@@ -1,0 +1,18 @@
+version: 0.2
+
+env:
+  variables:
+    GOOS: "linux"
+    GOARCH: "amd64"
+
+phases:
+  install:
+    runtime-versions:
+      golang: 1.13
+  build:
+    commands:
+      - cd $CODEBUILD_SRC_DIR/src
+      - go build -mod vendor -o ../bin/application -i github.com/eynorey/candyshop/src
+artifacts:
+  files:
+  - bin/application
