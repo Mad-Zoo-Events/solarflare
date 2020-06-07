@@ -48,5 +48,5 @@ func main() {
 	router.Handle("/health", HealthHandler()).Name("Health").Methods(http.MethodGet)
 	router.Handle("/visuals/{visual}/{action}", VisualHandler()).Methods(http.MethodPost)
 
-	http.ListenAndServe(":1337", router)
+	http.ListenAndServe(":5000", router)
 }
