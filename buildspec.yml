@@ -15,4 +15,9 @@ phases:
       - go build -mod vendor -o ../bin/application -i github.com/eynorey/candyshop/src
 artifacts:
   files:
-  - bin/application
+    - bin/application
+  secondary-artifacts:
+    static:
+      files:
+        - static/**/*
+      base-directory: src
