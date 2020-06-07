@@ -1,0 +1,79 @@
+:root {
+    --background: #161616;
+    --dark-gray : #444444;
+    --gray      : gray;
+    --font      : #dfffff;
+    --green     : #44ff66;
+    --orange    : #ffaa44;
+    --red       : #ff4466;
+    --cyan      : #1ba1e2;
+}
+
+body {
+    background-color: var(--background);
+    color           : var(--font);
+    font-family     : Arial, Helvetica, sans-serif;
+}
+
+/* ================ CONTROLS ================ */
+.controls-holder {
+    width: 100%;
+}
+
+#controls-table {
+    margin-left   : auto;
+    margin-right  : auto;
+    border-spacing: 0px;
+}
+
+#controls-table td {
+    text-align: center;
+}
+
+/* ================ BUTTONS ================ */
+button {
+    background-color: var(--dark-gray);
+    padding         : 10px;
+    border-radius   : 5px;
+    width: 100%;
+    font-variant: small-caps;
+}
+
+button.start {
+    color : var(--green);
+    border: 1px solid var(--green);
+}
+
+button.stop {
+    color : var(--red);
+    border: 1px solid var(--red);
+}
+
+button.restart {
+    color : var(--orange);
+    border: 1px solid var(--orange);
+}
+
+button.trigger {
+    color : var(--cyan);
+    border: 1px solid var(--cyan);
+}
+
+/* ================ LOGS ================ */
+#logWindow {
+    overflow-y: scroll;
+    height    : 400px;
+    border    : 1px solid var(--gray);
+}
+
+.logMessage {
+    display: block;
+}
+
+.success {
+    color: var(--green);
+}
+
+.failure {
+    color: var(--red);
+}

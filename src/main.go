@@ -45,7 +45,9 @@ func VisualHandler() http.HandlerFunc {
 func main() {
 	router := mux.NewRouter()
 
-	router.Handle("/health", HealthHandler()).Name("Health").Methods(http.MethodGet)
+	staticDir := "/static/"
+	router.PathPrefix(staticDir).Handler(http.StripPrefix(staticDir, http.FileServer(http.Dir("."+staticDir))))
+	router.Handle("/health", HealthHandler()).Methods(http.MethodGet)
 	router.Handle("/visuals/{visual}/{action}", VisualHandler()).Methods(http.MethodPost)
 
 	http.ListenAndServe(":5000", router)
