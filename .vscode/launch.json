@@ -10,7 +10,7 @@
             "request": "launch",
             "mode": "auto",
             "port": 5000,
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/src",
             "program": "${workspaceFolder}/src/main.go"
         }
     ]
