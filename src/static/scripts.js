@@ -30,7 +30,7 @@ function addToLog(message) {
 }
 
 sendRequest = async (visual, action, successMessage, failureMessage) => {
-    url = `http://localhost:5000/visuals/${visual}/${action}`;
+    url = `${window.location.origin}/visuals/${visual}/${action}`;
     var request = new XMLHttpRequest();
     request.open("POST", url, true);
     request.addEventListener('load', function (event) {
@@ -40,5 +40,9 @@ sendRequest = async (visual, action, successMessage, failureMessage) => {
             addToLog(`${failureMessage}: ${request.responseText}`);
         }
     });
-    request.send();
+    try {
+        request.send();
+    } catch (error) {
+        addToLog(`${failureMessage}: ${request.responseText}`);
+    }
 }
