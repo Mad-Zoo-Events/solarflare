@@ -17,26 +17,23 @@ body {
 
 /* ================ MAIN CONTROLS ================ */
 .controls-holder {
-    width: 100%;
-}
-
-#controls-table {
-    margin-left   : auto;
-    margin-right  : auto;
-    border-spacing: 0px;
-}
-
-#controls-table td {
     text-align: center;
-    padding   : 0.3em;
+}
+
+.visual-control {
+    display: inline-block;
+    width  : min-content;
+    padding: 0.1em;
 }
 
 /* ================ BUTTONS ================ */
 button {
+    margin-top      : 0.5em;
     width           : 100%;
     padding         : 1em 0.8em;
-    border-radius   : 10px;
+    border-radius   : 1em;
     cursor          : pointer;
+
     background-color: var(--dark-gray);
     font-size       : 1em;
     font-variant    : small-caps;
@@ -44,54 +41,54 @@ button {
 
 button.start {
     color : var(--green);
-    border: 1px solid var(--green);
+    border: 0.1em solid var(--green);
 }
 
 button.stop {
     color : var(--red);
-    border: 1px solid var(--red);
+    border: 0.1em solid var(--red);
 }
 
 button.restart {
     color : var(--orange);
-    border: 1px solid var(--orange);
+    border: 0.1em solid var(--orange);
 }
 
 button.trigger {
     color : var(--cyan);
-    border: 1px solid var(--cyan);
+    border: 0.1em solid var(--cyan);
 }
 
 button.disabled {
     background-color: var(--background);
     color           : var(--gray);
-    border          : 1px solid var(--dark-gray);
-    cursor          : default;
+    border          : 0.1em solid var(--dark-gray);
+    cursor          : not-allowed;
 }
 
 /* ================ FOOTER ================ */
 .footer {
-    position  : absolute;
-    bottom    : 5px;
-    right     : 5px;
-    left      : 5px;
-    height: 200px;
+    position: absolute;
+    bottom  : 0.5em;
+    right   : 0.5em;
+    left    : 0.5em;
+    height  : 10em;
 
-    display: grid;
+    display              : grid;
     grid-template-columns: auto min-content;
 }
 
 #log-window {
     grid-row-start: 1;
-    grid-row-end: 2;
-    padding   : 5px;
-    overflow-y: scroll;
-    border    : 1px solid var(--gray);
+    grid-row-end  : 2;
+    padding       : 0.3em;
+    overflow-y    : scroll;
+    border        : 0.1em solid var(--gray);
 }
 
 .master-controls {
     padding: 1em;
-    width: min-content;
+    width  : min-content;
 }
 
 .log-message {
