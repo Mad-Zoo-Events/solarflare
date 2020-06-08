@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Mad Zoo Events Visual Control System</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <script type="text/javascript" src="/static/scripts.js"></script>
+</head>
+
+<body>
+    <div class="controls-holder">
+        {{range .Effects}}
+        {{template "visualControl" .}}
+        {{end}}
+    </div>
+    <div class="footer">
+        <div id="log-window"></div>
+        <div class="master-controls">
+            <button class="stop" type="button" onclick='sendVisualAction("all", "stop")'>stop&nbsp;all</button>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+
+{{define "visualControl"}}
+<div class="visual-control">
+    <span>{{ .Name }}</span>
+    <button type="button" {{ if .AllowTrigger }} class="trigger" onclick='sendVisualAction("{{ .Name }}", "trigger")'
+        {{ else }}class="disabled" disabled{{ end }}>trigger</button>
+    <button type="button" {{ if .AllowStart }} class="start" onclick='sendVisualAction("{{ .Name }}", "start")'
+        {{ else }}class="disabled" disabled{{ end }}>start</button>
+    <button type="button" {{ if .AllowRestart }}class="restart" onclick='sendVisualAction("{{ .Name }}", "restart")'
+        {{ else }}class="disabled" disabled{{ end }}>restart</button>
+    <button type="button" {{ if .AllowStop }}class="stop" onclick='sendVisualAction("{{ .Name }}", "stop")'
+        {{ else }}class="disabled" disabled{{ end }}>stop</button>
+</div>
+{{end}}
