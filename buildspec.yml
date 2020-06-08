@@ -13,11 +13,10 @@ phases:
     commands:
       - cd $CODEBUILD_SRC_DIR/src
       - go build -mod vendor -o ../bin/application -i github.com/eynorey/candyshop/src
+      - chmod 755 ../bin/application
+      - mv -r static ../
 artifacts:
   files:
+    - .ebextensions/*
     - bin/application
-  secondary-artifacts:
-    static:
-      files:
-        - static/**/*
-      base-directory: src
+    - static/**/*
