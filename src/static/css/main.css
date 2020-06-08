@@ -1,6 +1,6 @@
 :root {
     --background: #161616;
-    --dark-gray : #444444;
+    --dark-gray : #333333;
     --gray      : gray;
     --font      : #dfffff;
     --green     : #44ff66;
@@ -15,7 +15,7 @@ body {
     font-family     : Arial, Helvetica, sans-serif;
 }
 
-/* ================ CONTROLS ================ */
+/* ================ MAIN CONTROLS ================ */
 .controls-holder {
     width: 100%;
 }
@@ -28,15 +28,18 @@ body {
 
 #controls-table td {
     text-align: center;
+    padding   : 0.3em;
 }
 
 /* ================ BUTTONS ================ */
 button {
+    width           : 100%;
+    padding         : 1em 0.8em;
+    border-radius   : 10px;
+    cursor          : pointer;
     background-color: var(--dark-gray);
-    padding         : 10px;
-    border-radius   : 5px;
-    width: 100%;
-    font-variant: small-caps;
+    font-size       : 1em;
+    font-variant    : small-caps;
 }
 
 button.start {
@@ -59,14 +62,39 @@ button.trigger {
     border: 1px solid var(--cyan);
 }
 
-/* ================ LOGS ================ */
-#logWindow {
+button.disabled {
+    background-color: var(--background);
+    color           : var(--gray);
+    border          : 1px solid var(--dark-gray);
+    cursor          : default;
+}
+
+/* ================ FOOTER ================ */
+.footer {
+    position  : absolute;
+    bottom    : 5px;
+    right     : 5px;
+    left      : 5px;
+    height: 200px;
+
+    display: grid;
+    grid-template-columns: auto min-content;
+}
+
+#log-window {
+    grid-row-start: 1;
+    grid-row-end: 2;
+    padding   : 5px;
     overflow-y: scroll;
-    height    : 400px;
     border    : 1px solid var(--gray);
 }
 
-.logMessage {
+.master-controls {
+    padding: 1em;
+    width: min-content;
+}
+
+.log-message {
     display: block;
 }
 

@@ -19,25 +19,32 @@
       </thead>
       <tbody>
         <tr>
-          <td><button class="start" type="button" onclick='startVisual("dragon")'>start</button></td>
-          <td><button class="start" type="button" onclick='startVisual("hearts")'>start</button></td>
+          <td><button class="start" type="button" onclick='sendVisualAction("dragon", "start")'>start</button></td>
+          <td><button class="start" type="button" onclick='sendVisualAction("hearts", "start")'>start</button></td>
         </tr>
         <tr>
-          <td><button class="stop" type="button" onclick='stopVisual("dragon")'>stop</button></td>
-          <td><button class="stop" type="button" onclick='stopVisual("hearts")'>stop</button></td>
+          <td><button class="stop" type="button" onclick='sendVisualAction("dragon", "stop")'>stop</button></td>
+          <td><button class="stop" type="button" onclick='sendVisualAction("hearts", "stop")'>stop</button></td>
         </tr>
         <tr>
-          <td><button class="restart" type="button" onclick='restartVisual("dragon")'>restart</button></td>
-          <td>-</td>
+          <td><button class="restart" type="button" onclick='sendVisualAction("dragon", "restart")'>restart</button>
+          </td>
+          <td><button class="disabled" type="button" disabled>restart</button></td>
         </tr>
         <tr>
-          <td>-</td>
-          <td><button class="trigger" type="button" onclick='triggerVisual("dragon")'>trigger</button></td>
+          <td><button class="disabled" type="button" disabled>trigger</button></td>
+          <td><button class="trigger" type="button" onclick='sendVisualAction("dragon", "trigger")'>trigger</button>
+          </td>
         </tr>
       </tbody>
     </table>
   </div>
-  <div id="logWindow"></div>
+  <div class="footer">
+    <div id="log-window"></div>
+    <div class="master-controls">
+      <button class="stop" type="button" onclick='sendVisualAction("all", "stop")'>stop&nbsp;all</button>
+    </div>
+  </div>
 </body>
 
 </html>
