@@ -43,12 +43,24 @@ func VisualHandler() http.HandlerFunc {
 	}
 }
 
+// ControlPanelHandler builds the control panel from templates
+func ControlPanelHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		err := controller.GenerateControlPanel(w)
+		if err != nil {
+			w.WriteHeader(500)
+			w.Write([]byte(err.Error()))
+		}
+	}
+}
+
 func main() {
 	router := mux.NewRouter()
 
 	staticDir := "/static/"
 	router.PathPrefix(staticDir).Handler(http.StripPrefix(staticDir, http.FileServer(http.Dir("."+staticDir))))
 	router.Handle("/health", HealthHandler()).Methods(http.MethodGet)
+	router.Handle("/controlpanel", ControlPanelHandler()).Methods(http.MethodGet)
 	router.Handle("/visuals/{visual}/{action}", VisualHandler()).Methods(http.MethodPost)
 
 	http.ListenAndServe(":5000", router)
