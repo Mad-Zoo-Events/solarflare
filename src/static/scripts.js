@@ -1,48 +1,20 @@
-function startVisual(visual) {
-    var successMessage = `<span class="success"><b>${visual}</b> has been started</span>`;
-    var failureMessage = `<span class="failure"><b>${visual}</b> failed to start</span>`;
-    sendRequest(visual, "start", successMessage, failureMessage);
-}
-
-function stopVisual(visual) {
-    var successMessage = `<span class="success"><b>${visual}</b> has been stopped</span>`;
-    var failureMessage = `<span class="failure"><b>${visual}</b> failed to stop</span>`;
-    sendRequest(visual, "stop", successMessage, failureMessage);
-}
-
-function restartVisual(visual) {
-    var successMessage = `<span class="success"><b>${visual}</b> has been restarted</span>`;
-    var failureMessage = `<span class="failure"><b>${visual}</b> failed to restart</span>`;
-    sendRequest(visual, "restart", successMessage, failureMessage);
-}
-
-function triggerVisual(visual) {
-    var successMessage = `<span class="success"><b>${visual}</b> has been triggered once</span>`;
-    var failureMessage = `<span class="failure"><b>${visual}</b> failed to trigger</span>`;
-    sendRequest(visual, "trigger", successMessage, failureMessage);
-}
-
 function addToLog(message) {
-    const logWindow = document.getElementById('logWindow');
+    const logWindow = document.getElementById('log-window');
 
     const timestamp = new Date().toLocaleTimeString();
-    logWindow.innerHTML = `<span class="logMessage">${timestamp} | ${message}</span>` + logWindow.innerHTML;
+    logWindow.innerHTML = `<span class="log-message">${timestamp} | ${message}</span>` + logWindow.innerHTML;
 }
 
-sendRequest = async (visual, action, successMessage, failureMessage) => {
+sendVisualAction = async (visual, action) => {
     url = `${window.location.origin}/visuals/${visual}/${action}`;
     var request = new XMLHttpRequest();
     request.open("POST", url, true);
     request.addEventListener('load', function (event) {
         if (request.status >= 200 && request.status < 300) {
-            addToLog(successMessage);
+            addToLog(`<span class="success">${action} <b>${visual}</b> succeeded</span>`);
         } else {
-            addToLog(`${failureMessage}: ${request.responseText}`);
+            addToLog(`<span class="failure">${action} <b>${visual}</b> failed: ${request.responseText}</span>`);
         }
     });
-    try {
-        request.send();
-    } catch (error) {
-        addToLog(`${failureMessage}: ${request.responseText}`);
-    }
+    request.send();
 }
