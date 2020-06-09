@@ -21,16 +21,18 @@ func HealthHandler() http.HandlerFunc {
 func VisualHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
-		visual := vars["visual"]
-		action := vars["action"]
+		visualType := vars["visualType"]
+		name := vars["name"]
+		action := model.Action(vars["actionName"])
 
 		var err error
-
-		switch model.Action(action) {
-		case model.StartVisualAction:
-			err = controller.StartVisual(visual)
+		switch model.VisualType(visualType) {
+		case model.VisualTypeParticleEffect:
+			err = controller.DoParticleEffect(name, action)
+		case model.VisualTypeDragon:
+			err = controller.DoDragon(action)
 		default:
-			err = errors.New("unknown action: " + action)
+			err = errors.New("unknown type: " + visualType)
 		}
 
 		if err != nil {
@@ -61,7 +63,7 @@ func main() {
 	router.PathPrefix(staticDir).Handler(http.StripPrefix(staticDir, http.FileServer(http.Dir("."+staticDir))))
 	router.Handle("/health", HealthHandler()).Methods(http.MethodGet)
 	router.Handle("/controlpanel", ControlPanelHandler()).Methods(http.MethodGet)
-	router.Handle("/visuals/{visual}/{action}", VisualHandler()).Methods(http.MethodPost)
+	router.Handle("/visuals/{visualType}/{name}/{actionName}", VisualHandler()).Methods(http.MethodPost)
 
 	http.ListenAndServe(":5000", router)
 }

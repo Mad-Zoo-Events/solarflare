@@ -31,7 +31,6 @@ button {
     margin-top      : 0.5em;
     width           : 100%;
     padding         : 1em 0.8em;
-    border-radius   : 1em;
     cursor          : pointer;
 
     background-color: var(--dark-gray);
