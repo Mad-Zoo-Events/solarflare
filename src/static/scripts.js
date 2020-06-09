@@ -8,8 +8,8 @@ function addToLog(message) {
 sendVisualAction = async (visualType, visualName, action) => {
     const url = `${window.location.origin}/effects/${visualType}`;
     const requestBody = {
-        "VisualName":"asd",
-        "Action":"asd"
+        "VisualName":visualName,
+        "Action":action
     };
 
     var request = new XMLHttpRequest();
