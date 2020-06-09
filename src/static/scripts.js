@@ -6,9 +6,15 @@ function addToLog(message) {
 }
 
 sendVisualAction = async (visualType, visualName, action) => {
-    url = `${window.location.origin}/effects/${visualType}/${visualName}/${action}`;
+    const url = `${window.location.origin}/effects/${visualType}`;
+    const requestBody = {
+        "VisualName":"asd",
+        "Action":"asd"
+    };
+
     var request = new XMLHttpRequest();
     request.open("POST", url, true);
+    request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
     request.addEventListener('load', function (event) {
         if (request.status >= 200 && request.status < 300) {
             addToLog(`<span class="success">${action} <b>${visualName}</b> succeeded</span>`);
@@ -16,5 +22,6 @@ sendVisualAction = async (visualType, visualName, action) => {
             addToLog(`<span class="failure">${action} <b>${visualName}</b> failed: ${request.responseText}</span>`);
         }
     });
-    request.send();
+
+    request.send(JSON.stringify(requestBody));
 }

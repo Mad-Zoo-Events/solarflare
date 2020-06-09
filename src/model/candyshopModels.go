@@ -17,3 +17,9 @@ type ControlPanel struct {
 	Dragon          DragonControl
 	// Lasers []LaserControl
 }
+
+// InboundEffectRequest is the data model used for requests coming from the frontend
+type InboundEffectRequest struct {
+	VisualName *string
+	Action     string
+}

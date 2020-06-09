@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-const baseURL = "http://localhost:5000/"
+const baseURL = "http://3.22.232.137:8001/"
 
 // Do does what do does
 func Do(method string, endpoint string, body []byte) error {
