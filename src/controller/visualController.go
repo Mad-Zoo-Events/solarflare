@@ -10,6 +10,11 @@ import (
 	"github.com/eynorey/candyshop/src/model"
 )
 
+const (
+	endpointParticleEffect = "effects/particle"
+	endpointDragon         = "effects/dragon"
+)
+
 // DoParticleEffect compiles and sends an action for a particle effect
 func DoParticleEffect(name string, action model.Action) error {
 	log.Printf("Performing %s on %s", action, name)
@@ -25,7 +30,7 @@ func DoParticleEffect(name string, action model.Action) error {
 		return err
 	}
 
-	err = client.Do(http.MethodPost, "effect/particle", body)
+	err = client.Do(http.MethodPost, endpointParticleEffect, body)
 	if err != nil {
 		return err
 	}
@@ -35,5 +40,22 @@ func DoParticleEffect(name string, action model.Action) error {
 
 // DoDragon compiles and sends an action for the dragon effect
 func DoDragon(action model.Action) error {
+	log.Printf("Performing %s on the dragon", action)
+
+	request := model.DragonRequest{
+		Action:  action,
+		PointID: 0,
+	}
+
+	body, err := json.Marshal(request)
+	if err != nil {
+		return err
+	}
+
+	err = client.Do(http.MethodPost, endpointDragon, body)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
