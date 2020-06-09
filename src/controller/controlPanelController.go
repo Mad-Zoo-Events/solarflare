@@ -4,18 +4,24 @@ import (
 	"html/template"
 	"net/http"
 
+	"github.com/eynorey/candyshop/src/config"
 	"github.com/eynorey/candyshop/src/model"
 )
 
 // GenerateControlPanel renders the control panel based on templates
 func GenerateControlPanel(writer http.ResponseWriter) error {
-	template, err := template.ParseFiles("static/templates/controlPanel.html", "static/templates/visualControl.html")
+	template, err := template.ParseFiles(
+		"static/templates/controlPanel.html",
+		"static/templates/particleEffectControl.html",
+		"static/templates/dragonControl.html",
+	)
 	if err != nil {
 		return err
 	}
 
 	data := model.ControlPanel{
-		Effects: getEffects(),
+		ParticleEffects: config.GetParticleEffects(),
+		Dragon:          config.GetDragon(),
 	}
 
 	err = template.Execute(writer, data)
@@ -24,33 +30,4 @@ func GenerateControlPanel(writer http.ResponseWriter) error {
 	}
 
 	return nil
-}
-
-// hardcoded for now
-func getEffects() []model.VisualControl {
-	dragon := model.VisualControl{
-		Name:         "dragon",
-		AllowTrigger: false,
-		AllowStart:   true,
-		AllowRestart: true,
-		AllowStop:    true,
-	}
-
-	hearts := model.VisualControl{
-		Name:         "hearts",
-		AllowTrigger: true,
-		AllowStart:   true,
-		AllowRestart: false,
-		AllowStop:    true,
-	}
-
-	flashes := model.VisualControl{
-		Name:         "flashes",
-		AllowTrigger: true,
-		AllowStart:   true,
-		AllowRestart: false,
-		AllowStop:    true,
-	}
-
-	return []model.VisualControl{dragon, hearts, flashes}
 }

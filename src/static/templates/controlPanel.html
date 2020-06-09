@@ -10,14 +10,18 @@
 
 <body>
     <div class="controls-holder">
-        {{range .Effects}}
-        {{template "visualControl" .}}
+        {{range .ParticleEffects}}
+        {{template "particleEffectControl" .}}
         {{end}}
+    </div>
+    <hr />
+    <div class="controls-holder">
+        {{template "dragonControl" .Dragon}}
     </div>
     <div class="footer">
         <div id="log-window"></div>
         <div class="master-controls">
-            <button class="stop" type="button" onclick='sendVisualAction("all", "stop")'>stop&nbsp;all</button>
+            <button class="stop" type="button" onclick='sendVisualAction("particle", "all", "stop")'>stop&nbsp;all</button>
         </div>
     </div>
 </body>
