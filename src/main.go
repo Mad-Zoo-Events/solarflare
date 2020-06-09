@@ -1,7 +1,10 @@
 package main
 
 import (
+	"encoding/json"
 	"errors"
+	"io/ioutil"
+	"log"
 	"net/http"
 
 	"github.com/eynorey/candyshop/src/controller"
@@ -22,13 +25,25 @@ func EffectsHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 		visualType := vars["visualType"]
-		name := vars["name"]
-		action := model.Action(vars["actionName"])
 
-		var err error
+		body, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			writeResponse(w, 400, err)
+			return
+		}
+
+		requestData := model.InboundEffectRequest{}
+		err = json.Unmarshal(body, &requestData)
+		if err != nil {
+			writeResponse(w, 400, err)
+			return
+		}
+
+		action := model.Action(requestData.Action)
+
 		switch model.VisualType(visualType) {
 		case model.VisualTypeParticleEffect:
-			err = controller.DoParticleEffect(name, action)
+			err = controller.DoParticleEffect(*requestData.VisualName, action)
 		case model.VisualTypeDragon:
 			err = controller.DoDragon(action)
 		default:
@@ -36,12 +51,11 @@ func EffectsHandler() http.HandlerFunc {
 		}
 
 		if err != nil {
-			w.WriteHeader(500)
-			w.Write([]byte(err.Error()))
+			writeResponse(w, 500, err)
 			return
 		}
 
-		w.WriteHeader(204)
+		writeResponse(w, 204, nil)
 	}
 }
 
@@ -50,9 +64,16 @@ func ControlPanelHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		err := controller.GenerateControlPanel(w)
 		if err != nil {
-			w.WriteHeader(500)
-			w.Write([]byte(err.Error()))
+			writeResponse(w, 500, err)
 		}
+	}
+}
+
+func writeResponse(w http.ResponseWriter, code int, err error) {
+	w.WriteHeader(code)
+	if err != nil {
+		w.Write([]byte(err.Error()))
+		log.Fatal(err.Error())
 	}
 }
 
@@ -63,7 +84,7 @@ func main() {
 	router.PathPrefix(staticDir).Handler(http.StripPrefix(staticDir, http.FileServer(http.Dir("."+staticDir))))
 	router.Handle("/health", HealthHandler()).Methods(http.MethodGet)
 	router.Handle("/controlpanel", ControlPanelHandler()).Methods(http.MethodGet)
-	router.Handle("/effects/{visualType}/{name}/{actionName}", EffectsHandler()).Methods(http.MethodPost)
+	router.Handle("/effects/{visualType}", EffectsHandler()).Methods(http.MethodPost)
 
 	http.ListenAndServe(":5000", router)
 }
