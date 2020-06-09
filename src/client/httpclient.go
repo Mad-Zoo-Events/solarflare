@@ -2,6 +2,8 @@ package client
 
 import (
 	"bytes"
+	"errors"
+	"io/ioutil"
 	"net/http"
 )
 
@@ -17,9 +19,14 @@ func Do(method string, endpoint string, body []byte) error {
 	}
 
 	client := http.Client{}
-	_, err = client.Do(request)
+	response, err := client.Do(request)
 	if err != nil {
 		return err
+	}
+
+	if response.StatusCode < 200 || response.StatusCode >= 400 {
+		responseMessage, _ := ioutil.ReadAll(response.Body)
+		return errors.New("Error received from eyecandy: " + string(responseMessage))
 	}
 
 	return nil

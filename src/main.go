@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -15,8 +16,11 @@ import (
 // HealthHandler returns the health status of the service
 func HealthHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		shrug := "¯\\_(ツ)_/¯"
+
+		log.Print(shrug)
 		w.WriteHeader(200)
-		w.Write([]byte("¯\\_(ツ)_/¯"))
+		w.Write([]byte(shrug))
 	}
 }
 
@@ -28,6 +32,7 @@ func EffectsHandler() http.HandlerFunc {
 
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
+			log.Fatalf("failed to read effects request: %s", err.Error())
 			writeResponse(w, 400, err)
 			return
 		}
@@ -35,6 +40,7 @@ func EffectsHandler() http.HandlerFunc {
 		requestData := model.InboundEffectRequest{}
 		err = json.Unmarshal(body, &requestData)
 		if err != nil {
+			log.Fatalf("failed to unmarshal effects request: %s", err.Error())
 			writeResponse(w, 400, err)
 			return
 		}
@@ -47,7 +53,9 @@ func EffectsHandler() http.HandlerFunc {
 		case model.VisualTypeDragon:
 			err = controller.DoDragon(action)
 		default:
-			err = errors.New("unknown type: " + visualType)
+			msg := fmt.Sprintf("unknown visual type: %s", visualType)
+			log.Fatal(msg)
+			err = errors.New(msg)
 		}
 
 		if err != nil {
@@ -73,7 +81,6 @@ func writeResponse(w http.ResponseWriter, code int, err error) {
 	w.WriteHeader(code)
 	if err != nil {
 		w.Write([]byte(err.Error()))
-		log.Fatal(err.Error())
 	}
 }
 
@@ -86,5 +93,9 @@ func main() {
 	router.Handle("/controlpanel", ControlPanelHandler()).Methods(http.MethodGet)
 	router.Handle("/effects/{visualType}", EffectsHandler()).Methods(http.MethodPost)
 
+	log.Print("Starting server listening on port 5000")
+
 	http.ListenAndServe(":5000", router)
+
+	log.Print("Server shut down")
 }

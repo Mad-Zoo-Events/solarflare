@@ -8,8 +8,8 @@ function addToLog(message) {
 sendVisualAction = async (visualType, visualName, action) => {
     const url = `${window.location.origin}/effects/${visualType}`;
     const requestBody = {
-        "VisualName":visualName,
-        "Action":action
+        "VisualName": visualName,
+        "Action": action
     };
 
     var request = new XMLHttpRequest();
@@ -19,7 +19,7 @@ sendVisualAction = async (visualType, visualName, action) => {
         if (request.status >= 200 && request.status < 300) {
             addToLog(`<span class="success">${action} <b>${visualName}</b> succeeded</span>`);
         } else {
-            addToLog(`<span class="failure">${action} <b>${visualName}</b> failed: ${request.responseText}</span>`);
+            addToLog(`<span class="failure">${action} <b>${visualName}</b> failed: (${request.status}) ${request.statusText}</span>`);
         }
     });
 
