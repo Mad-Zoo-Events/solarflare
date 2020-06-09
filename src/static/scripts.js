@@ -6,7 +6,7 @@ function addToLog(message) {
 }
 
 sendVisualAction = async (visualType, visualName, action) => {
-    url = `${window.location.origin}/visuals/${visualType}/${visualName}/${action}`;
+    url = `${window.location.origin}/effects/${visualType}/${visualName}/${action}`;
     var request = new XMLHttpRequest();
     request.open("POST", url, true);
     request.addEventListener('load', function (event) {

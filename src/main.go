@@ -17,8 +17,8 @@ func HealthHandler() http.HandlerFunc {
 	}
 }
 
-// VisualHandler handles requests to trigger actions on visuals
-func VisualHandler() http.HandlerFunc {
+// EffectsHandler handles requests to trigger actions on effects
+func EffectsHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 		visualType := vars["visualType"]
@@ -63,7 +63,7 @@ func main() {
 	router.PathPrefix(staticDir).Handler(http.StripPrefix(staticDir, http.FileServer(http.Dir("."+staticDir))))
 	router.Handle("/health", HealthHandler()).Methods(http.MethodGet)
 	router.Handle("/controlpanel", ControlPanelHandler()).Methods(http.MethodGet)
-	router.Handle("/visuals/{visualType}/{name}/{actionName}", VisualHandler()).Methods(http.MethodPost)
+	router.Handle("/effects/{visualType}/{name}/{actionName}", EffectsHandler()).Methods(http.MethodPost)
 
 	http.ListenAndServe(":5000", router)
 }
