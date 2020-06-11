@@ -27,13 +27,13 @@ func DoParticleEffect(name string, action model.Action) error {
 
 	body, err := json.Marshal(request)
 	if err != nil {
-		log.Fatalf("Failed to marshal particle effect request: %s", err.Error())
+		log.Printf("Failed to marshal particle effect request: %s", err.Error())
 		return err
 	}
 
 	err = client.Do(http.MethodPost, endpointParticleEffect, body)
 	if err != nil {
-		log.Fatalf("Failed to perform %s on particle effect %s: %s", action, name, err.Error())
+		log.Printf("Failed to perform %s on particle effect %s: %s", action, name, err.Error())
 		return err
 	}
 
@@ -48,17 +48,18 @@ func DoDragon(action model.Action) error {
 	request := model.DragonRequest{
 		Action:  action,
 		PointID: 0,
+		Static:  true,
 	}
 
 	body, err := json.Marshal(request)
 	if err != nil {
-		log.Fatalf("Failed to marshal dragon request: %s", err.Error())
+		log.Printf("Failed to marshal dragon request: %s", err.Error())
 		return err
 	}
 
 	err = client.Do(http.MethodPost, endpointDragon, body)
 	if err != nil {
-		log.Fatalf("Failed to perform %s on the dragon: %s", action, err.Error())
+		log.Printf("Failed to perform %s on the dragon: %s", action, err.Error())
 		return err
 	}
 

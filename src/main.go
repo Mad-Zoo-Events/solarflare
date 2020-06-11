@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -16,50 +15,50 @@ import (
 // HealthHandler returns the health status of the service
 func HealthHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		shrug := "¯\\_(ツ)_/¯"
+		msg := "¯\\_(ツ)_/¯"
 
-		log.Print(shrug)
-		w.WriteHeader(200)
-		w.Write([]byte(shrug))
+		writeResponse(w, 200, &msg)
 	}
 }
 
 // EffectsHandler handles requests to trigger actions on effects
 func EffectsHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		vars := mux.Vars(r)
-		visualType := vars["visualType"]
-
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
-			log.Fatalf("failed to read effects request: %s", err.Error())
-			writeResponse(w, 400, err)
+			msg := fmt.Sprintf("Failed to read effects request: %s", err.Error())
+			writeResponse(w, 400, &msg)
 			return
 		}
 
 		requestData := model.InboundEffectRequest{}
 		err = json.Unmarshal(body, &requestData)
 		if err != nil {
-			log.Fatalf("failed to unmarshal effects request: %s", err.Error())
-			writeResponse(w, 400, err)
+			msg := fmt.Sprintf("Failed to unmarshal effects request: %s", err.Error())
+			writeResponse(w, 400, &msg)
 			return
 		}
 
+		effectType := mux.Vars(r)["effectType"]
 		action := model.Action(requestData.Action)
 
-		switch model.VisualType(visualType) {
-		case model.VisualTypeParticleEffect:
-			err = controller.DoParticleEffect(*requestData.VisualName, action)
-		case model.VisualTypeDragon:
+		switch model.EffectType(effectType) {
+		case model.EffectTypeParticleEffect:
+			if requestData.EffectName == nil {
+				msg := "Parameter 'EffectName' is required for particle effects"
+				writeResponse(w, 400, &msg)
+				return
+			}
+			err = controller.DoParticleEffect(*requestData.EffectName, action)
+		case model.EffectTypeDragon:
 			err = controller.DoDragon(action)
 		default:
-			msg := fmt.Sprintf("unknown visual type: %s", visualType)
-			log.Fatal(msg)
-			err = errors.New(msg)
+			err = fmt.Errorf("Unknown effect type '%s'", effectType)
 		}
 
 		if err != nil {
-			writeResponse(w, 500, err)
+			msg := err.Error()
+			writeResponse(w, 500, &msg)
 			return
 		}
 
@@ -72,15 +71,18 @@ func ControlPanelHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		err := controller.GenerateControlPanel(w)
 		if err != nil {
-			writeResponse(w, 500, err)
+			writeResponse(w, 500, nil)
+			log.Fatalf("Error generating control panel: %s", err.Error())
 		}
 	}
 }
 
-func writeResponse(w http.ResponseWriter, code int, err error) {
+func writeResponse(w http.ResponseWriter, code int, msg *string) {
 	w.WriteHeader(code)
-	if err != nil {
-		w.Write([]byte(err.Error()))
+
+	if msg != nil {
+		w.Write([]byte(*msg))
+		log.Print(*msg)
 	}
 }
 
@@ -91,7 +93,7 @@ func main() {
 	router.PathPrefix(staticDir).Handler(http.StripPrefix(staticDir, http.FileServer(http.Dir("."+staticDir))))
 	router.Handle("/health", HealthHandler()).Methods(http.MethodGet)
 	router.Handle("/controlpanel", ControlPanelHandler()).Methods(http.MethodGet)
-	router.Handle("/effects/{visualType}", EffectsHandler()).Methods(http.MethodPost)
+	router.Handle("/effects/{effectType}", EffectsHandler()).Methods(http.MethodPost)
 
 	log.Print("Starting server listening on port 5000")
 

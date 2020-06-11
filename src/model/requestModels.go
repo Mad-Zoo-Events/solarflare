@@ -1,6 +1,6 @@
 package model
 
-// Action represents the action to be performed on the visual (e.g. start, stop, restart...)
+// Action represents the action to be performed on the visual effect (e.g. start, stop, restart...)
 type Action string
 
 const (
