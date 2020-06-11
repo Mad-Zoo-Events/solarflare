@@ -2,24 +2,32 @@ package client
 
 import (
 	"bytes"
+	"encoding/json"
 	"errors"
 	"io/ioutil"
+	"log"
 	"net/http"
 )
 
 const baseURL = "http://3.22.232.137:8001/"
 
 // Do does what do does
-func Do(method string, endpoint string, body []byte) error {
+func Do(method string, endpoint string, request interface{}) error {
 	url := baseURL + endpoint
 
-	request, err := http.NewRequest(method, url, bytes.NewBuffer(body))
+	body, err := json.Marshal(request)
+	if err != nil {
+		log.Printf("Failed to marshal request: %s", err.Error())
+		return err
+	}
+
+	r, err := http.NewRequest(method, url, bytes.NewBuffer(body))
 	if err != nil {
 		return err
 	}
 
 	client := http.Client{}
-	response, err := client.Do(request)
+	response, err := client.Do(r)
 	if err != nil {
 		return err
 	}
