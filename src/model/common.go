@@ -1,13 +1,13 @@
 package model
 
-// VisualType represents the type of visual effect
-type VisualType string
+// EffectType represents the type of visual effect
+type EffectType string
 
 const (
-	// VisualTypeParticleEffect represents a particle effect
-	VisualTypeParticleEffect = VisualType("particle")
-	// VisualTypeDragon represents the dragon effect
-	VisualTypeDragon = VisualType("dragon")
+	// EffectTypeParticleEffect represents a particle effect
+	EffectTypeParticleEffect = EffectType("particle")
+	// EffectTypeDragon represents the dragon effect
+	EffectTypeDragon = EffectType("dragon")
 )
 
 // Point is a representation of a coordinate in Minecraft

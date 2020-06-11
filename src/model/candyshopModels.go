@@ -20,6 +20,6 @@ type ControlPanel struct {
 
 // InboundEffectRequest is the data model used for requests coming from the frontend
 type InboundEffectRequest struct {
-	VisualName *string
+	EffectName *string
 	Action     string
 }

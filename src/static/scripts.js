@@ -1,27 +1,52 @@
-function addToLog(message) {
-    const logWindow = document.getElementById('log-window');
+const BASE_URL = `${window.location.origin}/effects/`;
+const ENDPOINT_PARTICLE = "particle";
+const ENDPOINT_DRAGON = "dragon";
 
-    const timestamp = new Date().toLocaleTimeString();
-    logWindow.innerHTML = `<span class="log-message">${timestamp} | ${message}</span>` + logWindow.innerHTML;
-}
-
-sendVisualAction = async (visualType, visualName, action) => {
-    const url = `${window.location.origin}/effects/${visualType}`;
+sendParticleEffect = async (effectName, effectDisplayName, action) => {
     const requestBody = {
-        "VisualName": visualName,
+        "EffectName": effectName,
         "Action": action
     };
 
+    doRequest(
+        ENDPOINT_PARTICLE,
+        JSON.stringify(requestBody),
+        (errorMsg) => addToLog(action, effectDisplayName, errorMsg)
+    );
+}
+
+sendDragonEffect = async (effectDisplayName, action) => {
+    const requestBody = {
+        "Action": action
+    };
+
+    doRequest(
+        ENDPOINT_DRAGON,
+        JSON.stringify(requestBody),
+        (errorMsg) => addToLog(action, effectDisplayName, errorMsg)
+    );
+}
+
+doRequest = async (endpoint, payload, callback) => {
     var request = new XMLHttpRequest();
-    request.open("POST", url, true);
+    request.open("POST", `${BASE_URL}${endpoint}`);
     request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
     request.addEventListener('load', function (event) {
         if (request.status >= 200 && request.status < 300) {
-            addToLog(`<span class="success">${action} <b>${visualName}</b> succeeded</span>`);
+            callback();
         } else {
-            addToLog(`<span class="failure">${action} <b>${visualName}</b> failed: (${request.status}) ${request.statusText}</span>`);
+            callback(`${request.status} ${request.statusText}`);
         }
     });
+    request.send(payload);
+}
 
-    request.send(JSON.stringify(requestBody));
+function addToLog(action, effectDispalyName, errMsg) {
+    const logWindow = document.getElementById('log-window');
+
+    const timestamp = new Date().toLocaleTimeString();
+    const msg = `${action} <b>${effectDispalyName}</b> ${errMsg ? "failed: " + errMsg : "succeeded"}`;
+    const logLine = `<span class="log-message">${timestamp} | <span class="${errMsg ? "failure" : "success"}">${msg}</span></span>`
+
+    logWindow.innerHTML = logLine + logWindow.innerHTML;
 }
