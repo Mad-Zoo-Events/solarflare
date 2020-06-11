@@ -1,3 +1,6 @@
 # github.com/gorilla/mux v1.7.4
 ## explicit
 github.com/gorilla/mux
+# github.com/mervick/aes-everywhere/go/aes256 v0.0.0-20200211051351-debc6fb9b206
+## explicit
+github.com/mervick/aes-everywhere/go/aes256
