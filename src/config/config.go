@@ -2,59 +2,24 @@ package config
 
 import "github.com/eynorey/candyshop/src/model"
 
-// GetParticleEffects returns the list of particle effects available
-func GetParticleEffects() []model.ParticleEffectControl {
-	return []model.ParticleEffectControl{
-		model.ParticleEffectControl{
-			Name:        "angry_villager",
-			DisplayName: "Fire Clouds",
-		},
+// Config contains the server configuration
+type Config struct {
+	ParticleEffects []model.ParticleEffectControl
+	Dragon          model.DragonControl
+	Servers         []model.Server
+}
 
-		model.ParticleEffectControl{
-			Name:        "barrier",
-			DisplayName: "Barrier",
-		},
+var cfg Config
 
-		model.ParticleEffectControl{
-			Name:        "dragon_breath",
-			DisplayName: "Magenta Blizzard",
-		},
-
-		model.ParticleEffectControl{
-			Name:        "dripping_lava",
-			DisplayName: "Fire Rain",
-		},
-
-		model.ParticleEffectControl{
-			Name:        "explosion",
-			DisplayName: "Explosion",
-		},
-
-		model.ParticleEffectControl{
-			Name:        "flash",
-			DisplayName: "Flashes",
-		},
-
-		model.ParticleEffectControl{
-			Name:        "heart",
-			DisplayName: "Hearts",
-		},
-
-		model.ParticleEffectControl{
-			Name:        "rain",
-			DisplayName: "Rain",
-		},
-
-		model.ParticleEffectControl{
-			Name:        "sweep_attack",
-			DisplayName: "Sweep",
-		},
+func init() {
+	cfg = Config{
+		ParticleEffects: loadParticleEffectControls(),
+		Dragon:          loadDragonControl(),
+		Servers:         loadServers(),
 	}
 }
 
-// GetDragon returns information on the dragon effect
-func GetDragon() model.DragonControl {
-	return model.DragonControl{
-		DisplayName: "Dragon",
-	}
+// Get returns the server config
+func Get() Config {
+	return cfg
 }
