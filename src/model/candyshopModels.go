@@ -18,6 +18,12 @@ type ControlPanel struct {
 	// Lasers []LaserControl
 }
 
+// Server contains information about aN eyecandy plugin server
+type Server struct {
+	Address string
+	Token   string
+}
+
 // ================ REQUEST MODELS ================ //
 
 // InboundParticleEffectRequest is the model for particle effect requests coming from the frontend

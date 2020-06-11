@@ -19,9 +19,10 @@ func GenerateControlPanel(writer http.ResponseWriter) error {
 		return err
 	}
 
+	cfg := config.Get()
 	data := model.ControlPanel{
-		ParticleEffects: config.GetParticleEffects(),
-		Dragon:          config.GetDragon(),
+		ParticleEffects: cfg.ParticleEffects,
+		Dragon:          cfg.Dragon,
 	}
 
 	err = template.Execute(writer, data)

@@ -2,7 +2,6 @@ package controller
 
 import (
 	"log"
-	"net/http"
 
 	"github.com/eynorey/candyshop/src/client"
 
@@ -24,7 +23,7 @@ func DoParticleEffect(r model.InboundParticleEffectRequest) error {
 		PointIDs: []int{0},
 	}
 
-	err := client.Do(http.MethodPost, endpointParticleEffect, request)
+	err := client.SendEffectRequest(endpointParticleEffect, request)
 	if err != nil {
 		log.Printf("Failed to perform %s on particle effect %s: %s", r.Action, r.EffectName, err.Error())
 		return err
@@ -53,7 +52,7 @@ func DoDragon(r model.InboundDragonRequest) error {
 		Static:  &r.Static,
 	}
 
-	err := client.Do(http.MethodPost, endpointDragon, request)
+	err := client.SendEffectRequest(endpointDragon, request)
 	if err != nil {
 		log.Printf("Failed to perform %s on the dragon: %s", r.Action, err.Error())
 		return err
