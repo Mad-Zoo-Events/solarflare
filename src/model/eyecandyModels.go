@@ -4,14 +4,14 @@ package model
 type Action string
 
 const (
-	// TriggerVisualAction triggers a visual effect
-	TriggerVisualAction = Action("TRIGGER")
-	// StartVisualAction starts a visual effect
-	StartVisualAction = Action("START")
-	// RestartVisualAction restarts a visual effect
-	RestartVisualAction = Action("RESTART")
-	// StopVisualAction stops a visual effect
-	StopVisualAction = Action("STOP")
+	// TriggerEffectAction triggers a visual effect
+	TriggerEffectAction = Action("TRIGGER")
+	// StartEffectAction starts a visual effect
+	StartEffectAction = Action("START")
+	// RestartEffectAction restarts a visual effect
+	RestartEffectAction = Action("RESTART")
+	// StopEffectAction stops a visual effect
+	StopEffectAction = Action("STOP")
 )
 
 // ParticleEffectRequest is the request model for particle effects
