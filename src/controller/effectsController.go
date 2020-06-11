@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"encoding/json"
 	"log"
 	"net/http"
 
@@ -25,13 +24,7 @@ func DoParticleEffect(r model.InboundParticleEffectRequest) error {
 		PointIDs: []int{0},
 	}
 
-	body, err := json.Marshal(request)
-	if err != nil {
-		log.Printf("Failed to marshal particle effect request: %s", err.Error())
-		return err
-	}
-
-	err = client.Do(http.MethodPost, endpointParticleEffect, body)
+	err := client.Do(http.MethodPost, endpointParticleEffect, request)
 	if err != nil {
 		log.Printf("Failed to perform %s on particle effect %s: %s", r.Action, r.EffectName, err.Error())
 		return err
@@ -60,13 +53,7 @@ func DoDragon(r model.InboundDragonRequest) error {
 		Static:  &r.Static,
 	}
 
-	body, err := json.Marshal(request)
-	if err != nil {
-		log.Printf("Failed to marshal dragon request: %s", err.Error())
-		return err
-	}
-
-	err = client.Do(http.MethodPost, endpointDragon, body)
+	err := client.Do(http.MethodPost, endpointDragon, request)
 	if err != nil {
 		log.Printf("Failed to perform %s on the dragon: %s", r.Action, err.Error())
 		return err
