@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/eynorey/candyshop/src/config"
+	"github.com/mervick/aes-everywhere/go/aes256"
 )
 
 // SendEffectRequest send a effect request to all registeres eyecandy instances
@@ -19,13 +20,18 @@ func SendEffectRequest(endpoint string, request interface{}) error {
 		return err
 	}
 
+	cfg := config.Get()
+	encBody := aes256.Encrypt(string(body), cfg.EncryptionKey)
+	if err != nil {
+		return err
+	}
+
 	c := http.Client{
 		Timeout: time.Duration(5 * time.Second),
 	}
-	cfg := config.Get()
 	for _, server := range cfg.Servers {
 		url := server.Address + endpoint
-		go send(c, http.MethodPost, url, body)
+		go send(c, http.MethodPost, url, []byte(encBody))
 	}
 
 	return nil
