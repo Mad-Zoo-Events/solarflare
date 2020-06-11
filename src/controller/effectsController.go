@@ -16,12 +16,12 @@ const (
 )
 
 // DoParticleEffect compiles and sends an action for a particle effect
-func DoParticleEffect(name string, action model.Action) error {
-	log.Printf("Attempting to perform %s on particle effect %s", action, name)
+func DoParticleEffect(r model.InboundParticleEffectRequest) error {
+	log.Printf("Attempting to perform %s on particle effect %s", r.Action, r.EffectName)
 
 	request := model.ParticleEffectRequest{
-		Name:     name,
-		Action:   action,
+		Name:     r.EffectName,
+		Action:   model.Action(r.Action),
 		PointIDs: []int{0},
 	}
 
@@ -33,22 +33,31 @@ func DoParticleEffect(name string, action model.Action) error {
 
 	err = client.Do(http.MethodPost, endpointParticleEffect, body)
 	if err != nil {
-		log.Printf("Failed to perform %s on particle effect %s: %s", action, name, err.Error())
+		log.Printf("Failed to perform %s on particle effect %s: %s", r.Action, r.EffectName, err.Error())
 		return err
 	}
 
-	log.Printf("Successfully performed %s on particle effect %s", action, name)
+	log.Printf("Successfully performed %s on particle effect %s", r.Action, r.EffectName)
 	return nil
 }
 
 // DoDragon compiles and sends an action for the dragon effect
-func DoDragon(action model.Action) error {
-	log.Printf("Attempting to perform %s on the dragon", action)
+func DoDragon(r model.InboundDragonRequest) error {
+	action := model.Action(r.Action)
+	floatingMsg := ""
+	if action == model.StartVisualAction {
+		if r.Static {
+			floatingMsg = " (not floating up)"
+		} else {
+			floatingMsg = " (floating up)"
+		}
+	}
+	log.Printf("Attempting to perform %s%s on the dragon", r.Action, floatingMsg)
 
 	request := model.DragonRequest{
 		Action:  action,
 		PointID: 0,
-		Static:  true,
+		Static:  &r.Static,
 	}
 
 	body, err := json.Marshal(request)
@@ -59,10 +68,10 @@ func DoDragon(action model.Action) error {
 
 	err = client.Do(http.MethodPost, endpointDragon, body)
 	if err != nil {
-		log.Printf("Failed to perform %s on the dragon: %s", action, err.Error())
+		log.Printf("Failed to perform %s on the dragon: %s", r.Action, err.Error())
 		return err
 	}
 
-	log.Printf("Successfully performed %s on the dragon", action)
+	log.Printf("Successfully performed %s%s on the dragon", r.Action, floatingMsg)
 	return nil
 }
