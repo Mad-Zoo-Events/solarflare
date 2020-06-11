@@ -4,8 +4,11 @@
 {{define "particleEffectControl"}}
 <div class="visual-control">
     <span>{{.DisplayName}}</span>
-    <button type="button" class="trigger" onclick='sendParticleEffect("{{.Name}}", "{{.DisplayName}}", "TRIGGER")'>trigger</button>
-    <button type="button" class="start" onclick='sendParticleEffect("{{.Name}}", "{{.DisplayName}}", "START")' >start</button>
-    <button type="button" class="stop" onclick='sendParticleEffect("{{.Name}}", "{{.DisplayName}}", "STOP")' >stop</button>
+    <button type="button" class="trigger"
+        onclick='sendParticleEffect("{{.Name}}", "{{.DisplayName}}", "TRIGGER")'>trigger</button>
+    <button type="button" class="start"
+        onclick='sendParticleEffect("{{.Name}}", "{{.DisplayName}}", "START")'>start</button>
+    <button type="button" class="stop"
+        onclick='sendParticleEffect("{{.Name}}", "{{.DisplayName}}", "STOP")'>stop</button>
 </div>
 {{end}}

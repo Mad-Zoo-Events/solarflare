@@ -16,8 +16,10 @@ sendParticleEffect = async (effectName, effectDisplayName, action) => {
 }
 
 sendDragonEffect = async (effectDisplayName, action) => {
+    const floatUp = document.getElementById("dragon-float-up").checked;
     const requestBody = {
-        "Action": action
+        "Action": action,
+        "Static": !floatUp
     };
 
     doRequest(

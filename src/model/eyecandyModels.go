@@ -25,5 +25,5 @@ type ParticleEffectRequest struct {
 type DragonRequest struct {
 	Action  Action
 	PointID int
-	Static  bool
+	Static  *bool
 }

@@ -18,8 +18,16 @@ type ControlPanel struct {
 	// Lasers []LaserControl
 }
 
-// InboundEffectRequest is the data model used for requests coming from the frontend
-type InboundEffectRequest struct {
-	EffectName *string
+// ================ REQUEST MODELS ================ //
+
+// InboundParticleEffectRequest is the model for particle effect requests coming from the frontend
+type InboundParticleEffectRequest struct {
+	EffectName string
 	Action     string
+}
+
+// InboundDragonRequest is the model for dragon requests coming from the frontend
+type InboundDragonRequest struct {
+	Action string
+	Static bool
 }

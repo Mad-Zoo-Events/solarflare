@@ -26,12 +26,16 @@ body {
     padding: 0.1em;
 }
 
+.control-option {
+    margin-top: 1em;
+}
+
 /* ================ BUTTONS ================ */
 button {
-    margin-top      : 0.5em;
-    width           : 100%;
-    padding         : 1em 0.8em;
-    cursor          : pointer;
+    margin-top: 0.5em;
+    width     : 100%;
+    padding   : 1em 0.8em;
+    cursor    : pointer;
 
     background-color: var(--dark-gray);
     font-size       : 1em;
@@ -101,3 +105,4 @@ button.disabled {
 .failure {
     color: var(--red);
 }
+

@@ -21,8 +21,8 @@ func HealthHandler() http.HandlerFunc {
 	}
 }
 
-// EffectsHandler handles requests to trigger actions on effects
-func EffectsHandler() http.HandlerFunc {
+// DragonHandler handles requests to trigger actions on the dragon
+func DragonHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
@@ -31,31 +31,44 @@ func EffectsHandler() http.HandlerFunc {
 			return
 		}
 
-		requestData := model.InboundEffectRequest{}
-		err = json.Unmarshal(body, &requestData)
+		dragonRequest := model.InboundDragonRequest{}
+		err = json.Unmarshal(body, &dragonRequest)
 		if err != nil {
 			msg := fmt.Sprintf("Failed to unmarshal effects request: %s", err.Error())
 			writeResponse(w, 400, &msg)
 			return
 		}
 
-		effectType := mux.Vars(r)["effectType"]
-		action := model.Action(requestData.Action)
-
-		switch model.EffectType(effectType) {
-		case model.EffectTypeParticleEffect:
-			if requestData.EffectName == nil {
-				msg := "Parameter 'EffectName' is required for particle effects"
-				writeResponse(w, 400, &msg)
-				return
-			}
-			err = controller.DoParticleEffect(*requestData.EffectName, action)
-		case model.EffectTypeDragon:
-			err = controller.DoDragon(action)
-		default:
-			err = fmt.Errorf("Unknown effect type '%s'", effectType)
+		err = controller.DoDragon(dragonRequest)
+		if err != nil {
+			msg := err.Error()
+			writeResponse(w, 500, &msg)
+			return
 		}
 
+		writeResponse(w, 204, nil)
+	}
+}
+
+// ParticleEffectHandler handles requests to trigger actions on effects
+func ParticleEffectHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		body, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			msg := fmt.Sprintf("Failed to read effects request: %s", err.Error())
+			writeResponse(w, 400, &msg)
+			return
+		}
+
+		particleEffectRequest := model.InboundParticleEffectRequest{}
+		err = json.Unmarshal(body, &particleEffectRequest)
+		if err != nil {
+			msg := fmt.Sprintf("Failed to unmarshal effects request: %s", err.Error())
+			writeResponse(w, 400, &msg)
+			return
+		}
+
+		err = controller.DoParticleEffect(particleEffectRequest)
 		if err != nil {
 			msg := err.Error()
 			writeResponse(w, 500, &msg)
@@ -93,7 +106,9 @@ func main() {
 	router.PathPrefix(staticDir).Handler(http.StripPrefix(staticDir, http.FileServer(http.Dir("."+staticDir))))
 	router.Handle("/health", HealthHandler()).Methods(http.MethodGet)
 	router.Handle("/controlpanel", ControlPanelHandler()).Methods(http.MethodGet)
-	router.Handle("/effects/{effectType}", EffectsHandler()).Methods(http.MethodPost)
+
+	router.Handle("/effects/dragon", DragonHandler()).Methods(http.MethodPost)
+	router.Handle("/effects/particle", ParticleEffectHandler()).Methods(http.MethodPost)
 
 	log.Print("Starting server listening on port 5000")
 
