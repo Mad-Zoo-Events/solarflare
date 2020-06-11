@@ -45,7 +45,7 @@ func DoParticleEffect(r model.InboundParticleEffectRequest) error {
 func DoDragon(r model.InboundDragonRequest) error {
 	action := model.Action(r.Action)
 	floatingMsg := ""
-	if action == model.StartVisualAction {
+	if action == model.StartEffectAction {
 		if r.Static {
 			floatingMsg = " (not floating up)"
 		} else {

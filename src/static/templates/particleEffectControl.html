@@ -3,7 +3,7 @@
 
 {{define "particleEffectControl"}}
 <div class="visual-control">
-    <span>{{.DisplayName}}</span>
+    <span title="{{.Name}}">{{.DisplayName}}</span>
     <button type="button" class="trigger"
         onclick='sendParticleEffect("{{.Name}}", "{{.DisplayName}}", "TRIGGER")'>trigger</button>
     <button type="button" class="start"
