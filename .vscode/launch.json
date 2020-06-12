@@ -11,7 +11,8 @@
             "mode": "auto",
             "port": 5000,
             "cwd": "${workspaceFolder}/src",
-            "program": "${workspaceFolder}/src/main.go"
+            "program": "${workspaceFolder}/src/main.go",
+            "envFile": "${workspaceFolder}/environment.txt"
         }
     ]
 }
