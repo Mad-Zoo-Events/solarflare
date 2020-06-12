@@ -25,7 +25,6 @@ func DoParticleEffect(r model.InboundParticleEffectRequest) error {
 
 	err := client.SendEffectRequest(endpointParticleEffect, request)
 	if err != nil {
-		log.Printf("Failed to perform %s on particle effect %s: %s", r.Action, r.EffectName, err.Error())
 		return err
 	}
 
@@ -54,7 +53,6 @@ func DoDragon(r model.InboundDragonRequest) error {
 
 	err := client.SendEffectRequest(endpointDragon, request)
 	if err != nil {
-		log.Printf("Failed to perform %s on the dragon: %s", r.Action, err.Error())
 		return err
 	}
 

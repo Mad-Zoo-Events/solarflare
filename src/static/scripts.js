@@ -37,7 +37,7 @@ doRequest = async (endpoint, payload, callback) => {
         if (request.status >= 200 && request.status < 300) {
             callback();
         } else {
-            callback(`${request.status} ${request.statusText}`);
+            callback(`${request.responseText}`);
         }
     });
     request.send(payload);
