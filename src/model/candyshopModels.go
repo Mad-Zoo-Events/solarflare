@@ -16,6 +16,8 @@ type ControlPanel struct {
 	ParticleEffects []ParticleEffectControl
 	Dragon          DragonControl
 	// Lasers []LaserControl
+
+	RegisteredServerCount int
 }
 
 // Server contains information about aN eyecandy plugin server
@@ -39,7 +41,7 @@ type InboundDragonRequest struct {
 
 // ================ RESPONSE MODELS ================ //
 
-// Status returns information on the service and the plugin network to the consumer
-type Status struct {
+// InboundStatusResponse returns information on the service and the plugin network to the consumer
+type InboundStatusResponse struct {
 	RegisteredServerCount int
 }
