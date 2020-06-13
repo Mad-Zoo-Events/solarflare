@@ -11,7 +11,6 @@ import (
 
 	"github.com/eynorey/candyshop/src/config"
 	"github.com/eynorey/candyshop/src/utils"
-	"github.com/mervick/aes-everywhere/go/aes256"
 )
 
 var (
@@ -27,12 +26,6 @@ func SendEffectRequest(endpoint string, request interface{}) error {
 	}
 
 	cfg := config.Get()
-	encBodyStr := aes256.Encrypt(string(body), cfg.EncryptionKey)
-	if err != nil {
-		return utils.HandleError("Failed to encrypt request", err)
-	}
-	encBody := []byte(encBodyStr)
-
 	c := http.Client{
 		Timeout: time.Duration(5 * time.Second),
 	}
@@ -43,7 +36,7 @@ func SendEffectRequest(endpoint string, request interface{}) error {
 	for _, server := range cfg.Servers {
 		url := server.Address + endpoint
 		wg.Add(1)
-		go sendEffectRequest(c, url, &encBody, &wg)
+		go sendEffectRequest(c, url, &body, &wg)
 	}
 
 	wg.Wait()
