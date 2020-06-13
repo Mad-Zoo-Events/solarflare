@@ -6,7 +6,7 @@
     <span title="{{.Name}}">{{.DisplayName}}</span>
     <button type="button" class="trigger"
         onclick='sendParticleEffect("{{.Name}}", "{{.DisplayName}}", "TRIGGER")'>trigger</button>
-    <button type="button" class="start"
+    <button type="button" class="start" id="start-{{.Name}}"
         onclick='sendParticleEffect("{{.Name}}", "{{.DisplayName}}", "START")'>start</button>
     <button type="button" class="stop"
         onclick='sendParticleEffect("{{.Name}}", "{{.DisplayName}}", "STOP")'>stop</button>

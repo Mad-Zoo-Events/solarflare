@@ -5,7 +5,8 @@
 <div class="visual-control">
     <span title="Ender Dragon Disco 💃🏾">{{.DisplayName}}</span>
 
-    <button type="button" class="start" onclick='sendDragonEffect("{{.DisplayName}}", "START")'>start</button>
+    <button type="button" class="start" id="start-dragon"
+        onclick='sendDragonEffect("{{.DisplayName}}", "START")'>start</button>
     <button type="button" class="restart" onclick='sendDragonEffect("{{.DisplayName}}", "RESTART")'>restart</button>
     <button type="button" class="stop" onclick='sendDragonEffect("{{.DisplayName}}", "STOP")'>stop</button>
 
