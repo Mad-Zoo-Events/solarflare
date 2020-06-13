@@ -21,7 +21,6 @@ type ControlPanel struct {
 // Server contains information about aN eyecandy plugin server
 type Server struct {
 	Address string
-	Token   string
 }
 
 // ================ REQUEST MODELS ================ //
@@ -36,4 +35,11 @@ type InboundParticleEffectRequest struct {
 type InboundDragonRequest struct {
 	Action string
 	Static bool
+}
+
+// ================ RESPONSE MODELS ================ //
+
+// Status returns information on the service and the plugin network to the consumer
+type Status struct {
+	RegisteredServerCount int
 }
