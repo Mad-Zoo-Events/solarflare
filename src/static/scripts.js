@@ -3,6 +3,8 @@ const PARTICLE_ENDPOINT = `${BASE_URL}/effects/particle`;
 const DRAGON_ENDPOINT = `${BASE_URL}/effects/dragon`;
 const STATUS_ENDPOINT = `${BASE_URL}/status`;
 
+var counters = new Map();
+
 init = () => {
     setInterval(doStatusUpdate, 30000);
 }
@@ -34,6 +36,8 @@ sendParticleEffect = async (effectName, effectDisplayName, action) => {
         JSON.stringify(requestBody),
         (errorMsg) => addToLog(action, effectDisplayName, errorMsg)
     );
+
+    counter(effectName, action);
 }
 
 sendDragonEffect = async (effectDisplayName, action) => {
@@ -48,6 +52,8 @@ sendDragonEffect = async (effectDisplayName, action) => {
         JSON.stringify(requestBody),
         (errorMsg) => addToLog(action, effectDisplayName, errorMsg)
     );
+
+    counter("dragon", action);
 }
 
 doEffectRequest = async (endpoint, payload, callback) => {
@@ -78,4 +84,23 @@ addToLog = (action, effectDispalyName, errMsg) => {
 
 updateStatus = (serverCount) => {
     document.getElementById('status-server-count').innerHTML = serverCount;
+}
+
+counter = async (name, action) => {
+    const startButton = document.getElementById(`start-${name}`);
+    var seconds = 0;
+
+    if (action === "START") {
+        startButton.disabled = true;
+        startButton.classList.add("disabled");
+        counters[name] = setInterval(() => {
+            seconds++;
+            startButton.innerHTML = seconds;
+        }, 1000);
+    } else if (action === "STOP") {
+        clearInterval(counters[name]);
+        startButton.disabled = false;
+        startButton.classList.remove("disabled");
+        startButton.innerHTML = "start";
+    }
 }
