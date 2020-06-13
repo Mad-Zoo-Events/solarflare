@@ -17,7 +17,21 @@ func HealthHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		msg := "¯\\_(ツ)_/¯"
 
-		writeResponse(w, 200, &msg)
+		writeResponse(w, 200, nil, &msg)
+	}
+}
+
+// StatusHandler returns status information about the server network
+func StatusHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		status := controller.GetStatus()
+		resp, err := json.Marshal(status)
+		if err != nil {
+			msg := fmt.Sprintf("Failed to marshal status response: %s", err.Error())
+			writeResponse(w, 500, nil, &msg)
+			return
+		}
+		writeResponse(w, 200, &resp, nil)
 	}
 }
 
@@ -27,7 +41,7 @@ func DragonHandler() http.HandlerFunc {
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
 			msg := fmt.Sprintf("Failed to read effects request: %s", err.Error())
-			writeResponse(w, 400, &msg)
+			writeResponse(w, 400, nil, &msg)
 			return
 		}
 
@@ -35,18 +49,18 @@ func DragonHandler() http.HandlerFunc {
 		err = json.Unmarshal(body, &dragonRequest)
 		if err != nil {
 			msg := fmt.Sprintf("Failed to unmarshal effects request: %s", err.Error())
-			writeResponse(w, 400, &msg)
+			writeResponse(w, 400, nil, &msg)
 			return
 		}
 
 		err = controller.DoDragon(dragonRequest)
 		if err != nil {
 			msg := err.Error()
-			writeResponse(w, 500, &msg)
+			writeResponse(w, 500, nil, &msg)
 			return
 		}
 
-		writeResponse(w, 204, nil)
+		writeResponse(w, 204, nil, nil)
 	}
 }
 
@@ -56,7 +70,7 @@ func ParticleEffectHandler() http.HandlerFunc {
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
 			msg := fmt.Sprintf("Failed to read effects request: %s", err.Error())
-			writeResponse(w, 400, &msg)
+			writeResponse(w, 400, nil, &msg)
 			return
 		}
 
@@ -64,18 +78,18 @@ func ParticleEffectHandler() http.HandlerFunc {
 		err = json.Unmarshal(body, &particleEffectRequest)
 		if err != nil {
 			msg := fmt.Sprintf("Failed to unmarshal effects request: %s", err.Error())
-			writeResponse(w, 400, &msg)
+			writeResponse(w, 400, nil, &msg)
 			return
 		}
 
 		err = controller.DoParticleEffect(particleEffectRequest)
 		if err != nil {
 			msg := err.Error()
-			writeResponse(w, 500, &msg)
+			writeResponse(w, 500, nil, &msg)
 			return
 		}
 
-		writeResponse(w, 204, nil)
+		writeResponse(w, 204, nil, nil)
 	}
 }
 
@@ -84,28 +98,38 @@ func ControlPanelHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		err := controller.GenerateControlPanel(w)
 		if err != nil {
-			writeResponse(w, 500, nil)
+			writeResponse(w, 500, nil, nil)
 			log.Fatalf("Error generating control panel: %s", err.Error())
 		}
 	}
 }
 
-func writeResponse(w http.ResponseWriter, code int, msg *string) {
+// writeResponse writes the response header and a response body
+// if supplied via resp []byte or respStr string
+func writeResponse(w http.ResponseWriter, code int, resp *[]byte, respStr *string) {
 	w.WriteHeader(code)
 
-	if msg != nil {
-		w.Write([]byte(*msg))
-		log.Print(*msg)
+	if resp != nil {
+		w.Write(*resp)
+		log.Print(string(*resp))
+	}
+
+	if respStr != nil {
+		w.Write([]byte(*respStr))
+		log.Print(*respStr)
 	}
 }
 
 func main() {
 	router := mux.NewRouter()
 
+	router.Handle("/health", HealthHandler()).Methods(http.MethodGet)
+
 	staticDir := "/static/"
 	router.PathPrefix(staticDir).Handler(http.StripPrefix(staticDir, http.FileServer(http.Dir("."+staticDir))))
-	router.Handle("/health", HealthHandler()).Methods(http.MethodGet)
 	router.Handle("/controlpanel", ControlPanelHandler()).Methods(http.MethodGet)
+
+	router.Handle("/status", StatusHandler()).Methods(http.MethodGet)
 
 	router.Handle("/effects/dragon", DragonHandler()).Methods(http.MethodPost)
 	router.Handle("/effects/particle", ParticleEffectHandler()).Methods(http.MethodPost)
