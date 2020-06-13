@@ -97,7 +97,7 @@ counter = async (name, action) => {
             seconds++;
             startButton.innerHTML = seconds;
         }, 1000);
-    } else if (action === "STOP") {
+    } else if (action === "STOP" && counters[name]) {
         clearInterval(counters[name]);
         startButton.disabled = false;
         startButton.classList.remove("disabled");
