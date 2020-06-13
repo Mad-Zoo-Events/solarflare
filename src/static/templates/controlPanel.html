@@ -8,7 +8,7 @@
     <script type="text/javascript" src="/static/scripts.js"></script>
 </head>
 
-<body>
+<body onload="init()">
     <div class="controls-holder">
         {{range .ParticleEffects}}
         {{template "particleEffectControl" .}}
@@ -20,6 +20,19 @@
     </div>
     <div class="footer">
         <div id="log-window"></div>
+        <div id="status-window">
+            <h3>Status</h3>
+            <table>
+                <tr>
+                    <td>
+                        <span>Servers listening: </span>
+                    </td>
+                    <td>
+                        <span id="status-server-count">{{.RegisteredServerCount}}</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
         <div class="master-controls">
             <button class="stop" type="button"
                 onclick='sendParticleEffect("all", "stop all", "STOP")'>stop&nbsp;all</button>

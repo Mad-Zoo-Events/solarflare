@@ -15,33 +15,36 @@ import (
 // HealthHandler returns the health status of the service
 func HealthHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		msg := "¯\\_(ツ)_/¯"
+		log.Print(">> Health called")
+		resp := "¯\\_(ツ)_/¯"
 
-		writeResponse(w, 200, nil, &msg)
+		writeResponse(w, 200, []byte(resp))
 	}
 }
 
 // StatusHandler returns status information about the server network
 func StatusHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		log.Print(">> Status called")
 		status := controller.GetStatus()
 		resp, err := json.Marshal(status)
 		if err != nil {
 			msg := fmt.Sprintf("Failed to marshal status response: %s", err.Error())
-			writeResponse(w, 500, nil, &msg)
+			writeResponse(w, 500, []byte(msg))
 			return
 		}
-		writeResponse(w, 200, &resp, nil)
+		writeResponse(w, 200, resp)
 	}
 }
 
 // DragonHandler handles requests to trigger actions on the dragon
 func DragonHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		log.Print(">> Dragon called")
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
 			msg := fmt.Sprintf("Failed to read effects request: %s", err.Error())
-			writeResponse(w, 400, nil, &msg)
+			writeResponse(w, 400, []byte(msg))
 			return
 		}
 
@@ -49,28 +52,29 @@ func DragonHandler() http.HandlerFunc {
 		err = json.Unmarshal(body, &dragonRequest)
 		if err != nil {
 			msg := fmt.Sprintf("Failed to unmarshal effects request: %s", err.Error())
-			writeResponse(w, 400, nil, &msg)
+			writeResponse(w, 400, []byte(msg))
 			return
 		}
 
 		err = controller.DoDragon(dragonRequest)
 		if err != nil {
 			msg := err.Error()
-			writeResponse(w, 500, nil, &msg)
+			writeResponse(w, 500, []byte(msg))
 			return
 		}
 
-		writeResponse(w, 204, nil, nil)
+		writeResponse(w, 204, nil)
 	}
 }
 
 // ParticleEffectHandler handles requests to trigger actions on effects
 func ParticleEffectHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		log.Print(">> Partocle Effect called")
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
 			msg := fmt.Sprintf("Failed to read effects request: %s", err.Error())
-			writeResponse(w, 400, nil, &msg)
+			writeResponse(w, 400, []byte(msg))
 			return
 		}
 
@@ -78,45 +82,39 @@ func ParticleEffectHandler() http.HandlerFunc {
 		err = json.Unmarshal(body, &particleEffectRequest)
 		if err != nil {
 			msg := fmt.Sprintf("Failed to unmarshal effects request: %s", err.Error())
-			writeResponse(w, 400, nil, &msg)
+			writeResponse(w, 400, []byte(msg))
 			return
 		}
 
 		err = controller.DoParticleEffect(particleEffectRequest)
 		if err != nil {
 			msg := err.Error()
-			writeResponse(w, 500, nil, &msg)
+			writeResponse(w, 500, []byte(msg))
 			return
 		}
 
-		writeResponse(w, 204, nil, nil)
+		writeResponse(w, 204, nil)
 	}
 }
 
 // ControlPanelHandler builds the control panel from templates
 func ControlPanelHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		log.Print(">> Control Panel called")
 		err := controller.GenerateControlPanel(w)
 		if err != nil {
-			writeResponse(w, 500, nil, nil)
+			writeResponse(w, 500, nil)
 			log.Fatalf("Error generating control panel: %s", err.Error())
 		}
 	}
 }
 
-// writeResponse writes the response header and a response body
-// if supplied via resp []byte or respStr string
-func writeResponse(w http.ResponseWriter, code int, resp *[]byte, respStr *string) {
+// writeResponse writes the response header and a response body if supplied
+func writeResponse(w http.ResponseWriter, code int, body []byte) {
 	w.WriteHeader(code)
 
-	if resp != nil {
-		w.Write(*resp)
-		log.Print(string(*resp))
-	}
-
-	if respStr != nil {
-		w.Write([]byte(*respStr))
-		log.Print(*respStr)
+	if body != nil {
+		w.Write(body)
 	}
 }
 

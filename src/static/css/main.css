@@ -78,19 +78,23 @@ button.disabled {
     height  : 10em;
 
     display              : grid;
-    grid-template-columns: auto min-content;
+    grid-template-columns: auto min-content min-content;
 }
 
 #log-window {
-    grid-row-start: 1;
-    grid-row-end  : 2;
-    padding       : 0.3em;
-    overflow-y    : scroll;
-    border        : 0.1em solid var(--gray);
+    padding   : 0.3em;
+    overflow-y: scroll;
+    border    : 0.1em solid var(--gray);
+}
+
+#status-window {
+    white-space : nowrap;
+    border-right: 0.1em dashed var(--gray);
+    padding     : 0 1em;
 }
 
 .master-controls {
-    padding: 1em;
+    padding: 0 1em;
     width  : min-content;
 }
 
@@ -105,4 +109,3 @@ button.disabled {
 .failure {
     color: var(--red);
 }
-
