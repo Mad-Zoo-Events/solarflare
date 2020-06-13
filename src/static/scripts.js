@@ -1,6 +1,27 @@
-const BASE_URL = `${window.location.origin}/effects/`;
-const ENDPOINT_PARTICLE = "particle";
-const ENDPOINT_DRAGON = "dragon";
+const BASE_URL = `${window.location.origin}`;
+const PARTICLE_ENDPOINT = `${BASE_URL}/effects/particle`;
+const DRAGON_ENDPOINT = `${BASE_URL}/effects/dragon`;
+const STATUS_ENDPOINT = `${BASE_URL}/status`;
+
+init = () => {
+    setInterval(doStatusUpdate, 30000);
+}
+
+// ================ HTTP REQUESTS ================ //
+
+doStatusUpdate = async () => {
+    const request = new XMLHttpRequest();
+    request.open("GET", STATUS_ENDPOINT);
+    request.addEventListener('load', () => {
+        if (request.status === 200) {
+            const resp = JSON.parse(request.responseText);
+            updateStatus(resp.RegisteredServerCount);
+        } else {
+            addToLog(">>>", "Retrieve status update", request.responseText);
+        }
+    });
+    request.send();
+}
 
 sendParticleEffect = async (effectName, effectDisplayName, action) => {
     const requestBody = {
@@ -8,8 +29,8 @@ sendParticleEffect = async (effectName, effectDisplayName, action) => {
         "Action": action
     };
 
-    doRequest(
-        ENDPOINT_PARTICLE,
+    doEffectRequest(
+        PARTICLE_ENDPOINT,
         JSON.stringify(requestBody),
         (errorMsg) => addToLog(action, effectDisplayName, errorMsg)
     );
@@ -22,18 +43,18 @@ sendDragonEffect = async (effectDisplayName, action) => {
         "Static": !floatUp
     };
 
-    doRequest(
-        ENDPOINT_DRAGON,
+    doEffectRequest(
+        DRAGON_ENDPOINT,
         JSON.stringify(requestBody),
         (errorMsg) => addToLog(action, effectDisplayName, errorMsg)
     );
 }
 
-doRequest = async (endpoint, payload, callback) => {
-    var request = new XMLHttpRequest();
-    request.open("POST", `${BASE_URL}${endpoint}`);
+doEffectRequest = async (endpoint, payload, callback) => {
+    const request = new XMLHttpRequest();
+    request.open("POST", endpoint);
     request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-    request.addEventListener('load', function (event) {
+    request.addEventListener('load', () => {
         if (request.status >= 200 && request.status < 300) {
             callback();
         } else {
@@ -43,7 +64,9 @@ doRequest = async (endpoint, payload, callback) => {
     request.send(payload);
 }
 
-function addToLog(action, effectDispalyName, errMsg) {
+// ================ UI UPDATES ================ //
+
+addToLog = (action, effectDispalyName, errMsg) => {
     const logWindow = document.getElementById('log-window');
 
     const timestamp = new Date().toLocaleTimeString();
@@ -51,4 +74,8 @@ function addToLog(action, effectDispalyName, errMsg) {
     const logLine = `<span class="log-message">${timestamp} | <span class="${errMsg ? "failure" : "success"}">${msg}</span></span>`
 
     logWindow.innerHTML = logLine + logWindow.innerHTML;
+}
+
+updateStatus = (serverCount) => {
+    document.getElementById('status-server-count').innerHTML = serverCount;
 }

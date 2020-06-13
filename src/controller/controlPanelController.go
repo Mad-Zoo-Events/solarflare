@@ -23,8 +23,9 @@ func GenerateControlPanel(writer http.ResponseWriter) error {
 
 	cfg := config.Get()
 	data := model.ControlPanel{
-		ParticleEffects: cfg.ParticleEffects,
-		Dragon:          cfg.Dragon,
+		ParticleEffects:       cfg.ParticleEffects,
+		Dragon:                cfg.Dragon,
+		RegisteredServerCount: len(cfg.Servers),
 	}
 
 	err = template.Execute(writer, data)
