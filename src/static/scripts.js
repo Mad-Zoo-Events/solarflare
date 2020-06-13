@@ -34,10 +34,13 @@ sendParticleEffect = async (effectName, effectDisplayName, action) => {
     doEffectRequest(
         PARTICLE_ENDPOINT,
         JSON.stringify(requestBody),
-        (errorMsg) => addToLog(action, effectDisplayName, errorMsg)
+        (success, errorMsg) => {
+            addToLog(action, effectDisplayName, errorMsg);
+            if (success) {
+                counter(effectName, action);
+            }
+        }
     );
-
-    counter(effectName, action);
 }
 
 sendDragonEffect = async (effectDisplayName, action) => {
@@ -50,10 +53,13 @@ sendDragonEffect = async (effectDisplayName, action) => {
     doEffectRequest(
         DRAGON_ENDPOINT,
         JSON.stringify(requestBody),
-        (errorMsg) => addToLog(action, effectDisplayName, errorMsg)
+        (success, errorMsg) => {
+            addToLog(action, effectDisplayName, errorMsg);
+            if (success) {
+                counter("dragon", action);
+            }
+        }
     );
-
-    counter("dragon", action);
 }
 
 doEffectRequest = async (endpoint, payload, callback) => {
@@ -62,9 +68,9 @@ doEffectRequest = async (endpoint, payload, callback) => {
     request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
     request.addEventListener('load', () => {
         if (request.status >= 200 && request.status < 300) {
-            callback();
+            callback(true);
         } else {
-            callback(`${request.responseText}`);
+            callback(false, `${request.responseText}`);
         }
     });
     request.send(payload);
