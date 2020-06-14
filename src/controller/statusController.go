@@ -6,10 +6,10 @@ import (
 )
 
 // GetStatus returns information on the service and network status
-func GetStatus() model.InboundStatusResponse {
+func GetStatus() model.StatusResponse {
 	cfg := config.Get()
 
-	return model.InboundStatusResponse{
+	return model.StatusResponse{
 		RegisteredServerCount: len(cfg.Servers),
 	}
 }
