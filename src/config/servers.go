@@ -9,5 +9,8 @@ func loadServers() []model.Server {
 		model.Server{
 			Address: "http://3.22.232.137:8001/",
 		},
+		model.Server{
+			Address: "http://172.31.1.228:8001/",
+		},
 	}
 }
