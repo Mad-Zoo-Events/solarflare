@@ -10,9 +10,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/eynorey/candyshop/src/utils/cserror"
-
 	"github.com/eynorey/candyshop/src/config"
+	"github.com/eynorey/candyshop/src/utils/cserror"
 )
 
 // ExecuteEffect executes an effect on all servers

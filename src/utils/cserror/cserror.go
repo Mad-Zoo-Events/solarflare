@@ -22,12 +22,21 @@ var (
 	// ActionNotAllowed | requested action is not allowed for the effect typer
 	ActionNotAllowed = ErrorType{"ActionNotAllowed", 12}
 
-	// Eyecandy | received error resaponse from Eyecandy
+	// Eyecandy | received error response from Eyecandy
 	Eyecandy = ErrorType{"Eyecandy", 20}
 	// FailedOnEyecandyAll | failed to execute request on all Eyecandy instances
 	FailedOnEyecandyAll = ErrorType{"FailedOnEyecandyAll", 21}
 	// FailedOnEyecandySome | failed to execute request on some Eyecandy instances
 	FailedOnEyecandySome = ErrorType{"FailedOnEyecandySome", 22}
+
+	// Database | unknown error from the database
+	Database = ErrorType{"Database", 30}
+	// DatabaseMarshal | failed to marshal data for the database
+	DatabaseMarshal = ErrorType{"DatabaseMarshal", 31}
+	// DatabaseUnmarshal | failed to unmarshal data from the database
+	DatabaseUnmarshal = ErrorType{"DatabaseUnmarshal", 32}
+	// DatabaseCRUD | error when tryping to read from or write to the database
+	DatabaseCRUD = ErrorType{"DatabaseCRUD", 22}
 
 	// Internal | unknown internal error
 	Internal = ErrorType{"Internal", 90}
