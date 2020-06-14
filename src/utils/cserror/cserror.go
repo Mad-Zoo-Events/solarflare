@@ -81,7 +81,7 @@ func GetErrorType(err error) ErrorType {
 func New(errType ErrorType, message string, err error) CsError {
 	var msg bytes.Buffer
 	msg.WriteString(errType.name)
-	msg.WriteString(" -> ")
+	msg.WriteString(" | ")
 	msg.WriteString(message)
 
 	ee := CsError{errType: errType, message: msg.String()}

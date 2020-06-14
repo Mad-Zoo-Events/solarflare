@@ -8,7 +8,6 @@ import (
 	"github.com/eynorey/candyshop/src/utils/cserror"
 
 	"github.com/eynorey/candyshop/src/client"
-	"github.com/eynorey/candyshop/src/config"
 
 	"github.com/eynorey/candyshop/src/model"
 )
@@ -19,10 +18,11 @@ const (
 )
 
 // ExecuteParticleEffect compiles a particle effect request and executes it on all servers
-func ExecuteParticleEffect(ID string, action model.Action) error {
-	preset := getParticleEffectPreset(ID)
-	if preset == nil {
-		return cserror.New(cserror.PresetNotFound, fmt.Sprintf("Preset with ID %s not found", ID), nil)
+func ExecuteParticleEffect(preset model.ParticleEffectPreset, action model.Action) error {
+	if action != model.TriggerEffectAction &&
+		action != model.StartEffectAction &&
+		action != model.StopEffectAction {
+		return cserror.New(cserror.ActionNotAllowed, fmt.Sprintf("Action %s is not allowed for particle effects"), nil)
 	}
 
 	log.Printf("Performing %s %s", action, preset.DisplayName)
@@ -37,12 +37,22 @@ func ExecuteParticleEffect(ID string, action model.Action) error {
 	return client.ExecuteEffect(endpoint, body)
 }
 
-func getParticleEffectPreset(ID string) *model.ParticleEffectPreset {
-	cfg := config.Get()
-	for _, p := range cfg.ParticleEffectPresets {
-		if p.ID == ID {
-			return &p
-		}
+// ExecuteDragonEffect compiles a dragon effect request and executes it on all servers
+func ExecuteDragonEffect(preset model.DragonEffectPreset, action model.Action) error {
+	if action != model.StartEffectAction &&
+		action != model.RestartEffectAction &&
+		action != model.StopEffectAction {
+		return cserror.New(cserror.ActionNotAllowed, fmt.Sprintf("Action %s is not allowed for the dragon effect"), nil)
 	}
-	return nil
+
+	log.Printf("Performing %s %s", action, preset.DisplayName)
+
+	body, err := json.Marshal(preset.DragonEffects)
+	if err != nil {
+		return cserror.New(cserror.Encoding, "Failed to marshal request", err)
+	}
+
+	endpoint := fmt.Sprintf("%s/%s?id=%s", endpointParticleEffect, string(action), preset.ID)
+
+	return client.ExecuteEffect(endpoint, body)
 }
