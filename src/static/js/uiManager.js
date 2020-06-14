@@ -11,7 +11,7 @@ addToLog = (action, effectDispalyName, errMsg) => {
 
     const timestamp = new Date().toLocaleTimeString();
     const msg = `${action} <b>${effectDispalyName}</b> ${errMsg ? "failed: " + errMsg : "succeeded"}`;
-    const logLine = `<span class="log-message">${timestamp} | <span class="${errMsg ? "failure" : "success"}">${msg}</span>}</span>`
+    const logLine = `<span class="log-message">${timestamp} | <span class="${errMsg ? "failure" : "success"}">${msg}</span></span>`
 
     logWindow.innerHTML = logLine + logWindow.innerHTML;
 }
