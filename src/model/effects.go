@@ -42,6 +42,8 @@ type ParticleEffectPreset struct {
 	ID string
 	// Display name for the UI
 	DisplayName string
+	// Description of the preset for the UI
+	Description string
 	// List of particle effects which are part of this preset
 	ParticleEffects []ParticleEffect
 }
@@ -61,7 +63,7 @@ type Region struct {
 	// Type of the region the effect is to be displayed in
 	RegionType RegionType `json:"type"`
 	// Density of the particles for CuboidRegionType
-	Density *float32 `json:"density,omitempty"`
+	Density *float64 `json:"density,omitempty"`
 	// Equation for the shape of the effect region for EquationRegionType
 	Equation *string `json:"equation,omitempty"`
 }
@@ -72,6 +74,8 @@ type DragonEffectPreset struct {
 	ID string
 	// Display name for the UI
 	DisplayName string
+	// Description of the preset for the UI
+	Description string
 	// List of dragon effects which are part of this preset
 	DragonEffects []DragonEffect
 }
