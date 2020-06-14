@@ -44,8 +44,8 @@ func StatusHandler() http.HandlerFunc {
 	}
 }
 
-// EffectHandler handles requests to execute effect templates
-func EffectHandler() http.HandlerFunc {
+// PresetExecutionHandler handles requests to execute effect presets
+func PresetExecutionHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		log.Print(">> Effect handler called")
 
