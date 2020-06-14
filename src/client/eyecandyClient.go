@@ -2,7 +2,6 @@ package client
 
 import (
 	"bytes"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"io/ioutil"
@@ -12,28 +11,22 @@ import (
 	"time"
 
 	"github.com/eynorey/candyshop/src/config"
-	"github.com/eynorey/candyshop/src/utils"
 )
 
-// SendEffectRequest send a effect request to all registeres eyecandy instances
-func SendEffectRequest(endpoint string, request interface{}) error {
+// ExecuteEffect executes an effect on all servers
+func ExecuteEffect(endpoint string, body []byte) error {
 	cfg := config.Get()
-	c := http.Client{
-		Timeout: time.Duration(1 * time.Second),
-	}
+	client := &http.Client{Timeout: time.Duration(1 * time.Second)}
+	errCount := 0
 
-	body, err := json.Marshal(request)
-	if err != nil {
-		return utils.HandleError("Failed to marshal request", err)
-	}
+	log.Println(string(body))
 
 	var wg sync.WaitGroup
-	errCount := 0
 
 	for _, server := range cfg.Servers {
 		url := server.Address + endpoint
 		wg.Add(1)
-		go sendEffectRequest(c, url, &body, &wg, &errCount)
+		go executeEffect(client, url, &body, &wg, &errCount)
 	}
 
 	wg.Wait()
@@ -48,7 +41,7 @@ func SendEffectRequest(endpoint string, request interface{}) error {
 	return nil
 }
 
-func sendEffectRequest(c http.Client, url string, body *[]byte, wg *sync.WaitGroup, errCount *int) {
+func executeEffect(client *http.Client, url string, body *[]byte, wg *sync.WaitGroup, errCount *int) {
 	defer wg.Done()
 	request, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(*body))
 	if err != nil {
@@ -57,7 +50,7 @@ func sendEffectRequest(c http.Client, url string, body *[]byte, wg *sync.WaitGro
 		return
 	}
 
-	response, err := c.Do(request)
+	response, err := client.Do(request)
 	if err != nil {
 		log.Printf("Error sending request to Eyecandy: %s", err.Error())
 		*errCount++

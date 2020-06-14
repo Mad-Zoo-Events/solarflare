@@ -1,61 +1,47 @@
 package controller
 
 import (
+	"encoding/json"
+	"fmt"
 	"log"
 
 	"github.com/eynorey/candyshop/src/client"
+	"github.com/eynorey/candyshop/src/config"
+	"github.com/eynorey/candyshop/src/utils"
 
 	"github.com/eynorey/candyshop/src/model"
 )
 
 const (
-	endpointParticleEffect = "effects/particle"
-	endpointDragon         = "effects/dragon"
+	endpointParticleEffect = "/effects/particle"
+	endpointDragon         = "/effects/dragon"
 )
 
-// DoParticleEffect compiles and sends an action for a particle effect
-func DoParticleEffect(r model.InboundParticleEffectRequest) error {
-	log.Printf("Attempting to perform %s on particle effect %s", r.Action, r.EffectName)
-
-	request := model.ParticleEffectRequest{
-		Name:     r.EffectName,
-		Action:   model.Action(r.Action),
-		PointIDs: []int{0},
+// ExecuteParticleEffect compiles a particle effect request and executes it on all servers
+func ExecuteParticleEffect(ID string, action model.Action) error {
+	preset := getParticleEffectPreset(ID)
+	if preset == nil {
+		return fmt.Errorf("Preset with ID %s not found", ID)
 	}
 
-	err := client.SendEffectRequest(endpointParticleEffect, request)
+	log.Printf("Performing %s %s", action, preset.DisplayName)
+
+	body, err := json.Marshal(preset.ParticleEffects)
 	if err != nil {
-		return err
+		return utils.HandleError("Failed to marshal request", err)
 	}
 
-	log.Printf("Successfully performed %s on particle effect %s", r.Action, r.EffectName)
-	return nil
+	endpoint := fmt.Sprintf("%s/%s?id=%s", endpointParticleEffect, string(action), preset.ID)
+
+	return client.ExecuteEffect(endpoint, body)
 }
 
-// DoDragon compiles and sends an action for the dragon effect
-func DoDragon(r model.InboundDragonRequest) error {
-	action := model.Action(r.Action)
-	floatingMsg := ""
-	if action == model.StartEffectAction {
-		if r.Static {
-			floatingMsg = " (not floating up)"
-		} else {
-			floatingMsg = " (floating up)"
+func getParticleEffectPreset(ID string) *model.ParticleEffectPreset {
+	cfg := config.Get()
+	for _, p := range cfg.ParticleEffectPresets {
+		if p.ID == ID {
+			return &p
 		}
 	}
-	log.Printf("Attempting to perform %s%s on the dragon", r.Action, floatingMsg)
-
-	request := model.DragonRequest{
-		Action:  action,
-		PointID: 0,
-		Static:  &r.Static,
-	}
-
-	err := client.SendEffectRequest(endpointDragon, request)
-	if err != nil {
-		return err
-	}
-
-	log.Printf("Successfully performed %s%s on the dragon", r.Action, floatingMsg)
 	return nil
 }

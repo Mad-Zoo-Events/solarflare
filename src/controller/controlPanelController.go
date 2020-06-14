@@ -23,8 +23,8 @@ func GenerateControlPanel(writer http.ResponseWriter) error {
 
 	cfg := config.Get()
 	data := model.ControlPanel{
-		ParticleEffects:       cfg.ParticleEffects,
-		Dragon:                cfg.Dragon,
+		ParticleEffectPresets: cfg.ParticleEffectPresets,
+		DragonEffectPresets:   cfg.DragonEffectPresets,
 		RegisteredServerCount: len(cfg.Servers),
 	}
 
