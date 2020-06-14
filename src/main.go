@@ -5,9 +5,23 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+
+	"github.com/eynorey/candyshop/src/client"
+	"github.com/eynorey/candyshop/src/config"
+	"github.com/eynorey/candyshop/src/model"
 )
 
+func load() {
+	cfg := config.Get()
+
+	cfg.ParticleEffectPresets = client.GetParticleEffectPresets()
+	cfg.DragonEffectPresets = client.GetDragonEffectPresets()
+	cfg.Servers = []model.Server{}
+}
+
 func main() {
+	load()
+
 	router := mux.NewRouter()
 
 	router.Handle("/health", HealthHandler()).Methods(http.MethodGet)
