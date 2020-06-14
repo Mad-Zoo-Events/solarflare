@@ -59,7 +59,7 @@ func PresetExecutionHandler() http.HandlerFunc {
 		switch preset.(type) {
 
 		case model.ParticleEffectPreset:
-			err := controller.ExecuteParticleEffect(preset.(model.ParticleEffectPreset), action)
+			err := controller.ExecuteParticleEffectPreset(preset.(model.ParticleEffectPreset), action)
 			if err != nil {
 				switch cserror.GetErrorType(err) {
 				case cserror.ActionNotAllowed:
@@ -72,7 +72,7 @@ func PresetExecutionHandler() http.HandlerFunc {
 			}
 
 		case model.DragonEffectPreset:
-			err := controller.ExecuteDragonEffect(preset.(model.DragonEffectPreset), action)
+			err := controller.ExecuteDragonEffectPreset(preset.(model.DragonEffectPreset), action)
 			if err != nil {
 				switch cserror.GetErrorType(err) {
 				case cserror.ActionNotAllowed:

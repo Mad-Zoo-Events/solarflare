@@ -17,8 +17,8 @@ const (
 	endpointDragon         = "/effects/dragon"
 )
 
-// ExecuteParticleEffect compiles a particle effect request and executes it on all servers
-func ExecuteParticleEffect(preset model.ParticleEffectPreset, action model.Action) error {
+// ExecuteParticleEffectPreset compiles a particle effect request and executes it on all servers
+func ExecuteParticleEffectPreset(preset model.ParticleEffectPreset, action model.Action) error {
 	if action != model.TriggerEffectAction &&
 		action != model.StartEffectAction &&
 		action != model.StopEffectAction {
@@ -37,8 +37,8 @@ func ExecuteParticleEffect(preset model.ParticleEffectPreset, action model.Actio
 	return client.ExecuteEffect(endpoint, body)
 }
 
-// ExecuteDragonEffect compiles a dragon effect request and executes it on all servers
-func ExecuteDragonEffect(preset model.DragonEffectPreset, action model.Action) error {
+// ExecuteDragonEffectPreset compiles a dragon effect request and executes it on all servers
+func ExecuteDragonEffectPreset(preset model.DragonEffectPreset, action model.Action) error {
 	if action != model.StartEffectAction &&
 		action != model.RestartEffectAction &&
 		action != model.StopEffectAction {
