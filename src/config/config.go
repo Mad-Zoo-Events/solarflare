@@ -10,10 +10,10 @@ const envEncryptionKey = "ENCRYPTION_KEY"
 
 // Config contains the server configuration
 type Config struct {
-	ParticleEffects []model.ParticleEffectControl
-	Dragon          model.DragonControl
-	Servers         []model.Server
-	EncryptionKey   string
+	ParticleEffectPresets []model.ParticleEffectPreset
+	DragonEffectPresets   []model.DragonEffectPreset
+	Servers               []model.Server
+	EncryptionKey         string
 }
 
 var cfg Config
@@ -21,10 +21,10 @@ var cfg Config
 func init() {
 	encryptionKey := os.Getenv(envEncryptionKey)
 	cfg = Config{
-		ParticleEffects: loadParticleEffectControls(),
-		Dragon:          loadDragonControl(),
-		Servers:         loadServers(),
-		EncryptionKey:   encryptionKey,
+		ParticleEffectPresets: loadParticleEffectPresets(),
+		DragonEffectPresets:   loadDragonEffectPresets(),
+		Servers:               loadServers(),
+		EncryptionKey:         encryptionKey,
 	}
 }
 

@@ -2,14 +2,15 @@ package main
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"log"
 	"net/http"
 
+	"github.com/gorilla/mux"
+
+	"github.com/eynorey/candyshop/src/model"
 	"github.com/eynorey/candyshop/src/utils"
 
 	"github.com/eynorey/candyshop/src/controller"
-	"github.com/eynorey/candyshop/src/model"
 )
 
 // HealthHandler returns the health status of the service
@@ -40,59 +41,23 @@ func StatusHandler() http.HandlerFunc {
 	}
 }
 
-// DragonHandler handles requests to trigger actions on the dragon
-func DragonHandler() http.HandlerFunc {
+// EffectHandler handles requests to execute effect templates
+func EffectHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		log.Print(">> Dragon called")
+		vars := mux.Vars(r)
+		id := vars["id"]
+		action := model.Action(vars["action"])
 
-		body, err := ioutil.ReadAll(r.Body)
-		if err != nil {
-			err = utils.HandleError("Failed to read dragon request", err)
-			writeResponse(w, 400, []byte(err.Error()))
-			return
+		if action != model.TriggerEffectAction &&
+			action != model.StartEffectAction &&
+			action != model.RestartEffectAction &&
+			action != model.StopEffectAction {
+			writeResponse(w, 400, []byte("Unknown action: "+action))
 		}
 
-		dragonRequest := model.InboundDragonRequest{}
-		err = json.Unmarshal(body, &dragonRequest)
-		if err != nil {
-			err = utils.HandleError("Failed to unmarshal dragon request", err)
-			writeResponse(w, 400, []byte(err.Error()))
-			return
-		}
-
-		err = controller.DoDragon(dragonRequest)
+		err := controller.ExecuteParticleEffect(id, action)
 		if err != nil {
 			writeResponse(w, 500, []byte(err.Error()))
-			return
-		}
-
-		writeResponse(w, 204, nil)
-	}
-}
-
-// ParticleEffectHandler handles requests to trigger actions on particle effects
-func ParticleEffectHandler() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		log.Print(">> Partocle Effect called")
-		body, err := ioutil.ReadAll(r.Body)
-		if err != nil {
-			err = utils.HandleError("Failed to read particle effects request", err)
-			writeResponse(w, 400, []byte(err.Error()))
-			return
-		}
-
-		particleEffectRequest := model.InboundParticleEffectRequest{}
-		err = json.Unmarshal(body, &particleEffectRequest)
-		if err != nil {
-			err = utils.HandleError("Failed to unmarshal particle effects request", err)
-			writeResponse(w, 400, []byte(err.Error()))
-			return
-		}
-
-		err = controller.DoParticleEffect(particleEffectRequest)
-		if err != nil {
-			msg := err.Error()
-			writeResponse(w, 500, []byte(msg))
 			return
 		}
 

@@ -18,8 +18,10 @@ func main() {
 
 	router.Handle("/status", StatusHandler()).Methods(http.MethodGet)
 
-	router.Handle("/effects/dragon", DragonHandler()).Methods(http.MethodPost)
-	router.Handle("/effects/particle", ParticleEffectHandler()).Methods(http.MethodPost)
+	// router.Handle("/effects/dragon", DragonHandler()).Methods(http.MethodPost)
+	// router.Handle("/effects/particle", ParticleEffectHandler()).Methods(http.MethodPost)
+
+	router.Handle("/effects/{id}/{action}", EffectHandler()).Methods(http.MethodPost)
 
 	log.Print("Starting server listening on port 5000")
 	http.ListenAndServe(":5000", router)
