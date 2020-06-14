@@ -4,7 +4,7 @@ import (
 	"html/template"
 	"net/http"
 
-	"github.com/eynorey/candyshop/src/utils"
+	"github.com/eynorey/candyshop/src/utils/cserror"
 
 	"github.com/eynorey/candyshop/src/config"
 	"github.com/eynorey/candyshop/src/model"
@@ -18,7 +18,7 @@ func GenerateControlPanel(writer http.ResponseWriter) error {
 		"static/templates/dragonControl.html",
 	)
 	if err != nil {
-		return utils.HandleError("Error loading control panel templates", err)
+		return cserror.New(cserror.Template, "Error loading control panel templates", err)
 	}
 
 	cfg := config.Get()
@@ -30,7 +30,7 @@ func GenerateControlPanel(writer http.ResponseWriter) error {
 
 	err = template.Execute(writer, data)
 	if err != nil {
-		return utils.HandleError("Error running control panel templates", err)
+		return cserror.New(cserror.Template, "Error running control panel templates", err)
 	}
 
 	return nil

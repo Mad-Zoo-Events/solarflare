@@ -5,9 +5,10 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/eynorey/candyshop/src/utils/cserror"
+
 	"github.com/eynorey/candyshop/src/client"
 	"github.com/eynorey/candyshop/src/config"
-	"github.com/eynorey/candyshop/src/utils"
 
 	"github.com/eynorey/candyshop/src/model"
 )
@@ -21,14 +22,14 @@ const (
 func ExecuteParticleEffect(ID string, action model.Action) error {
 	preset := getParticleEffectPreset(ID)
 	if preset == nil {
-		return fmt.Errorf("Preset with ID %s not found", ID)
+		return cserror.New(cserror.PresetNotFound, fmt.Sprintf("Preset with ID %s not found", ID), nil)
 	}
 
 	log.Printf("Performing %s %s", action, preset.DisplayName)
 
 	body, err := json.Marshal(preset.ParticleEffects)
 	if err != nil {
-		return utils.HandleError("Failed to marshal request", err)
+		return cserror.New(cserror.Encoding, "Failed to marshal request", err)
 	}
 
 	endpoint := fmt.Sprintf("%s/%s?id=%s", endpointParticleEffect, string(action), preset.ID)
