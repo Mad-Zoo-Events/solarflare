@@ -5,6 +5,8 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/eynorey/candyshop/src/utils"
+
 	"github.com/gorilla/mux"
 
 	"github.com/eynorey/candyshop/src/model"
@@ -48,28 +50,39 @@ func EffectHandler() http.HandlerFunc {
 		log.Print(">> Effect handler called")
 
 		vars := mux.Vars(r)
-		id := vars["id"]
 		action := model.Action(vars["action"])
 
-		if action != model.TriggerEffectAction &&
-			action != model.StartEffectAction &&
-			action != model.RestartEffectAction &&
-			action != model.StopEffectAction {
-			writeResponse(w, 400, []byte("Unknown action: "+action))
-		}
-
-		err := controller.ExecuteParticleEffect(id, action)
+		preset, err := utils.FindPreset(vars["id"])
 		if err != nil {
-			switch cserror.GetErrorType(err) {
-			case cserror.PresetNotFound:
-				writeResponse(w, 404, cserror.GetErrorResponse(err))
-			case cserror.ActionNotAllowed:
-				writeResponse(w, 400, cserror.GetErrorResponse(err))
-			default:
-				writeResponse(w, 500, cserror.GetErrorResponse(err))
+			writeResponse(w, 404, cserror.GetErrorResponse(err))
+		}
+		switch preset.(type) {
+
+		case model.ParticleEffectPreset:
+			err := controller.ExecuteParticleEffect(preset.(model.ParticleEffectPreset), action)
+			if err != nil {
+				switch cserror.GetErrorType(err) {
+				case cserror.ActionNotAllowed:
+					writeResponse(w, 400, cserror.GetErrorResponse(err))
+				default:
+					writeResponse(w, 500, cserror.GetErrorResponse(err))
+				}
+
+				return
 			}
 
-			return
+		case model.DragonEffectPreset:
+			err := controller.ExecuteDragonEffect(preset.(model.DragonEffectPreset), action)
+			if err != nil {
+				switch cserror.GetErrorType(err) {
+				case cserror.ActionNotAllowed:
+					writeResponse(w, 400, cserror.GetErrorResponse(err))
+				default:
+					writeResponse(w, 500, cserror.GetErrorResponse(err))
+				}
+
+				return
+			}
 		}
 
 		writeResponse(w, 204, nil)
