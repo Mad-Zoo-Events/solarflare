@@ -1,6 +1,8 @@
 const BASE_URL = `${window.location.origin}`;
-const PRESETS_ENDPOINT = `${BASE_URL}/presets`
-const STATUS_ENDPOINT = `${BASE_URL}/status`
+const PRESETS_ENDPOINT = `${BASE_URL}/presets`;
+const STATUS_ENDPOINT = `${BASE_URL}/status`;
+
+var startTime;
 
 executePreset = async (id, displayName, action) => {
     const request = new XMLHttpRequest();
@@ -9,11 +11,13 @@ executePreset = async (id, displayName, action) => {
         if (request.status >= 200 && request.status < 400) {
             addToLog(action, displayName);
             counter(id, action);
+            updateResponseTime(Date.now() - startTime);
         } else {
             addToLog(action, displayName, request.responseText);
         }
     });
 
+    startTime = Date.now();
     request.send();
 }
 
