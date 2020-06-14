@@ -8,7 +8,7 @@ import (
 	"github.com/gorilla/mux"
 
 	"github.com/eynorey/candyshop/src/model"
-	"github.com/eynorey/candyshop/src/utils"
+	"github.com/eynorey/candyshop/src/utils/cserror"
 
 	"github.com/eynorey/candyshop/src/controller"
 )
@@ -16,7 +16,7 @@ import (
 // HealthHandler returns the health status of the service
 func HealthHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		log.Print(">> Health called")
+		log.Print(">> Health handler called")
 
 		resp := "¯\\_(ツ)_/¯"
 
@@ -27,13 +27,14 @@ func HealthHandler() http.HandlerFunc {
 // StatusHandler returns status information about the server network
 func StatusHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		log.Print(">> Status called")
+		log.Print(">> Status handler called")
 
 		status := controller.GetStatus()
+
 		resp, err := json.Marshal(status)
 		if err != nil {
-			err = utils.HandleError("Failed to marshal status response", err)
-			writeResponse(w, 500, []byte(err.Error()))
+			err = cserror.New(cserror.Encoding, "Failed to marshal status response", err)
+			writeResponse(w, 500, cserror.GetErrorResponse(err))
 			return
 		}
 
@@ -44,6 +45,8 @@ func StatusHandler() http.HandlerFunc {
 // EffectHandler handles requests to execute effect templates
 func EffectHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		log.Print(">> Effect handler called")
+
 		vars := mux.Vars(r)
 		id := vars["id"]
 		action := model.Action(vars["action"])
@@ -57,7 +60,15 @@ func EffectHandler() http.HandlerFunc {
 
 		err := controller.ExecuteParticleEffect(id, action)
 		if err != nil {
-			writeResponse(w, 500, []byte(err.Error()))
+			switch cserror.GetErrorType(err) {
+			case cserror.PresetNotFound:
+				writeResponse(w, 404, cserror.GetErrorResponse(err))
+			case cserror.ActionNotAllowed:
+				writeResponse(w, 400, cserror.GetErrorResponse(err))
+			default:
+				writeResponse(w, 500, cserror.GetErrorResponse(err))
+			}
+
 			return
 		}
 
@@ -68,11 +79,10 @@ func EffectHandler() http.HandlerFunc {
 // ControlPanelHandler builds the control panel from templates
 func ControlPanelHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		log.Print(">> Control Panel called")
+		log.Print(">> Control Panel handler called")
 		err := controller.GenerateControlPanel(w)
 		if err != nil {
-			err = utils.HandleError("Error generating control panel", err)
-			writeResponse(w, 500, []byte(err.Error()))
+			writeResponse(w, 500, cserror.GetErrorResponse(err))
 		}
 	}
 }
