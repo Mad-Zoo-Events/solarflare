@@ -62,9 +62,11 @@ type Region struct {
 	PointIDs []int `json:"pointIds"`
 	// Type of the region the effect is to be displayed in
 	RegionType RegionType `json:"type"`
-	// Density of the particles for CuboidRegionType
+	// Whether or not to randomize placement of particles within the region [for CuboidRegionType]
+	Randomize *float64 `json:"randomize,omitempty"`
+	// Density of the particles [for CuboidRegionType]
 	Density *float64 `json:"density,omitempty"`
-	// Equation for the shape of the effect region for EquationRegionType
+	// Equation for the shape of the effect region [for EquationRegionTyp]e
 	Equation *string `json:"equation,omitempty"`
 }
 
