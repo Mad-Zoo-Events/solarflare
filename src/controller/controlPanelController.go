@@ -15,7 +15,7 @@ func GenerateControlPanel(writer http.ResponseWriter) error {
 	template, err := template.ParseFiles(
 		"static/templates/controlPanel.html",
 		"static/templates/particleEffectControl.html",
-		"static/templates/dragonControl.html",
+		"static/templates/dragonEffectControl.html",
 	)
 	if err != nil {
 		return cserror.New(cserror.Template, "Error loading control panel templates", err)

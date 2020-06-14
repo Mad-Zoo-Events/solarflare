@@ -1,11 +1,11 @@
-{{define "particleEffectControl"}}
+{{define "dragonControl"}}
 <div class="visual-control">
     <span title="{{.Description}}">{{.DisplayName}}</span>
 
-    <button type="button" class="trigger"
-        onclick='executePreset("{{.ID}}", "{{.DisplayName}}", "trigger")'>trigger</button>
-    <button type="button" class="start" id="start-{{.ID}}"
+    <button type="button" class="start" id="start-dragon"
         onclick='executePreset("{{.ID}}", "{{.DisplayName}}", "start")'>start</button>
+    <button type="button" class="restart"
+        onclick='executePreset("{{.ID}}", "{{.DisplayName}}", "restart")'>restart</button>
     <button type="button" class="stop" onclick='executePreset("{{.ID}}", "{{.DisplayName}}", "stop")'>stop</button>
 </div>
 {{end}}
