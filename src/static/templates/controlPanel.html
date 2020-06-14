@@ -13,15 +13,18 @@
 
 <body onload="init()">
     <div class="controls-holder">
+        <span class="controls-header">Particle Effects</span>
         {{range .ParticleEffectPresets}}
         {{template "particleEffectControl" .}}
         {{end}}
     </div>
     <hr />
     <div class="controls-holder">
+        <span class="controls-header">Dragon Effects</span>
         {{range .DragonEffectPresets}}
         {{template "dragonControl" .}}
         {{end}}
+        <span class="vr"></span>
     </div>
     <div class="footer">
         <div id="log-window"></div>

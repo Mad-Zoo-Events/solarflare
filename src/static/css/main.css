@@ -30,6 +30,19 @@ body {
     margin-top: 1em;
 }
 
+.controls-header {
+    writing-mode: vertical-lr;
+    float       : left;
+
+    font-size   : x-large;
+    font-variant: small-caps;
+}
+
+hr {
+    border       : none;
+    border-bottom: 2px dashed var(--gray);
+}
+
 /* ================ BUTTONS ================ */
 button {
     margin-top: 0.5em;
