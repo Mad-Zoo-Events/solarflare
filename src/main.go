@@ -12,7 +12,7 @@ func main() {
 
 	router.Handle("/health", HealthHandler()).Methods(http.MethodGet)
 	router.Handle("/status", StatusHandler()).Methods(http.MethodGet)
-	router.Handle("/effects/{id}/{action}", EffectHandler()).Methods(http.MethodPost)
+	router.Handle("/presets/{id}/{action}", PresetExecutionHandler()).Methods(http.MethodPost)
 
 	staticDir := "/static/"
 	router.PathPrefix(staticDir).Handler(http.StripPrefix(staticDir, http.FileServer(http.Dir("."+staticDir))))

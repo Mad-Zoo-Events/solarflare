@@ -1,8 +1,10 @@
 const BASE_URL = `${window.location.origin}`;
+const PRESETS_ENDPOINT = `${BASE_URL}/presets`
+const STATUS_ENDPOINT = `${BASE_URL}/status`
 
 executePreset = async (id, displayName, action) => {
     const request = new XMLHttpRequest();
-    request.open("POST", `${BASE_URL}/effects/${id}/${action}`);
+    request.open("POST", `${PRESETS_ENDPOINT}/${id}/${action}`);
     request.addEventListener('load', () => {
         if (request.status >= 200 && request.status < 400) {
             addToLog(action, displayName);
@@ -17,7 +19,7 @@ executePreset = async (id, displayName, action) => {
 
 doStatusUpdateRequest = async () => {
     const request = new XMLHttpRequest();
-    request.open("GET", `${BASE_URL}/status`);
+    request.open("GET", STATUS_ENDPOINT);
     request.addEventListener('load', () => {
         if (request.status === 200) {
             const resp = JSON.parse(request.responseText);
