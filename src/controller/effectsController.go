@@ -22,7 +22,7 @@ func ExecuteParticleEffect(preset model.ParticleEffectPreset, action model.Actio
 	if action != model.TriggerEffectAction &&
 		action != model.StartEffectAction &&
 		action != model.StopEffectAction {
-		return cserror.New(cserror.ActionNotAllowed, fmt.Sprintf("Action %s is not allowed for particle effects"), nil)
+		return cserror.New(cserror.ActionNotAllowed, fmt.Sprintf("Action %s is not allowed for particle effects", action), nil)
 	}
 
 	log.Printf("Performing %s %s", action, preset.DisplayName)
@@ -42,7 +42,7 @@ func ExecuteDragonEffect(preset model.DragonEffectPreset, action model.Action) e
 	if action != model.StartEffectAction &&
 		action != model.RestartEffectAction &&
 		action != model.StopEffectAction {
-		return cserror.New(cserror.ActionNotAllowed, fmt.Sprintf("Action %s is not allowed for the dragon effect"), nil)
+		return cserror.New(cserror.ActionNotAllowed, fmt.Sprintf("Action %s is not allowed for the dragon effect", action), nil)
 	}
 
 	log.Printf("Performing %s %s", action, preset.DisplayName)
