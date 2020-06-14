@@ -11,13 +11,15 @@
 
 <body onload="init()">
     <div class="controls-holder">
-        {{range .ParticleEffects}}
+        {{range .ParticleEffectPresets}}
         {{template "particleEffectControl" .}}
         {{end}}
     </div>
     <hr />
     <div class="controls-holder">
-        {{template "dragonControl" .Dragon}}
+        {{range .DragonEffectPresets}}
+        {{template "dragonControl" .}}
+        {{end}}
     </div>
     <div class="footer">
         <div id="log-window"></div>
@@ -36,7 +38,7 @@
         </div>
         <div class="master-controls">
             <button class="stop" type="button"
-                onclick='sendParticleEffect("all", "stop all", "STOP")'>stop&nbsp;all</button>
+                onclick='executeEffect("all", "stop all", "STOP")'>stop&nbsp;all</button>
         </div>
     </div>
 </body>
