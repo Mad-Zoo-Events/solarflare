@@ -20,6 +20,10 @@ updateStatus = (serverCount) => {
     document.getElementById('status-server-count').innerHTML = serverCount;
 }
 
+updateResponseTime = (millis) => {
+    document.getElementById('status-last-request-time').innerHTML = `${millis} ms`;
+}
+
 counter = async (id, action) => {
     const startButton = document.getElementById(`start-${id}`);
     var seconds = 0;
