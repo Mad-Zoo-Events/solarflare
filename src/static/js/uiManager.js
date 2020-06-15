@@ -28,14 +28,14 @@ counter = async (id, action) => {
     const startButton = document.getElementById(`start-${id}`);
     var seconds = 0;
 
-    if (action === "START") {
+    if (action === "start") {
         startButton.disabled = true;
         startButton.classList.add("disabled");
         counters[id] = setInterval(() => {
             seconds++;
             startButton.innerHTML = seconds;
         }, 1000);
-    } else if (action === "STOP" && counters[id]) {
+    } else if (action === "stop" && counters[id]) {
         clearInterval(counters[id]);
         startButton.disabled = false;
         startButton.classList.remove("disabled");
