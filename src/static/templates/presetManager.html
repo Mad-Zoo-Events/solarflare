@@ -60,7 +60,8 @@
             </td>
             <td class="actions-column">
                 <span class="delete-action" onclick='confirmDelete("{{.ID}}", "dragon", "{{.DisplayName}}")'>🗑</span>
-                <span class="edit-action">🖉</span>
+                <span class="edit-action"
+                    onclick='window.location.href = "../controlpanel/presets/modify/dragon/{{.ID}}";'>🖉</span>
             </td>
         </tr>
         {{end}}
@@ -69,10 +70,14 @@
     <div class="footer">
         <div></div>
         <div class="master-controls">
-            <button class="cyan" type="button">Add&nbsp;New Particle&nbsp;Effect&nbsp;Preset</button>
+            <button class="cyan" type="button"
+                onclick='window.location.href = "../controlpanel/presets/new/particle";'>Add&nbsp;New
+                Particle&nbsp;Effect&nbsp;Preset</button>
         </div>
         <div class="master-controls">
-            <button class="magenta" type="button">Add&nbsp;New Dragon&nbsp;Effect&nbsp;Preset</button>
+            <button class="magenta" type="button"
+                onclick='window.location.href = "../controlpanel/presets/new/dragon";'>Add&nbsp;New
+                Dragon&nbsp;Effect&nbsp;Preset</button>
         </div>
         <div class="master-controls">
             <button class="darker-cyan" type="button"

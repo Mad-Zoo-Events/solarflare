@@ -219,3 +219,42 @@ td.type-header {
 .code {
     font-family: 'Courier New', Courier, monospace;
 }
+
+/* ================ PRESET MUTATION ================ */
+.preset-edit-main {
+    margin-left: auto;
+    margin-right: auto;
+    width: 50em;
+}
+
+.preset-form {
+    display: grid;
+    grid-template-columns: min-content auto;
+}
+
+input[type=text], input[type=number] {
+    grid-column: 2;
+    color: var(--font);
+    padding: 0.5em;
+    border: none;
+    background-color: var(--dark-gray);
+}
+
+label {
+    grid-column: 1;
+    white-space: nowrap;
+    padding-right: 1em;
+}
+
+.effect-label {
+    writing-mode: vertical-rl;
+    grid-column: 1;
+    color: var(--cyan);
+    padding-right: 0.5em;
+}
+
+.effect-box {
+    grid-column: 2;
+    display: grid;
+    grid-template-columns: min-content auto;
+}
