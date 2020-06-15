@@ -40,10 +40,9 @@ func GenerateControlPanel(writer http.ResponseWriter) error {
 func GeneratePresetManager(writer http.ResponseWriter) error {
 	template, err := template.ParseFiles(
 		"static/templates/presetManager.html",
-		// "static/templates/mutatePreset.html",
 	)
 	if err != nil {
-		return cserror.New(cserror.Template, "Error loading preset manager templates", err)
+		return cserror.New(cserror.Template, "Error loading preset manager template", err)
 	}
 
 	cfg := config.Get()
@@ -55,7 +54,49 @@ func GeneratePresetManager(writer http.ResponseWriter) error {
 
 	err = template.Execute(writer, data)
 	if err != nil {
-		return cserror.New(cserror.Template, "Error running preset manager templates", err)
+		return cserror.New(cserror.Template, "Error running preset manager template", err)
+	}
+
+	return nil
+}
+
+// GenerateDragonPresetMutationPage renders the dragon preset creation/edit page based on templates
+func GenerateDragonPresetMutationPage(writer http.ResponseWriter, preset *model.DragonEffectPreset) error {
+	template, err := template.ParseFiles(
+		"static/templates/dragonPresetMutation.html",
+	)
+	if err != nil {
+		return cserror.New(cserror.Template, "Error loading preset mutation template", err)
+	}
+
+	if preset == nil {
+		preset = new(model.DragonEffectPreset)
+	}
+
+	err = template.Execute(writer, *preset)
+	if err != nil {
+		return cserror.New(cserror.Template, "Error running preset mutation templates", err)
+	}
+
+	return nil
+}
+
+// GenerateParticlePresetMutationPage renders the particle effect preset creation/edit page based on templates
+func GenerateParticlePresetMutationPage(writer http.ResponseWriter, preset *model.ParticleEffectPreset) error {
+	template, err := template.ParseFiles(
+		"static/templates/particlePresetMutation.html",
+	)
+	if err != nil {
+		return cserror.New(cserror.Template, "Error loading preset mutation template", err)
+	}
+
+	if preset == nil {
+		preset = new(model.ParticleEffectPreset)
+	}
+
+	err = template.Execute(writer, *preset)
+	if err != nil {
+		return cserror.New(cserror.Template, "Error running preset mutation templates", err)
 	}
 
 	return nil

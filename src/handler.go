@@ -158,6 +158,56 @@ func ControlPanelPresetHandler() http.HandlerFunc {
 	}
 }
 
+// ControlPanelPresetCreationHandler builds an empty preset mutation page
+func ControlPanelPresetCreationHandler(effectType model.EffectType) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		log.Print(">> Control Panel Preset Creation handler called")
+
+		var err error
+
+		switch effectType {
+		case model.EffectTypeParticleEffect:
+			// err = controller.GenerateParticlePresetMutationPage(w, nil)
+			return
+		case model.EffectTypeDragon:
+			err = controller.GenerateDragonPresetMutationPage(w, nil)
+		}
+
+		if err != nil {
+			writeResponse(w, 500, cserror.GetErrorResponse(err))
+		}
+	}
+}
+
+// ControlPanelPresetModificationHandler builds a pre-filled preset mutation page
+func ControlPanelPresetModificationHandler(effectType model.EffectType) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		log.Print(">> Control Panel Preset Creation handler called")
+
+		vars := mux.Vars(r)
+
+		preset, err := utils.FindPreset(vars["id"])
+		if err != nil {
+			writeResponse(w, 404, cserror.GetErrorResponse(err))
+			return
+		}
+
+		switch preset.(type) {
+		case model.ParticleEffectPreset:
+			p := preset.(model.ParticleEffectPreset)
+			err = controller.GenerateParticlePresetMutationPage(w, &p)
+			return
+		case model.DragonEffectPreset:
+			p := preset.(model.DragonEffectPreset)
+			err = controller.GenerateDragonPresetMutationPage(w, &p)
+		}
+
+		if err != nil {
+			writeResponse(w, 500, cserror.GetErrorResponse(err))
+		}
+	}
+}
+
 // writeResponse writes the response header and a response body if supplied
 func writeResponse(w http.ResponseWriter, code int, body []byte) {
 	w.WriteHeader(code)
