@@ -35,3 +35,28 @@ func GenerateControlPanel(writer http.ResponseWriter) error {
 
 	return nil
 }
+
+// GeneratePresetManager renders the preset management page based on templates
+func GeneratePresetManager(writer http.ResponseWriter) error {
+	template, err := template.ParseFiles(
+		"static/templates/presetManager.html",
+		// "static/templates/mutatePreset.html",
+	)
+	if err != nil {
+		return cserror.New(cserror.Template, "Error loading preset manager templates", err)
+	}
+
+	cfg := config.Get()
+	data := model.ControlPanel{
+		ParticleEffectPresets: cfg.ParticleEffectPresets,
+		DragonEffectPresets:   cfg.DragonEffectPresets,
+		RegisteredServerCount: len(cfg.Servers),
+	}
+
+	err = template.Execute(writer, data)
+	if err != nil {
+		return cserror.New(cserror.Template, "Error running preset manager templates", err)
+	}
+
+	return nil
+}
