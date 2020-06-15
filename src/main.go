@@ -44,6 +44,9 @@ func main() {
 	router.Handle("/controlpanel", ControlPanelHandler()).Methods(http.MethodGet)
 	router.Handle("/controlpanel/presets", ControlPanelPresetHandler()).Methods(http.MethodGet)
 
+	router.Handle("/controlpanel/presets/new/dragon", ControlPanelPresetCreationHandler(model.EffectTypeDragon)).Methods(http.MethodGet)
+	router.Handle("/controlpanel/presets/modify/dragon/{id}", ControlPanelPresetModificationHandler(model.EffectTypeDragon)).Methods(http.MethodGet)
+
 	log.Print("Starting server listening on port 5000")
 	http.ListenAndServe(":5000", router)
 }
