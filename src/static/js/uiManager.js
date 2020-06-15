@@ -49,3 +49,9 @@ confirmDelete = (id, effectType, displayName) => {
         doDeletePreset(id, effectType);
     }
 }
+
+addDragonEffectInput = () => {
+    const form = document.getElementById("dragon-preset-form");
+    const input = `<input type="text" placeholder="effect"/>`
+    logWindow.innerHTML += input;
+}

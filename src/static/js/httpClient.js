@@ -47,3 +47,7 @@ doDeletePreset = async (id, effectType) => {
 
     request.send();
 }
+
+saveDragonPreset = async (form) => {
+    console.log(form);
+}
