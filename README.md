@@ -67,7 +67,7 @@ To automate this process, each Eyecandy plugin will register itself at the Go se
 
 *To be implemented*
 
-## Request Models
+## API Endpoints
 
 ### Trigger an action on a preset
 ```
@@ -79,7 +79,7 @@ POST https://visuals.madzoo.events/presets/{preset_id}/{action}
 | Parameter   | Description                             |
 | ----------- | --------------------------------------- |
 | `preset_id` | The UUID of the preset to be controlled |
-| `action`    | the action to perform on the preset     |
+| `action`    | The action to perform on the preset     |
 
 **Actions allowed on *particle effect* presets:**
 - `trigger`
@@ -90,3 +90,92 @@ POST https://visuals.madzoo.events/presets/{preset_id}/{action}
 - `start`
 - `restart`
 - `stop`
+
+### Manage Presets
+
+#### Create Particle Effect Preset
+
+```
+POST https://visuals.madzoo.events/presets/particle
+
+{
+	"displayName": string,
+	"description": string,
+	"particleEffects": [
+		{
+			"name": string,
+			"region": {
+				"pointIds": [int],
+				"type": "POINTS|CUBOID|EQUATION",
+				"randomize": bool,
+				"density": float(0.0 - 1-0),
+				"equation": string
+			}
+		}
+	]
+}
+```
+
+**Parameters:**
+
+|                   |                                                                                  |
+| ----------------- | -------------------------------------------------------------------------------- |
+| `displayName`     | Short name of the preset                                                         |
+| `description`     | Short description of the preset                                                  |
+| `particleEffects` | List of effects to be controlled simultaneously                                  |
+| `├─ name`         | Minecraft name of the particle effect                                            |
+| `└─ region`       | Information on where and how to display the effect                               |
+| `   ├─ pointIds`  | List of pre-defined in-game points, required amount depends on `type`            |
+| `   ├─ type`      | Specifies how to display the particles, see possible values below                |
+| `   ├─ randomize` | Specifies whether particles in a `CUBOID` are arranged symmetrically or randomly |
+| `   ├─ density`   | Specifies how dense particles in a `CUBOID` will be (between `0.0` and `1.0`)    |
+| `   └─ equation`  | Specifies the mathematical `EQUATION` for the 3D shape                           |
+
+**Region Types**
+- `POINTS`: display effects at all specified points
+- `CUBOID`: display effects in a cuboid; exactly two points
+- `EQUATION`: display effects according to a mathematical equation; exactly one origin point required
+
+**Equation**
+- see [here](https://www.benjoffe.com/code/tools/functions3d/examples) for examples
+
+#### Create Dragon Effect Preset
+
+```
+POST https://visuals.madzoo.events/presets/dragon
+
+{
+	"displayName": string,
+	"description": string,
+	"dragonEffects": [
+		{
+			"pointId": int,
+			"static": bool
+		}
+	]
+}
+```
+
+**Parameters:**
+
+|                 |                                                                        |
+| --------------- | ---------------------------------------------------------------------- |
+| `displayName`   | Short name of the preset                                               |
+| `description`   | Short description of the preset                                        |
+| `dragonEffects` | List of effects to be controlled simultaneously                        |
+| `├─ pointId`    | Pre-defined in-game point to display the dragon effect at              |
+| `└─ static`     | Specifies whether the dragon should be static or continuously move up |
+
+#### Update Existing Presets
+
+To update an existing preset, use the corresponding request above, but add the parameter `id` with the preset's UUID to the root of the JSON payload. This will overwrite the existing preset with the information you provided.
+
+```
+POST https://visuals.madzoo.events/presets/dragon
+
+{
+	"id": uuid,
+	"displayName": string,
+	...
+}
+```
