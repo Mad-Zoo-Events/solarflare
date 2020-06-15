@@ -21,23 +21,20 @@
             <td>Actions</td>
         </thead>
         <tr>
-            <td colspan="5" class="type-header">Particle Effect Presets</td>
+            <td colspan="5" class="type-header type-header-cyan">Particle Effect Presets</td>
         </tr>
         {{range .ParticleEffectPresets}}
         <tr>
             <td class="id-column">{{.ID}}</td>
             <td>{{.DisplayName}}</td>
             <td>{{.Description}}</td>
-            <td>
-                <ul>
-                    {{range .ParticleEffects}}
-                    <li>
-                        <span class="code">{{.Name}}</span>
-                        <span>→ {{.Region.RegionType}} →</span>
-                        <span class="code">{{.Region.PointIDs}}</span>
-                    </li>
-                    {{end}}
-                </ul>
+            <td class="effects-column">
+                {{range .ParticleEffects}}
+                <span>→&nbsp;&nbsp;</span>
+                <span class="code">{{.Name}}</span>
+                <span>{{.Region.RegionType}}</span>
+                <span class="code">{{.Region.PointIDs}}</span>
+                {{end}}
             </td>
             <td class="actions-column">
                 🗑 🖉 ➕
@@ -45,22 +42,20 @@
         </tr>
         {{end}}
         <tr>
-            <td colspan="5" class="type-header">Dragon Effect Presets</td>
+            <td colspan="5" class="type-header type-header-magenta">Dragon Effect Presets</td>
         </tr>
         {{range .DragonEffectPresets}}
         <tr>
             <td class="id-column">{{.ID}}</td>
             <td>{{.DisplayName}}</td>
             <td>{{.Description}}</td>
-            <td>
-                <ul>
-                    {{range .DragonEffects}}
-                    <li>
-                        <span>{{if .Static}}static{{else}}moving up{{end}} →</span>
-                        <span class="code">[{{.PointID}}]</span>
-                    </li>
-                    {{end}}
-                </ul>
+            <td class="effects-column">
+                {{range .DragonEffects}}
+                <span>→&nbsp;&nbsp;</span>
+                <span></span>
+                <span>{{if .Static}}STATIC{{else}}MOVING UP{{end}}</span>
+                <span class="code">[{{.PointID}}]</span>
+                {{end}}
             </td>
             <td class="actions-column">
                 🗑 🖉 ➕
@@ -71,14 +66,14 @@
 
     <div class="footer">
         <div></div>
-        <div>
-            <div class="master-controls">
-                <button class="other" type="button">Add&nbsp;New Particle&nbsp;Effect&nbsp;Preset</button>
-                <button class="other" type="button">Add&nbsp;New Dragon&nbsp;Effect&nbsp;Preset</button>
-            </div>
+        <div class="master-controls">
+            <button class="cyan" type="button">Add&nbsp;New Particle&nbsp;Effect&nbsp;Preset</button>
         </div>
         <div class="master-controls">
-            <button class="other" type="button"
+            <button class="magenta" type="button">Add&nbsp;New Dragon&nbsp;Effect&nbsp;Preset</button>
+        </div>
+        <div class="master-controls">
+            <button class="darker-cyan" type="button"
                 onclick='window.location.href = "../controlpanel";'>Back&nbsp;to&nbsp;Control&nbsp;Panel</button>
         </div>
     </div>
