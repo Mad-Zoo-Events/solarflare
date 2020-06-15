@@ -50,8 +50,19 @@ confirmDelete = (id, effectType, displayName) => {
     }
 }
 
-addDragonEffectInput = () => {
+addDragonEffectInput = (index) => {
+    const next = document.getElementsByClassName("effect-box").length;
     const form = document.getElementById("dragon-preset-form");
-    const input = `<input type="text" placeholder="effect"/>`
-    logWindow.innerHTML += input;
+    const input = `<span class="effect-label">Effect ${next}</span>
+    <div class="effect-box">
+        <label for="effect-pointId">Point ID</label>
+        <input name="effect-pointId[${next}]" type="number" value="{{.PointID}}" />
+        <br />
+
+        <label for="effect-static">Static</label>
+        <input name="effect-static[${next}]" type="checkbox" {{if .Static}}checked{{end}} />
+        <br />
+    </div>
+    <br />`;
+    form.innerHTML += input;
 }

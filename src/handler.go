@@ -61,9 +61,21 @@ func PresetMutationHandler(effectType model.EffectType) http.HandlerFunc {
 
 		switch effectType {
 		case model.EffectTypeParticleEffect:
-			id, err = controller.UpsertParticleEffectPreset(body)
+			preset := model.ParticleEffectPreset{}
+			err = json.Unmarshal(body, &preset)
+			if err != nil {
+				err = cserror.New(cserror.Encoding, "Error unmarshalling particle effect preset request", err)
+				return
+			}
+			id, err = controller.UpsertParticleEffectPreset(preset)
 		case model.EffectTypeDragon:
-			id, err = controller.UpsertDragonEffectPreset(body)
+			preset := model.DragonEffectPreset{}
+			err = json.Unmarshal(body, &preset)
+			if err != nil {
+				err = cserror.New(cserror.Encoding, "Error unmarshalling dragon effect preset request", err)
+				return
+			}
+			id, err = controller.UpsertDragonEffectPreset(preset)
 		}
 
 		if err != nil {
@@ -72,6 +84,36 @@ func PresetMutationHandler(effectType model.EffectType) http.HandlerFunc {
 		}
 
 		writeResponse(w, 201, []byte(*id))
+	}
+}
+
+// PresetMutationUIHandler handles requests from the UI to create a new preset
+func PresetMutationUIHandler(effectType model.EffectType) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		log.Print(">> Preset Mutation UI handler called")
+
+		var err error
+
+		switch effectType {
+		case model.EffectTypeParticleEffect:
+			// id, err = controller.UpsertParticleEffectPreset(preset)
+			return
+		case model.EffectTypeDragon:
+			preset, err := utils.GetUIDragonPreset(r)
+			if err == nil {
+				_, err = controller.UpsertDragonEffectPreset(*preset)
+			}
+		}
+
+		if err != nil {
+			writeResponse(w, 500, cserror.GetErrorResponse(err))
+			return
+		}
+
+		err = controller.GeneratePresetManager(w)
+		if err != nil {
+			writeResponse(w, 500, cserror.GetErrorResponse(err))
+		}
 	}
 }
 
