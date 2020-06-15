@@ -71,6 +71,7 @@ func GenerateDragonPresetMutationPage(writer http.ResponseWriter, preset *model.
 
 	if preset == nil {
 		preset = new(model.DragonEffectPreset)
+		preset.DragonEffects = []model.DragonEffect{model.DragonEffect{}}
 	}
 
 	err = template.Execute(writer, *preset)
