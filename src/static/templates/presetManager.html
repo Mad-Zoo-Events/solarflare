@@ -37,7 +37,8 @@
                 {{end}}
             </td>
             <td class="actions-column">
-                🗑 🖉 ➕
+                <span class="delete-action" onclick='confirmDelete("{{.ID}}", "particle", "{{.DisplayName}}")'>🗑</span>
+                <span class="edit-action">🖉</span>
             </td>
         </tr>
         {{end}}
@@ -58,7 +59,8 @@
                 {{end}}
             </td>
             <td class="actions-column">
-                🗑 🖉 ➕
+                <span class="delete-action" onclick='confirmDelete("{{.ID}}", "dragon", "{{.DisplayName}}")'>🗑</span>
+                <span class="edit-action">🖉</span>
             </td>
         </tr>
         {{end}}

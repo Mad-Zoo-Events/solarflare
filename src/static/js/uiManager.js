@@ -42,3 +42,10 @@ counter = async (id, action) => {
         startButton.innerHTML = "start";
     }
 }
+
+confirmDelete = (id, effectType, displayName) => {
+    const r = confirm(`WARNING!\nAre you sure you want to delete "${displayName}"?`);
+    if (r == true) {
+        doDeletePreset(id, effectType);
+    }
+}
