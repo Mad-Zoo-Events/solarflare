@@ -32,6 +32,7 @@ func main() {
 	staticDir := "/static/"
 	router.PathPrefix(staticDir).Handler(http.StripPrefix(staticDir, http.FileServer(http.Dir("."+staticDir))))
 	router.Handle("/controlpanel", ControlPanelHandler()).Methods(http.MethodGet)
+	router.Handle("/controlpanel/presets", ControlPanelPresetHandler()).Methods(http.MethodGet)
 
 	log.Print("Starting server listening on port 5000")
 	http.ListenAndServe(":5000", router)
