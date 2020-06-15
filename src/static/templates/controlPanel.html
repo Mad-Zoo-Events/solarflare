@@ -13,14 +13,14 @@
 
 <body onload="init()">
     <div class="controls-holder">
-        <span class="controls-header">Particle Effects</span>
+        <span class="controls-header cyan">Particle Effects</span>
         {{range .ParticleEffectPresets}}
         {{template "particleEffectControl" .}}
         {{end}}
     </div>
     <hr />
     <div class="controls-holder">
-        <span class="controls-header">Dragon Effects</span>
+        <span class="controls-header magenta">Dragon Effects</span>
         {{range .DragonEffectPresets}}
         {{template "dragonControl" .}}
         {{end}}
@@ -53,7 +53,7 @@
             <button class="stop" type="button" onclick='executeEffect("all", "stop all", "STOP")'>stop&nbsp;all</button>
         </div>
         <div class="master-controls">
-            <button class="other" type="button"
+            <button class="darker-cyan" type="button"
                 onclick='window.location.href = "controlpanel/presets";'>Manage&nbsp;Presets</button>
         </div>
     </div>
