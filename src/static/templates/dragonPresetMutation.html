@@ -25,27 +25,29 @@
             <input name="description" type="text" size="50" placeholder="Short description" value="{{.Description}}" />
             <br />
 
+            <label>Effects</label>
             {{range $index, $element := .DragonEffects}}
-            <span class="effect-label">Effect {{$index}}</span>
             <div class="effect-box">
                 <label for="effect-pointId">Point ID</label>
-                <input name="effect-pointId[{{$index}}]" type="number" value="{{.PointID}}" />
+                <input class="indexed-input" name="effect[{{$index}}].pointId" type="number" value="{{.PointID}}" />
                 <br />
 
                 <label for="effect-static">Static</label>
-                <input name="effect-static[{{$index}}]" type="checkbox" {{if .Static}}checked{{end}} />
+                <input class="indexed-input" name="effect[{{$index}}].static" type="checkbox"
+                    {{if .Static}}checked{{end}} />
                 <br />
             </div>
             <br />
             {{end}}
         </form>
-        <button onclick='addDragonEffectInput();' >Add effect</button>
+        <button class="magenta" onclick='addDragonEffectInput();'>Add effect</button>
     </div>
 
     <div class="footer">
         <div></div>
         <div class="master-controls">
-            <button class="magenta" type="button" onclick='document.getElementById("dragon-preset-form").submit();'>Save</button>
+            <button class="magenta" type="button"
+                onclick='document.getElementById("dragon-preset-form").submit();'>Save</button>
         </div>
         <div class="master-controls">
             <button class="darker-cyan" type="button" onclick='window.history.back();'>Cancel</button>

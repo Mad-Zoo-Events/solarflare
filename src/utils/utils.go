@@ -3,13 +3,15 @@ package utils
 import (
 	"fmt"
 	"net/http"
-	"strconv"
 
-	"github.com/eynorey/candyshop/src/model"
+	"github.com/go-playground/form/v4"
 
 	"github.com/eynorey/candyshop/src/config"
+	"github.com/eynorey/candyshop/src/model"
 	"github.com/eynorey/candyshop/src/utils/cserror"
 )
+
+var decoder *form.Decoder
 
 // FindPreset returns the preset identified by the ID passed, or an error if it couldn't be found
 func FindPreset(id string) (interface{}, error) {
@@ -36,41 +38,14 @@ func GetUIDragonPreset(r *http.Request) (*model.DragonEffectPreset, error) {
 		return nil, cserror.New(cserror.Encoding, "Error parsing form from UI", err)
 	}
 
-	effects := []model.DragonEffect{}
+	decoder = form.NewDecoder()
 
-	i := 0
-	for {
-		pointStr := r.PostFormValue(fmt.Sprintf("effect-pointId[%d]", i))
-		if pointStr == "" {
-			break
-		}
+	var preset model.DragonEffectPreset
 
-		point, err := strconv.Atoi(pointStr)
-		if err != nil {
-			break
-		}
-
-		static := false
-		if r.PostFormValue(fmt.Sprintf("effect-static[%d]", i)) == "on" {
-			static = true
-		}
-
-		effects = append(effects, model.DragonEffect{
-			PointID: point,
-			Static:  static,
-		})
-
-		i++
+	err = decoder.Decode(&preset, r.PostForm)
+	if err != nil {
+		return nil, cserror.New(cserror.Encoding, "Error parsing data from UI request", err)
 	}
-
-	preset := model.DragonEffectPreset{
-		ID:            r.PostFormValue("id"),
-		DisplayName:   r.PostFormValue("name"),
-		Description:   r.PostFormValue("description"),
-		DragonEffects: effects,
-	}
-
-	fmt.Println(preset)
 
 	return &preset, nil
 }

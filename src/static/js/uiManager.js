@@ -50,19 +50,16 @@ confirmDelete = (id, effectType, displayName) => {
     }
 }
 
-addDragonEffectInput = (index) => {
+addDragonEffectInput = () => {
     const next = document.getElementsByClassName("effect-box").length;
     const form = document.getElementById("dragon-preset-form");
-    const input = `<span class="effect-label">Effect ${next}</span>
-    <div class="effect-box">
-        <label for="effect-pointId">Point ID</label>
-        <input name="effect-pointId[${next}]" type="number" value="{{.PointID}}" />
-        <br />
+    const newEffectsHolder = document.getElementsByClassName("effect-box")[0].cloneNode(true);
 
-        <label for="effect-static">Static</label>
-        <input name="effect-static[${next}]" type="checkbox" {{if .Static}}checked{{end}} />
-        <br />
-    </div>
-    <br />`;
-    form.innerHTML += input;
+    const inputs = newEffectsHolder.getElementsByClassName("indexed-input");
+    for (let index = 0; index < inputs.length; index++) {
+        const element = inputs[index];
+        element.name = element.name.replace(0, next);
+    }
+
+    form.appendChild(newEffectsHolder);
 }
