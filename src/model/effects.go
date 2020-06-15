@@ -39,13 +39,13 @@ const (
 // ParticleEffectPreset describes a particle effect preset
 type ParticleEffectPreset struct {
 	// Unique identifier of the preset
-	ID string
+	ID string `json:"id"`
 	// Display name for the UI
-	DisplayName string
+	DisplayName string `json:"displayName"`
 	// Description of the preset for the UI
-	Description string
+	Description string `json:"description"`
 	// List of particle effects which are part of this preset
-	ParticleEffects []ParticleEffect
+	ParticleEffects []ParticleEffect `json:"particleEffects"`
 }
 
 // ParticleEffect contains information on the effect and where to display it
@@ -63,7 +63,7 @@ type Region struct {
 	// Type of the region the effect is to be displayed in
 	RegionType RegionType `json:"type"`
 	// Whether or not to randomize placement of particles within the region [for CuboidRegionType]
-	Randomize *float64 `json:"randomize,omitempty"`
+	Randomize *bool `json:"randomize,omitempty"`
 	// Density of the particles [for CuboidRegionType]
 	Density *float64 `json:"density,omitempty"`
 	// Equation for the shape of the effect region [for EquationRegionTyp]e
@@ -73,13 +73,13 @@ type Region struct {
 // DragonEffectPreset is the request model for particle effects
 type DragonEffectPreset struct {
 	// Unique identifier of the preset
-	ID string
+	ID string `json:"id"`
 	// Display name for the UI
-	DisplayName string
+	DisplayName string `json:"displayName"`
 	// Description of the preset for the UI
-	Description string
+	Description string `json:"description"`
 	// List of dragon effects which are part of this preset
-	DragonEffects []DragonEffect
+	DragonEffects []DragonEffect `json:"dragonEffects"`
 }
 
 // DragonEffect contains information on where and how to display the dragon effect

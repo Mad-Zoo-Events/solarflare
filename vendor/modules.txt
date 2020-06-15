@@ -39,6 +39,9 @@ github.com/aws/aws-sdk-go/service/dynamodb
 github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute
 github.com/aws/aws-sdk-go/service/sts
 github.com/aws/aws-sdk-go/service/sts/stsiface
+# github.com/google/uuid v1.1.1
+## explicit
+github.com/google/uuid
 # github.com/gorilla/mux v1.7.4
 ## explicit
 github.com/gorilla/mux
