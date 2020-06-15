@@ -212,6 +212,10 @@ td.type-header {
     white-space: nowrap;
 }
 
+.actions-column span {
+    cursor: pointer;
+}
+
 .code {
     font-family: 'Courier New', Courier, monospace;
 }

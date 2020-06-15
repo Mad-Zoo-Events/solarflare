@@ -35,3 +35,15 @@ doStatusUpdateRequest = async () => {
 
     request.send();
 }
+
+doDeletePreset = async (id, effectType) => {
+    const request = new XMLHttpRequest();
+    request.open("DELETE", `${PRESETS_ENDPOINT}/${effectType}/${id}`);
+    request.addEventListener('load', () => {
+        if (request.status === 200) {
+            location.reload();
+        }
+    });
+
+    request.send();
+}
