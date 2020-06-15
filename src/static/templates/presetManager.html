@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Mad Zoo Events Visual Control System</title>
+    <link rel="shortcut icon" href="/static/favicon.ico">
+    <link rel="icon" href="/static/favicon.ico">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <script type="text/javascript" src="/static/js/httpClient.js"></script>
+    <script type="text/javascript" src="/static/js/uiManager.js"></script>
+</head>
+
+<body>
+    <table class="preset-table">
+        <thead>
+            <td>ID</td>
+            <td>Name</td>
+            <td>Description</td>
+            <td>Effects</td>
+            <td>Actions</td>
+        </thead>
+        <tr>
+            <td colspan="5" class="type-header">Particle Effect Presets</td>
+        </tr>
+        {{range .ParticleEffectPresets}}
+        <tr>
+            <td class="id-column">{{.ID}}</td>
+            <td>{{.DisplayName}}</td>
+            <td>{{.Description}}</td>
+            <td>
+                <ul>
+                    {{range .ParticleEffects}}
+                    <li>
+                        <span class="code">{{.Name}}</span>
+                        <span>→ {{.Region.RegionType}} →</span>
+                        <span class="code">{{.Region.PointIDs}}</span>
+                    </li>
+                    {{end}}
+                </ul>
+            </td>
+            <td class="actions-column">
+                🗑 🖉 ➕
+            </td>
+        </tr>
+        {{end}}
+        <tr>
+            <td colspan="5" class="type-header">Dragon Effect Presets</td>
+        </tr>
+        {{range .DragonEffectPresets}}
+        <tr>
+            <td class="id-column">{{.ID}}</td>
+            <td>{{.DisplayName}}</td>
+            <td>{{.Description}}</td>
+            <td>
+                <ul>
+                    {{range .DragonEffects}}
+                    <li>
+                        <span>{{if .Static}}static{{else}}moving up{{end}} →</span>
+                        <span class="code">[{{.PointID}}]</span>
+                    </li>
+                    {{end}}
+                </ul>
+            </td>
+            <td class="actions-column">
+                🗑 🖉 ➕
+            </td>
+        </tr>
+        {{end}}
+    </table>
+
+    <div class="footer">
+        <div></div>
+        <div>
+            <div class="master-controls">
+                <button class="other" type="button">Add&nbsp;New Particle&nbsp;Effect&nbsp;Preset</button>
+                <button class="other" type="button">Add&nbsp;New Dragon&nbsp;Effect&nbsp;Preset</button>
+            </div>
+        </div>
+        <div class="master-controls">
+            <button class="other" type="button"
+                onclick='window.location.href = "../controlpanel";'>Back&nbsp;to&nbsp;Control&nbsp;Panel</button>
+        </div>
+    </div>
+</body>
+
+</html>

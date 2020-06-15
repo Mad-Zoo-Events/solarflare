@@ -1,18 +1,20 @@
 :root {
-    --background: #161616;
-    --dark-gray : #333333;
-    --gray      : gray;
-    --font      : #dfffff;
-    --green     : #44ff66;
-    --orange    : #ffaa44;
-    --red       : #ff4466;
-    --cyan      : #1ba1e2;
+    --background : #161616;
+    --dark-gray  : #333;
+    --darker-gray: #222;
+    --gray       : gray;
+    --font       : #dfffff;
+    --green      : #44ff66;
+    --orange     : #ffaa44;
+    --red        : #ff4466;
+    --cyan       : #1ba1e2;
+    --darker-cyan: #0b3c55;
 }
 
 body {
     background-color: var(--background);
     color           : var(--font);
-    font-family     : Arial, Helvetica, sans-serif;
+    font-family     : sans-serif;
 }
 
 /* ================ MAIN CONTROLS ================ */
@@ -58,28 +60,34 @@ button {
 
 button.start {
     color : var(--green);
-    border: 0.1em solid var(--green);
+    border: 2px solid var(--green);
 }
 
 button.stop {
     color : var(--red);
-    border: 0.1em solid var(--red);
+    border: 2px solid var(--red);
 }
 
 button.restart {
     color : var(--orange);
-    border: 0.1em solid var(--orange);
+    border: 2px solid var(--orange);
 }
 
 button.trigger {
     color : var(--cyan);
-    border: 0.1em solid var(--cyan);
+    border: 2px solid var(--cyan);
+}
+
+button.other {
+    color           : var(--font);
+    background-color: var(--cyan);
+    border          : 2px solid var(--cyan);
 }
 
 button.disabled {
     background-color: var(--background);
     color           : var(--gray);
-    border          : 0.1em solid var(--dark-gray);
+    border          : 2px solid var(--dark-gray);
     cursor          : not-allowed;
 }
 
@@ -89,27 +97,27 @@ button.disabled {
     bottom  : 0.5em;
     right   : 0.5em;
     left    : 0.5em;
-    height  : 10em;
 
     display              : grid;
-    grid-template-columns: auto min-content min-content;
+    grid-template-columns: auto min-content min-content min-content;
 }
 
 #log-window {
+    height    : 10em;
     padding   : 0.3em;
     overflow-y: scroll;
-    border    : 0.1em solid var(--gray);
+    border    : 2px solid var(--gray);
 }
 
 #status-window {
-    white-space : nowrap;
-    border-right: 0.1em dashed var(--gray);
-    padding     : 0 1em;
+    white-space: nowrap;
+    padding    : 0 1em;
 }
 
 .master-controls {
-    padding: 0 1em;
-    width  : min-content;
+    padding    : 0 1em;
+    border-left: 2px dashed var(--gray);
+    width      : min-content;
 }
 
 .log-message {
@@ -122,4 +130,54 @@ button.disabled {
 
 .failure {
     color: var(--red);
+}
+
+/* ================ PRESET MANAGER ================ */
+.preset-table {
+    width           : 100%;
+    background-color: var(--dark-gray);
+    border-collapse : collapse;
+}
+
+.preset-table thead {
+    background-color: var(--darker-cyan);
+    color           : var(--cyan);
+    font-variant    : small-caps;
+}
+
+.preset-table thead td {
+    padding: 1em 0.5em;
+}
+
+.preset-table td {
+    padding: 0em 0.5em;
+}
+
+.preset-table tr:nth-child(2n+2) {
+    background-color: var(--darker-gray);
+}
+
+.type-header {
+    background-color: var(--cyan);
+    color           : var(--darker-cyan);
+    font-variant    : small-caps;
+    text-align      : center;
+}
+
+.id-column {
+    font-size: x-small;
+}
+
+.actions-column {
+    font-size: x-large;
+}
+
+.code {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+ul {
+    list-style-position: inside;
+    list-style-type    : square;
+    padding-left       : 0;
 }

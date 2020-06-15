@@ -141,6 +141,17 @@ func ControlPanelHandler() http.HandlerFunc {
 	}
 }
 
+// ControlPanelPresetHandler builds the preset management page from templates
+func ControlPanelPresetHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		log.Print(">> Control Panel Preset handler called")
+		err := controller.GeneratePresetManager(w)
+		if err != nil {
+			writeResponse(w, 500, cserror.GetErrorResponse(err))
+		}
+	}
+}
+
 // writeResponse writes the response header and a response body if supplied
 func writeResponse(w http.ResponseWriter, code int, body []byte) {
 	w.WriteHeader(code)
