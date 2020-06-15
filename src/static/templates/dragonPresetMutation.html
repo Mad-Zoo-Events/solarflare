@@ -14,7 +14,7 @@
 <bod>
     <div class="preset-edit-main">
         <h1>{{if .ID}} Edit "{{.DisplayName}}" {{else}} Create New Dragon Preset {{end}}</h1>
-        <form class="preset-form" id="dragon-preset-form" action="#" onsubmit="saveDragonPreset(this);">
+        <form class="preset-form" id="dragon-preset-form" method="POST" action="/presets/dragon-ui">
             <input name="id" type="hidden" value="{{.ID}}" />
 
             <label for="name">Name</label>
@@ -28,7 +28,7 @@
             {{range $index, $element := .DragonEffects}}
             <span class="effect-label">Effect {{$index}}</span>
             <div class="effect-box">
-                <label for="effect-pointIds">Point ID</label>
+                <label for="effect-pointId">Point ID</label>
                 <input name="effect-pointId[{{$index}}]" type="number" value="{{.PointID}}" />
                 <br />
 
@@ -39,12 +39,13 @@
             <br />
             {{end}}
         </form>
+        <button onclick='addDragonEffectInput();' >Add effect</button>
     </div>
 
     <div class="footer">
         <div></div>
         <div class="master-controls">
-            <button class="magenta" type="button">Save</button>
+            <button class="magenta" type="button" onclick='document.getElementById("dragon-preset-form").submit();'>Save</button>
         </div>
         <div class="master-controls">
             <button class="darker-cyan" type="button" onclick='window.history.back();'>Cancel</button>
