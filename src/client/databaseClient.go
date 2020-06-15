@@ -11,8 +11,8 @@ import (
 )
 
 const (
-	particleEffectPresetsTable = "particleEffects"
-	dragonEffectPresetsTable   = "dragonEffects"
+	particleEffectPresetsTable = "presets_particle-effects"
+	dragonEffectPresetsTable   = "presets_dragon-effects"
 )
 
 var (
@@ -82,8 +82,8 @@ func GetDragonEffectPresets() (presets []model.DragonEffectPreset) {
 	return
 }
 
-// InsertParticleEffectPreset adds a particle effect preset to the database
-func InsertParticleEffectPreset(preset model.ParticleEffectPreset) error {
+// UpsertParticleEffectPreset adds a particle effect preset to the database
+func UpsertParticleEffectPreset(preset model.ParticleEffectPreset) error {
 	tableName := particleEffectPresetsTable
 
 	item, err := dynamodbattribute.MarshalMap(preset)
@@ -96,14 +96,14 @@ func InsertParticleEffectPreset(preset model.ParticleEffectPreset) error {
 		TableName: aws.String(tableName),
 	})
 	if err != nil {
-		return cserror.New(cserror.DatabaseCRUD, "Failed to insert particle effect preset", err)
+		return cserror.New(cserror.DatabaseCRUD, "Failed to upsert particle effect preset", err)
 	}
 
 	return nil
 }
 
-// InsertDragonEffectPreset adds a dragon effect preset to the database
-func InsertDragonEffectPreset(preset model.DragonEffectPreset) error {
+// UpsertDragonEffectPreset adds a dragon effect preset to the database
+func UpsertDragonEffectPreset(preset model.DragonEffectPreset) error {
 	tableName := dragonEffectPresetsTable
 
 	item, err := dynamodbattribute.MarshalMap(preset)
@@ -116,7 +116,7 @@ func InsertDragonEffectPreset(preset model.DragonEffectPreset) error {
 		TableName: aws.String(tableName),
 	})
 	if err != nil {
-		return cserror.New(cserror.DatabaseCRUD, "Failed to insert dragon effect preset", err)
+		return cserror.New(cserror.DatabaseCRUD, "Failed to upsert dragon effect preset", err)
 	}
 
 	return nil

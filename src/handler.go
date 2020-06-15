@@ -2,6 +2,8 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 
@@ -41,6 +43,45 @@ func StatusHandler() http.HandlerFunc {
 		}
 
 		writeResponse(w, 200, resp)
+	}
+}
+
+// PresetMutationHandler handles requests to create a new preset
+func PresetMutationHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		log.Print(">> Preset Creation handler called")
+
+		vars := mux.Vars(r)
+		effectType := model.EffectType(vars["effectType"])
+
+		body, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			err = cserror.New(cserror.Encoding, "Error reading preset request body", err)
+			writeResponse(w, 500, cserror.GetErrorResponse(err))
+		}
+
+		var id *string
+		switch effectType {
+		case model.EffectTypeParticleEffect:
+			id, err = controller.UpsertParticleEffectPreset(body)
+			if err != nil {
+				// TODO error code differentiation
+				writeResponse(w, 500, cserror.GetErrorResponse(err))
+				return
+			}
+		case model.EffectTypeDragon:
+			id, err = controller.UpsertDragonEffectPreset(body)
+			if err != nil {
+				// TODO error code differentiation
+				writeResponse(w, 500, cserror.GetErrorResponse(err))
+				return
+			}
+		default:
+			err = cserror.New(cserror.BadRequest, fmt.Sprintf("Effect type %s is invalid", effectType), nil)
+			writeResponse(w, 400, cserror.GetErrorResponse(err))
+		}
+
+		writeResponse(w, 201, []byte(*id))
 	}
 }
 
