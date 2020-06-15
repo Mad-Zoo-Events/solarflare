@@ -246,13 +246,6 @@ label {
     padding-right: 1em;
 }
 
-.effect-label {
-    writing-mode: vertical-rl;
-    grid-column: 1;
-    color: var(--cyan);
-    padding-right: 0.5em;
-}
-
 .effect-box {
     grid-column: 2;
     display: grid;
