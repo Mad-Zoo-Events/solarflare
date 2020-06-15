@@ -35,6 +35,7 @@ func main() {
 	// preset management
 	router.Handle("/presets/particle", PresetMutationHandler(model.EffectTypeParticleEffect)).Methods(http.MethodPost)
 	router.Handle("/presets/dragon", PresetMutationHandler(model.EffectTypeDragon)).Methods(http.MethodPost)
+	router.Handle("/presets/dragon-ui", PresetMutationUIHandler(model.EffectTypeDragon)).Methods(http.MethodPost)
 	router.Handle("/presets/particle/{id}", PresetDeletionHandler(model.EffectTypeParticleEffect)).Methods(http.MethodDelete)
 	router.Handle("/presets/dragon/{id}", PresetDeletionHandler(model.EffectTypeDragon)).Methods(http.MethodDelete)
 
