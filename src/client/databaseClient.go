@@ -1,7 +1,10 @@
 package client
 
 import (
+	"fmt"
+
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
@@ -117,6 +120,38 @@ func UpsertDragonEffectPreset(preset model.DragonEffectPreset) error {
 	})
 	if err != nil {
 		return cserror.New(cserror.DatabaseCRUD, "Failed to upsert dragon effect preset", err)
+	}
+
+	return nil
+}
+
+// DeleteParticleEffectPreset deletes a particle effect preset from the database
+func DeleteParticleEffectPreset(id string) error {
+	return deleteEffectPreset(id, particleEffectPresetsTable)
+}
+
+// DeleteDragonEffectPreset deletes a dragon effect preset from the database
+func DeleteDragonEffectPreset(id string) error {
+	return deleteEffectPreset(id, dragonEffectPresetsTable)
+}
+
+func deleteEffectPreset(id, tableName string) error {
+	_, err := db.DeleteItem(&dynamodb.DeleteItemInput{
+		Key: map[string]*dynamodb.AttributeValue{
+			"id": {
+				S: aws.String(id),
+			},
+		},
+		TableName: aws.String(tableName),
+	})
+
+	if err != nil {
+		if aerr, ok := err.(awserr.Error); ok {
+			if aerr.Code() == dynamodb.ErrCodeResourceNotFoundException {
+				return cserror.New(cserror.DatabaseNotFound, fmt.Sprintf("Effect preset with %s des not exist", id), err)
+			}
+		}
+		return cserror.New(cserror.DatabaseCRUD, "Error deleting effect preset", err)
 	}
 
 	return nil

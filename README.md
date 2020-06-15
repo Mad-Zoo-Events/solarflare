@@ -71,15 +71,15 @@ To automate this process, each Eyecandy plugin will register itself at the Go se
 
 ### Trigger an action on a preset
 ```
-POST https://visuals.madzoo.events/presets/{preset_id}/{action}
+POST https://visuals.madzoo.events/presets/{id}/{action}
 ```
 
 **Parameters:**
 
-| Parameter   | Description                             |
-| ----------- | --------------------------------------- |
-| `preset_id` | The UUID of the preset to be controlled |
-| `action`    | The action to perform on the preset     |
+| Parameter | Description                             |
+| --------- | --------------------------------------- |
+| `id`      | The UUID of the preset to be controlled |
+| `action`  | The action to perform on the preset     |
 
 **Actions allowed on *particle effect* presets:**
 - `trigger`
@@ -158,12 +158,12 @@ POST https://visuals.madzoo.events/presets/dragon
 
 **Parameters:**
 
-|                 |                                                                        |
-| --------------- | ---------------------------------------------------------------------- |
-| `displayName`   | Short name of the preset                                               |
-| `description`   | Short description of the preset                                        |
-| `dragonEffects` | List of effects to be controlled simultaneously                        |
-| `├─ pointId`    | Pre-defined in-game point to display the dragon effect at              |
+|                 |                                                                       |
+| --------------- | --------------------------------------------------------------------- |
+| `displayName`   | Short name of the preset                                              |
+| `description`   | Short description of the preset                                       |
+| `dragonEffects` | List of effects to be controlled simultaneously                       |
+| `├─ pointId`    | Pre-defined in-game point to display the dragon effect at             |
 | `└─ static`     | Specifies whether the dragon should be static or continuously move up |
 
 #### Update Existing Presets
@@ -179,3 +179,17 @@ POST https://visuals.madzoo.events/presets/dragon
 	...
 }
 ```
+
+#### Delete Preset
+
+```
+DELETE https://visuals.madzoo.events/presets/{effect_type}/{id}
+
+```
+
+**Parameters:**
+
+| Parameter     | Description                         |
+| ------------- | ----------------------------------- |
+| `effect_type` | Preset type; `particle` or `dragon` |
+| `id`          | The UUID of the preset to delete    |
