@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -47,12 +46,12 @@ func StatusHandler() http.HandlerFunc {
 }
 
 // PresetMutationHandler handles requests to create a new preset
-func PresetMutationHandler() http.HandlerFunc {
+func PresetMutationHandler(effectType model.EffectType) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		log.Print(">> Preset Creation handler called")
+		log.Print(">> Preset Mutation handler called")
 
-		vars := mux.Vars(r)
-		effectType := model.EffectType(vars["effectType"])
+		var id *string
+		var err error
 
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
@@ -60,28 +59,43 @@ func PresetMutationHandler() http.HandlerFunc {
 			writeResponse(w, 500, cserror.GetErrorResponse(err))
 		}
 
-		var id *string
 		switch effectType {
 		case model.EffectTypeParticleEffect:
 			id, err = controller.UpsertParticleEffectPreset(body)
-			if err != nil {
-				// TODO error code differentiation
-				writeResponse(w, 500, cserror.GetErrorResponse(err))
-				return
-			}
 		case model.EffectTypeDragon:
 			id, err = controller.UpsertDragonEffectPreset(body)
-			if err != nil {
-				// TODO error code differentiation
-				writeResponse(w, 500, cserror.GetErrorResponse(err))
-				return
-			}
-		default:
-			err = cserror.New(cserror.BadRequest, fmt.Sprintf("Effect type %s is invalid", effectType), nil)
-			writeResponse(w, 400, cserror.GetErrorResponse(err))
+		}
+
+		if err != nil {
+			writeResponse(w, 500, cserror.GetErrorResponse(err))
+			return
 		}
 
 		writeResponse(w, 201, []byte(*id))
+	}
+}
+
+// PresetDeletionHandler deletes a preset
+func PresetDeletionHandler(effectType model.EffectType) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		log.Print(">> Preset Deletion handler called")
+
+		vars := mux.Vars(r)
+		id := vars["id"]
+
+		err := controller.DeletePreset(effectType, id)
+
+		if err != nil {
+			switch cserror.GetErrorType(err) {
+			case cserror.DatabaseNotFound:
+				writeResponse(w, 404, cserror.GetErrorResponse(err))
+			default:
+				writeResponse(w, 500, cserror.GetErrorResponse(err))
+			}
+			return
+		}
+
+		writeResponse(w, 200, nil)
 	}
 }
 
@@ -92,38 +106,30 @@ func PresetExecutionHandler() http.HandlerFunc {
 
 		vars := mux.Vars(r)
 		action := model.Action(vars["action"])
+		var err error
 
 		preset, err := utils.FindPreset(vars["id"])
 		if err != nil {
 			writeResponse(w, 404, cserror.GetErrorResponse(err))
+			return
 		}
+
 		switch preset.(type) {
-
 		case model.ParticleEffectPreset:
-			err := controller.ExecuteParticleEffectPreset(preset.(model.ParticleEffectPreset), action)
-			if err != nil {
-				switch cserror.GetErrorType(err) {
-				case cserror.ActionNotAllowed:
-					writeResponse(w, 400, cserror.GetErrorResponse(err))
-				default:
-					writeResponse(w, 500, cserror.GetErrorResponse(err))
-				}
-
-				return
-			}
-
+			err = controller.ExecuteParticleEffectPreset(preset.(model.ParticleEffectPreset), action)
 		case model.DragonEffectPreset:
-			err := controller.ExecuteDragonEffectPreset(preset.(model.DragonEffectPreset), action)
-			if err != nil {
-				switch cserror.GetErrorType(err) {
-				case cserror.ActionNotAllowed:
-					writeResponse(w, 400, cserror.GetErrorResponse(err))
-				default:
-					writeResponse(w, 500, cserror.GetErrorResponse(err))
-				}
+			err = controller.ExecuteDragonEffectPreset(preset.(model.DragonEffectPreset), action)
+		}
 
-				return
+		if err != nil {
+			switch cserror.GetErrorType(err) {
+			case cserror.ActionNotAllowed:
+				writeResponse(w, 400, cserror.GetErrorResponse(err))
+			default:
+				writeResponse(w, 500, cserror.GetErrorResponse(err))
 			}
+
+			return
 		}
 
 		writeResponse(w, 204, nil)

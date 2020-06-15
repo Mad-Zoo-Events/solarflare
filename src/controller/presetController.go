@@ -31,7 +31,7 @@ func UpsertParticleEffectPreset(request []byte) (*string, error) {
 	}
 
 	cfg := config.Get()
-	cfg.ParticleEffectPresets = append(cfg.ParticleEffectPresets, preset)
+	cfg.ParticleEffectPresets = client.GetParticleEffectPresets()
 
 	return &preset.ID, nil
 }
@@ -56,7 +56,29 @@ func UpsertDragonEffectPreset(request []byte) (*string, error) {
 	}
 
 	cfg := config.Get()
-	cfg.DragonEffectPresets = append(cfg.DragonEffectPresets, preset)
+	cfg.DragonEffectPresets = client.GetDragonEffectPresets()
 
 	return &preset.ID, nil
+}
+
+// DeletePreset deletes a preset from the database and reloads
+func DeletePreset(effectType model.EffectType, id string) error {
+	cfg := config.Get()
+
+	var err error
+
+	switch effectType {
+	case model.EffectTypeParticleEffect:
+		err = client.DeleteParticleEffectPreset(id)
+		if err == nil {
+			cfg.ParticleEffectPresets = client.GetParticleEffectPresets()
+		}
+	case model.EffectTypeDragon:
+		err = client.DeleteDragonEffectPreset(id)
+		if err == nil {
+			cfg.DragonEffectPresets = client.GetDragonEffectPresets()
+		}
+	}
+
+	return err
 }
