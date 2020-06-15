@@ -25,10 +25,20 @@ func main() {
 	router := mux.NewRouter()
 
 	router.Handle("/health", HealthHandler()).Methods(http.MethodGet)
-	router.Handle("/status", StatusHandler()).Methods(http.MethodGet)
-	router.Handle("/presets/{id}/{action}", PresetExecutionHandler()).Methods(http.MethodPost)
-	router.Handle("/presets/{effectType}", PresetMutationHandler()).Methods(http.MethodPost, http.MethodPut)
 
+	// network status
+	router.Handle("/status", StatusHandler()).Methods(http.MethodGet)
+
+	// preset execution
+	router.Handle("/presets/{id}/{action}", PresetExecutionHandler()).Methods(http.MethodPost)
+
+	// preset management
+	router.Handle("/presets/particle", PresetMutationHandler(model.EffectTypeParticleEffect)).Methods(http.MethodPost)
+	router.Handle("/presets/dragon", PresetMutationHandler(model.EffectTypeDragon)).Methods(http.MethodPost)
+	router.Handle("/presets/particle/{id}", PresetDeletionHandler(model.EffectTypeParticleEffect)).Methods(http.MethodDelete)
+	router.Handle("/presets/dragon/{id}", PresetDeletionHandler(model.EffectTypeDragon)).Methods(http.MethodDelete)
+
+	// web UI
 	staticDir := "/static/"
 	router.PathPrefix(staticDir).Handler(http.StripPrefix(staticDir, http.FileServer(http.Dir("."+staticDir))))
 	router.Handle("/controlpanel", ControlPanelHandler()).Methods(http.MethodGet)

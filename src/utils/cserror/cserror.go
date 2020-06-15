@@ -36,7 +36,9 @@ var (
 	// DatabaseUnmarshal | failed to unmarshal data from the database
 	DatabaseUnmarshal = ErrorType{"DatabaseUnmarshal", 32}
 	// DatabaseCRUD | error when tryping to read from or write to the database
-	DatabaseCRUD = ErrorType{"DatabaseCRUD", 22}
+	DatabaseCRUD = ErrorType{"DatabaseCRUD", 33}
+	// DatabaseNotFound | the requested entry could not be found on the database
+	DatabaseNotFound = ErrorType{"DatabaseNotFound", 34}
 
 	// Internal | unknown internal error
 	Internal = ErrorType{"Internal", 90}
