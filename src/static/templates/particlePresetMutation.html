@@ -29,6 +29,9 @@
             <label>Effects</label>
             {{range $index, $element := .ParticleEffects}}
             <div class="effect-box">
+                <span class="armor-stand">
+                    <span class="delete-effect" onclick='removeEffectInput("{{$index}}")'>🗑</span>
+                </span>
                 <label>Minecraft Particle Name</label>
                 <select class="indexed-input" name="effect[{{$index}}].name">
                     {{$current := .Name}}
@@ -70,7 +73,7 @@
             </div>
             {{end}}
         </form>
-        <button class="cyan" onclick='addEffectInput("particle-preset-form");'>Add effect</button>
+        <div class="add-effect" onclick='addEffectInput("particle-preset-form");'>+</div>
     </div>
 
     <div class="footer">

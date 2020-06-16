@@ -222,37 +222,65 @@ td.type-header {
 
 /* ================ PRESET MUTATION ================ */
 .preset-edit-main {
-    margin-left: auto;
+    margin-left : auto;
     margin-right: auto;
-    width: 50em;
+    width       : 50em;
 }
 
 .preset-form {
-    display: grid;
+    display              : grid;
     grid-template-columns: min-content auto;
 }
 
-input[type=text], input[type=number], select {
-    grid-column: 2;
-    color: var(--font);
-    padding: 0.5em;
-    border: none;
+input[type=text],
+input[type=number],
+select {
+    grid-column     : 2;
+    color           : var(--font);
+    padding         : 0.5em;
+    border          : none;
     background-color: var(--dark-gray);
 }
 
 label {
-    grid-column: 1;
-    white-space: nowrap;
+    grid-column  : 1;
+    white-space  : nowrap;
     padding-right: 1em;
 }
 
 .effect-box {
-    padding: 1em;
-    grid-column: 2;
-    display: grid;
+    padding              : 1em;
+    grid-column          : 2;
+    display              : grid;
     grid-template-columns: min-content auto;
 }
 
 .effect-box:nth-of-type(even) {
     background-color: var(--darker-gray);
+}
+
+.armor-stand {
+    position: relative;
+    width   : 0;
+    height  : 0;
+}
+
+.delete-effect {
+    position : absolute;
+    top      : -0.5em;
+    left     : -1.5em;
+    width    : min-content;
+    color    : var(--red);
+    cursor   : pointer;
+    font-size: xx-large;
+}
+
+.add-effect {
+    margin    : 1em auto 0 auto;
+    width     : 50%;
+    text-align: center;
+    border    : 1px solid var(--green);
+    color     : var(--green);
+    cursor    : pointer;
+    font-size : xx-large;
 }
