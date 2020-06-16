@@ -15,6 +15,10 @@ func RunEffect(id string, effectType model.EffectType, action model.Action) erro
 		return cserror.New(cserror.ActionNotAllowed, fmt.Sprintf("Action %s is not allowed for on type %s", action, effectType), nil)
 	}
 
+	if action == model.StopEffectAction {
+		return manager.StopEffect(id)
+	}
+
 	preset, err := utils.FindPreset(id, effectType)
 	if err != nil {
 		return err

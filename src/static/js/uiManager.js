@@ -25,22 +25,51 @@ updateResponseTime = (millis) => {
 }
 
 counter = async (id, action) => {
+    if (action === "start") {
+        startCounter(id);
+    } else if (action === "stop") {
+        stopCounter(id);
+    }
+}
+
+startCounter = (id) => {
     const startButton = document.getElementById(`start-${id}`);
     var seconds = 0;
 
-    if (action === "start") {
-        startButton.disabled = true;
-        startButton.classList.add("disabled");
-        counters[id] = setInterval(() => {
-            seconds++;
-            startButton.innerHTML = seconds;
-        }, 1000);
-    } else if (action === "stop" && counters[id]) {
-        clearInterval(counters[id]);
-        startButton.disabled = false;
-        startButton.classList.remove("disabled");
-        startButton.innerHTML = "start";
+    startButton.disabled = true;
+    startButton.classList.add("disabled");
+    counters[id] = setInterval(() => {
+        seconds++;
+        startButton.innerHTML = seconds;
+    }, 1000);
+}
+
+stopCounter = (id) => {
+    if (id === "all") {
+        for (const key in counters) {
+            clearInterval(counters[key]);
+        }
+
+        const buttons = document.getElementsByClassName("start");
+        for (let i = 0; i < buttons.length; i++) {
+            resetStartButton(buttons[i]);
+        }
+
+        return;
     }
+
+    if (!counters[id]) {
+        return;
+    }
+
+    clearInterval(counters[id]);
+    resetStartButton(document.getElementById(`start-${id}`));
+}
+
+resetStartButton = async (startButton) => {
+    startButton.disabled = false;
+    startButton.classList.remove("disabled");
+    startButton.innerHTML = "start";
 }
 
 confirmDelete = (id, effectType, displayName) => {
