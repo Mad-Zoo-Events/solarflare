@@ -28,6 +28,10 @@
             <label>Effects</label>
             {{range $index, $element := .DragonEffects}}
             <div class="effect-box">
+                <span class="armor-stand">
+                    <span class="delete-effect" onclick='removeEffectInput("{{$index}}")'>🗑</span>
+                </span>
+
                 <label>Point ID</label>
                 <input class="indexed-input" name="effect[{{$index}}].pointId" type="number" value="{{.PointID}}" />
                 <br />
@@ -40,7 +44,7 @@
             <br />
             {{end}}
         </form>
-        <button class="magenta" onclick='addEffectInput("dragon-preset-form");'>Add effect</button>
+        <div class="add-effect" onclick='addEffectInput("dragon-preset-form");'>+</div>
     </div>
 
     <div class="footer">
