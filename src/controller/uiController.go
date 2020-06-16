@@ -4,18 +4,17 @@ import (
 	"html/template"
 	"net/http"
 
-	"github.com/eynorey/candyshop/src/utils/cserror"
-
 	"github.com/eynorey/candyshop/src/config"
 	"github.com/eynorey/candyshop/src/model"
+	"github.com/eynorey/candyshop/src/utils/cserror"
 )
 
 // GenerateControlPanel renders the control panel based on templates
 func GenerateControlPanel(writer http.ResponseWriter) error {
 	template, err := template.ParseFiles(
-		"static/templates/controlPanel.html",
-		"static/templates/particleEffectControl.html",
-		"static/templates/dragonEffectControl.html",
+		"static/templates/controlPanel/controlPanel.html",
+		"static/templates/controlPanel/particleEffectControl.html",
+		"static/templates/controlPanel/dragonEffectControl.html",
 	)
 	if err != nil {
 		return cserror.New(cserror.Template, "Error loading control panel templates", err)
@@ -39,7 +38,7 @@ func GenerateControlPanel(writer http.ResponseWriter) error {
 // GeneratePresetManager renders the preset management page based on templates
 func GeneratePresetManager(writer http.ResponseWriter) error {
 	template, err := template.ParseFiles(
-		"static/templates/presetManager.html",
+		"static/templates/presetManager/presetManager.html",
 	)
 	if err != nil {
 		return cserror.New(cserror.Template, "Error loading preset manager template", err)
@@ -63,7 +62,7 @@ func GeneratePresetManager(writer http.ResponseWriter) error {
 // GenerateDragonPresetMutationPage renders the dragon preset creation/edit page based on templates
 func GenerateDragonPresetMutationPage(writer http.ResponseWriter, preset *model.DragonEffectPreset) error {
 	template, err := template.ParseFiles(
-		"static/templates/dragonPresetMutation.html",
+		"static/templates/presetManager/dragonPresetMutation.html",
 	)
 	if err != nil {
 		return cserror.New(cserror.Template, "Error loading preset mutation template", err)
@@ -85,7 +84,7 @@ func GenerateDragonPresetMutationPage(writer http.ResponseWriter, preset *model.
 // GenerateParticlePresetMutationPage renders the particle effect preset creation/edit page based on templates
 func GenerateParticlePresetMutationPage(writer http.ResponseWriter, preset *model.ParticleEffectPreset) error {
 	template, err := template.ParseFiles(
-		"static/templates/particlePresetMutation.html",
+		"static/templates/presetManager/particlePresetMutation.html",
 	)
 	if err != nil {
 		return cserror.New(cserror.Template, "Error loading preset mutation template", err)

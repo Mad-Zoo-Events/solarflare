@@ -4,9 +4,9 @@ const STATUS_ENDPOINT = `${BASE_URL}/status`;
 
 var startTime;
 
-executePreset = async (id, displayName, action) => {
+executePreset = async (effectType, id, displayName, action) => {
     const request = new XMLHttpRequest();
-    request.open("POST", `${PRESETS_ENDPOINT}/${id}/${action}`);
+    request.open("POST", `${PRESETS_ENDPOINT}/${effectType}/${id}/${action}`);
     request.addEventListener('load', () => {
         if (request.status >= 200 && request.status < 400) {
             addToLog(action, displayName);

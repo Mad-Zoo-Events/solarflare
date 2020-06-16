@@ -1,4 +1,4 @@
-package controller
+package manager
 
 import (
 	"github.com/google/uuid"

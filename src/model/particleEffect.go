@@ -16,12 +16,6 @@ type ParticleEffectPreset struct {
 	UIAllowedRegionTypes     []UIRegionType `json:"-" form:"-"`
 }
 
-// UIRegionType is used for displaying region type options on the UI
-type UIRegionType struct {
-	Name        string
-	Description string
-}
-
 // ParticleEffect contains information on the effect and where to display it
 type ParticleEffect struct {
 	// Minecraft name of the particle effect
@@ -51,22 +45,93 @@ type Region struct {
 	Equation string `json:"equation,omitempty"`
 }
 
-// DragonEffectPreset is the request model for particle effects
-type DragonEffectPreset struct {
-	// Unique identifier of the preset
-	ID string `json:"id" form:"id"`
-	// Display name for the UI
-	DisplayName string `json:"displayName" form:"displayName"`
-	// Description of the preset for the UI
-	Description string `json:"description" form:"description"`
-	// List of dragon effects which are part of this preset
-	DragonEffects []DragonEffect `json:"dragonEffects" form:"effect"`
+// UIRegionType is used for displaying region type options on the UI
+type UIRegionType struct {
+	Name        string
+	Description string
 }
 
-// DragonEffect contains information on where and how to display the dragon effect
-type DragonEffect struct {
-	// Predefined point where the dragon should be displayed in the world
-	PointID int `json:"pointId" form:"pointId"`
-	// Defines whether or not the dragon should remain where it is or continuously float up
-	Static bool `json:"static" form:"static"`
+// RegionTypes is a list of all supported region types
+var RegionTypes = []UIRegionType{
+	UIRegionType{
+		Name:        "POINTS",
+		Description: "One particle at each specified point",
+	},
+	UIRegionType{
+		Name:        "CUBOID",
+		Description: "Inside a cuboid specified by two points",
+	},
+	UIRegionType{
+		Name:        "EQUATION",
+		Description: "In a shape described by an equation around one point",
+	},
+}
+
+// MinecraftParticleEffects is a list of all supported Minecraft particle effects
+var MinecraftParticleEffects = []string{
+	"BARRIER",
+	"BLOCK_CRACK",
+	"BLOCK_DUST",
+	"BUBBLE_COLUMN_UP",
+	"BUBBLE_POP",
+	"CAMPFIRE_COSY_SMOKE",
+	"CAMPFIRE_SIGNAL_SMOKE",
+	"CLOUD",
+	"COMPOSTER",
+	"CRIT",
+	"CRIT_MAGIC",
+	"CURRENT_DOWN",
+	"DAMAGE_INDICATOR",
+	"DOLPHIN",
+	"DRAGON_BREATH",
+	"DRIP_LAVA",
+	"DRIP_WATER",
+	"DRIPPING_HONEY",
+	"ENCHANTMENT_TABLE",
+	"END_ROD",
+	"EXPLOSION_HUGE",
+	"EXPLOSION_LARGE",
+	"EXPLOSION_NORMAL",
+	"FALLING_DUST",
+	"FALLING_HONEY",
+	"FALLING_LAVA",
+	"FALLING_NECTAR",
+	"FALLING_WATER",
+	"FIREWORKS_SPARK",
+	"FLAME",
+	"FLASH",
+	"HEART",
+	"ITEM_CRACK",
+	"LANDING_HONEY",
+	"LANDING_LAVA",
+	"LAVA",
+	"MOB_APPEARANCE",
+	"NAUTILUS",
+	"NOTE",
+	"PORTAL",
+	"REDSTONE",
+	"SLIME",
+	"SMOKE_LARGE",
+	"SMOKE_NORMAL",
+	"SNEEZE",
+	"SNOW_SHOVEL",
+	"SNOWBALL",
+	"SPELL",
+	"SPELL_INSTANT",
+	"SPELL_MOB",
+	"SPELL_MOB_AMBIENT",
+	"SPELL_WITCH",
+	"SPIT",
+	"SQUID_INK",
+	"SUSPENDED",
+	"SUSPENDED_DEPTH",
+	"SWEEP_ATTACK",
+	"TOTEM",
+	"TOWN_AURA",
+	"VILLAGER_ANGRY",
+	"VILLAGER_HAPPY",
+	"WATER_BUBBLE",
+	"WATER_DROP",
+	"WATER_SPLASH",
+	"WATER_WAKE",
 }
