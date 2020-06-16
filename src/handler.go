@@ -96,8 +96,10 @@ func PresetMutationUIHandler(effectType model.EffectType) http.HandlerFunc {
 
 		switch effectType {
 		case model.EffectTypeParticleEffect:
-			// id, err = controller.UpsertParticleEffectPreset(preset)
-			return
+			preset, err := utils.GetUIParticlePreset(r)
+			if err == nil {
+				_, err = controller.UpsertParticleEffectPreset(*preset)
+			}
 		case model.EffectTypeDragon:
 			preset, err := utils.GetUIDragonPreset(r)
 			if err == nil {
@@ -110,10 +112,7 @@ func PresetMutationUIHandler(effectType model.EffectType) http.HandlerFunc {
 			return
 		}
 
-		err = controller.GeneratePresetManager(w)
-		if err != nil {
-			writeResponse(w, 500, cserror.GetErrorResponse(err))
-		}
+		redirectTo(w, "/controlpanel/presets")
 	}
 }
 
@@ -209,7 +208,7 @@ func ControlPanelPresetCreationHandler(effectType model.EffectType) http.Handler
 
 		switch effectType {
 		case model.EffectTypeParticleEffect:
-			// err = controller.GenerateParticlePresetMutationPage(w, nil)
+			err = controller.GenerateParticlePresetMutationPage(w, nil)
 			return
 		case model.EffectTypeDragon:
 			err = controller.GenerateDragonPresetMutationPage(w, nil)
@@ -257,4 +256,12 @@ func writeResponse(w http.ResponseWriter, code int, body []byte) {
 	if body != nil {
 		w.Write(body)
 	}
+}
+
+func redirectTo(w http.ResponseWriter, target string) {
+	w.WriteHeader(301)
+
+	resp := "<html><head><meta http-equiv=\"Refresh\" content=\"0; url='" + target + "'\" /></head></html>"
+
+	w.Write([]byte(resp))
 }
