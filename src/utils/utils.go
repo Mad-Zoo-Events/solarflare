@@ -49,8 +49,6 @@ func GetUIParticlePreset(r *http.Request) (*model.ParticleEffectPreset, error) {
 
 	preset.TramsformFromUI()
 
-	fmt.Printf("%#v\n", preset)
-
 	return &preset, nil
 }
 
