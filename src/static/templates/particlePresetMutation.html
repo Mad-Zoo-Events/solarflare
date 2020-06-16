@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Mad Zoo Events Visual Control System</title>
+    <link rel="shortcut icon" href="/static/favicon.ico">
+    <link rel="icon" href="/static/favicon.ico">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <script type="text/javascript" src="/static/js/httpClient.js"></script>
+    <script type="text/javascript" src="/static/js/uiManager.js"></script>
+</head>
+
+<bod>
+    <div class="preset-edit-main">
+        <h1>{{if .ID}} Edit "{{.DisplayName}}" {{else}} Create New Particle Effect Preset {{end}}</h1>
+        <form class="preset-form" id="particle-preset-form" method="POST" action="/presets/particle-ui">
+            <input name="id" type="hidden" value="{{.ID}}" />
+
+            <label>Dispaly Name</label>
+            <input name="displayName" type="text" size="10" placeholder="Preset display name"
+                value="{{.DisplayName}}" />
+            <br />
+
+            <label>Description</label>
+            <input name="description" type="text" size="50" placeholder="Short description" value="{{.Description}}" />
+            <br />
+
+            <label>Effects</label>
+            {{range $index, $element := .ParticleEffects}}
+            <div class="effect-box">
+                <label>Minecraft Particle Name</label>
+                <select class="indexed-input" name="effect[{{$index}}].name">
+                    {{$current := .Name}}
+                    {{range $.UIAllowedParticleEffects}}
+                    <option value="{{.}}" {{if eq $current .}}selected{{end}}>{{.}}</option>
+                    {{end}}
+                </select>
+                <br />
+
+                <label>Display Region Type</label>
+                <select class="indexed-input" name="effect[{{$index}}].regionType">
+                    {{$current := .UIRegionRegionType}}
+                    {{range $.UIAllowedRegionTypes}}
+                    <option value="{{.Name}}" {{if eq $current .Name}}selected{{end}}>{{.Description}}</option>
+                    {{end}}
+                </select>
+                <br />
+
+                <label>Comma-separated list of point IDs</label>
+                <input class="indexed-input" name="effect[{{$index}}].pointIds" type="text" placeholder="0,1,2"
+                    value="{{.UIRegionPointIDs}}" />
+                <br />
+
+                <label>Randomize particles in the cuboid</label>
+                <input class="indexed-input" name="effect[{{$index}}].randomize" type="checkbox"
+                    {{if .UIRegionRandomize}}checked{{end}} />
+                <br />
+
+                <label>Particle density in the cuboid</label>
+                <input class="indexed-input" name="effect[{{$index}}].density" type="range" max="100" min="0" step="10"
+                    value="{{.UIRegionDensity}}" />
+                <br />
+
+                <label>Shape equation</label>
+                <input class="indexed-input" name="effect[{{$index}}].equation" type="text"
+                    placeholder="1-abs(x+y)-abs(y-x)" value="{{.UIRegionEquation}}" />
+
+                <hr />
+            </div>
+            {{end}}
+        </form>
+        <button class="cyan" onclick='addEffectInput("particle-preset-form");'>Add effect</button>
+    </div>
+
+    <div class="footer">
+        <div></div>
+        <div class="master-controls">
+            <button class="magenta" type="button"
+                onclick='document.getElementById("particle-preset-form").submit();'>Save</button>
+        </div>
+        <div class="master-controls">
+            <button class="darker-cyan" type="button" onclick='window.history.back();'>Cancel</button>
+        </div>
+    </div>
+</bod>
+
+</html>

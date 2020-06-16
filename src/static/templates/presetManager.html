@@ -38,7 +38,8 @@
             </td>
             <td class="actions-column">
                 <span class="delete-action" onclick='confirmDelete("{{.ID}}", "particle", "{{.DisplayName}}")'>🗑</span>
-                <span class="edit-action">🖉</span>
+                <span class="edit-action"
+                    onclick='window.location.href = "/controlpanel/presets/modify/particle/{{.ID}}";'>🖉</span>
             </td>
         </tr>
         {{end}}
@@ -61,7 +62,7 @@
             <td class="actions-column">
                 <span class="delete-action" onclick='confirmDelete("{{.ID}}", "dragon", "{{.DisplayName}}")'>🗑</span>
                 <span class="edit-action"
-                    onclick='window.location.href = "../controlpanel/presets/modify/dragon/{{.ID}}";'>🖉</span>
+                    onclick='window.location.href = "/controlpanel/presets/modify/dragon/{{.ID}}";'>🖉</span>
             </td>
         </tr>
         {{end}}
@@ -71,17 +72,17 @@
         <div></div>
         <div class="master-controls">
             <button class="cyan" type="button"
-                onclick='window.location.href = "../controlpanel/presets/new/particle";'>Add&nbsp;New
+                onclick='window.location.href = "/controlpanel/presets/new/particle";'>Add&nbsp;New
                 Particle&nbsp;Effect&nbsp;Preset</button>
         </div>
         <div class="master-controls">
             <button class="magenta" type="button"
-                onclick='window.location.href = "../controlpanel/presets/new/dragon";'>Add&nbsp;New
+                onclick='window.location.href = "/controlpanel/presets/new/dragon";'>Add&nbsp;New
                 Dragon&nbsp;Effect&nbsp;Preset</button>
         </div>
         <div class="master-controls">
             <button class="darker-cyan" type="button"
-                onclick='window.location.href = "../controlpanel";'>Back&nbsp;to&nbsp;Control&nbsp;Panel</button>
+                onclick='window.location.href = "/controlpanel";'>Back&nbsp;to&nbsp;Control&nbsp;Panel</button>
         </div>
     </div>
 </body>
