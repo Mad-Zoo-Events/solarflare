@@ -31,6 +31,29 @@ func FindPreset(id string) (interface{}, error) {
 	return nil, cserror.New(cserror.PresetNotFound, fmt.Sprintf("Preset with ID %s not found", id), nil)
 }
 
+// GetUIParticlePreset parses and converts a particle preset request to the candyshop format
+func GetUIParticlePreset(r *http.Request) (*model.ParticleEffectPreset, error) {
+	err := r.ParseForm()
+	if err != nil {
+		return nil, cserror.New(cserror.Encoding, "Error parsing form from UI", err)
+	}
+
+	decoder = form.NewDecoder()
+
+	var preset model.ParticleEffectPreset
+
+	err = decoder.Decode(&preset, r.PostForm)
+	if err != nil {
+		return nil, cserror.New(cserror.Encoding, "Error parsing data from UI request", err)
+	}
+
+	preset.TramsformFromUI()
+
+	fmt.Printf("%#v\n", preset)
+
+	return &preset, nil
+}
+
 // GetUIDragonPreset parses and converts a dragon preset request to the candyshop format
 func GetUIDragonPreset(r *http.Request) (*model.DragonEffectPreset, error) {
 	err := r.ParseForm()

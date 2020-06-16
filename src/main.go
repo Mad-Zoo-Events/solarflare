@@ -34,6 +34,7 @@ func main() {
 
 	// preset management
 	router.Handle("/presets/particle", PresetMutationHandler(model.EffectTypeParticleEffect)).Methods(http.MethodPost)
+	router.Handle("/presets/particle-ui", PresetMutationUIHandler(model.EffectTypeParticleEffect)).Methods(http.MethodPost)
 	router.Handle("/presets/dragon", PresetMutationHandler(model.EffectTypeDragon)).Methods(http.MethodPost)
 	router.Handle("/presets/dragon-ui", PresetMutationUIHandler(model.EffectTypeDragon)).Methods(http.MethodPost)
 	router.Handle("/presets/particle/{id}", PresetDeletionHandler(model.EffectTypeParticleEffect)).Methods(http.MethodDelete)
@@ -47,6 +48,9 @@ func main() {
 
 	router.Handle("/controlpanel/presets/new/dragon", ControlPanelPresetCreationHandler(model.EffectTypeDragon)).Methods(http.MethodGet)
 	router.Handle("/controlpanel/presets/modify/dragon/{id}", ControlPanelPresetModificationHandler(model.EffectTypeDragon)).Methods(http.MethodGet)
+
+	router.Handle("/controlpanel/presets/new/particle", ControlPanelPresetCreationHandler(model.EffectTypeParticleEffect)).Methods(http.MethodGet)
+	router.Handle("/controlpanel/presets/modify/particle/{id}", ControlPanelPresetModificationHandler(model.EffectTypeParticleEffect)).Methods(http.MethodGet)
 
 	log.Print("Starting server listening on port 5000")
 	http.ListenAndServe(":5000", router)

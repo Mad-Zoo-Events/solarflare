@@ -17,22 +17,22 @@
         <form class="preset-form" id="dragon-preset-form" method="POST" action="/presets/dragon-ui">
             <input name="id" type="hidden" value="{{.ID}}" />
 
-            <label for="name">Name</label>
-            <input name="name" type="text" size="10" placeholder="Preset name" value="{{.DisplayName}}" />
+            <label>Dispaly Name</label>
+            <input name="displayName" type="text" size="10" placeholder="Preset display name" value="{{.DisplayName}}" />
             <br />
 
-            <label for="description">Description</label>
+            <label>Description</label>
             <input name="description" type="text" size="50" placeholder="Short description" value="{{.Description}}" />
             <br />
 
             <label>Effects</label>
             {{range $index, $element := .DragonEffects}}
             <div class="effect-box">
-                <label for="effect-pointId">Point ID</label>
+                <label>Point ID</label>
                 <input class="indexed-input" name="effect[{{$index}}].pointId" type="number" value="{{.PointID}}" />
                 <br />
 
-                <label for="effect-static">Static</label>
+                <label>Static</label>
                 <input class="indexed-input" name="effect[{{$index}}].static" type="checkbox"
                     {{if .Static}}checked{{end}} />
                 <br />
@@ -40,7 +40,7 @@
             <br />
             {{end}}
         </form>
-        <button class="magenta" onclick='addDragonEffectInput();'>Add effect</button>
+        <button class="magenta" onclick='addEffectInput("dragon-preset-form");'>Add effect</button>
     </div>
 
     <div class="footer">

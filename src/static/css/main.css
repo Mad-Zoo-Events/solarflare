@@ -232,7 +232,7 @@ td.type-header {
     grid-template-columns: min-content auto;
 }
 
-input[type=text], input[type=number] {
+input[type=text], input[type=number], select {
     grid-column: 2;
     color: var(--font);
     padding: 0.5em;
@@ -247,7 +247,12 @@ label {
 }
 
 .effect-box {
+    padding: 1em;
     grid-column: 2;
     display: grid;
     grid-template-columns: min-content auto;
+}
+
+.effect-box:nth-of-type(even) {
+    background-color: var(--darker-gray);
 }

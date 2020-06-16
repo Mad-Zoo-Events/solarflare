@@ -1,59 +1,40 @@
 package model
 
-// EffectType represents the type of visual effect
-type EffectType string
-
-const (
-	// EffectTypeParticleEffect represents a particle effect
-	EffectTypeParticleEffect = EffectType("particle")
-	// EffectTypeDragon represents the dragon effect
-	EffectTypeDragon = EffectType("dragon")
-)
-
-// Action represents the action to be performed on the visual effect (e.g. start, stop, restart...)
-type Action string
-
-const (
-	// TriggerEffectAction triggers a visual effect
-	TriggerEffectAction = Action("trigger")
-	// StartEffectAction starts a visual effect
-	StartEffectAction = Action("start")
-	// RestartEffectAction restarts a visual effect
-	RestartEffectAction = Action("restart")
-	// StopEffectAction stops a visual effect
-	StopEffectAction = Action("stop")
-)
-
-// RegionType represents the regional display type for particle effects
-type RegionType string
-
-const (
-	// PointsRegionType defines a region as a list of points
-	PointsRegionType = RegionType("POINTS")
-	// CuboidRegionType defines a cuboid filled with particles at a specified density
-	CuboidRegionType = RegionType("CUBOID")
-	// EquationRegionType defines a shape described by a mathematical equation
-	EquationRegionType = RegionType("EQUATION")
-)
-
 // ParticleEffectPreset describes a particle effect preset
 type ParticleEffectPreset struct {
 	// Unique identifier of the preset
-	ID string `json:"id"`
+	ID string `json:"id" form:"id"`
 	// Display name for the UI
-	DisplayName string `json:"displayName"`
+	DisplayName string `json:"displayName" form:"displayName"`
 	// Description of the preset for the UI
-	Description string `json:"description"`
+	Description string `json:"description" form:"description"`
 	// List of particle effects which are part of this preset
-	ParticleEffects []ParticleEffect `json:"particleEffects"`
+	ParticleEffects []ParticleEffect `json:"particleEffects" form:"effect"`
+
+	// UI specific models
+	UIAllowedParticleEffects []string       `json:"-" form:"-"`
+	UIAllowedRegionTypes     []UIRegionType `json:"-" form:"-"`
+}
+
+// UIRegionType is used for displaying region type options on the UI
+type UIRegionType struct {
+	Name        string
+	Description string
 }
 
 // ParticleEffect contains information on the effect and where to display it
 type ParticleEffect struct {
 	// Minecraft name of the particle effect
-	Name string `json:"name"`
+	Name string `json:"name" form:"name"`
 	// Region information on where and how to display the effect
-	Region Region `json:"region"`
+	Region Region `json:"region" form:"-"`
+
+	// UI specific models
+	UIRegionPointIDs   string `json:"-" form:"pointIds"`
+	UIRegionRegionType string `json:"-" form:"regionType"`
+	UIRegionRandomize  bool   `json:"-" form:"randomize"`
+	UIRegionDensity    int    `json:"-" form:"density"`
+	UIRegionEquation   string `json:"-" form:"equation"`
 }
 
 // Region contains information on where and how to display the particle effect
@@ -61,13 +42,13 @@ type Region struct {
 	// List of predefined points in the Minecraft world
 	PointIDs []int `json:"pointIds"`
 	// Type of the region the effect is to be displayed in
-	RegionType RegionType `json:"type"`
+	RegionType string `json:"type"`
 	// Whether or not to randomize placement of particles within the region [for CuboidRegionType]
-	Randomize *bool `json:"randomize,omitempty"`
+	Randomize bool `json:"randomize,omitempty"`
 	// Density of the particles [for CuboidRegionType]
-	Density *float64 `json:"density,omitempty"`
+	Density float64 `json:"density,omitempty"`
 	// Equation for the shape of the effect region [for EquationRegionTyp]e
-	Equation *string `json:"equation,omitempty"`
+	Equation string `json:"equation,omitempty"`
 }
 
 // DragonEffectPreset is the request model for particle effects
@@ -75,7 +56,7 @@ type DragonEffectPreset struct {
 	// Unique identifier of the preset
 	ID string `json:"id" form:"id"`
 	// Display name for the UI
-	DisplayName string `json:"displayName" form:"name"`
+	DisplayName string `json:"displayName" form:"displayName"`
 	// Description of the preset for the UI
 	Description string `json:"description" form:"description"`
 	// List of dragon effects which are part of this preset

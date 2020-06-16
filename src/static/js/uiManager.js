@@ -50,9 +50,9 @@ confirmDelete = (id, effectType, displayName) => {
     }
 }
 
-addDragonEffectInput = () => {
+addEffectInput = (formId) => {
     const next = document.getElementsByClassName("effect-box").length;
-    const form = document.getElementById("dragon-preset-form");
+    const form = document.getElementById(formId);
     const newEffectsHolder = document.getElementsByClassName("effect-box")[0].cloneNode(true);
 
     const inputs = newEffectsHolder.getElementsByClassName("indexed-input");

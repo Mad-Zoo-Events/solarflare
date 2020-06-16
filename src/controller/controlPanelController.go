@@ -93,7 +93,10 @@ func GenerateParticlePresetMutationPage(writer http.ResponseWriter, preset *mode
 
 	if preset == nil {
 		preset = new(model.ParticleEffectPreset)
+		preset.ParticleEffects = []model.ParticleEffect{model.ParticleEffect{}}
 	}
+
+	preset.TransformToUI()
 
 	err = template.Execute(writer, *preset)
 	if err != nil {
