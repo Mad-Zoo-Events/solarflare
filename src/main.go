@@ -17,7 +17,12 @@ func load() {
 
 	cfg.ParticleEffectPresets = client.GetParticleEffectPresets()
 	cfg.DragonEffectPresets = client.GetDragonEffectPresets()
-	cfg.Servers = []model.Server{}
+	cfg.Servers = []model.Server{
+		model.Server{
+			Address: "http://3.12.169.73:8001", //stage public
+			// Address: "http://172.31.24.225:8001", //stage private
+		},
+	}
 }
 
 // writes the response header and a response body if supplied

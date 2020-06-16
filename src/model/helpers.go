@@ -39,7 +39,7 @@ func (preset *ParticleEffectPreset) TramsformFromUI() {
 		}
 
 		effect.Region = Region{
-			Density:    float64(effect.UIRegionDensity) / 100,
+			Density:    convertDensity(float64(effect.UIRegionDensity), true),
 			Equation:   effect.UIRegionEquation,
 			PointIDs:   pointIDs,
 			Randomize:  effect.UIRegionRandomize,
@@ -60,7 +60,7 @@ func (preset *ParticleEffectPreset) TransformToUI() {
 		}
 		pointIDs = strings.TrimSuffix(pointIDs, ",")
 
-		effect.UIRegionDensity = int(region.Density * 100)
+		effect.UIRegionDensity = int(convertDensity(region.Density, false))
 		effect.UIRegionEquation = region.Equation
 		effect.UIRegionPointIDs = pointIDs
 		effect.UIRegionRandomize = region.Randomize
@@ -69,4 +69,15 @@ func (preset *ParticleEffectPreset) TransformToUI() {
 		preset.UIAllowedParticleEffects = MinecraftParticleEffects
 		preset.UIAllowedRegionTypes = RegionTypes
 	}
+}
+
+func convertDensity(density float64, fromUI bool) float64 {
+	m := 0.000100909
+	n := -9.09091E-05
+
+	if fromUI {
+		return m*density + n
+	}
+
+	return (density - n) / m
 }

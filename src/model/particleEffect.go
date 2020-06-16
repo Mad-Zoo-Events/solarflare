@@ -34,14 +34,14 @@ type ParticleEffect struct {
 // Region contains information on where and how to display the particle effect
 type Region struct {
 	// List of predefined points in the Minecraft world
-	PointIDs []int `json:"pointIds"`
+	PointIDs []int `json:"pointIDs"`
 	// Type of the region the effect is to be displayed in
 	RegionType string `json:"type"`
 	// Whether or not to randomize placement of particles within the region [for CuboidRegionType]
 	Randomize bool `json:"randomize,omitempty"`
 	// Density of the particles [for CuboidRegionType]
-	Density float64 `json:"density,omitempty"`
-	// Equation for the shape of the effect region [for EquationRegionTyp]e
+	Density float64 `json:"density,omitempty"` // MIN 0.00001 | MAX 0.01
+	// Equation for the shape of the effect region [for EquationRegionType]
 	Equation string `json:"equation,omitempty"`
 }
 

@@ -10,8 +10,9 @@ import (
 )
 
 const (
-	endpointParticleEffect = "/effects/particle"
-	endpointDragon         = "/effects/dragon"
+	particleEffectEndpoint = "/effects/particle"
+	dragonEffectEndpoint   = "/effects/dragon"
+	stopEndpoint           = "/effects/stop"
 )
 
 // RunParticleEffect compiles a particle effect request and executes it on all servers
@@ -21,7 +22,7 @@ func RunParticleEffect(preset model.ParticleEffectPreset, action model.Action) e
 		return cserror.New(cserror.Encoding, "Failed to marshal request", err)
 	}
 
-	endpoint := fmt.Sprintf("%s/%s?id=%s", endpointParticleEffect, string(action), preset.ID)
+	endpoint := fmt.Sprintf("%s/%s?id=%s", particleEffectEndpoint, string(action), preset.ID)
 
 	return client.ExecuteEffect(endpoint, body)
 }
@@ -33,7 +34,13 @@ func RunDragonEffect(preset model.DragonEffectPreset, action model.Action) error
 		return cserror.New(cserror.Encoding, "Failed to marshal request", err)
 	}
 
-	endpoint := fmt.Sprintf("%s/%s?id=%s", endpointParticleEffect, string(action), preset.ID)
+	endpoint := fmt.Sprintf("%s/%s?id=%s", dragonEffectEndpoint, string(action), preset.ID)
 
 	return client.ExecuteEffect(endpoint, body)
+}
+
+// StopEffect stops an effect by ID
+func StopEffect(id string) error {
+	endpoint := fmt.Sprintf("%s?id=%s", stopEndpoint, id)
+	return client.ExecuteEffect(endpoint, nil)
 }
