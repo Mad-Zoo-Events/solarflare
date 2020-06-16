@@ -26,6 +26,9 @@ var (
 func init() {
 	sess = session.Must(session.NewSessionWithOptions(session.Options{
 		SharedConfigState: session.SharedConfigEnable,
+		Config: aws.Config{
+			Region: aws.String("us-east-2"),
+		},
 	}))
 
 	db = dynamodb.New(sess)
