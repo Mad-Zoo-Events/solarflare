@@ -1,0 +1,12 @@
+{{define "particleEffectControl"}}
+<div class="visual-control">
+    <span title="{{.Description}}">{{.DisplayName}}</span>
+
+    <button type="button" class="trigger"
+        onclick='executePreset("particle", "{{.ID}}", "{{.DisplayName}}", "trigger")'>trigger</button>
+    <button type="button" class="start" id="start-{{.ID}}"
+        onclick='executePreset("particle", "{{.ID}}", "{{.DisplayName}}", "start")'>start</button>
+    <button type="button" class="stop"
+        onclick='executePreset("particle", "{{.ID}}", "{{.DisplayName}}", "stop")'>stop</button>
+</div>
+{{end}}

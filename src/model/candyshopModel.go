@@ -1,5 +1,7 @@
 package model
 
+// ================ INTERNAL MODELS ================ //
+
 // ControlPanel holds all data to be rendered on the control panel website
 type ControlPanel struct {
 	ParticleEffectPresets []ParticleEffectPreset
@@ -12,6 +14,30 @@ type ControlPanel struct {
 type Server struct {
 	Address string
 }
+
+// EffectType represents the type of visual effect
+type EffectType string
+
+const (
+	// EffectTypeParticleEffect represents a particle effect
+	EffectTypeParticleEffect = EffectType("particle")
+	// EffectTypeDragon represents the dragon effect
+	EffectTypeDragon = EffectType("dragon")
+)
+
+// Action represents the action to be performed on the visual effect (e.g. start, stop, restart...)
+type Action string
+
+const (
+	// TriggerEffectAction triggers a visual effect
+	TriggerEffectAction = Action("trigger")
+	// StartEffectAction starts a visual effect
+	StartEffectAction = Action("start")
+	// RestartEffectAction restarts a visual effect
+	RestartEffectAction = Action("restart")
+	// StopEffectAction stops a visual effect
+	StopEffectAction = Action("stop")
+)
 
 // ================ RESPONSE MODELS ================ //
 

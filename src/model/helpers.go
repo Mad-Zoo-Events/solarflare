@@ -5,6 +5,26 @@ import (
 	"strings"
 )
 
+// IsAllowedOn checks whether the effect type passed is valid for the given action
+func (action Action) IsAllowedOn(effectType EffectType) bool {
+	switch effectType {
+	case EffectTypeParticleEffect:
+		if action == TriggerEffectAction ||
+			action == StartEffectAction ||
+			action == StopEffectAction {
+			return true
+		}
+	case EffectTypeDragon:
+		if action == StartEffectAction ||
+			action == RestartEffectAction ||
+			action == StopEffectAction {
+			return true
+		}
+	}
+
+	return false
+}
+
 // TramsformFromUI transforms UI specific values to the main model
 func (preset *ParticleEffectPreset) TramsformFromUI() {
 	for i := range preset.ParticleEffects {
