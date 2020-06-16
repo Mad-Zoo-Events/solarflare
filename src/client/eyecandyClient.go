@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"sync"
 	"time"
@@ -19,8 +18,6 @@ func ExecuteEffect(endpoint string, body []byte) error {
 	cfg := config.Get()
 	client := &http.Client{Timeout: time.Duration(1 * time.Second)}
 	errCount := 0
-
-	log.Println(string(body))
 
 	var wg sync.WaitGroup
 
