@@ -188,13 +188,13 @@ td.type-header {
 }
 
 .type-header-cyan {
-    background-color: var(--cyan);
-    color           : var(--darker-cyan);
+    color           : var(--cyan);
+    background-color: var(--background);
 }
 
 .type-header-magenta {
-    background-color: var(--magenta);
-    color           : var(--darker-magenta);
+    color           : var(--magenta);
+    background-color: var(--background)
 }
 
 .id-column {
