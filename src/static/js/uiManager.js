@@ -63,3 +63,7 @@ addEffectInput = (formId) => {
 
     form.appendChild(newEffectsHolder);
 }
+
+removeEffectInput = (index) => {
+    document.getElementsByClassName("effect-box")[Number(index)].remove();
+}
