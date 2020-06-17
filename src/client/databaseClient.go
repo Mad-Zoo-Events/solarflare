@@ -14,8 +14,12 @@ import (
 )
 
 const (
-	particleEffectPresetsTable = "presets_particle-effects"
-	dragonEffectPresetsTable   = "presets_dragon-effects"
+	// ParticleEffectPresetsTable table where particle effects are stored
+	ParticleEffectPresetsTable = "presets_particle-effects"
+	// DragonEffectPresetsTable table where dragon effects are stored
+	DragonEffectPresetsTable = "presets_dragon-effects"
+	// TimeshiftEffectPresetsTable table where timeshift effects are stored
+	TimeshiftEffectPresetsTable = "presets_timeshift-effects"
 )
 
 var (
@@ -36,7 +40,7 @@ func init() {
 
 // GetParticleEffectPresets retrieves all particle effect presets from the database
 func GetParticleEffectPresets() (presets []model.ParticleEffectPreset) {
-	tableName := particleEffectPresetsTable
+	tableName := ParticleEffectPresetsTable
 
 	result, err := db.Scan(&dynamodb.ScanInput{
 		TableName: &tableName,
@@ -63,7 +67,7 @@ func GetParticleEffectPresets() (presets []model.ParticleEffectPreset) {
 
 // GetDragonEffectPresets retrieves all dragon effect presets from the database
 func GetDragonEffectPresets() (presets []model.DragonEffectPreset) {
-	tableName := dragonEffectPresetsTable
+	tableName := DragonEffectPresetsTable
 
 	result, err := db.Scan(&dynamodb.ScanInput{
 		TableName: &tableName,
@@ -88,13 +92,38 @@ func GetDragonEffectPresets() (presets []model.DragonEffectPreset) {
 	return
 }
 
-// UpsertParticleEffectPreset adds a particle effect preset to the database
-func UpsertParticleEffectPreset(preset model.ParticleEffectPreset) error {
-	tableName := particleEffectPresetsTable
+// GetTimeshiftEffectPresets retrieves all timeshift effect presets from the database
+func GetTimeshiftEffectPresets() (presets []model.TimeshiftEffectPreset) {
+	tableName := TimeshiftEffectPresetsTable
 
+	result, err := db.Scan(&dynamodb.ScanInput{
+		TableName: &tableName,
+	})
+	if err != nil {
+		cserror.New(cserror.DatabaseCRUD, "Failed to read timeshift effect presets", err)
+		return nil
+	}
+
+	for _, item := range result.Items {
+		preset := model.TimeshiftEffectPreset{}
+
+		err = dynamodbattribute.UnmarshalMap(item, &preset)
+		if err != nil {
+			cserror.New(cserror.DatabaseUnmarshal, "Failed to unmarshal timeshift effect preset", err)
+			continue
+		}
+
+		presets = append(presets, preset)
+	}
+
+	return
+}
+
+// UpsertEffectPreset adds an effect preset to the database
+func UpsertEffectPreset(tableName string, preset interface{}) error {
 	item, err := dynamodbattribute.MarshalMap(preset)
 	if err != nil {
-		return cserror.New(cserror.DatabaseMarshal, "Failed to marshal particle effect preset", err)
+		return cserror.New(cserror.DatabaseMarshal, "Failed to marshal effect preset", err)
 	}
 
 	_, err = db.PutItem(&dynamodb.PutItemInput{
@@ -102,43 +131,14 @@ func UpsertParticleEffectPreset(preset model.ParticleEffectPreset) error {
 		TableName: aws.String(tableName),
 	})
 	if err != nil {
-		return cserror.New(cserror.DatabaseCRUD, "Failed to upsert particle effect preset", err)
+		return cserror.New(cserror.DatabaseCRUD, "Failed to upsert effect preset", err)
 	}
 
 	return nil
 }
 
-// UpsertDragonEffectPreset adds a dragon effect preset to the database
-func UpsertDragonEffectPreset(preset model.DragonEffectPreset) error {
-	tableName := dragonEffectPresetsTable
-
-	item, err := dynamodbattribute.MarshalMap(preset)
-	if err != nil {
-		return cserror.New(cserror.DatabaseMarshal, "Failed to marshal dragon effect preset", err)
-	}
-
-	_, err = db.PutItem(&dynamodb.PutItemInput{
-		Item:      item,
-		TableName: aws.String(tableName),
-	})
-	if err != nil {
-		return cserror.New(cserror.DatabaseCRUD, "Failed to upsert dragon effect preset", err)
-	}
-
-	return nil
-}
-
-// DeleteParticleEffectPreset deletes a particle effect preset from the database
-func DeleteParticleEffectPreset(id string) error {
-	return deleteEffectPreset(id, particleEffectPresetsTable)
-}
-
-// DeleteDragonEffectPreset deletes a dragon effect preset from the database
-func DeleteDragonEffectPreset(id string) error {
-	return deleteEffectPreset(id, dragonEffectPresetsTable)
-}
-
-func deleteEffectPreset(id, tableName string) error {
+// DeleteEffectPreset deletes an effect preset from the database
+func DeleteEffectPreset(tableName, id string) error {
 	_, err := db.DeleteItem(&dynamodb.DeleteItemInput{
 		Key: map[string]*dynamodb.AttributeValue{
 			"id": {

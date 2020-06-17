@@ -14,7 +14,7 @@ func UpsertParticleEffectPreset(preset model.ParticleEffectPreset) (*string, err
 		preset.ID = uuid.New().String()
 	}
 
-	err := client.UpsertParticleEffectPreset(preset)
+	err := client.UpsertEffectPreset(client.ParticleEffectPresetsTable, preset)
 	if err != nil {
 		return nil, err
 	}
@@ -31,7 +31,7 @@ func UpsertDragonEffectPreset(preset model.DragonEffectPreset) (*string, error) 
 		preset.ID = uuid.New().String()
 	}
 
-	err := client.UpsertDragonEffectPreset(preset)
+	err := client.UpsertEffectPreset(client.DragonEffectPresetsTable, preset)
 	if err != nil {
 		return nil, err
 	}
@@ -50,12 +50,12 @@ func DeletePreset(effectType model.EffectType, id string) error {
 
 	switch effectType {
 	case model.EffectTypeParticle:
-		err = client.DeleteParticleEffectPreset(id)
+		err = client.DeleteEffectPreset(client.ParticleEffectPresetsTable, id)
 		if err == nil {
 			cfg.ParticleEffectPresets = client.GetParticleEffectPresets()
 		}
 	case model.EffectTypeDragon:
-		err = client.DeleteDragonEffectPreset(id)
+		err = client.DeleteEffectPreset(client.DragonEffectPresetsTable, id)
 		if err == nil {
 			cfg.DragonEffectPresets = client.GetDragonEffectPresets()
 		}
