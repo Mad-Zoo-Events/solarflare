@@ -12,7 +12,7 @@ import (
 // UpsertPresetAPI inserts a new preset or updates an existing one from an API request
 func UpsertPresetAPI(effectType model.EffectType, body []byte) (*string, error) {
 	switch effectType {
-	case model.EffectTypeParticleEffect:
+	case model.EffectTypeParticle:
 		preset := model.ParticleEffectPreset{}
 
 		if err := json.Unmarshal(body, &preset); err != nil {
@@ -36,7 +36,7 @@ func UpsertPresetAPI(effectType model.EffectType, body []byte) (*string, error) 
 // UpsertPresetUI inserts a new preset or updates an existing one from a UI request
 func UpsertPresetUI(effectType model.EffectType, values url.Values) (*string, error) {
 	switch effectType {
-	case model.EffectTypeParticleEffect:
+	case model.EffectTypeParticle:
 		preset := model.ParticleEffectPreset{}
 
 		if err := unmarshalParticlePreset(&preset, values); err != nil {

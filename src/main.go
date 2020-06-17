@@ -53,15 +53,16 @@ func main() {
 	router.Handle("/status", StatusHandler()).Methods(http.MethodGet)
 
 	// effect execution
-	router.Handle("/presets/particle/{id}/{action}", EffectHandler(model.EffectTypeParticleEffect)).Methods(http.MethodPost)
+	router.Handle("/presets/particle/{id}/{action}", EffectHandler(model.EffectTypeParticle)).Methods(http.MethodPost)
 	router.Handle("/presets/dragon/{id}/{action}", EffectHandler(model.EffectTypeDragon)).Methods(http.MethodPost)
+	router.Handle("/presets/timeshift/{id}/{action}", EffectHandler(model.EffectTypeDragon)).Methods(http.MethodPost)
 
 	// preset management
-	router.Handle("/presets/particle", PresetMutationHandler(model.EffectTypeParticleEffect)).Methods(http.MethodPost)
-	router.Handle("/presets/particle-ui", PresetMutationUIHandler(model.EffectTypeParticleEffect)).Methods(http.MethodPost)
+	router.Handle("/presets/particle", PresetMutationHandler(model.EffectTypeParticle)).Methods(http.MethodPost)
+	router.Handle("/presets/particle-ui", PresetMutationUIHandler(model.EffectTypeParticle)).Methods(http.MethodPost)
 	router.Handle("/presets/dragon", PresetMutationHandler(model.EffectTypeDragon)).Methods(http.MethodPost)
 	router.Handle("/presets/dragon-ui", PresetMutationUIHandler(model.EffectTypeDragon)).Methods(http.MethodPost)
-	router.Handle("/presets/particle/{id}", PresetDeletionHandler(model.EffectTypeParticleEffect)).Methods(http.MethodDelete)
+	router.Handle("/presets/particle/{id}", PresetDeletionHandler(model.EffectTypeParticle)).Methods(http.MethodDelete)
 	router.Handle("/presets/dragon/{id}", PresetDeletionHandler(model.EffectTypeDragon)).Methods(http.MethodDelete)
 
 	// web UI
@@ -72,10 +73,10 @@ func main() {
 	router.Handle("/controlpanel/presets", CPPresetManagerHandler()).Methods(http.MethodGet)
 
 	router.Handle("/controlpanel/presets/new/dragon", CPPresetCreationHandler(model.EffectTypeDragon)).Methods(http.MethodGet)
-	router.Handle("/controlpanel/presets/new/particle", CPPresetCreationHandler(model.EffectTypeParticleEffect)).Methods(http.MethodGet)
+	router.Handle("/controlpanel/presets/new/particle", CPPresetCreationHandler(model.EffectTypeParticle)).Methods(http.MethodGet)
 
 	router.Handle("/controlpanel/presets/modify/dragon/{id}", CPPresetModificationHandler(model.EffectTypeDragon)).Methods(http.MethodGet)
-	router.Handle("/controlpanel/presets/modify/particle/{id}", CPPresetModificationHandler(model.EffectTypeParticleEffect)).Methods(http.MethodGet)
+	router.Handle("/controlpanel/presets/modify/particle/{id}", CPPresetModificationHandler(model.EffectTypeParticle)).Methods(http.MethodGet)
 
 	log.Print("Starting server listening on port 5000")
 	http.ListenAndServe(":5000", router)

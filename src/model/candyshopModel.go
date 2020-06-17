@@ -19,8 +19,8 @@ type Server struct {
 type EffectType string
 
 const (
-	// EffectTypeParticleEffect represents a particle effect
-	EffectTypeParticleEffect = EffectType("particle")
+	// EffectTypeParticle represents a particle effect
+	EffectTypeParticle = EffectType("particle")
 	// EffectTypeDragon represents the dragon effect
 	EffectTypeDragon = EffectType("dragon")
 )

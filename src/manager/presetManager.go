@@ -49,7 +49,7 @@ func DeletePreset(effectType model.EffectType, id string) error {
 	var err error
 
 	switch effectType {
-	case model.EffectTypeParticleEffect:
+	case model.EffectTypeParticle:
 		err = client.DeleteParticleEffectPreset(id)
 		if err == nil {
 			cfg.ParticleEffectPresets = client.GetParticleEffectPresets()
