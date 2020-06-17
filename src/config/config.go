@@ -6,9 +6,10 @@ import (
 
 // Config contains the server configuration
 type Config struct {
-	ParticleEffectPresets []model.ParticleEffectPreset
-	DragonEffectPresets   []model.DragonEffectPreset
-	Servers               []model.Server
+	ParticleEffectPresets  []model.ParticleEffectPreset
+	DragonEffectPresets    []model.DragonEffectPreset
+	TimeshiftEffectPresets []model.TimeshiftEffectPreset
+	Servers                []model.Server
 }
 
 var cfg Config
