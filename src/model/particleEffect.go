@@ -2,13 +2,9 @@ package model
 
 // ParticleEffectPreset describes a particle effect preset
 type ParticleEffectPreset struct {
-	// Unique identifier of the preset
-	ID string `json:"id" form:"id"`
-	// Display name for the UI
-	DisplayName string `json:"displayName" form:"displayName"`
-	// Description of the preset for the UI
-	Description string `json:"description" form:"description"`
-	// List of particle effects which are part of this preset
+	ID              string           `json:"id" form:"id"`
+	DisplayName     string           `json:"displayName" form:"displayName"`
+	Description     string           `json:"description" form:"description"`
 	ParticleEffects []ParticleEffect `json:"particleEffects" form:"effect"`
 
 	// UI specific models
