@@ -8,7 +8,7 @@ import (
 // IsAllowedOn checks whether the effect type passed is valid for the given action
 func (action Action) IsAllowedOn(effectType EffectType) bool {
 	switch effectType {
-	case EffectTypeParticleEffect:
+	case EffectTypeParticle:
 		if action == TriggerEffectAction ||
 			action == StartEffectAction ||
 			action == StopEffectAction {

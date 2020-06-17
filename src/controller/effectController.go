@@ -25,7 +25,7 @@ func RunEffect(id string, effectType model.EffectType, action model.Action) erro
 	}
 
 	switch effectType {
-	case model.EffectTypeParticleEffect:
+	case model.EffectTypeParticle:
 		return manager.RunParticleEffect(preset.(model.ParticleEffectPreset), action)
 	case model.EffectTypeDragon:
 		return manager.RunDragonEffect(preset.(model.DragonEffectPreset), action)
