@@ -25,6 +25,12 @@ func FindPreset(id string, effectType model.EffectType) (interface{}, error) {
 				return p, nil
 			}
 		}
+	case model.EffectTypeTimeshift:
+		for _, p := range cfg.TimeshiftEffectPresets {
+			if p.ID == id {
+				return p, nil
+			}
+		}
 	}
 
 	return nil, cserror.New(cserror.PresetNotFound, fmt.Sprintf("Preset with ID %s not found", id), nil)

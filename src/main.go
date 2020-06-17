@@ -55,15 +55,20 @@ func main() {
 	// effect execution
 	router.Handle("/presets/particle/{id}/{action}", EffectHandler(model.EffectTypeParticle)).Methods(http.MethodPost)
 	router.Handle("/presets/dragon/{id}/{action}", EffectHandler(model.EffectTypeDragon)).Methods(http.MethodPost)
-	router.Handle("/presets/timeshift/{id}/{action}", EffectHandler(model.EffectTypeDragon)).Methods(http.MethodPost)
+	router.Handle("/presets/timeshift/{id}/{action}", EffectHandler(model.EffectTypeTimeshift)).Methods(http.MethodPost)
 
 	// preset management
-	router.Handle("/presets/particle", PresetMutationHandler(model.EffectTypeParticle)).Methods(http.MethodPost)
 	router.Handle("/presets/particle-ui", PresetMutationUIHandler(model.EffectTypeParticle)).Methods(http.MethodPost)
-	router.Handle("/presets/dragon", PresetMutationHandler(model.EffectTypeDragon)).Methods(http.MethodPost)
 	router.Handle("/presets/dragon-ui", PresetMutationUIHandler(model.EffectTypeDragon)).Methods(http.MethodPost)
+	router.Handle("/presets/timeshift-ui", PresetMutationUIHandler(model.EffectTypeTimeshift)).Methods(http.MethodPost)
+
+	router.Handle("/presets/particle", PresetMutationHandler(model.EffectTypeParticle)).Methods(http.MethodPost)
+	router.Handle("/presets/dragon", PresetMutationHandler(model.EffectTypeDragon)).Methods(http.MethodPost)
+	router.Handle("/presets/timeshift", PresetMutationHandler(model.EffectTypeTimeshift)).Methods(http.MethodPost)
+
 	router.Handle("/presets/particle/{id}", PresetDeletionHandler(model.EffectTypeParticle)).Methods(http.MethodDelete)
 	router.Handle("/presets/dragon/{id}", PresetDeletionHandler(model.EffectTypeDragon)).Methods(http.MethodDelete)
+	router.Handle("/presets/timeshift/{id}", PresetDeletionHandler(model.EffectTypeTimeshift)).Methods(http.MethodDelete)
 
 	// web UI
 	staticDir := "/static/"
@@ -72,11 +77,13 @@ func main() {
 	router.Handle("/controlpanel", ControlPanelHandler()).Methods(http.MethodGet)
 	router.Handle("/controlpanel/presets", CPPresetManagerHandler()).Methods(http.MethodGet)
 
-	router.Handle("/controlpanel/presets/new/dragon", CPPresetCreationHandler(model.EffectTypeDragon)).Methods(http.MethodGet)
 	router.Handle("/controlpanel/presets/new/particle", CPPresetCreationHandler(model.EffectTypeParticle)).Methods(http.MethodGet)
+	router.Handle("/controlpanel/presets/new/dragon", CPPresetCreationHandler(model.EffectTypeDragon)).Methods(http.MethodGet)
+	router.Handle("/controlpanel/presets/new/timeshift", CPPresetCreationHandler(model.EffectTypeTimeshift)).Methods(http.MethodGet)
 
-	router.Handle("/controlpanel/presets/modify/dragon/{id}", CPPresetModificationHandler(model.EffectTypeDragon)).Methods(http.MethodGet)
 	router.Handle("/controlpanel/presets/modify/particle/{id}", CPPresetModificationHandler(model.EffectTypeParticle)).Methods(http.MethodGet)
+	router.Handle("/controlpanel/presets/modify/dragon/{id}", CPPresetModificationHandler(model.EffectTypeDragon)).Methods(http.MethodGet)
+	router.Handle("/controlpanel/presets/modify/timeshift/{id}", CPPresetModificationHandler(model.EffectTypeTimeshift)).Methods(http.MethodGet)
 
 	log.Print("Starting server listening on port 5000")
 	http.ListenAndServe(":5000", router)
