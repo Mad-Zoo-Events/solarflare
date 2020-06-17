@@ -44,7 +44,7 @@ func CPPresetCreationHandler(effectType model.EffectType) http.HandlerFunc {
 		var err error
 
 		switch effectType {
-		case model.EffectTypeParticleEffect:
+		case model.EffectTypeParticle:
 			err = controller.GenerateParticlePresetMutationPage(w, nil)
 		case model.EffectTypeDragon:
 			err = controller.GenerateDragonPresetMutationPage(w, nil)
@@ -70,7 +70,7 @@ func CPPresetModificationHandler(effectType model.EffectType) http.HandlerFunc {
 		}
 
 		switch effectType {
-		case model.EffectTypeParticleEffect:
+		case model.EffectTypeParticle:
 			p := preset.(model.ParticleEffectPreset)
 			err = controller.GenerateParticlePresetMutationPage(w, &p)
 		case model.EffectTypeDragon:

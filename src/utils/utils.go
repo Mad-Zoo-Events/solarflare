@@ -13,7 +13,7 @@ func FindPreset(id string, effectType model.EffectType) (interface{}, error) {
 	cfg := config.Get()
 
 	switch effectType {
-	case model.EffectTypeParticleEffect:
+	case model.EffectTypeParticle:
 		for _, p := range cfg.ParticleEffectPresets {
 			if p.ID == id {
 				return p, nil
