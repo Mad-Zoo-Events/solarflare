@@ -8,7 +8,7 @@ import (
 	"github.com/eynorey/candyshop/src/model"
 )
 
-// UpsertParticleEffectPreset stores a new particle effect preset in the database
+// UpsertParticleEffectPreset creates or updates a particle effect preset in the database
 func UpsertParticleEffectPreset(preset model.ParticleEffectPreset) (*string, error) {
 	if preset.ID == "" {
 		preset.ID = uuid.New().String()
@@ -25,8 +25,25 @@ func UpsertParticleEffectPreset(preset model.ParticleEffectPreset) (*string, err
 	return &preset.ID, nil
 }
 
-// UpsertDragonEffectPreset stores a new dragon effect preset in the database
+// UpsertDragonEffectPreset creates or updates a dragon effect preset in the database
 func UpsertDragonEffectPreset(preset model.DragonEffectPreset) (*string, error) {
+	if preset.ID == "" {
+		preset.ID = uuid.New().String()
+	}
+
+	err := client.UpsertEffectPreset(client.DragonEffectPresetsTable, preset)
+	if err != nil {
+		return nil, err
+	}
+
+	cfg := config.Get()
+	cfg.DragonEffectPresets = client.GetDragonEffectPresets()
+
+	return &preset.ID, nil
+}
+
+// UpsertTimeshiftEffectPreset creates or updates a timeshift effect preset in the database
+func UpsertTimeshiftEffectPreset(preset model.DragonEffectPreset) (*string, error) {
 	if preset.ID == "" {
 		preset.ID = uuid.New().String()
 	}
@@ -58,6 +75,11 @@ func DeletePreset(effectType model.EffectType, id string) error {
 		err = client.DeleteEffectPreset(client.DragonEffectPresetsTable, id)
 		if err == nil {
 			cfg.DragonEffectPresets = client.GetDragonEffectPresets()
+		}
+	case model.EffectTypeTimeshift:
+		err = client.DeleteEffectPreset(client.TimeshiftEffectPresetsTable, id)
+		if err == nil {
+			cfg.TimeshiftEffectPresets = client.GetTimeshiftEffectPresets()
 		}
 	}
 

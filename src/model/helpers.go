@@ -20,6 +20,11 @@ func (action Action) IsAllowedOn(effectType EffectType) bool {
 			action == StopEffectAction {
 			return true
 		}
+	case EffectTypeTimeshift:
+		if action == StartEffectAction ||
+			action == StopEffectAction {
+			return true
+		}
 	}
 
 	return false

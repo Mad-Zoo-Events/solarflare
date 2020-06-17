@@ -10,9 +10,10 @@ import (
 )
 
 const (
-	particleEffectEndpoint = "/effects/particle"
-	dragonEffectEndpoint   = "/effects/dragon"
-	stopEndpoint           = "/effects/stop"
+	particleEffectEndpoint  = "/effects/particle"
+	dragonEffectEndpoint    = "/effects/dragon"
+	timeshiftEffectEndpoint = "/effects/time"
+	stopEndpoint            = "/effects/stop"
 )
 
 // RunParticleEffect compiles a particle effect request and executes it on all servers
@@ -35,6 +36,18 @@ func RunDragonEffect(preset model.DragonEffectPreset, action model.Action) error
 	}
 
 	endpoint := fmt.Sprintf("%s/%s?id=%s", dragonEffectEndpoint, string(action), preset.ID)
+
+	return client.ExecuteEffect(endpoint, body)
+}
+
+// RunTimeshiftEffect compiles a timeshift effect request and executes it on all servers
+func RunTimeshiftEffect(preset model.TimeshiftEffectPreset, action model.Action) error {
+	body, err := json.Marshal(preset.TimeshiftEffect)
+	if err != nil {
+		return cserror.New(cserror.Encoding, "Failed to marshal request", err)
+	}
+
+	endpoint := fmt.Sprintf("%s/%s?id=%s", timeshiftEffectEndpoint, string(action), preset.ID)
 
 	return client.ExecuteEffect(endpoint, body)
 }

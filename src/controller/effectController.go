@@ -29,6 +29,8 @@ func RunEffect(id string, effectType model.EffectType, action model.Action) erro
 		return manager.RunParticleEffect(preset.(model.ParticleEffectPreset), action)
 	case model.EffectTypeDragon:
 		return manager.RunDragonEffect(preset.(model.DragonEffectPreset), action)
+	case model.EffectTypeTimeshift:
+		return manager.RunTimeshiftEffect(preset.(model.TimeshiftEffectPreset), action)
 	}
 
 	return cserror.New(cserror.Internal, "Invalid effect type: "+string(effectType), nil)
