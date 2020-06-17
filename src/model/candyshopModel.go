@@ -51,8 +51,6 @@ type StatusResponse struct {
 
 // Error returns an error
 type Error struct {
-	// code
-	Code int64 `json:"code"`
-	// message
+	Code    int64  `json:"code"`
 	Message string `json:"message"`
 }

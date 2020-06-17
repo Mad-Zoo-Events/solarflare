@@ -48,6 +48,8 @@ func CPPresetCreationHandler(effectType model.EffectType) http.HandlerFunc {
 			err = controller.GenerateParticlePresetMutationPage(w, nil)
 		case model.EffectTypeDragon:
 			err = controller.GenerateDragonPresetMutationPage(w, nil)
+		case model.EffectTypeTimeshift:
+			// err = controller.GenerateTimeshiftPresetMutationPage(w, nil)
 		}
 
 		if err != nil {
@@ -76,6 +78,9 @@ func CPPresetModificationHandler(effectType model.EffectType) http.HandlerFunc {
 		case model.EffectTypeDragon:
 			p := preset.(model.DragonEffectPreset)
 			err = controller.GenerateDragonPresetMutationPage(w, &p)
+		case model.EffectTypeTimeshift:
+			// p := preset.(model.TimeshiftEffectPreset)
+			// err = controller.GenerateTimeshiftPresetMutationPage(w, &p)
 		}
 
 		if err != nil {

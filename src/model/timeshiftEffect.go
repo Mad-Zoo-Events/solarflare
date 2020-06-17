@@ -14,5 +14,5 @@ type TimeshiftEffectPreset struct {
 // TimeshiftEffect contains parameters for the timeshift effect
 type TimeshiftEffect struct {
 	// Amount of ticks to skip per server tick; 1000 ticks = one hour
-	Amount int `json:"amount" form:"-"`
+	Amount int `json:"amount"`
 }

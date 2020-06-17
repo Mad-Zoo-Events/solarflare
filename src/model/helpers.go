@@ -86,3 +86,13 @@ func convertDensity(density float64, fromUI bool) float64 {
 
 	return (density - n) / m
 }
+
+// TramsformFromUI transforms UI specific values to the main model
+func (preset *TimeshiftEffectPreset) TramsformFromUI() {
+	preset.TimeshiftEffect.Amount = preset.UIPercentOfDayToSkipPerSecond * 240
+}
+
+// TransformToUI transforms sets UI specific values from the main model
+func (preset *TimeshiftEffectPreset) TransformToUI() {
+	preset.UIPercentOfDayToSkipPerSecond = preset.TimeshiftEffect.Amount / 240
+}
