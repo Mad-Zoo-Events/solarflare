@@ -4,8 +4,9 @@ package model
 
 // ControlPanel holds all data to be rendered on the control panel website
 type ControlPanel struct {
-	ParticleEffectPresets []ParticleEffectPreset
-	DragonEffectPresets   []DragonEffectPreset
+	ParticleEffectPresets  []ParticleEffectPreset
+	DragonEffectPresets    []DragonEffectPreset
+	TimeshiftEffectPresets []TimeshiftEffectPreset
 
 	RegisteredServerCount int
 }
@@ -23,6 +24,8 @@ const (
 	EffectTypeParticle = EffectType("particle")
 	// EffectTypeDragon represents the dragon effect
 	EffectTypeDragon = EffectType("dragon")
+	// EffectTypeTimeshift represents the timeshift effect
+	EffectTypeTimeshift = EffectType("time")
 )
 
 // Action represents the action to be performed on the visual effect (e.g. start, stop, restart...)
