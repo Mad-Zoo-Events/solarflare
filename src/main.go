@@ -54,9 +54,7 @@ func main() {
 	router.Handle("/status", StatusHandler()).Methods(http.MethodGet)
 
 	// effect execution
-	router.Handle("/effects/particle/{id}/{action}", EffectHandler(model.EffectTypeParticle)).Methods(http.MethodPost)
-	router.Handle("/effects/dragon/{id}/{action}", EffectHandler(model.EffectTypeDragon)).Methods(http.MethodPost)
-	router.Handle("/effects/timeshift/{id}/{action}", EffectHandler(model.EffectTypeTimeshift)).Methods(http.MethodPost)
+	router.Handle("/effects/{effectType}/{id}/{action}", EffectHandler()).Methods(http.MethodPost)
 
 	// preset management
 	router.Handle("/presets/{effectType}-ui", PresetMutationUIHandler()).Methods(http.MethodPost)

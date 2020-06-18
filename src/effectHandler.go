@@ -12,20 +12,23 @@ import (
 )
 
 // EffectHandler handles requests to execute effect presets
-func EffectHandler(effectType model.EffectType) http.HandlerFunc {
+func EffectHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		log.Print(">> Effect handler called")
 
 		vars := mux.Vars(r)
-		action := model.Action(vars["action"])
-		id := vars["id"]
+		var (
+			action     = model.Action(vars["action"])
+			id         = vars["id"]
+			effectType = model.EffectType(vars["effectType "])
+		)
 
 		err := controller.RunEffect(id, effectType, action)
 		if err != nil {
 			switch cserror.GetErrorType(err) {
 			case cserror.PresetNotFound:
 				writeResponse(w, 404, cserror.GetErrorResponse(err))
-			case cserror.ActionNotAllowed:
+			case cserror.ActionNotAllowed, cserror.InvalidEffectType:
 				writeResponse(w, 400, cserror.GetErrorResponse(err))
 			default:
 				writeResponse(w, 500, cserror.GetErrorResponse(err))
