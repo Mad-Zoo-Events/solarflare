@@ -33,5 +33,5 @@ func RunEffect(id string, effectType model.EffectType, action model.Action) erro
 		return manager.RunTimeshiftEffect(preset.(model.TimeshiftEffectPreset), action)
 	}
 
-	return cserror.New(cserror.Internal, "Invalid effect type: "+string(effectType), nil)
+	return cserror.New(cserror.InvalidEffectType, "Invalid effect type: "+string(effectType), nil)
 }

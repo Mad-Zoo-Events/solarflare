@@ -1,12 +1,13 @@
 const BASE_URL = `${window.location.origin}`;
+const EFFECTS_ENDPOINT = `${BASE_URL}/effects`;
 const PRESETS_ENDPOINT = `${BASE_URL}/presets`;
 const STATUS_ENDPOINT = `${BASE_URL}/status`;
 
 var startTime;
 
-executePreset = async (effectType, id, displayName, action) => {
+doEffect = async (effectType, id, displayName, action) => {
     const request = new XMLHttpRequest();
-    request.open("POST", `${PRESETS_ENDPOINT}/${effectType}/${id}/${action}`);
+    request.open("POST", `${EFFECTS_ENDPOINT}/${effectType}/${id}/${action}`);
     request.addEventListener('load', () => {
         if (request.status >= 200 && request.status < 400) {
             addToLog(action, displayName);
@@ -21,7 +22,7 @@ executePreset = async (effectType, id, displayName, action) => {
     request.send();
 }
 
-doStatusUpdateRequest = async () => {
+doStatusUpdate = async () => {
     const request = new XMLHttpRequest();
     request.open("GET", STATUS_ENDPOINT);
     request.addEventListener('load', () => {

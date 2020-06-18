@@ -3,10 +3,10 @@
     <span title="{{.Description}}">{{.DisplayName}}</span>
 
     <button type="button" class="start" id="start-{{.ID}}"
-        onclick='executePreset("dragon", "{{.ID}}", "{{.DisplayName}}", "start")'>start</button>
+        onclick='doEffect("dragon", "{{.ID}}", "{{.DisplayName}}", "start")'>start</button>
     <button type="button" class="restart"
-        onclick='executePreset("dragon", "{{.ID}}", "{{.DisplayName}}", "restart")'>restart</button>
+        onclick='doEffect("dragon", "{{.ID}}", "{{.DisplayName}}", "restart")'>restart</button>
     <button type="button" class="stop"
-        onclick='executePreset("dragon", "{{.ID}}", "{{.DisplayName}}", "stop")'>stop</button>
+        onclick='doEffect("dragon", "{{.ID}}", "{{.DisplayName}}", "stop")'>stop</button>
 </div>
 {{end}}

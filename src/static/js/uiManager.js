@@ -3,7 +3,7 @@ const STATUS_UPDATE_INTERVAL = 30000;
 var counters = new Map();
 
 init = () => {
-    setInterval(doStatusUpdateRequest, STATUS_UPDATE_INTERVAL);
+    setInterval(doStatusUpdate, STATUS_UPDATE_INTERVAL);
 }
 
 addToLog = (action, displayName, errMsg) => {
