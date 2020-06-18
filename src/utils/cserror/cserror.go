@@ -19,8 +19,10 @@ var (
 	BadRequest = ErrorType{"BadRequest", 10}
 	// PresetNotFound | requested preset does not exist
 	PresetNotFound = ErrorType{"PresetNotFound", 11}
-	// ActionNotAllowed | requested action is not allowed for the effect typer
+	// ActionNotAllowed | requested action is not allowed for the effect type
 	ActionNotAllowed = ErrorType{"ActionNotAllowed", 12}
+	// InvalidEffectType | effect type does not exist
+	InvalidEffectType = ErrorType{"InvalidEffectType", 13}
 
 	// Eyecandy | received error response from Eyecandy
 	Eyecandy = ErrorType{"Eyecandy", 20}

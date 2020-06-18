@@ -54,22 +54,14 @@ func main() {
 	router.Handle("/status", StatusHandler()).Methods(http.MethodGet)
 
 	// effect execution
-	router.Handle("/presets/particle/{id}/{action}", EffectHandler(model.EffectTypeParticle)).Methods(http.MethodPost)
-	router.Handle("/presets/dragon/{id}/{action}", EffectHandler(model.EffectTypeDragon)).Methods(http.MethodPost)
-	router.Handle("/presets/timeshift/{id}/{action}", EffectHandler(model.EffectTypeTimeshift)).Methods(http.MethodPost)
+	router.Handle("/effects/particle/{id}/{action}", EffectHandler(model.EffectTypeParticle)).Methods(http.MethodPost)
+	router.Handle("/effects/dragon/{id}/{action}", EffectHandler(model.EffectTypeDragon)).Methods(http.MethodPost)
+	router.Handle("/effects/timeshift/{id}/{action}", EffectHandler(model.EffectTypeTimeshift)).Methods(http.MethodPost)
 
 	// preset management
-	router.Handle("/presets/particle-ui", PresetMutationUIHandler(model.EffectTypeParticle)).Methods(http.MethodPost)
-	router.Handle("/presets/dragon-ui", PresetMutationUIHandler(model.EffectTypeDragon)).Methods(http.MethodPost)
-	router.Handle("/presets/timeshift-ui", PresetMutationUIHandler(model.EffectTypeTimeshift)).Methods(http.MethodPost)
-
-	router.Handle("/presets/particle", PresetMutationHandler(model.EffectTypeParticle)).Methods(http.MethodPost)
-	router.Handle("/presets/dragon", PresetMutationHandler(model.EffectTypeDragon)).Methods(http.MethodPost)
-	router.Handle("/presets/timeshift", PresetMutationHandler(model.EffectTypeTimeshift)).Methods(http.MethodPost)
-
-	router.Handle("/presets/particle/{id}", PresetDeletionHandler(model.EffectTypeParticle)).Methods(http.MethodDelete)
-	router.Handle("/presets/dragon/{id}", PresetDeletionHandler(model.EffectTypeDragon)).Methods(http.MethodDelete)
-	router.Handle("/presets/timeshift/{id}", PresetDeletionHandler(model.EffectTypeTimeshift)).Methods(http.MethodDelete)
+	router.Handle("/presets/{effectType}-ui", PresetMutationUIHandler()).Methods(http.MethodPost)
+	router.Handle("/presets/{effectType}", PresetMutationHandler()).Methods(http.MethodPost)
+	router.Handle("/presets/{effectType}/{id}", PresetDeletionHandler()).Methods(http.MethodDelete)
 
 	// web UI
 	staticDir := "/static/"

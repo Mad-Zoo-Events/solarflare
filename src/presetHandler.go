@@ -6,14 +6,12 @@ import (
 	"net/http"
 
 	"github.com/eynorey/candyshop/src/controller"
-	"github.com/eynorey/candyshop/src/manager"
-	"github.com/eynorey/candyshop/src/model"
 	"github.com/eynorey/candyshop/src/utils/cserror"
 	"github.com/gorilla/mux"
 )
 
 // PresetMutationHandler handles requests to create a new preset
-func PresetMutationHandler(effectType model.EffectType) http.HandlerFunc {
+func PresetMutationHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		log.Print(">> Preset Mutation handler called")
 
@@ -24,9 +22,16 @@ func PresetMutationHandler(effectType model.EffectType) http.HandlerFunc {
 			return
 		}
 
-		id, err := controller.UpsertPresetAPI(effectType, body)
+		vars := mux.Vars(r)
+
+		id, err := controller.UpsertPresetAPI(vars["effectType"], body)
 		if err != nil {
-			writeResponse(w, 500, cserror.GetErrorResponse(err))
+			switch cserror.GetErrorType(err) {
+			case cserror.InvalidEffectType:
+				writeResponse(w, 400, cserror.GetErrorResponse(err))
+			default:
+				writeResponse(w, 500, cserror.GetErrorResponse(err))
+			}
 			return
 		}
 
@@ -35,7 +40,7 @@ func PresetMutationHandler(effectType model.EffectType) http.HandlerFunc {
 }
 
 // PresetMutationUIHandler handles requests from the UI to create a new preset
-func PresetMutationUIHandler(effectType model.EffectType) http.HandlerFunc {
+func PresetMutationUIHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		log.Print(">> Preset Mutation UI handler called")
 
@@ -46,9 +51,16 @@ func PresetMutationUIHandler(effectType model.EffectType) http.HandlerFunc {
 			return
 		}
 
-		_, err = controller.UpsertPresetUI(effectType, r.PostForm)
+		vars := mux.Vars(r)
+
+		_, err = controller.UpsertPresetUI(vars["effectType"], r.PostForm)
 		if err != nil {
-			writeResponse(w, 500, cserror.GetErrorResponse(err))
+			switch cserror.GetErrorType(err) {
+			case cserror.InvalidEffectType:
+				writeResponse(w, 400, cserror.GetErrorResponse(err))
+			default:
+				writeResponse(w, 500, cserror.GetErrorResponse(err))
+			}
 			return
 		}
 
@@ -57,23 +69,22 @@ func PresetMutationUIHandler(effectType model.EffectType) http.HandlerFunc {
 }
 
 // PresetDeletionHandler deletes a preset
-func PresetDeletionHandler(effectType model.EffectType) http.HandlerFunc {
+func PresetDeletionHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		log.Print(">> Preset Deletion handler called")
 
 		vars := mux.Vars(r)
-		id := vars["id"]
 
-		err := manager.DeletePreset(effectType, id)
-
+		err := controller.DeletePreset(vars["effectType"], vars["id"])
 		if err != nil {
 			switch cserror.GetErrorType(err) {
 			case cserror.DatabaseNotFound:
 				writeResponse(w, 404, cserror.GetErrorResponse(err))
+			case cserror.InvalidEffectType:
+				writeResponse(w, 400, cserror.GetErrorResponse(err))
 			default:
 				writeResponse(w, 500, cserror.GetErrorResponse(err))
 			}
-
 			return
 		}
 
