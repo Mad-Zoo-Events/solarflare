@@ -13,8 +13,8 @@
 
 <bod>
     <div class="preset-edit-main">
-        <h1>{{if .ID}} Edit "{{.DisplayName}}" {{else}} Create New Dragon Preset {{end}}</h1>
-        <form class="preset-form" id="dragon-preset-form" method="POST" action="/presets/dragon-ui">
+        <h1>{{if .ID}} Edit "{{.DisplayName}}" {{else}} Create New Timeshift Preset {{end}}</h1>
+        <form class="preset-form" id="timeshift-preset-form" method="POST" action="/presets/timeshift-ui">
             <input name="id" type="hidden" value="{{.ID}}" />
 
             <label>Display Name</label>
@@ -26,32 +26,18 @@
             <input name="description" type="text" size="50" placeholder="Short description" value="{{.Description}}" />
             <br />
 
-            <label>Effects</label>
-            {{range $index, $element := .DragonEffects}}
-            <div class="effect-box">
-                <span class="armor-stand">
-                    <span class="delete-effect" onclick='removeEffectInput("{{$index}}")'>🗑</span>
-                </span>
-
-                <label>Point ID</label>
-                <input class="indexed-input" name="effect[{{$index}}].pointId" type="number" value="{{.PointID}}" />
-                <br />
-
-                <label>Static</label>
-                <input class="indexed-input" name="effect[{{$index}}].static" type="checkbox"
-                    {{if .Static}}checked{{end}} />
-                <br />
-            </div>
+            <label>Skip <span id="timeshift-range"></span>% of Minecraft day per second</label>
+            <input name="percentToSkip" type="range" max="100" min="-100" step="1" placeholder="0"
+                value="{{.UIPercentOfDayToSkipPerSecond}}"
+                onchange='updateRangeValue("timeshift-range", this.value);' />
             <br />
-            {{end}}
         </form>
-        <div class="add-effect" onclick='addEffectInput("dragon-preset-form");'>+</div>
     </div>
 
     <div class="footer">
         <div></div>
         <button class="cyan" type="button"
-            onclick='document.getElementById("dragon-preset-form").submit();'>Save</button>
+            onclick='document.getElementById("timeshift-preset-form").submit();'>Save</button>
         <div class="master-controls">
             <button class="darker-cyan" type="button" onclick='window.history.back();'>Cancel</button>
         </div>

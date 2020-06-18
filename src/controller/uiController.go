@@ -15,6 +15,7 @@ func GenerateControlPanel(writer http.ResponseWriter) error {
 		"static/templates/controlPanel/controlPanel.html",
 		"static/templates/controlPanel/particleEffectControl.html",
 		"static/templates/controlPanel/dragonEffectControl.html",
+		"static/templates/controlPanel/timeshiftEffectControl.html",
 	)
 	if err != nil {
 		return cserror.New(cserror.Template, "Error loading control panel templates", err)
@@ -22,9 +23,10 @@ func GenerateControlPanel(writer http.ResponseWriter) error {
 
 	cfg := config.Get()
 	data := model.ControlPanel{
-		ParticleEffectPresets: cfg.ParticleEffectPresets,
-		DragonEffectPresets:   cfg.DragonEffectPresets,
-		RegisteredServerCount: len(cfg.Servers),
+		ParticleEffectPresets:  cfg.ParticleEffectPresets,
+		DragonEffectPresets:    cfg.DragonEffectPresets,
+		TimeshiftEffectPresets: cfg.TimeshiftEffectPresets,
+		RegisteredServerCount:  len(cfg.Servers),
 	}
 
 	err = template.Execute(writer, data)
@@ -46,14 +48,38 @@ func GeneratePresetManager(writer http.ResponseWriter) error {
 
 	cfg := config.Get()
 	data := model.ControlPanel{
-		ParticleEffectPresets: cfg.ParticleEffectPresets,
-		DragonEffectPresets:   cfg.DragonEffectPresets,
-		RegisteredServerCount: len(cfg.Servers),
+		ParticleEffectPresets:  cfg.ParticleEffectPresets,
+		DragonEffectPresets:    cfg.DragonEffectPresets,
+		TimeshiftEffectPresets: cfg.TimeshiftEffectPresets,
+		RegisteredServerCount:  len(cfg.Servers),
 	}
 
 	err = template.Execute(writer, data)
 	if err != nil {
 		return cserror.New(cserror.Template, "Error running preset manager template", err)
+	}
+
+	return nil
+}
+
+// GenerateParticlePresetMutationPage renders the particle effect preset creation/edit page based on templates
+func GenerateParticlePresetMutationPage(writer http.ResponseWriter, preset *model.ParticleEffectPreset) error {
+	template, err := template.ParseFiles(
+		"static/templates/presetManager/particlePresetMutation.html",
+	)
+	if err != nil {
+		return cserror.New(cserror.Template, "Error loading preset mutation template", err)
+	}
+
+	if preset == nil {
+		preset = new(model.ParticleEffectPreset)
+		preset.ParticleEffects = []model.ParticleEffect{model.ParticleEffect{}}
+		preset.TransformToUI()
+	}
+
+	err = template.Execute(writer, *preset)
+	if err != nil {
+		return cserror.New(cserror.Template, "Error running preset mutation templates", err)
 	}
 
 	return nil
@@ -81,21 +107,19 @@ func GenerateDragonPresetMutationPage(writer http.ResponseWriter, preset *model.
 	return nil
 }
 
-// GenerateParticlePresetMutationPage renders the particle effect preset creation/edit page based on templates
-func GenerateParticlePresetMutationPage(writer http.ResponseWriter, preset *model.ParticleEffectPreset) error {
+// GenerateTimeshiftPresetMutationPage renders the timeshift preset creation/edit page based on templates
+func GenerateTimeshiftPresetMutationPage(writer http.ResponseWriter, preset *model.TimeshiftEffectPreset) error {
 	template, err := template.ParseFiles(
-		"static/templates/presetManager/particlePresetMutation.html",
+		"static/templates/presetManager/timeshiftPresetMutation.html",
 	)
 	if err != nil {
 		return cserror.New(cserror.Template, "Error loading preset mutation template", err)
 	}
 
 	if preset == nil {
-		preset = new(model.ParticleEffectPreset)
-		preset.ParticleEffects = []model.ParticleEffect{model.ParticleEffect{}}
+		preset = new(model.TimeshiftEffectPreset)
+		preset.TransformToUI()
 	}
-
-	preset.TransformToUI()
 
 	err = template.Execute(writer, *preset)
 	if err != nil {

@@ -43,18 +43,18 @@ func UpsertDragonEffectPreset(preset model.DragonEffectPreset) (*string, error) 
 }
 
 // UpsertTimeshiftEffectPreset creates or updates a timeshift effect preset in the database
-func UpsertTimeshiftEffectPreset(preset model.DragonEffectPreset) (*string, error) {
+func UpsertTimeshiftEffectPreset(preset model.TimeshiftEffectPreset) (*string, error) {
 	if preset.ID == "" {
 		preset.ID = uuid.New().String()
 	}
 
-	err := client.UpsertEffectPreset(client.DragonEffectPresetsTable, preset)
+	err := client.UpsertEffectPreset(client.TimeshiftEffectPresetsTable, preset)
 	if err != nil {
 		return nil, err
 	}
 
 	cfg := config.Get()
-	cfg.DragonEffectPresets = client.GetDragonEffectPresets()
+	cfg.TimeshiftEffectPresets = client.GetTimeshiftEffectPresets()
 
 	return &preset.ID, nil
 }

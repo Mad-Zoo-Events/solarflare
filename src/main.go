@@ -17,10 +17,12 @@ func load() {
 
 	cfg.ParticleEffectPresets = client.GetParticleEffectPresets()
 	cfg.DragonEffectPresets = client.GetDragonEffectPresets()
+	cfg.TimeshiftEffectPresets = client.GetTimeshiftEffectPresets()
 	cfg.Servers = []model.Server{
 		model.Server{
+			Address: "http://3.133.229.78:8001", //hospital public
 			// Address: "http://3.12.169.73:8001", //stage public
-			Address: "http://172.31.24.225:8001", //stage private
+			// Address: "http://172.31.24.225:8001", //stage private
 		},
 	}
 }

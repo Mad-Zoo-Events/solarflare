@@ -1,16 +1,17 @@
 :root {
-    --background    : #161616;
-    --dark-gray     : #333;
-    --darker-gray   : #222;
-    --gray          : gray;
-    --font          : #dfffff;
-    --green         : #44ff66;
-    --orange        : #ffaa44;
-    --red           : #ff4466;
-    --cyan          : #1ba1e2;
-    --magenta       : #d80073;
-    --darker-magenta: #52002c;
-    --darker-cyan   : #0b3c55;
+    --background      : #161616;
+    --background-alpha: rgba(22, 22, 22, 0.9);
+    --dark-gray       : #333;
+    --darker-gray     : #222;
+    --gray            : gray;
+    --font            : #dfffff;
+    --green           : #0eaf2c;
+    --orange          : #f5a700;
+    --red             : #ec2323;
+    --cyan            : #1ba1e2;
+    --magenta         : #b90383;
+    --darker-magenta  : #52002c;
+    --darker-cyan     : #0b3c55;
 }
 
 body {
@@ -42,12 +43,16 @@ body {
     font-variant: small-caps;
 }
 
-.cyan {
+span.cyan {
     color: var(--cyan);
 }
 
-.magenta {
+span.magenta {
     color: var(--magenta);
+}
+
+span.orange {
+    color: var(--orange);
 }
 
 hr {
@@ -99,6 +104,12 @@ button.magenta {
     border          : 2px solid var(--magenta);
 }
 
+button.orange {
+    color           : var(--font);
+    background-color: var(--orange);
+    border          : 2px solid var(--orange);
+}
+
 button.darker-cyan {
     color           : var(--font);
     background-color: var(--darker-cyan);
@@ -114,13 +125,17 @@ button.disabled {
 
 /* ================ FOOTER ================ */
 .footer {
-    position: absolute;
-    bottom  : 0.5em;
-    right   : 0.5em;
-    left    : 0.5em;
+    position: fixed;
+    bottom  : 0em;
+    right   : 0em;
+    left    : 0em;
+    padding : 0.5em;
 
     display              : grid;
-    grid-template-columns: auto min-content min-content min-content;
+    grid-template-columns: auto max-content max-content;
+    gap                  : 1em;
+
+    background-color: var(--background-alpha);
 }
 
 #log-window {
@@ -135,10 +150,15 @@ button.disabled {
     padding    : 0 1em;
 }
 
+.footer-buttons {
+    display              : grid;
+    grid-template-columns: max-content max-content max-content;
+    gap                  : 1em;
+}
+
 .master-controls {
     padding    : 0 1em;
     border-left: 2px dashed var(--gray);
-    width      : min-content;
 }
 
 .log-message {
@@ -155,9 +175,13 @@ button.disabled {
 
 /* ================ PRESET MANAGER ================ */
 .preset-table {
-    width           : 100%;
+    max-width       : 100em;
+    min-width       : 50%;
+    margin-left     : auto;
+    margin-right    : auto;
     background-color: var(--dark-gray);
     border-collapse : collapse;
+    margin-bottom   : 10em;
 }
 
 .preset-table thead {
@@ -169,7 +193,9 @@ button.disabled {
 }
 
 .preset-table thead td {
-    padding: 1em 0.5em;
+    padding      : 1em 0.5em;
+    border-top   : 2px solid var(--font);
+    border-bottom: 2px solid var(--font);
 }
 
 .preset-table td {
@@ -181,20 +207,26 @@ button.disabled {
 }
 
 td.type-header {
-    font-variant: small-caps;
-    font-weight : bold;
-    text-align  : center;
-    padding     : 0.5em;
-}
-
-.type-header-cyan {
-    color           : var(--cyan);
+    font-variant    : small-caps;
+    font-weight     : bold;
+    text-align      : center;
+    padding         : 0.5em;
     background-color: var(--background);
 }
 
+.type-header-cyan {
+    color        : var(--cyan);
+    border-bottom: 2px solid var(--cyan);
+}
+
 .type-header-magenta {
-    color           : var(--magenta);
-    background-color: var(--background)
+    color        : var(--magenta);
+    border-bottom: 2px solid var(--magenta);
+}
+
+.type-header-orange {
+    color        : var(--orange);
+    border-bottom: 2px solid var(--orange);
 }
 
 .id-column {
@@ -203,7 +235,7 @@ td.type-header {
 
 .effects-column {
     display              : grid;
-    grid-template-columns: min-content auto auto auto;
+    grid-template-columns: min-content 13em 6em min-content;
     white-space          : nowrap;
 }
 
@@ -222,9 +254,10 @@ td.type-header {
 
 /* ================ PRESET MUTATION ================ */
 .preset-edit-main {
-    margin-left : auto;
-    margin-right: auto;
-    width       : 50em;
+    margin-left  : auto;
+    margin-right : auto;
+    width        : 50em;
+    margin-bottom: 10em;
 }
 
 .preset-form {
