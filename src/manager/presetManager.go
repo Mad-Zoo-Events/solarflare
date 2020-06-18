@@ -59,29 +59,7 @@ func UpsertTimeshiftEffectPreset(preset model.TimeshiftEffectPreset) (*string, e
 	return &preset.ID, nil
 }
 
-// DeletePreset deletes a preset from the database and reloads
-func DeletePreset(effectType model.EffectType, id string) error {
-	cfg := config.Get()
-
-	var err error
-
-	switch effectType {
-	case model.EffectTypeParticle:
-		err = client.DeleteEffectPreset(client.ParticleEffectPresetsTable, id)
-		if err == nil {
-			cfg.ParticleEffectPresets = client.GetParticleEffectPresets()
-		}
-	case model.EffectTypeDragon:
-		err = client.DeleteEffectPreset(client.DragonEffectPresetsTable, id)
-		if err == nil {
-			cfg.DragonEffectPresets = client.GetDragonEffectPresets()
-		}
-	case model.EffectTypeTimeshift:
-		err = client.DeleteEffectPreset(client.TimeshiftEffectPresetsTable, id)
-		if err == nil {
-			cfg.TimeshiftEffectPresets = client.GetTimeshiftEffectPresets()
-		}
-	}
-
-	return err
+// DeletePreset deletes a preset from the database
+func DeletePreset(tableName, id string) error {
+	return client.DeleteEffectPreset(tableName, id)
 }
