@@ -28,6 +28,14 @@ func UpsertPresetAPI(effectType model.EffectType, body []byte) (*string, error) 
 		}
 
 		return manager.UpsertDragonEffectPreset(preset)
+	case model.EffectTypeTimeshift:
+		preset := model.TimeshiftEffectPreset{}
+
+		if err := json.Unmarshal(body, &preset); err != nil {
+			return nil, cserror.New(cserror.Encoding, "Error unmarshalling timeshift effect preset request", err)
+		}
+
+		return manager.UpsertTimeshiftEffectPreset(preset)
 	}
 
 	return nil, cserror.New(cserror.Internal, "Invalid effect type: "+string(effectType), nil)
@@ -51,6 +59,13 @@ func UpsertPresetUI(effectType model.EffectType, values url.Values) (*string, er
 			return nil, err
 		}
 		return manager.UpsertDragonEffectPreset(preset)
+	case model.EffectTypeTimeshift:
+		preset := model.TimeshiftEffectPreset{}
+
+		if err := unmarshalTimeshiftPreset(&preset, values); err != nil {
+			return nil, err
+		}
+		return manager.UpsertTimeshiftEffectPreset(preset)
 	}
 
 	return nil, cserror.New(cserror.Internal, "Invalid effect type: "+string(effectType), nil)

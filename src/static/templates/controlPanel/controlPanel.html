@@ -17,12 +17,21 @@
         {{range .ParticleEffectPresets}}
         {{template "particleEffectControl" .}}
         {{end}}
+        <span class="vr"></span>
     </div>
     <hr />
     <div class="controls-holder">
         <span class="controls-header magenta">Dragon Effects</span>
         {{range .DragonEffectPresets}}
         {{template "dragonControl" .}}
+        {{end}}
+        <span class="vr"></span>
+    </div>
+    <hr />
+    <div class="controls-holder">
+        <span class="controls-header orange">Timeshift Effects</span>
+        {{range .TimeshiftEffectPresets}}
+        {{template "timeshiftControl" .}}
         {{end}}
         <span class="vr"></span>
     </div>
@@ -50,11 +59,10 @@
             </table>
         </div>
         <div class="master-controls">
-            <button class="stop" type="button" onclick='executePreset("particle", "all", "stop all", "stop")'>stop&nbsp;all</button>
-        </div>
-        <div class="master-controls">
-            <button class="darker-cyan" type="button"
-                onclick='window.location.href = "controlpanel/presets";'>Manage Presets</button>
+            <button class="stop" type="button"
+                onclick='executePreset("particle", "all", "stop all", "stop")'>stop&nbsp;all</button>
+            <button class="darker-cyan" type="button" onclick='window.location.href = "controlpanel/presets";'>Manage
+                Presets</button>
         </div>
     </div>
 </body>
