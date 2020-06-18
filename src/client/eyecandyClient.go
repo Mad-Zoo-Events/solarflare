@@ -16,7 +16,7 @@ import (
 // ExecuteEffect executes an effect on all servers
 func ExecuteEffect(endpoint string, body []byte) error {
 	cfg := config.Get()
-	client := &http.Client{Timeout: time.Duration(1 * time.Second)}
+	client := &http.Client{Timeout: time.Duration(5 * time.Second)}
 	errCount := 0
 
 	var wg sync.WaitGroup
