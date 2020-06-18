@@ -59,6 +59,8 @@ func GetParticleEffectPresets() (presets []model.ParticleEffectPreset) {
 			continue
 		}
 
+		preset.TransformToUI()
+
 		presets = append(presets, preset)
 	}
 
@@ -112,6 +114,8 @@ func GetTimeshiftEffectPresets() (presets []model.TimeshiftEffectPreset) {
 			cserror.New(cserror.DatabaseUnmarshal, "Failed to unmarshal timeshift effect preset", err)
 			continue
 		}
+
+		preset.TransformToUI()
 
 		presets = append(presets, preset)
 	}
