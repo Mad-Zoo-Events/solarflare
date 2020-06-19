@@ -40,7 +40,7 @@ func UpsertPresetAPI(effectType string, body []byte) (*string, error) {
 		return manager.UpsertTimeshiftEffectPreset(preset)
 	}
 
-	return nil, cserror.New(cserror.InvalidEffectType, "Invalid effect type: "+effectType, nil)
+	return nil, cserror.New(cserror.InvalidEffectType, effectType, nil)
 }
 
 // UpsertPresetUI inserts a new preset or updates an existing one from a UI request
@@ -72,7 +72,7 @@ func UpsertPresetUI(effectType string, values url.Values) (*string, error) {
 		return manager.UpsertTimeshiftEffectPreset(preset)
 	}
 
-	return nil, cserror.New(cserror.InvalidEffectType, "Invalid effect type: "+effectType, nil)
+	return nil, cserror.New(cserror.InvalidEffectType, effectType, nil)
 }
 
 // DeletePreset deletes a preset and reloads
@@ -97,7 +97,7 @@ func DeletePreset(effectType, id string) error {
 			cfg.TimeshiftEffectPresets = client.GetTimeshiftEffectPresets()
 		}
 	default:
-		err = cserror.New(cserror.InvalidEffectType, "Invalid effect type: "+effectType, nil)
+		err = cserror.New(cserror.InvalidEffectType, effectType, nil)
 	}
 
 	return err

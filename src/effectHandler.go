@@ -18,12 +18,12 @@ func EffectHandler() http.HandlerFunc {
 
 		vars := mux.Vars(r)
 		var (
-			action     = model.Action(vars["action"])
+			action     = vars["action"]
 			id         = vars["id"]
-			effectType = model.EffectType(vars["effectType "])
+			effectType = vars["effectType"]
 		)
 
-		err := controller.RunEffect(id, effectType, action)
+		err := controller.RunEffect(id, model.EffectType(effectType), model.Action(action))
 		if err != nil {
 			switch cserror.GetErrorType(err) {
 			case cserror.PresetNotFound:

@@ -39,7 +39,7 @@
             <td class="actions-column">
                 <span class="delete-action" onclick='confirmDelete("{{.ID}}", "particle", "{{.DisplayName}}")'>🗑</span>
                 <span class="edit-action"
-                    onclick='window.location.href = "/controlpanel/presets/modify/particle/{{.ID}}";'>🖉</span>
+                    onclick='navigate(CP_PRESETS_ENDPOINT+"/particle/modify/{{.ID}}");'>🖉</span>
             </td>
         </tr>
         {{end}}
@@ -61,8 +61,7 @@
             </td>
             <td class="actions-column">
                 <span class="delete-action" onclick='confirmDelete("{{.ID}}", "dragon", "{{.DisplayName}}")'>🗑</span>
-                <span class="edit-action"
-                    onclick='window.location.href = "/controlpanel/presets/modify/dragon/{{.ID}}";'>🖉</span>
+                <span class="edit-action" onclick='navigate(CP_PRESETS_ENDPOINT+"/dragon/modify/{{.ID}}");'>🖉</span>
             </td>
         </tr>
         {{end}}
@@ -81,9 +80,10 @@
                 <span></span>
             </td>
             <td class="actions-column">
-                <span class="delete-action" onclick='confirmDelete("{{.ID}}", "timeshift", "{{.DisplayName}}")'>🗑</span>
+                <span class="delete-action"
+                    onclick='confirmDelete("{{.ID}}", "timeshift", "{{.DisplayName}}")'>🗑</span>
                 <span class="edit-action"
-                    onclick='window.location.href = "/controlpanel/presets/modify/timeshift/{{.ID}}";'>🖉</span>
+                    onclick='navigate(CP_PRESETS_ENDPOINT+"/timeshift/modify/{{.ID}}");'>🖉</span>
             </td>
         </tr>
         {{end}}
@@ -93,17 +93,17 @@
         <div></div>
         <div class="footer-buttons">
             <button class="cyan" type="button"
-                onclick='window.location.href = "/controlpanel/presets/new/particle";'>New&nbsp;Particle
+                onclick='navigate(CP_PRESETS_ENDPOINT+"/particle/new");'>New&nbsp;Particle
                 Effect&nbsp;Preset</button>
             <button class="magenta" type="button"
-                onclick='window.location.href = "/controlpanel/presets/new/dragon";'>New&nbsp;Dragon
+                onclick='navigate(CP_PRESETS_ENDPOINT+"/dragon/new");'>New&nbsp;Dragon
                 Effect&nbsp;Preset</button>
             <button class="orange" type="button"
-                onclick='window.location.href = "/controlpanel/presets/new/timeshift";'>New&nbsp;Timeshift
+                onclick='navigate(CP_PRESETS_ENDPOINT+"/timeshift/new");'>New&nbsp;Timeshift
                 Effect&nbsp;Preset</button>
         </div>
         <div class="master-controls">
-            <button class="darker-cyan" type="button" onclick='window.location.href = "/controlpanel";'>Back&nbsp;to
+            <button class="darker-cyan" type="button" onclick='navigate(CP_ENDPOINT);'>Back&nbsp;to
                 Control&nbsp;Panel</button>
         </div>
     </div>

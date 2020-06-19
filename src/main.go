@@ -68,13 +68,8 @@ func main() {
 	router.Handle("/controlpanel", ControlPanelHandler()).Methods(http.MethodGet)
 	router.Handle("/controlpanel/presets", CPPresetManagerHandler()).Methods(http.MethodGet)
 
-	router.Handle("/controlpanel/presets/new/particle", CPPresetCreationHandler(model.EffectTypeParticle)).Methods(http.MethodGet)
-	router.Handle("/controlpanel/presets/new/dragon", CPPresetCreationHandler(model.EffectTypeDragon)).Methods(http.MethodGet)
-	router.Handle("/controlpanel/presets/new/timeshift", CPPresetCreationHandler(model.EffectTypeTimeshift)).Methods(http.MethodGet)
-
-	router.Handle("/controlpanel/presets/modify/particle/{id}", CPPresetModificationHandler(model.EffectTypeParticle)).Methods(http.MethodGet)
-	router.Handle("/controlpanel/presets/modify/dragon/{id}", CPPresetModificationHandler(model.EffectTypeDragon)).Methods(http.MethodGet)
-	router.Handle("/controlpanel/presets/modify/timeshift/{id}", CPPresetModificationHandler(model.EffectTypeTimeshift)).Methods(http.MethodGet)
+	router.Handle("/controlpanel/presets/{effectType}/new", CPPresetHandler()).Methods(http.MethodGet)
+	router.Handle("/controlpanel/presets/{effectType}/modify/{id}", CPPresetHandler()).Methods(http.MethodGet)
 
 	log.Print("Starting server listening on port 5000")
 	http.ListenAndServe(":5000", router)

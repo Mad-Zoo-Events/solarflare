@@ -6,16 +6,22 @@ import (
 
 	"github.com/eynorey/candyshop/src/config"
 	"github.com/eynorey/candyshop/src/model"
+	"github.com/eynorey/candyshop/src/utils"
 	"github.com/eynorey/candyshop/src/utils/cserror"
 )
 
-// GenerateControlPanel renders the control panel based on templates
-func GenerateControlPanel(writer http.ResponseWriter) error {
+const (
+	controlPanelPath  = "static/templates/controlPanel/"
+	presetManagerPath = "static/templates/presetManager/"
+)
+
+// RenderControlPanel renders the control panel based on templates
+func RenderControlPanel(writer http.ResponseWriter) error {
 	template, err := template.ParseFiles(
-		"static/templates/controlPanel/controlPanel.html",
-		"static/templates/controlPanel/particleEffectControl.html",
-		"static/templates/controlPanel/dragonEffectControl.html",
-		"static/templates/controlPanel/timeshiftEffectControl.html",
+		controlPanelPath+"controlPanel.html",
+		controlPanelPath+"particleEffectControl.html",
+		controlPanelPath+"dragonEffectControl.html",
+		controlPanelPath+"timeshiftEffectControl.html",
 	)
 	if err != nil {
 		return cserror.New(cserror.Template, "Error loading control panel templates", err)
@@ -31,16 +37,16 @@ func GenerateControlPanel(writer http.ResponseWriter) error {
 
 	err = template.Execute(writer, data)
 	if err != nil {
-		return cserror.New(cserror.Template, "Error running control panel templates", err)
+		return cserror.New(cserror.Template, "Error executing control panel templates", err)
 	}
 
 	return nil
 }
 
-// GeneratePresetManager renders the preset management page based on templates
-func GeneratePresetManager(writer http.ResponseWriter) error {
+// RenderPresetManager renders the preset management page based on templates
+func RenderPresetManager(writer http.ResponseWriter) error {
 	template, err := template.ParseFiles(
-		"static/templates/presetManager/presetManager.html",
+		presetManagerPath + "presetManager.html",
 	)
 	if err != nil {
 		return cserror.New(cserror.Template, "Error loading preset manager template", err)
@@ -56,74 +62,77 @@ func GeneratePresetManager(writer http.ResponseWriter) error {
 
 	err = template.Execute(writer, data)
 	if err != nil {
-		return cserror.New(cserror.Template, "Error running preset manager template", err)
+		return cserror.New(cserror.Template, "Error executing preset manager template", err)
 	}
 
 	return nil
 }
 
-// GenerateParticlePresetMutationPage renders the particle effect preset creation/edit page based on templates
-func GenerateParticlePresetMutationPage(writer http.ResponseWriter, preset *model.ParticleEffectPreset) error {
-	template, err := template.ParseFiles(
-		"static/templates/presetManager/particlePresetMutation.html",
+// RenderPresetModifier renders the preset modification/creation page based on templates
+func RenderPresetModifier(writer http.ResponseWriter, effectType model.EffectType, id string) error {
+	var (
+		preset     interface{}
+		err        error
+		presetName string
 	)
+
+	switch effectType {
+	case model.EffectTypeParticle:
+		presetName = "particlePresetModification.html"
+	case model.EffectTypeDragon:
+		presetName = "dragonPresetModification.html"
+	case model.EffectTypeTimeshift:
+		presetName = "timeshiftPresetModification.html"
+	default:
+		return cserror.New(cserror.InvalidEffectType, string(effectType), err)
+	}
+
+	template, err := template.ParseFiles(presetManagerPath + presetName)
 	if err != nil {
-		return cserror.New(cserror.Template, "Error loading preset mutation template", err)
+		return cserror.New(cserror.Template, "Error loading preset modification template", err)
 	}
 
-	if preset == nil {
-		preset = new(model.ParticleEffectPreset)
-		preset.ParticleEffects = []model.ParticleEffect{model.ParticleEffect{}}
-		preset.TransformToUI()
+	if id != "" {
+		if preset, err = utils.FindPreset(id, effectType); err != nil {
+			return err
+		}
 	}
 
-	err = template.Execute(writer, *preset)
+	switch effectType {
+	case model.EffectTypeParticle:
+		p := model.ParticleEffectPreset{}
+
+		if id != "" {
+			p = preset.(model.ParticleEffectPreset)
+		} else {
+			p.ParticleEffects = []model.ParticleEffect{model.ParticleEffect{}}
+		}
+
+		p.TransformToUI()
+		err = template.Execute(writer, p)
+	case model.EffectTypeDragon:
+		p := model.DragonEffectPreset{}
+
+		if id != "" {
+			p = preset.(model.DragonEffectPreset)
+		} else {
+			p.DragonEffects = []model.DragonEffect{model.DragonEffect{}}
+		}
+
+		err = template.Execute(writer, p)
+	case model.EffectTypeTimeshift:
+		p := model.TimeshiftEffectPreset{}
+
+		if id != "" {
+			p = preset.(model.TimeshiftEffectPreset)
+		}
+
+		p.TransformToUI()
+		err = template.Execute(writer, p)
+	}
+
 	if err != nil {
-		return cserror.New(cserror.Template, "Error running preset mutation templates", err)
-	}
-
-	return nil
-}
-
-// GenerateDragonPresetMutationPage renders the dragon preset creation/edit page based on templates
-func GenerateDragonPresetMutationPage(writer http.ResponseWriter, preset *model.DragonEffectPreset) error {
-	template, err := template.ParseFiles(
-		"static/templates/presetManager/dragonPresetMutation.html",
-	)
-	if err != nil {
-		return cserror.New(cserror.Template, "Error loading preset mutation template", err)
-	}
-
-	if preset == nil {
-		preset = new(model.DragonEffectPreset)
-		preset.DragonEffects = []model.DragonEffect{model.DragonEffect{}}
-	}
-
-	err = template.Execute(writer, *preset)
-	if err != nil {
-		return cserror.New(cserror.Template, "Error running preset mutation templates", err)
-	}
-
-	return nil
-}
-
-// GenerateTimeshiftPresetMutationPage renders the timeshift preset creation/edit page based on templates
-func GenerateTimeshiftPresetMutationPage(writer http.ResponseWriter, preset *model.TimeshiftEffectPreset) error {
-	template, err := template.ParseFiles(
-		"static/templates/presetManager/timeshiftPresetMutation.html",
-	)
-	if err != nil {
-		return cserror.New(cserror.Template, "Error loading preset mutation template", err)
-	}
-
-	if preset == nil {
-		preset = new(model.TimeshiftEffectPreset)
-		preset.TransformToUI()
-	}
-
-	err = template.Execute(writer, *preset)
-	if err != nil {
-		return cserror.New(cserror.Template, "Error running preset mutation templates", err)
+		return cserror.New(cserror.Template, "Error executing preset modification templates", err)
 	}
 
 	return nil
