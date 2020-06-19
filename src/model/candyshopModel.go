@@ -25,7 +25,7 @@ const (
 	// EffectTypeDragon represents the dragon effect
 	EffectTypeDragon = EffectType("dragon")
 	// EffectTypeTimeshift represents the timeshift effect
-	EffectTypeTimeshift = EffectType("time")
+	EffectTypeTimeshift = EffectType("timeshift")
 )
 
 // Action represents the action to be performed on the visual effect (e.g. start, stop, restart...)

@@ -31,6 +31,8 @@ func FindPreset(id string, effectType model.EffectType) (interface{}, error) {
 				return p, nil
 			}
 		}
+	default:
+		return nil, cserror.New(cserror.InvalidEffectType, string(effectType), nil)
 	}
 
 	return nil, cserror.New(cserror.PresetNotFound, fmt.Sprintf("Preset with ID %s not found", id), nil)

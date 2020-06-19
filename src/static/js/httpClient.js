@@ -1,7 +1,10 @@
 const BASE_URL = `${window.location.origin}`;
+const STATUS_ENDPOINT = `${BASE_URL}/status`;
 const EFFECTS_ENDPOINT = `${BASE_URL}/effects`;
 const PRESETS_ENDPOINT = `${BASE_URL}/presets`;
-const STATUS_ENDPOINT = `${BASE_URL}/status`;
+
+const CP_ENDPOINT = `${BASE_URL}/controlpanel`;
+const CP_PRESETS_ENDPOINT = `${CP_ENDPOINT}/presets`;
 
 var startTime;
 
@@ -48,3 +51,5 @@ doDeletePreset = async (id, effectType) => {
 
     request.send();
 }
+
+navigate = (endpoint) => window.location.href = endpoint;

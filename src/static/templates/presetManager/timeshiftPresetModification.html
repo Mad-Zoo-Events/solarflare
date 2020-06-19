@@ -13,7 +13,7 @@
 
 <bod>
     <div class="preset-edit-main">
-        <h1>{{if .ID}} Edit "{{.DisplayName}}" {{else}} Create New Timeshift Preset {{end}}</h1>
+        <h1>{{if .ID}} Edit {{else}} Create New {{end}} <span class="orange">{{.DisplayName}} </span> Timeshift Preset</h1>
         <form class="preset-form" id="timeshift-preset-form" method="POST" action="/presets/timeshift-ui">
             <input name="id" type="hidden" value="{{.ID}}" />
 
@@ -39,7 +39,7 @@
         <button class="cyan" type="button"
             onclick='document.getElementById("timeshift-preset-form").submit();'>Save</button>
         <div class="master-controls">
-            <button class="darker-cyan" type="button" onclick='window.history.back();'>Cancel</button>
+            <button class="darker-cyan" type="button" onclick='navigate(CP_PRESETS_ENDPOINT);'>Cancel</button>
         </div>
     </div>
 </bod>
