@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/eynorey/candyshop/src/model"
+	"github.com/eynorey/solarflare/src/model"
 )
 
 // Config contains the server configuration

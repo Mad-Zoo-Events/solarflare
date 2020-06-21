@@ -4,12 +4,12 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/eynorey/candyshop/src/model"
+	"github.com/eynorey/solarflare/src/model"
 
 	"github.com/gorilla/mux"
 
-	"github.com/eynorey/candyshop/src/controller"
-	"github.com/eynorey/candyshop/src/utils/cserror"
+	"github.com/eynorey/solarflare/src/controller"
+	"github.com/eynorey/solarflare/src/utils/sferror"
 )
 
 // ControlPanelHandler builds the control panel from templates
@@ -19,7 +19,7 @@ func ControlPanelHandler() http.HandlerFunc {
 
 		err := controller.RenderControlPanel(w)
 		if err != nil {
-			writeResponse(w, 500, cserror.GetErrorResponse(err))
+			writeResponse(w, 500, sferror.GetErrorResponse(err))
 		}
 	}
 }
@@ -31,7 +31,7 @@ func CPPresetManagerHandler() http.HandlerFunc {
 
 		err := controller.RenderPresetManager(w)
 		if err != nil {
-			writeResponse(w, 500, cserror.GetErrorResponse(err))
+			writeResponse(w, 500, sferror.GetErrorResponse(err))
 		}
 	}
 }
@@ -49,13 +49,13 @@ func CPPresetHandler() http.HandlerFunc {
 
 		err := controller.RenderPresetModifier(w, model.EffectType(effectType), id)
 		if err != nil {
-			switch cserror.GetErrorType(err) {
-			case cserror.InvalidEffectType:
-				writeResponse(w, 400, cserror.GetErrorResponse(err))
-			case cserror.PresetNotFound:
-				writeResponse(w, 404, cserror.GetErrorResponse(err))
+			switch sferror.GetErrorType(err) {
+			case sferror.InvalidEffectType:
+				writeResponse(w, 400, sferror.GetErrorResponse(err))
+			case sferror.PresetNotFound:
+				writeResponse(w, 404, sferror.GetErrorResponse(err))
 			default:
-				writeResponse(w, 500, cserror.GetErrorResponse(err))
+				writeResponse(w, 500, sferror.GetErrorResponse(err))
 			}
 		}
 	}

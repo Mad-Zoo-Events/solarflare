@@ -4,11 +4,11 @@ import (
 	"encoding/json"
 	"net/url"
 
-	"github.com/eynorey/candyshop/src/client"
-	"github.com/eynorey/candyshop/src/config"
-	"github.com/eynorey/candyshop/src/manager"
-	"github.com/eynorey/candyshop/src/model"
-	"github.com/eynorey/candyshop/src/utils/cserror"
+	"github.com/eynorey/solarflare/src/client"
+	"github.com/eynorey/solarflare/src/config"
+	"github.com/eynorey/solarflare/src/manager"
+	"github.com/eynorey/solarflare/src/model"
+	"github.com/eynorey/solarflare/src/utils/sferror"
 )
 
 // UpsertPresetAPI inserts a new preset or updates an existing one from an API request
@@ -18,7 +18,7 @@ func UpsertPresetAPI(effectType string, body []byte) (*string, error) {
 		preset := model.ParticleEffectPreset{}
 
 		if err := json.Unmarshal(body, &preset); err != nil {
-			return nil, cserror.New(cserror.Encoding, "Error unmarshalling particle effect preset request", err)
+			return nil, sferror.New(sferror.Encoding, "Error unmarshalling particle effect preset request", err)
 		}
 
 		return manager.UpsertParticleEffectPreset(preset)
@@ -26,7 +26,7 @@ func UpsertPresetAPI(effectType string, body []byte) (*string, error) {
 		preset := model.DragonEffectPreset{}
 
 		if err := json.Unmarshal(body, &preset); err != nil {
-			return nil, cserror.New(cserror.Encoding, "Error unmarshalling dragon effect preset request", err)
+			return nil, sferror.New(sferror.Encoding, "Error unmarshalling dragon effect preset request", err)
 		}
 
 		return manager.UpsertDragonEffectPreset(preset)
@@ -34,7 +34,7 @@ func UpsertPresetAPI(effectType string, body []byte) (*string, error) {
 		preset := model.TimeshiftEffectPreset{}
 
 		if err := json.Unmarshal(body, &preset); err != nil {
-			return nil, cserror.New(cserror.Encoding, "Error unmarshalling timeshift effect preset request", err)
+			return nil, sferror.New(sferror.Encoding, "Error unmarshalling timeshift effect preset request", err)
 		}
 
 		return manager.UpsertTimeshiftEffectPreset(preset)
@@ -42,13 +42,13 @@ func UpsertPresetAPI(effectType string, body []byte) (*string, error) {
 		preset := model.PotionEffectPreset{}
 
 		if err := json.Unmarshal(body, &preset); err != nil {
-			return nil, cserror.New(cserror.Encoding, "Error unmarshalling potion effect preset request", err)
+			return nil, sferror.New(sferror.Encoding, "Error unmarshalling potion effect preset request", err)
 		}
 
 		return manager.UpsertPotionEffectPreset(preset)
 	}
 
-	return nil, cserror.New(cserror.InvalidEffectType, effectType, nil)
+	return nil, sferror.New(sferror.InvalidEffectType, effectType, nil)
 }
 
 // UpsertPresetUI inserts a new preset or updates an existing one from a UI request
@@ -88,7 +88,7 @@ func UpsertPresetUI(effectType string, values url.Values) (*string, error) {
 		return manager.UpsertPotionEffectPreset(preset)
 	}
 
-	return nil, cserror.New(cserror.InvalidEffectType, effectType, nil)
+	return nil, sferror.New(sferror.InvalidEffectType, effectType, nil)
 }
 
 // DeletePreset deletes a preset and reloads
@@ -118,7 +118,7 @@ func DeletePreset(effectType, id string) error {
 			cfg.PotionEffectPresets = client.GetPotionEffectPresets()
 		}
 	default:
-		err = cserror.New(cserror.InvalidEffectType, effectType, nil)
+		err = sferror.New(sferror.InvalidEffectType, effectType, nil)
 	}
 
 	return err

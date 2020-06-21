@@ -9,8 +9,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/eynorey/candyshop/src/config"
-	"github.com/eynorey/candyshop/src/utils/cserror"
+	"github.com/eynorey/solarflare/src/config"
+	"github.com/eynorey/solarflare/src/utils/sferror"
 )
 
 // ExecuteEffect executes an effect on all servers
@@ -31,9 +31,9 @@ func ExecuteEffect(endpoint string, body []byte) error {
 
 	if errCount > 0 {
 		if errCount == len(cfg.Servers) {
-			return cserror.New(cserror.FailedOnEyecandyAll, "Command failed on all servers", nil)
+			return sferror.New(sferror.FailedOnEyecandyAll, "Command failed on all servers", nil)
 		}
-		return cserror.New(cserror.FailedOnEyecandySome, fmt.Sprintf("Command failed on %d out of %d servers", errCount, len(cfg.Servers)), nil)
+		return sferror.New(sferror.FailedOnEyecandySome, fmt.Sprintf("Command failed on %d out of %d servers", errCount, len(cfg.Servers)), nil)
 	}
 
 	return nil
@@ -43,21 +43,21 @@ func executeEffect(client *http.Client, url string, body *[]byte, wg *sync.WaitG
 	defer wg.Done()
 	request, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(*body))
 	if err != nil {
-		cserror.New(cserror.Encoding, "Error compiling request to Eyecandy", err)
+		sferror.New(sferror.Encoding, "Error compiling request to Eyecandy", err)
 		*errCount++
 		return
 	}
 
 	response, err := client.Do(request)
 	if err != nil {
-		cserror.New(cserror.Eyecandy, "Error sending request to Eyecandy", err)
+		sferror.New(sferror.Eyecandy, "Error sending request to Eyecandy", err)
 		*errCount++
 		return
 	}
 
 	if response.StatusCode < 200 || response.StatusCode >= 400 {
 		responseMessage, _ := ioutil.ReadAll(response.Body)
-		cserror.New(cserror.Eyecandy, "Error received from Eyecandy", errors.New(string(responseMessage)))
+		sferror.New(sferror.Eyecandy, "Error received from Eyecandy", errors.New(string(responseMessage)))
 		*errCount++
 		return
 	}

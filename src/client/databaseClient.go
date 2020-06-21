@@ -9,8 +9,8 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
 
-	"github.com/eynorey/candyshop/src/model"
-	"github.com/eynorey/candyshop/src/utils/cserror"
+	"github.com/eynorey/solarflare/src/model"
+	"github.com/eynorey/solarflare/src/utils/sferror"
 )
 
 const (
@@ -48,7 +48,7 @@ func GetParticleEffectPresets() (presets []model.ParticleEffectPreset) {
 		TableName: &tableName,
 	})
 	if err != nil {
-		cserror.New(cserror.DatabaseCRUD, "Failed to read particle effect presets", err)
+		sferror.New(sferror.DatabaseCRUD, "Failed to read particle effect presets", err)
 		return nil
 	}
 
@@ -57,7 +57,7 @@ func GetParticleEffectPresets() (presets []model.ParticleEffectPreset) {
 
 		err = dynamodbattribute.UnmarshalMap(item, &preset)
 		if err != nil {
-			cserror.New(cserror.DatabaseUnmarshal, "Failed to unmarshal particle effect preset", err)
+			sferror.New(sferror.DatabaseUnmarshal, "Failed to unmarshal particle effect preset", err)
 			continue
 		}
 
@@ -77,7 +77,7 @@ func GetDragonEffectPresets() (presets []model.DragonEffectPreset) {
 		TableName: &tableName,
 	})
 	if err != nil {
-		cserror.New(cserror.DatabaseCRUD, "Failed to read dragon effect presets", err)
+		sferror.New(sferror.DatabaseCRUD, "Failed to read dragon effect presets", err)
 		return nil
 	}
 
@@ -86,7 +86,7 @@ func GetDragonEffectPresets() (presets []model.DragonEffectPreset) {
 
 		err = dynamodbattribute.UnmarshalMap(item, &preset)
 		if err != nil {
-			cserror.New(cserror.DatabaseUnmarshal, "Failed to unmarshal dragon effect preset", err)
+			sferror.New(sferror.DatabaseUnmarshal, "Failed to unmarshal dragon effect preset", err)
 			continue
 		}
 
@@ -104,7 +104,7 @@ func GetTimeshiftEffectPresets() (presets []model.TimeshiftEffectPreset) {
 		TableName: &tableName,
 	})
 	if err != nil {
-		cserror.New(cserror.DatabaseCRUD, "Failed to read timeshift effect presets", err)
+		sferror.New(sferror.DatabaseCRUD, "Failed to read timeshift effect presets", err)
 		return nil
 	}
 
@@ -113,7 +113,7 @@ func GetTimeshiftEffectPresets() (presets []model.TimeshiftEffectPreset) {
 
 		err = dynamodbattribute.UnmarshalMap(item, &preset)
 		if err != nil {
-			cserror.New(cserror.DatabaseUnmarshal, "Failed to unmarshal timeshift effect preset", err)
+			sferror.New(sferror.DatabaseUnmarshal, "Failed to unmarshal timeshift effect preset", err)
 			continue
 		}
 
@@ -133,7 +133,7 @@ func GetPotionEffectPresets() (presets []model.PotionEffectPreset) {
 		TableName: &tableName,
 	})
 	if err != nil {
-		cserror.New(cserror.DatabaseCRUD, "Failed to read potion effect presets", err)
+		sferror.New(sferror.DatabaseCRUD, "Failed to read potion effect presets", err)
 		return nil
 	}
 
@@ -142,7 +142,7 @@ func GetPotionEffectPresets() (presets []model.PotionEffectPreset) {
 
 		err = dynamodbattribute.UnmarshalMap(item, &preset)
 		if err != nil {
-			cserror.New(cserror.DatabaseUnmarshal, "Failed to unmarshal potion effect preset", err)
+			sferror.New(sferror.DatabaseUnmarshal, "Failed to unmarshal potion effect preset", err)
 			continue
 		}
 
@@ -156,7 +156,7 @@ func GetPotionEffectPresets() (presets []model.PotionEffectPreset) {
 func UpsertEffectPreset(tableName string, preset interface{}) error {
 	item, err := dynamodbattribute.MarshalMap(preset)
 	if err != nil {
-		return cserror.New(cserror.DatabaseMarshal, "Failed to marshal effect preset", err)
+		return sferror.New(sferror.DatabaseMarshal, "Failed to marshal effect preset", err)
 	}
 
 	_, err = db.PutItem(&dynamodb.PutItemInput{
@@ -164,7 +164,7 @@ func UpsertEffectPreset(tableName string, preset interface{}) error {
 		TableName: aws.String(tableName),
 	})
 	if err != nil {
-		return cserror.New(cserror.DatabaseCRUD, "Failed to upsert effect preset", err)
+		return sferror.New(sferror.DatabaseCRUD, "Failed to upsert effect preset", err)
 	}
 
 	return nil
@@ -184,10 +184,10 @@ func DeleteEffectPreset(tableName, id string) error {
 	if err != nil {
 		if aerr, ok := err.(awserr.Error); ok {
 			if aerr.Code() == dynamodb.ErrCodeResourceNotFoundException {
-				return cserror.New(cserror.DatabaseNotFound, fmt.Sprintf("Effect preset with %s des not exist", id), err)
+				return sferror.New(sferror.DatabaseNotFound, fmt.Sprintf("Effect preset with %s des not exist", id), err)
 			}
 		}
-		return cserror.New(cserror.DatabaseCRUD, "Error deleting effect preset", err)
+		return sferror.New(sferror.DatabaseCRUD, "Error deleting effect preset", err)
 	}
 
 	return nil

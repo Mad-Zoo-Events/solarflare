@@ -3,9 +3,9 @@ package utils
 import (
 	"fmt"
 
-	"github.com/eynorey/candyshop/src/config"
-	"github.com/eynorey/candyshop/src/model"
-	"github.com/eynorey/candyshop/src/utils/cserror"
+	"github.com/eynorey/solarflare/src/config"
+	"github.com/eynorey/solarflare/src/model"
+	"github.com/eynorey/solarflare/src/utils/sferror"
 )
 
 // FindPreset returns the preset identified by the ID passed, or an error if it couldn't be found
@@ -38,8 +38,8 @@ func FindPreset(id string, effectType model.EffectType) (interface{}, error) {
 			}
 		}
 	default:
-		return nil, cserror.New(cserror.InvalidEffectType, string(effectType), nil)
+		return nil, sferror.New(sferror.InvalidEffectType, string(effectType), nil)
 	}
 
-	return nil, cserror.New(cserror.PresetNotFound, fmt.Sprintf("Preset with ID %s not found", id), nil)
+	return nil, sferror.New(sferror.PresetNotFound, fmt.Sprintf("Preset with ID %s not found", id), nil)
 }

@@ -4,10 +4,10 @@ import (
 	"html/template"
 	"net/http"
 
-	"github.com/eynorey/candyshop/src/config"
-	"github.com/eynorey/candyshop/src/model"
-	"github.com/eynorey/candyshop/src/utils"
-	"github.com/eynorey/candyshop/src/utils/cserror"
+	"github.com/eynorey/solarflare/src/config"
+	"github.com/eynorey/solarflare/src/model"
+	"github.com/eynorey/solarflare/src/utils"
+	"github.com/eynorey/solarflare/src/utils/sferror"
 )
 
 const (
@@ -25,7 +25,7 @@ func RenderControlPanel(writer http.ResponseWriter) error {
 		controlPanelPath+"potionEffectControl.html",
 	)
 	if err != nil {
-		return cserror.New(cserror.Template, "Error loading control panel templates", err)
+		return sferror.New(sferror.Template, "Error loading control panel templates", err)
 	}
 
 	cfg := config.Get()
@@ -39,7 +39,7 @@ func RenderControlPanel(writer http.ResponseWriter) error {
 
 	err = template.Execute(writer, data)
 	if err != nil {
-		return cserror.New(cserror.Template, "Error executing control panel templates", err)
+		return sferror.New(sferror.Template, "Error executing control panel templates", err)
 	}
 
 	return nil
@@ -51,7 +51,7 @@ func RenderPresetManager(writer http.ResponseWriter) error {
 		presetManagerPath + "presetManager.html",
 	)
 	if err != nil {
-		return cserror.New(cserror.Template, "Error loading preset manager template", err)
+		return sferror.New(sferror.Template, "Error loading preset manager template", err)
 	}
 
 	cfg := config.Get()
@@ -65,7 +65,7 @@ func RenderPresetManager(writer http.ResponseWriter) error {
 
 	err = template.Execute(writer, data)
 	if err != nil {
-		return cserror.New(cserror.Template, "Error executing preset manager template", err)
+		return sferror.New(sferror.Template, "Error executing preset manager template", err)
 	}
 
 	return nil
@@ -89,12 +89,12 @@ func RenderPresetModifier(writer http.ResponseWriter, effectType model.EffectTyp
 	case model.EffectTypePotion:
 		presetName = "potionPresetModification.html"
 	default:
-		return cserror.New(cserror.InvalidEffectType, string(effectType), err)
+		return sferror.New(sferror.InvalidEffectType, string(effectType), err)
 	}
 
 	template, err := template.ParseFiles(presetManagerPath + presetName)
 	if err != nil {
-		return cserror.New(cserror.Template, "Error loading preset modification template", err)
+		return sferror.New(sferror.Template, "Error loading preset modification template", err)
 	}
 
 	if id != "" {
@@ -150,7 +150,7 @@ func RenderPresetModifier(writer http.ResponseWriter, effectType model.EffectTyp
 	}
 
 	if err != nil {
-		return cserror.New(cserror.Template, "Error executing preset modification templates", err)
+		return sferror.New(sferror.Template, "Error executing preset modification templates", err)
 	}
 
 	return nil
