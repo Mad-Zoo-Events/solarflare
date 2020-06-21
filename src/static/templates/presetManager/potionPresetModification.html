@@ -28,7 +28,8 @@
             <br />
 
             <label>Keyboard Shortcut</label>
-            <input type="text" maxlength="1" size="50" value="{{.UIKeyBinding}}" onkeypress='setKeyBinding(event, this);' />
+            <input type="text" maxlength="1" size="50" value="{{.UIKeyBinding}}"
+                onkeypress='setKeyBinding(event, this);' onchange='checkKeyBinding(this)' />
             <input id="key-binding" name="keyBinding" type="hidden" value="{{.KeyBinding}}" />
             <br />
 
@@ -49,7 +50,8 @@
                 </select>
                 <br />
 
-                <label>Amplifier: <span class="indexed-input" id="potion-amplifier-{{$index}}">{{.Amplifier}}</span></label>
+                <label>Amplifier: <span class="indexed-input"
+                        id="potion-amplifier-{{$index}}">{{.Amplifier}}</span></label>
                 <input class="indexed-input" name="effect[{{$index}}].amplifier" type="range" max="255" min="1" step="1"
                     value="{{.Amplifier}}" data-index="{{$index}}"
                     onchange='updateRangeValue("potion-amplifier", this);' />

@@ -128,6 +128,13 @@ setKeyBinding = (event, source) => {
     source.value = String.fromCharCode(charCode);
 }
 
+checkKeyBinding = (source) => {
+    if (source.value === "") {
+        document.getElementById("key-binding").value = 0;
+    }
+}
+
+
 handleKeypress = (event) => {
     event = event || window.event;
     var charCode = event.which || event.keyCode;
