@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/eynorey/candyshop/src/client"
-	"github.com/eynorey/candyshop/src/model"
-	"github.com/eynorey/candyshop/src/utils/cserror"
+	"github.com/eynorey/solarflare/src/client"
+	"github.com/eynorey/solarflare/src/model"
+	"github.com/eynorey/solarflare/src/utils/sferror"
 )
 
 const (
@@ -21,7 +21,7 @@ const (
 func RunParticleEffect(preset model.ParticleEffectPreset, action model.Action) error {
 	body, err := json.Marshal(preset.ParticleEffects)
 	if err != nil {
-		return cserror.New(cserror.Encoding, "Failed to marshal request", err)
+		return sferror.New(sferror.Encoding, "Failed to marshal request", err)
 	}
 
 	endpoint := fmt.Sprintf("%s/%s/%s", particleEffectEndpoint, preset.ID, string(action))
@@ -33,7 +33,7 @@ func RunParticleEffect(preset model.ParticleEffectPreset, action model.Action) e
 func RunDragonEffect(preset model.DragonEffectPreset, action model.Action) error {
 	body, err := json.Marshal(preset.DragonEffects)
 	if err != nil {
-		return cserror.New(cserror.Encoding, "Failed to marshal request", err)
+		return sferror.New(sferror.Encoding, "Failed to marshal request", err)
 	}
 
 	endpoint := fmt.Sprintf("%s/%s/%s", dragonEffectEndpoint, preset.ID, string(action))
@@ -45,7 +45,7 @@ func RunDragonEffect(preset model.DragonEffectPreset, action model.Action) error
 func RunTimeshiftEffect(preset model.TimeshiftEffectPreset, action model.Action) error {
 	body, err := json.Marshal(preset.TimeshiftEffects)
 	if err != nil {
-		return cserror.New(cserror.Encoding, "Failed to marshal request", err)
+		return sferror.New(sferror.Encoding, "Failed to marshal request", err)
 	}
 
 	endpoint := fmt.Sprintf("%s/%s/%s", timeshiftEffectEndpoint, preset.ID, string(action))
@@ -57,7 +57,7 @@ func RunTimeshiftEffect(preset model.TimeshiftEffectPreset, action model.Action)
 func RunPotionEffect(preset model.PotionEffectPreset, action model.Action) error {
 	body, err := json.Marshal(preset.PotionEffects)
 	if err != nil {
-		return cserror.New(cserror.Encoding, "Failed to marshal request", err)
+		return sferror.New(sferror.Encoding, "Failed to marshal request", err)
 	}
 
 	endpoint := fmt.Sprintf("%s/%s/%s", potionEffectEndpoint, preset.ID, string(action))

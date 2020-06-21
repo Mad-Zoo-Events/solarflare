@@ -3,16 +3,16 @@ package controller
 import (
 	"fmt"
 
-	"github.com/eynorey/candyshop/src/manager"
-	"github.com/eynorey/candyshop/src/model"
-	"github.com/eynorey/candyshop/src/utils"
-	"github.com/eynorey/candyshop/src/utils/cserror"
+	"github.com/eynorey/solarflare/src/manager"
+	"github.com/eynorey/solarflare/src/model"
+	"github.com/eynorey/solarflare/src/utils"
+	"github.com/eynorey/solarflare/src/utils/sferror"
 )
 
 // RunEffect runs a eyecandy effect
 func RunEffect(id string, effectType model.EffectType, action model.Action) error {
 	if !action.IsAllowedOn(effectType) {
-		return cserror.New(cserror.ActionNotAllowed, fmt.Sprintf("Action %s is not allowed for on type %s", action, effectType), nil)
+		return sferror.New(sferror.ActionNotAllowed, fmt.Sprintf("Action %s is not allowed for on type %s", action, effectType), nil)
 	}
 
 	if action == model.StopEffectAction {
@@ -35,5 +35,5 @@ func RunEffect(id string, effectType model.EffectType, action model.Action) erro
 		return manager.RunPotionEffect(preset.(model.PotionEffectPreset), action)
 	}
 
-	return cserror.New(cserror.InvalidEffectType, string(effectType), nil)
+	return sferror.New(sferror.InvalidEffectType, string(effectType), nil)
 }

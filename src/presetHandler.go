@@ -5,8 +5,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/eynorey/candyshop/src/controller"
-	"github.com/eynorey/candyshop/src/utils/cserror"
+	"github.com/eynorey/solarflare/src/controller"
+	"github.com/eynorey/solarflare/src/utils/sferror"
 	"github.com/gorilla/mux"
 )
 
@@ -17,8 +17,8 @@ func PresetMutationHandler() http.HandlerFunc {
 
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
-			err = cserror.New(cserror.Encoding, "Error reading preset request body", err)
-			writeResponse(w, 400, cserror.GetErrorResponse(err))
+			err = sferror.New(sferror.Encoding, "Error reading preset request body", err)
+			writeResponse(w, 400, sferror.GetErrorResponse(err))
 			return
 		}
 
@@ -26,11 +26,11 @@ func PresetMutationHandler() http.HandlerFunc {
 
 		id, err := controller.UpsertPresetAPI(vars["effectType"], body)
 		if err != nil {
-			switch cserror.GetErrorType(err) {
-			case cserror.InvalidEffectType:
-				writeResponse(w, 400, cserror.GetErrorResponse(err))
+			switch sferror.GetErrorType(err) {
+			case sferror.InvalidEffectType:
+				writeResponse(w, 400, sferror.GetErrorResponse(err))
 			default:
-				writeResponse(w, 500, cserror.GetErrorResponse(err))
+				writeResponse(w, 500, sferror.GetErrorResponse(err))
 			}
 			return
 		}
@@ -46,8 +46,8 @@ func PresetMutationUIHandler() http.HandlerFunc {
 
 		err := r.ParseForm()
 		if err != nil {
-			err = cserror.New(cserror.Encoding, "Error parsing form from UI", err)
-			writeResponse(w, 400, cserror.GetErrorResponse(err))
+			err = sferror.New(sferror.Encoding, "Error parsing form from UI", err)
+			writeResponse(w, 400, sferror.GetErrorResponse(err))
 			return
 		}
 
@@ -55,11 +55,11 @@ func PresetMutationUIHandler() http.HandlerFunc {
 
 		_, err = controller.UpsertPresetUI(vars["effectType"], r.PostForm)
 		if err != nil {
-			switch cserror.GetErrorType(err) {
-			case cserror.InvalidEffectType:
-				writeResponse(w, 400, cserror.GetErrorResponse(err))
+			switch sferror.GetErrorType(err) {
+			case sferror.InvalidEffectType:
+				writeResponse(w, 400, sferror.GetErrorResponse(err))
 			default:
-				writeResponse(w, 500, cserror.GetErrorResponse(err))
+				writeResponse(w, 500, sferror.GetErrorResponse(err))
 			}
 			return
 		}
@@ -77,13 +77,13 @@ func PresetDeletionHandler() http.HandlerFunc {
 
 		err := controller.DeletePreset(vars["effectType"], vars["id"])
 		if err != nil {
-			switch cserror.GetErrorType(err) {
-			case cserror.DatabaseNotFound:
-				writeResponse(w, 404, cserror.GetErrorResponse(err))
-			case cserror.InvalidEffectType:
-				writeResponse(w, 400, cserror.GetErrorResponse(err))
+			switch sferror.GetErrorType(err) {
+			case sferror.DatabaseNotFound:
+				writeResponse(w, 404, sferror.GetErrorResponse(err))
+			case sferror.InvalidEffectType:
+				writeResponse(w, 400, sferror.GetErrorResponse(err))
 			default:
-				writeResponse(w, 500, cserror.GetErrorResponse(err))
+				writeResponse(w, 500, sferror.GetErrorResponse(err))
 			}
 			return
 		}

@@ -1,4 +1,4 @@
-module github.com/eynorey/candyshop
+module github.com/eynorey/solarflare
 
 go 1.14
 

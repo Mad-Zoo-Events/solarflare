@@ -5,8 +5,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/eynorey/candyshop/src/controller"
-	"github.com/eynorey/candyshop/src/utils/cserror"
+	"github.com/eynorey/solarflare/src/controller"
+	"github.com/eynorey/solarflare/src/utils/sferror"
 )
 
 // HealthHandler returns the health status of the service
@@ -29,8 +29,8 @@ func StatusHandler() http.HandlerFunc {
 
 		resp, err := json.Marshal(status)
 		if err != nil {
-			err = cserror.New(cserror.Encoding, "Failed to marshal status response", err)
-			writeResponse(w, 500, cserror.GetErrorResponse(err))
+			err = sferror.New(sferror.Encoding, "Failed to marshal status response", err)
+			writeResponse(w, 500, sferror.GetErrorResponse(err))
 			return
 		}
 

@@ -6,9 +6,9 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"github.com/eynorey/candyshop/src/client"
-	"github.com/eynorey/candyshop/src/config"
-	"github.com/eynorey/candyshop/src/model"
+	"github.com/eynorey/solarflare/src/client"
+	"github.com/eynorey/solarflare/src/config"
+	"github.com/eynorey/solarflare/src/model"
 )
 
 // loads data from the database into the config

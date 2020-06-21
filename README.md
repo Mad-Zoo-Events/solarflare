@@ -1,8 +1,8 @@
-# Candyshop
+# Solarflare
 Your Friendly Neighborhood Eyecandy Distribution System&trade;
 
 ## What is this?
-Candyshop is a Minecraft visual effect management system that works in combination with [the Eyecandy plugin](https://github.com/SorenNeedsCoffee/eyecandy).
+Solarflare is a Minecraft visual effect management system that works in combination with [the Eyecandy plugin](https://github.com/SorenNeedsCoffee/eyecandy).
 
 It allows you to create **presets** which can be used to control a range of awesome Minecraft effects in a certain region and shape.
 
@@ -75,7 +75,7 @@ The basic workflow is as follows:
 
 ### Registration of Servers
 
-This system can be used to cater a large number of Minecraft server instances at the same time. Thus, each instance needs to have the Eyecandy plugin installed and the Candyshop service must know the address of each instance.
+This system can be used to cater a large number of Minecraft server instances at the same time. Thus, each instance needs to have the Eyecandy plugin installed and Solarflare must know the address of each instance.
 
 To automate this process, each Eyecandy plugin will register itself at the Go service when it starts up by sending it's network address. The Go service maintains a list of registered servers and distributes traffic to all servers this way.
 

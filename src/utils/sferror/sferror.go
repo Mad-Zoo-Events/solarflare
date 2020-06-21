@@ -53,14 +53,14 @@ var (
 	Unknown = ErrorType{"Unknown", 99}
 )
 
-// CsError is the error type to be used within the microservice
-type CsError struct {
+// SolarflareError is the error type to be used within the microservice
+type SolarflareError struct {
 	errType ErrorType
 	message string
 }
 
 // Error returns the message of the error
-func (e CsError) Error() string {
+func (e SolarflareError) Error() string {
 	return e.message
 }
 
@@ -68,7 +68,7 @@ func (e CsError) Error() string {
 func GetErrorResponse(err error) []byte {
 	var errResp model.Error
 	// try to cast to cs error
-	if csErr, ok := err.(CsError); ok {
+	if csErr, ok := err.(SolarflareError); ok {
 		errResp = model.Error{Message: csErr.message, Code: csErr.errType.code}
 	} else {
 		// this should never happen
@@ -82,7 +82,7 @@ func GetErrorResponse(err error) []byte {
 // GetErrorType returns the type of an cs error
 func GetErrorType(err error) ErrorType {
 	// try to cast to cs error
-	if csErr, ok := err.(CsError); ok {
+	if csErr, ok := err.(SolarflareError); ok {
 		return csErr.errType
 	}
 
@@ -91,13 +91,13 @@ func GetErrorType(err error) ErrorType {
 }
 
 // New returns a new error based on the type
-func New(errType ErrorType, message string, err error) CsError {
+func New(errType ErrorType, message string, err error) SolarflareError {
 	var msg bytes.Buffer
 	msg.WriteString(errType.name)
 	msg.WriteString(" | ")
 	msg.WriteString(message)
 
-	ee := CsError{errType: errType, message: msg.String()}
+	ee := SolarflareError{errType: errType, message: msg.String()}
 
 	if err != nil {
 		msg.WriteString(" | ")
