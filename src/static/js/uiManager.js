@@ -102,8 +102,12 @@ addEffectInput = (formId) => {
     form.appendChild(newEffectsHolder);
 }
 
-removeEffectInput = (index) => {
-    document.getElementsByClassName("effect-box")[Number(index)].remove();
+removeEffectInput = (element) => {
+    if (document.getElementsByClassName("effect-box").length > 1) {
+        element.parentNode.parentNode.remove();        
+    } else {
+        alert("Gotta keep at least one effect!\n(what's the point otherwise!?)");
+    }
 }
 
 updateRangeValue = (labelId, range) => {
