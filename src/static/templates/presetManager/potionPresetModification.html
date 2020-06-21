@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Mad Zoo Events Visual Control System</title>
+    <link rel="shortcut icon" href="/static/favicon.ico">
+    <link rel="icon" href="/static/favicon.ico">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <script type="text/javascript" src="/static/js/httpClient.js"></script>
+    <script type="text/javascript" src="/static/js/uiManager.js"></script>
+</head>
+
+<bod>
+    <div class="preset-edit-main">
+        <h1>{{if .ID}} Edit {{else}} Create New {{end}} <span class="magenta">{{.DisplayName}} </span> Potion Preset
+        </h1>
+        <form class="preset-form" id="potion-preset-form" method="POST" action="/presets/potion-ui">
+            <input name="id" type="hidden" value="{{.ID}}" />
+
+            <label>Display Name</label>
+            <input name="displayName" type="text" size="10" placeholder="Preset display name"
+                value="{{.DisplayName}}" />
+            <br />
+
+            <label>Description</label>
+            <input name="description" type="text" size="50" placeholder="Short description" value="{{.Description}}" />
+            <br />
+
+            <label>Effects</label>
+            {{range $index, $element := .PotionEffects}}
+            <div class="effect-box">
+                <span class="armor-stand">
+                    <span class="delete-effect" onclick='removeEffectInput("{{$index}}")'>🗑</span>
+                </span>
+
+                <label>Type</label>
+                <select class="indexed-input" name="effect[{{$index}}].type">
+                    {{$current := .Type}}
+                    {{range $type, $description := $.UIAllowedPotionEffects}}
+                    <option value="{{$type}}" {{if eq $current $type}}selected{{end}}>{{$type}}</option>
+                    <option class="option-description" disabled>&nbsp;&nbsp;└─ {{$description}}</option>
+                    {{end}}
+                </select>
+                <br />
+
+                <label>Amplifier: <span id="potion-amplifier">{{.Amplifier}}</span></label>
+                <input class="indexed-input" name="effect[{{$index}}].amplifier" type="range" max="255" min="1" step="1"
+                    value="{{.Amplifier}}" onchange='updateRangeValue("potion-amplifier", this.value);' />
+                <br />
+            </div>
+            <br />
+            {{end}}
+        </form>
+        <div class="add-effect" onclick='addEffectInput("potion-preset-form");'>+</div>
+    </div>
+
+    <div class="footer">
+        <div></div>
+        <button class="cyan" type="button"
+            onclick='document.getElementById("potion-preset-form").submit();'>Save</button>
+        <div class="master-controls">
+            <button class="darker-cyan" type="button" onclick='navigate(CP_PRESETS_ENDPOINT);'>Cancel</button>
+        </div>
+    </div>
+</bod>
+
+</html>

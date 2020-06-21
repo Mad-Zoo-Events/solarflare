@@ -14,9 +14,9 @@ type PotionEffectPreset struct {
 // PotionEffect defines which effect to apply with which amplifier
 type PotionEffect struct {
 	// Minecraft name of the potion effect
-	Type int `json:"type" form:"type"`
+	Type string `json:"type" form:"type"`
 	// Sets the amplifier for the potion effect if supported
-	Amplifier bool `json:"amplifier" form:"amplifier"`
+	Amplifier int `json:"amplifier" form:"amplifier"`
 }
 
 // MinecraftPotionEffects is a list of all supported Minecraft potion effects
