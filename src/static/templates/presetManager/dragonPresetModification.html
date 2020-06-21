@@ -26,6 +26,11 @@
             <input name="description" type="text" size="50" placeholder="Short description" value="{{.Description}}" />
             <br />
 
+            <label>Keyboard Shortcut</label>
+            <input type="text" maxlength="1" size="50" value="{{.UIKeyBinding}}" onkeypress='setKeyBinding(event, this);' />
+            <input id="key-binding" name="keyBinding" type="hidden" value="{{.KeyBinding}}" />
+            <br />
+
             <label>Effects</label>
             {{range $index, $element := .DragonEffects}}
             <div class="effect-box">

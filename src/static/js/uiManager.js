@@ -107,7 +107,7 @@ addEffectInput = (formId) => {
 
 removeEffectInput = (element) => {
     if (document.getElementsByClassName("effect-box").length > 1) {
-        element.parentNode.parentNode.remove();        
+        element.parentNode.parentNode.remove();
     } else {
         alert("Gotta keep at least one effect!\n(what's the point otherwise!?)");
     }
@@ -119,4 +119,17 @@ updateRangeValue = (labelId, range) => {
     const id = `${labelId}-${index}`;
     console.log(id);
     document.getElementById(id).innerHTML = range.value;
+}
+
+setKeyBinding = (event, source) => {
+    event = event || window.event;
+    var charCode = event.which || event.keyCode;
+    document.getElementById("key-binding").value = charCode;
+    source.value = String.fromCharCode(charCode);
+}
+
+handleKeypress = (event) => {
+    event = event || window.event;
+    var charCode = event.which || event.keyCode;
+    addToLog("Key pressed: ", String.fromCharCode(charCode));
 }

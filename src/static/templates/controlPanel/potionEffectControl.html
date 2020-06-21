@@ -1,6 +1,8 @@
 {{define "potionControl"}}
 <div class="visual-control">
     <span title="{{.Description}}">{{.DisplayName}}</span>
+    <hr />
+    {{if .UIKeyBinding}}<span>► {{.UIKeyBinding}} ◄</span>{{end}}
 
     <button type="button" class="start" id="start-{{.ID}}"
         onclick='doEffect("potion", "{{.ID}}", "{{.DisplayName}}", "start")'>start</button>

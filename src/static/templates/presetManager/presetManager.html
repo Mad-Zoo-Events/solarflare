@@ -15,17 +15,19 @@
     <table class="preset-table">
         <thead>
             <td>ID</td>
+            <td>Key</td>
             <td>Name</td>
             <td>Description</td>
             <td>Effects</td>
             <td>Actions</td>
         </thead>
         <tr>
-            <td colspan="5" class="type-header type-header-cyan">Particle Effect Presets</td>
+            <td colspan="6" class="type-header type-header-cyan">Particle Effect Presets</td>
         </tr>
         {{range .ParticleEffectPresets}}
         <tr>
             <td class="id-column">{{.ID}}</td>
+            <td><span class="cyan">{{.UIKeyBinding}}</span></td>
             <td>{{.DisplayName}}</td>
             <td>{{.Description}}</td>
             <td class="effects-column">
@@ -43,11 +45,12 @@
         </tr>
         {{end}}
         <tr>
-            <td colspan="5" class="type-header type-header-magenta">Dragon Effect Presets</td>
+            <td colspan="6" class="type-header type-header-magenta">Dragon Effect Presets</td>
         </tr>
         {{range .DragonEffectPresets}}
         <tr>
             <td class="id-column">{{.ID}}</td>
+            <td><span class="magenta">{{.UIKeyBinding}}</span></td>
             <td>{{.DisplayName}}</td>
             <td>{{.Description}}</td>
             <td class="effects-column">
@@ -65,11 +68,12 @@
         </tr>
         {{end}}
         <tr>
-            <td colspan="5" class="type-header type-header-orange">Timeshift Effect Presets</td>
+            <td colspan="6" class="type-header type-header-orange">Timeshift Effect Presets</td>
         </tr>
         {{range .TimeshiftEffectPresets}}
         <tr>
             <td class="id-column">{{.ID}}</td>
+            <td><span class="orange">{{.UIKeyBinding}}</span></td>
             <td>{{.DisplayName}}</td>
             <td>{{.Description}}</td>
             <td class="effects-column">
@@ -88,11 +92,12 @@
         </tr>
         {{end}}
         <tr>
-            <td colspan="5" class="type-header type-header-green">Potion Effect Presets</td>
+            <td colspan="6" class="type-header type-header-green">Potion Effect Presets</td>
         </tr>
         {{range .PotionEffectPresets}}
         <tr>
             <td class="id-column">{{.ID}}</td>
+            <td><span class="green">{{.UIKeyBinding}}</span></td>
             <td>{{.DisplayName}}</td>
             <td>{{.Description}}</td>
             <td class="effects-column">
