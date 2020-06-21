@@ -24,7 +24,7 @@ func RunParticleEffect(preset model.ParticleEffectPreset, action model.Action) e
 		return cserror.New(cserror.Encoding, "Failed to marshal request", err)
 	}
 
-	endpoint := fmt.Sprintf("%s/%s?id=%s", particleEffectEndpoint, string(action), preset.ID)
+	endpoint := fmt.Sprintf("%s/%s/%s", particleEffectEndpoint, preset.ID, string(action))
 
 	return client.ExecuteEffect(endpoint, body)
 }
@@ -36,7 +36,7 @@ func RunDragonEffect(preset model.DragonEffectPreset, action model.Action) error
 		return cserror.New(cserror.Encoding, "Failed to marshal request", err)
 	}
 
-	endpoint := fmt.Sprintf("%s/%s?id=%s", dragonEffectEndpoint, string(action), preset.ID)
+	endpoint := fmt.Sprintf("%s/%s/%s", dragonEffectEndpoint, preset.ID, string(action))
 
 	return client.ExecuteEffect(endpoint, body)
 }
@@ -48,7 +48,7 @@ func RunTimeshiftEffect(preset model.TimeshiftEffectPreset, action model.Action)
 		return cserror.New(cserror.Encoding, "Failed to marshal request", err)
 	}
 
-	endpoint := fmt.Sprintf("%s/%s?id=%s", timeshiftEffectEndpoint, string(action), preset.ID)
+	endpoint := fmt.Sprintf("%s/%s/%s", timeshiftEffectEndpoint, preset.ID, string(action))
 
 	return client.ExecuteEffect(endpoint, body)
 }
@@ -60,7 +60,7 @@ func RunPotionEffect(preset model.PotionEffectPreset, action model.Action) error
 		return cserror.New(cserror.Encoding, "Failed to marshal request", err)
 	}
 
-	endpoint := fmt.Sprintf("%s/%s?id=%s", potionEffectEndpoint, string(action), preset.ID)
+	endpoint := fmt.Sprintf("%s/%s/%s", potionEffectEndpoint, preset.ID, string(action))
 
 	return client.ExecuteEffect(endpoint, body)
 }
