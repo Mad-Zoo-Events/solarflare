@@ -45,7 +45,8 @@
                 <select class="indexed-input" name="effect[{{$index}}].regionType">
                     {{$current := .UIRegionRegionType}}
                     {{range $.UIAllowedRegionTypes}}
-                    <option value="{{.Name}}" {{if eq $current .Name}}selected{{end}}>{{.Description}}</option>
+                    <option value="{{.Name}}" {{if eq $current .Name}}selected{{end}}>{{.Name}}</option>
+                    <option class="option-description" disabled>&nbsp;&nbsp;└─ {{.Description}}</option>
                     {{end}}
                 </select>
                 <br />
