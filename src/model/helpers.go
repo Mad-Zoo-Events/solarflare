@@ -77,8 +77,8 @@ func (preset *ParticleEffectPreset) TransformToUI() {
 }
 
 func convertDensity(density float64, fromUI bool) float64 {
-	m := 0.000100909
-	n := -9.09091E-05
+	m := 5.0404E-05
+	n := -4.0404E-05
 
 	if fromUI {
 		return m*density + n
