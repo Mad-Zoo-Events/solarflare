@@ -25,6 +25,11 @@ func (action Action) IsAllowedOn(effectType EffectType) bool {
 			action == StopEffectAction {
 			return true
 		}
+	case EffectTypePotion:
+		if action == StartEffectAction ||
+			action == StopEffectAction {
+			return true
+		}
 	}
 
 	return false
