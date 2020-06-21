@@ -5,9 +5,11 @@ type ParticleEffectPreset struct {
 	ID              string           `json:"id" form:"id"`
 	DisplayName     string           `json:"displayName" form:"displayName"`
 	Description     string           `json:"description" form:"description"`
+	KeyBinding      rune             `json:"keyBinding" form:"keyBinding"`
 	ParticleEffects []ParticleEffect `json:"particleEffects" form:"effect"`
 
 	// UI specific models
+	UIKeyBinding             string         `json:"-" form:"-"`
 	UIAllowedParticleEffects []string       `json:"-" form:"-"`
 	UIAllowedRegionTypes     []UIRegionType `json:"-" form:"-"`
 }

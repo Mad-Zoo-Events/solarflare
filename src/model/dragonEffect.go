@@ -5,7 +5,11 @@ type DragonEffectPreset struct {
 	ID            string         `json:"id" form:"id"`
 	DisplayName   string         `json:"displayName" form:"displayName"`
 	Description   string         `json:"description" form:"description"`
+	KeyBinding    rune           `json:"keyBinding" form:"keyBinding"`
 	DragonEffects []DragonEffect `json:"dragonEffects" form:"effect"`
+
+	// UI specific models
+	UIKeyBinding string `json:"-" form:"-"`
 }
 
 // DragonEffect contains information on where and how to display the dragon effect
