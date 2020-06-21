@@ -59,6 +59,23 @@ func UpsertTimeshiftEffectPreset(preset model.TimeshiftEffectPreset) (*string, e
 	return &preset.ID, nil
 }
 
+// UpsertPotionEffectPreset creates or updates a potion effect preset in the database
+func UpsertPotionEffectPreset(preset model.PotionEffectPreset) (*string, error) {
+	if preset.ID == "" {
+		preset.ID = uuid.New().String()
+	}
+
+	err := client.UpsertEffectPreset(client.PotionEffectPresetsTable, preset)
+	if err != nil {
+		return nil, err
+	}
+
+	cfg := config.Get()
+	cfg.PotionEffectPresets = client.GetPotionEffectPresets()
+
+	return &preset.ID, nil
+}
+
 // DeletePreset deletes a preset from the database
 func DeletePreset(tableName, id string) error {
 	return client.DeleteEffectPreset(tableName, id)
