@@ -9,7 +9,7 @@ import (
 	"github.com/eynorey/solarflare/src/utils/sferror"
 )
 
-// RunEffect runs a eyecandy effect
+// RunEffect runs an effect on Aurora
 func RunEffect(id string, effectType model.EffectType, action model.Action) error {
 	if !action.IsAllowedOn(effectType) {
 		return sferror.New(sferror.ActionNotAllowed, fmt.Sprintf("Action %s is not allowed for on type %s", action, effectType), nil)

@@ -1,8 +1,8 @@
 # Solarflare
-Your Friendly Neighborhood Eyecandy Distribution System&trade;
+Your Friendly Neighborhood Visual Effect Distribution System&trade;
 
 ## What is this?
-Solarflare is a Minecraft visual effect management system that works in combination with [the Eyecandy plugin](https://github.com/SorenNeedsCoffee/eyecandy).
+Solarflare is a Minecraft visual effect management system that works in combination with [the Aurora plugin](https://github.com/SorenNeedsCoffee/aurora).
 
 It allows you to create **presets** which can be used to control a range of awesome Minecraft effects in a certain region and shape.
 
@@ -65,19 +65,19 @@ The system consists of three components:
 
 - This Go service (preset management, orchestration and request distribution)
 - Control Panel (website hosted by the Go service)
-- The Eyecandy Plugin (running on Minecraft servers)
+- The Aurora Plugin (running on Minecraft servers)
 
 The basic workflow is as follows:
 1. User creates presets in the Control Panel
 2. User triggers action on a preset by ID
 3. Go service then loads the corresponding information
-4. Go service compiles request and concurrently sends it to all registered Eyecandy instances
+4. Go service compiles request and concurrently sends it to all registered Aurora instances
 
 ### Registration of Servers
 
-This system can be used to cater a large number of Minecraft server instances at the same time. Thus, each instance needs to have the Eyecandy plugin installed and Solarflare must know the address of each instance.
+This system can be used to cater a large number of Minecraft server instances at the same time. Thus, each instance needs to have the Aurora plugin installed and Solarflare must know the address of each instance.
 
-To automate this process, each Eyecandy plugin will register itself at the Go service when it starts up by sending it's network address. The Go service maintains a list of registered servers and distributes traffic to all servers this way.
+To automate this process, each Aurora instance will register itself at the Go service when it starts up by sending it's network address. The Go service maintains a list of registered servers and distributes traffic to all servers this way.
 
 *To be implemented*
 
