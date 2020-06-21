@@ -1,6 +1,8 @@
 {{define "particleEffectControl"}}
 <div class="visual-control">
     <span title="{{.Description}}">{{.DisplayName}}</span>
+    <hr />
+    {{if .UIKeyBinding}}<span>► {{.UIKeyBinding}} ◄</span>{{end}}
 
     <button type="button" class="trigger"
         onclick='doEffect("particle", "{{.ID}}", "{{.DisplayName}}", "trigger")'>trigger</button>
