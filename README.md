@@ -31,6 +31,18 @@ The dying dragon effect is an amazing purple-laser-beam animation which continuo
 
 The effect originates from a specified point and can be toggled on and off with the additional option to restart the animation.
 
+#### Timeshift Effect
+
+The timeshift effect lets you control the daylight cycle in the game. You can specify which portion of one Minecraft day to skip ahead or rewind per second. It's a continuous effect that can be turned on and off.
+
+You can trigger as many timeshift effects at the same time as you want. A neat side-effect of this is that the moon's shape reacts to that as it skips along the server time as well. For instance if you skip ahead and rewind with the exact same amount at the same time, the moon just rapidly skips through its cycles without the time of the day actually changing. Add a third time skip on top of that, and you have days flying by with a frenzy moon!
+
+#### Potion Effects
+
+You can apply one or multiple Minecraft potion effects to every player in the world at the same time.
+
+This can be used to turn the lights off with blindness, give players night vision (these two are a good combination), make them glow, become invisible (another combo that looks really cool), move really fast, get nausea... You get the idea.
+
 ### Presets
 
 Presets represent a compilation of effects of the same type to be controlled at the same time. For instance you could display hearts in a specific location and shape while also turning on the rain in a different shape.
@@ -41,9 +53,11 @@ Effects in a preset have to be of the same type (either particle effect, dragon 
 
 ### Control Panel
 
-The control panel is the browser-based user interface which lets you control effects, manage presets and monitor the network.
+The control panel is the browser-based user interface which interacts with the Go service.
 
-*Work in Progress.*
+Here you can execute, create, update and delete presets for the effects described above, monitor the network status and view your click-to-execution delay on the effects.
+
+It also logs a message indicating if the effect you just triggered successfully ran on all servers, or at least on how many of them.
 
 ## System Architecture
 
@@ -55,7 +69,7 @@ The system consists of three components:
 
 The basic workflow is as follows:
 1. User creates presets in the Control Panel
-2. user triggers action on a preset by ID
+2. User triggers action on a preset by ID
 3. Go service then loads the corresponding information
 4. Go service compiles request and concurrently sends it to all registered Eyecandy instances
 
@@ -70,16 +84,23 @@ To automate this process, each Eyecandy plugin will register itself at the Go se
 ## API Endpoints
 
 ### Trigger an action on a preset
-```
-POST https://visuals.madzoo.events/presets/{id}/{action}
-```
+`POST https://visuals.madzoo.events/effects/{effectType}/{id}/{action}`
+
+There is no payload.
 
 **Parameters:**
 
-| Parameter | Description                             |
-| --------- | --------------------------------------- |
-| `id`      | The UUID of the preset to be controlled |
-| `action`  | The action to perform on the preset     |
+| Parameter    | Description                                                            |
+| ------------ | ---------------------------------------------------------------------- |
+| `effectType` | Type of the effect (see below)                                         |
+| `id`         | The UUID of the preset to be controlled (find it on the control panel) |
+| `action`     | The action to perform on the preset (see below)                        |
+
+**Effect Types**
+- `particle`
+- `dragon`
+- `timeshift`
+- `potion`
 
 **Actions allowed on *particle effect* presets:**
 - `trigger`
@@ -91,105 +112,16 @@ POST https://visuals.madzoo.events/presets/{id}/{action}
 - `restart`
 - `stop`
 
+**Actions allowed on *timeshift effect* presets:**
+- `start`
+- `stop`
+
+**Actions allowed on *potion effect* presets:**
+- `start`
+- `stop`
+
 ### Manage Presets
 
-#### Create Particle Effect Preset
+It is *highly* recommended to manage presets through the UI only, as there is some conversion happening before they are saved in the database.
 
-```
-POST https://visuals.madzoo.events/presets/particle
-
-{
-	"displayName": string,
-	"description": string,
-	"particleEffects": [
-		{
-			"name": string,
-			"region": {
-				"pointIds": [int],
-				"type": "POINTS|CUBOID|EQUATION",
-				"randomize": bool,
-				"density": float(0.0 - 1-0),
-				"equation": string
-			}
-		}
-	]
-}
-```
-
-**Parameters:**
-
-|                   |                                                                                  |
-| ----------------- | -------------------------------------------------------------------------------- |
-| `displayName`     | Short name of the preset                                                         |
-| `description`     | Short description of the preset                                                  |
-| `particleEffects` | List of effects to be controlled simultaneously                                  |
-| `├─ name`         | Minecraft name of the particle effect                                            |
-| `└─ region`       | Information on where and how to display the effect                               |
-| `   ├─ pointIds`  | List of pre-defined in-game points, required amount depends on `type`            |
-| `   ├─ type`      | Specifies how to display the particles, see possible values below                |
-| `   ├─ randomize` | Specifies whether particles in a `CUBOID` are arranged symmetrically or randomly |
-| `   ├─ density`   | Specifies how dense particles in a `CUBOID` will be (between `0.0` and `1.0`)    |
-| `   └─ equation`  | Specifies the mathematical `EQUATION` for the 3D shape                           |
-
-**Region Types**
-- `POINTS`: display effects at all specified points
-- `CUBOID`: display effects in a cuboid; exactly two points
-- `EQUATION`: display effects according to a mathematical equation; exactly one origin point required
-
-**Equation**
-- see [here](https://www.benjoffe.com/code/tools/functions3d/examples) for examples
-
-#### Create Dragon Effect Preset
-
-```
-POST https://visuals.madzoo.events/presets/dragon
-
-{
-	"displayName": string,
-	"description": string,
-	"dragonEffects": [
-		{
-			"pointId": int,
-			"static": bool
-		}
-	]
-}
-```
-
-**Parameters:**
-
-|                 |                                                                       |
-| --------------- | --------------------------------------------------------------------- |
-| `displayName`   | Short name of the preset                                              |
-| `description`   | Short description of the preset                                       |
-| `dragonEffects` | List of effects to be controlled simultaneously                       |
-| `├─ pointId`    | Pre-defined in-game point to display the dragon effect at             |
-| `└─ static`     | Specifies whether the dragon should be static or continuously move up |
-
-#### Update Existing Presets
-
-To update an existing preset, use the corresponding request above, but add the parameter `id` with the preset's UUID to the root of the JSON payload. This will overwrite the existing preset with the information you provided.
-
-```
-POST https://visuals.madzoo.events/presets/dragon
-
-{
-	"id": uuid,
-	"displayName": string,
-	...
-}
-```
-
-#### Delete Preset
-
-```
-DELETE https://visuals.madzoo.events/presets/{effect_type}/{id}
-
-```
-
-**Parameters:**
-
-| Parameter     | Description                         |
-| ------------- | ----------------------------------- |
-| `effect_type` | Preset type; `particle` or `dragon` |
-| `id`          | The UUID of the preset to delete    |
+If you still wish to do it manually via POST requests, you should know what you are doing and can find the request schemes in the code by yourself.
