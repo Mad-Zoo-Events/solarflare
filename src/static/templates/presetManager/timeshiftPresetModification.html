@@ -27,13 +27,24 @@
             <input name="description" type="text" size="50" placeholder="Short description" value="{{.Description}}" />
             <br />
 
-            <label>Skip <span id="timeshift-range">{{.UIPercentOfDayToSkipPerSecond}}</span>% of Minecraft day per
-                second</label>
-            <input name="percentToSkip" type="range" max="100" min="-100" step="1" placeholder="0"
-                value="{{.UIPercentOfDayToSkipPerSecond}}"
-                onchange='updateRangeValue("timeshift-range", this.value);' />
+            <label>Effects</label>
+            {{range $index, $element := .TimeshiftEffects}}
+            <div class="effect-box">
+                <span class="armor-stand">
+                    <span class="delete-effect" onclick='removeEffectInput("{{$index}}")'>🗑</span>
+                </span>
+
+                <label>Skip <span class="indexed-input" id="timeshift-range-{{$index}}">
+                        {{.UIPercentOfDayToSkipPerSecond}}
+                    </span>% of Minecraft day per second</label>
+                <input class="indexed-input" name="effect[{{$index}}].percentToSkip" data-index="{{$index}}"
+                    type="range" max="100" min="-100" step="1" placeholder="0"
+                    value="{{.UIPercentOfDayToSkipPerSecond}}" onchange='updateRangeValue("timeshift-range", this);' />
+            </div>
             <br />
+            {{end}}
         </form>
+        <div class="add-effect" onclick='addEffectInput("timeshift-preset-form");'>+</div>
     </div>
 
     <div class="footer">

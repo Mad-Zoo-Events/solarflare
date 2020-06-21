@@ -13,7 +13,8 @@
 
 <bod>
     <div class="preset-edit-main">
-        <h1>{{if .ID}} Edit {{else}} Create New {{end}} <span class="cyan">{{.DisplayName}} </span> Particle Effect Preset</h1>
+        <h1>{{if .ID}} Edit {{else}} Create New {{end}} <span class="cyan">{{.DisplayName}} </span> Particle Effect
+            Preset</h1>
         <form class="preset-form" id="particle-preset-form" method="POST" action="/presets/particle-ui">
             <input name="id" type="hidden" value="{{.ID}}" />
 
