@@ -30,7 +30,7 @@
             {{range $index, $element := .DragonEffects}}
             <div class="effect-box">
                 <span class="armor-stand">
-                    <span class="delete-effect" onclick='removeEffectInput("{{$index}}")'>🗑</span>
+                    <span class="delete-effect" onclick='removeEffectInput(this);'>🗑</span>
                 </span>
 
                 <label>Point ID</label>

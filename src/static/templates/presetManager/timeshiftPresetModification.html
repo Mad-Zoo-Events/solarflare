@@ -31,7 +31,7 @@
             {{range $index, $element := .TimeshiftEffects}}
             <div class="effect-box">
                 <span class="armor-stand">
-                    <span class="delete-effect" onclick='removeEffectInput("{{$index}}")'>🗑</span>
+                    <span class="delete-effect" onclick='removeEffectInput(this);'>🗑</span>
                 </span>
 
                 <label>Skip <span class="indexed-input" id="timeshift-range-{{$index}}">
