@@ -48,6 +48,7 @@ stopCounter = (id) => {
     if (id === "all") {
         for (const key in counters) {
             clearInterval(counters[key]);
+            counters.delete(key);
         }
 
         const buttons = document.getElementsByClassName("start");
@@ -63,6 +64,8 @@ stopCounter = (id) => {
     }
 
     clearInterval(counters[id]);
+    counters.delete(id);
+
     resetStartButton(document.getElementById(`start-${id}`));
 }
 
