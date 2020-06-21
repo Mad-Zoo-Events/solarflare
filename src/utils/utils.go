@@ -31,6 +31,12 @@ func FindPreset(id string, effectType model.EffectType) (interface{}, error) {
 				return p, nil
 			}
 		}
+	case model.EffectTypePotion:
+		for _, p := range cfg.PotionEffectPresets {
+			if p.ID == id {
+				return p, nil
+			}
+		}
 	default:
 		return nil, cserror.New(cserror.InvalidEffectType, string(effectType), nil)
 	}
