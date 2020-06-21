@@ -22,6 +22,7 @@ func RenderControlPanel(writer http.ResponseWriter) error {
 		controlPanelPath+"particleEffectControl.html",
 		controlPanelPath+"dragonEffectControl.html",
 		controlPanelPath+"timeshiftEffectControl.html",
+		controlPanelPath+"potionEffectControl.html",
 	)
 	if err != nil {
 		return cserror.New(cserror.Template, "Error loading control panel templates", err)
@@ -32,6 +33,7 @@ func RenderControlPanel(writer http.ResponseWriter) error {
 		ParticleEffectPresets:  cfg.ParticleEffectPresets,
 		DragonEffectPresets:    cfg.DragonEffectPresets,
 		TimeshiftEffectPresets: cfg.TimeshiftEffectPresets,
+		PotionEffectPresets:    cfg.PotionEffectPresets,
 		RegisteredServerCount:  len(cfg.Servers),
 	}
 
@@ -57,6 +59,7 @@ func RenderPresetManager(writer http.ResponseWriter) error {
 		ParticleEffectPresets:  cfg.ParticleEffectPresets,
 		DragonEffectPresets:    cfg.DragonEffectPresets,
 		TimeshiftEffectPresets: cfg.TimeshiftEffectPresets,
+		PotionEffectPresets:    cfg.PotionEffectPresets,
 		RegisteredServerCount:  len(cfg.Servers),
 	}
 
@@ -83,6 +86,8 @@ func RenderPresetModifier(writer http.ResponseWriter, effectType model.EffectTyp
 		presetName = "dragonPresetModification.html"
 	case model.EffectTypeTimeshift:
 		presetName = "timeshiftPresetModification.html"
+	case model.EffectTypePotion:
+		presetName = "potionPresetModification.html"
 	default:
 		return cserror.New(cserror.InvalidEffectType, string(effectType), err)
 	}
@@ -125,6 +130,15 @@ func RenderPresetModifier(writer http.ResponseWriter, effectType model.EffectTyp
 
 		if id != "" {
 			p = preset.(model.TimeshiftEffectPreset)
+		}
+
+		p.TransformToUI()
+		err = template.Execute(writer, p)
+	case model.EffectTypePotion:
+		p := model.PotionEffectPreset{}
+
+		if id != "" {
+			p = preset.(model.PotionEffectPreset)
 		}
 
 		p.TransformToUI()
