@@ -75,10 +75,9 @@ func (preset *ParticleEffectPreset) TransformToUI() {
 		effect.UIRegionPointIDs = pointIDs
 		effect.UIRegionRandomize = region.Randomize
 		effect.UIRegionRegionType = region.RegionType
-
-		preset.UIAllowedParticleEffects = MinecraftParticleEffects
-		preset.UIAllowedRegionTypes = RegionTypes
 	}
+	preset.UIAllowedParticleEffects = MinecraftParticleEffects
+	preset.UIAllowedRegionTypes = RegionTypes
 }
 
 func convertDensity(density float64, fromUI bool) float64 {
@@ -100,4 +99,9 @@ func (preset *TimeshiftEffectPreset) TramsformFromUI() {
 // TransformToUI transforms sets UI specific values from the main model
 func (preset *TimeshiftEffectPreset) TransformToUI() {
 	preset.UIPercentOfDayToSkipPerSecond = preset.TimeshiftEffect.Amount / 12
+}
+
+// TransformToUI transforms sets UI specific values from the main model
+func (preset *PotionEffectPreset) TransformToUI() {
+	preset.UIAllowedPotionEffects = MinecraftPotionEffects
 }
