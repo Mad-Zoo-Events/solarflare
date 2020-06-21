@@ -13,7 +13,8 @@
 
 <bod>
     <div class="preset-edit-main">
-        <h1>{{if .ID}} Edit {{else}} Create New {{end}} <span class="magenta">{{.DisplayName}} </span> Dragon Preset</h1>
+        <h1>{{if .ID}} Edit {{else}} Create New {{end}} <span class="magenta">{{.DisplayName}} </span> Dragon Preset
+        </h1>
         <form class="preset-form" id="dragon-preset-form" method="POST" action="/presets/dragon-ui">
             <input name="id" type="hidden" value="{{.ID}}" />
 
@@ -27,7 +28,8 @@
             <br />
 
             <label>Keyboard Shortcut</label>
-            <input type="text" maxlength="1" size="50" value="{{.UIKeyBinding}}" onkeypress='setKeyBinding(event, this);' />
+            <input type="text" maxlength="1" size="50" value="{{.UIKeyBinding}}"
+                onkeypress='setKeyBinding(event, this);' onchange='checkKeyBinding(this)' />
             <input id="key-binding" name="keyBinding" type="hidden" value="{{.KeyBinding}}" />
             <br />
 

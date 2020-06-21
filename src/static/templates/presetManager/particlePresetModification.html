@@ -28,7 +28,8 @@
             <br />
 
             <label>Keyboard Shortcut</label>
-            <input type="text" maxlength="1" size="50" value="{{.UIKeyBinding}}" onkeypress='setKeyBinding(event, this);' />
+            <input type="text" maxlength="1" size="50" value="{{.UIKeyBinding}}"
+                onkeypress='setKeyBinding(event, this);' onchange='checkKeyBinding(this)' />
             <input id="key-binding" name="keyBinding" type="hidden" value="{{.KeyBinding}}" />
             <br />
 
