@@ -12,32 +12,31 @@
 </head>
 
 <body onload="init()">
-    <div class="controls-holder">
-        <span class="controls-header cyan">Particle</span>
-        {{range .ParticleEffectPresets}}
-        {{template "particleEffectControl" .}}
-        {{end}}
-    </div>
-    <hr />
-    <div class="controls-holder">
-        <span class="controls-header magenta">Dragon</span>
-        {{range .DragonEffectPresets}}
-        {{template "dragonControl" .}}
-        {{end}}
-    </div>
-    <hr />
-    <div class="controls-holder">
-        <span class="controls-header orange">Timeshift</span>
-        {{range .TimeshiftEffectPresets}}
-        {{template "timeshiftControl" .}}
-        {{end}}
-    </div>
-    <hr />
-    <div class="controls-holder">
-        <span class="controls-header green">Potion</span>
-        {{range .PotionEffectPresets}}
-        {{template "potionControl" .}}
-        {{end}}
+    <div class="main-controls-holder">
+        <div class="controls-holder particle-controls">
+            <span class="controls-header cyan">Particle</span>
+            {{range .ParticleEffectPresets}}
+            {{template "particleEffectControl" .}}
+            {{end}}
+        </div>
+        <div class="controls-holder dragon-controls">
+            <span class="controls-header magenta">Dragon</span>
+            {{range .DragonEffectPresets}}
+            {{template "dragonControl" .}}
+            {{end}}
+        </div>
+        <div class="controls-holder timeshift-controls">
+            <span class="controls-header orange">Timeshift</span>
+            {{range .TimeshiftEffectPresets}}
+            {{template "timeshiftControl" .}}
+            {{end}}
+        </div>
+        <div class="controls-holder potion-controls">
+            <span class="controls-header green">Potion</span>
+            {{range .PotionEffectPresets}}
+            {{template "potionControl" .}}
+            {{end}}
+        </div>
     </div>
     <div class="footer">
         <div id="log-window"></div>
