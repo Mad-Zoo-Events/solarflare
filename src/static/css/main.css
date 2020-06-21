@@ -5,13 +5,19 @@
     --darker-gray     : #222;
     --gray            : gray;
     --font            : #dfffff;
-    --green           : #0eaf2c;
-    --orange          : #f5a700;
-    --red             : #ec2323;
-    --cyan            : #1ba1e2;
-    --magenta         : #b90383;
-    --darker-magenta  : #52002c;
-    --darker-cyan     : #0b3c55;
+
+    --green        : #0eaf2c;
+    --green-alpha  : rgba(14, 175, 44, 0.1);
+    --orange       : #f5a700;
+    --orange-alpha : rgba(245, 167, 0, 0.1);
+    --red          : #ec2323;
+    --cyan         : #1ba1e2;
+    --cyan-alpha   : rgba(27, 161, 226, 0.1);
+    --magenta      : #b90383;
+    --magenta-alpha: rgba(185, 3, 131, 0.1);
+
+    --darker-magenta: #52002c;
+    --darker-cyan   : #0b3c55;
 }
 
 body {
@@ -21,8 +27,54 @@ body {
 }
 
 /* ================ MAIN CONTROLS ================ */
+.main-controls-holder {
+    display: grid;
+
+    grid-template-columns: 50% 50%;
+
+    grid-template-areas:
+        "particle    particle"
+        "dragon      dragon"
+        "timeshift   potion";
+
+    margin-bottom: 15em;
+}
+
 .controls-holder {
     text-align: center;
+    padding   : 0.5em;
+}
+
+.controls-header {
+    float       : left;
+    writing-mode: vertical-lr;
+
+    font-size   : x-large;
+    font-variant: small-caps;
+}
+
+.particle-controls {
+    grid-area       : particle;
+    background-color: var(--cyan-alpha);
+}
+
+.dragon-controls {
+    grid-area       : dragon;
+    background-color: var(--magenta-alpha);
+}
+
+.timeshift-controls {
+    grid-area       : timeshift;
+    background-color: var(--orange-alpha);
+}
+
+.potion-controls {
+    grid-area       : potion;
+    background-color: var(--green-alpha);
+}
+
+.controls-divider {
+    grid-area: divider;
 }
 
 .visual-control {
@@ -33,14 +85,6 @@ body {
 
 .control-option {
     margin-top: 1em;
-}
-
-.controls-header {
-    writing-mode: vertical-lr;
-    float       : left;
-
-    font-size   : x-large;
-    font-variant: small-caps;
 }
 
 span.cyan {
@@ -285,7 +329,7 @@ select {
     background-color: var(--dark-gray);
 }
 
-.option-description{
+.option-description {
     font-style: italic;
 }
 
