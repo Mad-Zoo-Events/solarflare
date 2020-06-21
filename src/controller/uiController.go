@@ -130,6 +130,8 @@ func RenderPresetModifier(writer http.ResponseWriter, effectType model.EffectTyp
 
 		if id != "" {
 			p = preset.(model.TimeshiftEffectPreset)
+		} else {
+			p.TimeshiftEffects = []model.TimeshiftEffect{model.TimeshiftEffect{}}
 		}
 
 		p.TransformToUI()
