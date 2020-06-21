@@ -13,7 +13,8 @@
 
 <bod>
     <div class="preset-edit-main">
-        <h1>{{if .ID}} Edit {{else}} Create New {{end}} <span class="orange">{{.DisplayName}} </span> Timeshift Preset</h1>
+        <h1>{{if .ID}} Edit {{else}} Create New {{end}} <span class="orange">{{.DisplayName}} </span> Timeshift Preset
+        </h1>
         <form class="preset-form" id="timeshift-preset-form" method="POST" action="/presets/timeshift-ui">
             <input name="id" type="hidden" value="{{.ID}}" />
 
@@ -26,7 +27,8 @@
             <input name="description" type="text" size="50" placeholder="Short description" value="{{.Description}}" />
             <br />
 
-            <label>Skip <span id="timeshift-range"></span>% of Minecraft day per second</label>
+            <label>Skip <span id="timeshift-range">{{.UIPercentOfDayToSkipPerSecond}}</span>% of Minecraft day per
+                second</label>
             <input name="percentToSkip" type="range" max="100" min="-100" step="1" placeholder="0"
                 value="{{.UIPercentOfDayToSkipPerSecond}}"
                 onchange='updateRangeValue("timeshift-range", this.value);' />

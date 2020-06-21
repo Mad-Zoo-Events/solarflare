@@ -13,27 +13,31 @@
 
 <body onload="init()">
     <div class="controls-holder">
-        <span class="controls-header cyan">Particle Effects</span>
+        <span class="controls-header cyan">Particle</span>
         {{range .ParticleEffectPresets}}
         {{template "particleEffectControl" .}}
         {{end}}
-        <span class="vr"></span>
     </div>
     <hr />
     <div class="controls-holder">
-        <span class="controls-header magenta">Dragon Effects</span>
+        <span class="controls-header magenta">Dragon</span>
         {{range .DragonEffectPresets}}
         {{template "dragonControl" .}}
         {{end}}
-        <span class="vr"></span>
     </div>
     <hr />
     <div class="controls-holder">
-        <span class="controls-header orange">Timeshift Effects</span>
+        <span class="controls-header orange">Timeshift</span>
         {{range .TimeshiftEffectPresets}}
         {{template "timeshiftControl" .}}
         {{end}}
-        <span class="vr"></span>
+    </div>
+    <hr />
+    <div class="controls-holder">
+        <span class="controls-header green">Potion</span>
+        {{range .PotionEffectPresets}}
+        {{template "potionControl" .}}
+        {{end}}
     </div>
     <div class="footer">
         <div id="log-window"></div>

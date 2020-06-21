@@ -87,6 +87,28 @@
             </td>
         </tr>
         {{end}}
+        <tr>
+            <td colspan="5" class="type-header type-header-green">Potion Effect Presets</td>
+        </tr>
+        {{range .PotionEffectPresets}}
+        <tr>
+            <td class="id-column">{{.ID}}</td>
+            <td>{{.DisplayName}}</td>
+            <td>{{.Description}}</td>
+            <td class="effects-column">
+                {{range .PotionEffects}}
+                <span>→&nbsp;&nbsp;</span>
+                <span class="code">{{.Type}}</span>
+                <span>{{.Amplifier}}</span>
+                <span></span>
+                {{end}}
+            </td>
+            <td class="actions-column">
+                <span class="delete-action" onclick='confirmDelete("{{.ID}}", "potion", "{{.DisplayName}}")'>🗑</span>
+                <span class="edit-action" onclick='navigate(CP_PRESETS_ENDPOINT+"/potion/modify/{{.ID}}");'>🖉</span>
+            </td>
+        </tr>
+        {{end}}
     </table>
 
     <div class="footer">
@@ -100,6 +122,9 @@
                 Effect&nbsp;Preset</button>
             <button class="orange" type="button"
                 onclick='navigate(CP_PRESETS_ENDPOINT+"/timeshift/new");'>New&nbsp;Timeshift
+                Effect&nbsp;Preset</button>
+            <button class="green" type="button"
+                onclick='navigate(CP_PRESETS_ENDPOINT+"/potion/new");'>New&nbsp;Potion
                 Effect&nbsp;Preset</button>
         </div>
         <div class="master-controls">
