@@ -7,6 +7,7 @@ type ControlPanel struct {
 	ParticleEffectPresets  []ParticleEffectPreset
 	DragonEffectPresets    []DragonEffectPreset
 	TimeshiftEffectPresets []TimeshiftEffectPreset
+	PotionEffectPresets    []PotionEffectPreset
 
 	RegisteredServerCount int
 }
@@ -26,6 +27,8 @@ const (
 	EffectTypeDragon = EffectType("dragon")
 	// EffectTypeTimeshift represents the timeshift effect
 	EffectTypeTimeshift = EffectType("timeshift")
+	// EffectTypePotion represents the potion effect
+	EffectTypePotion = EffectType("potion")
 )
 
 // Action represents the action to be performed on the visual effect (e.g. start, stop, restart...)
