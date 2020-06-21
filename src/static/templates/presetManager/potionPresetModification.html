@@ -13,7 +13,7 @@
 
 <bod>
     <div class="preset-edit-main">
-        <h1>{{if .ID}} Edit {{else}} Create New {{end}} <span class="magenta">{{.DisplayName}} </span> Potion Preset
+        <h1>{{if .ID}} Edit {{else}} Create New {{end}} <span class="green">{{.DisplayName}} </span> Potion Preset
         </h1>
         <form class="preset-form" id="potion-preset-form" method="POST" action="/presets/potion-ui">
             <input name="id" type="hidden" value="{{.ID}}" />
@@ -37,9 +37,9 @@
                 <label>Type</label>
                 <select class="indexed-input" name="effect[{{$index}}].type">
                     {{$current := .Type}}
-                    {{range $type, $description := $.UIAllowedPotionEffects}}
-                    <option value="{{$type}}" {{if eq $current $type}}selected{{end}}>{{$type}}</option>
-                    <option class="option-description" disabled>&nbsp;&nbsp;└─ {{$description}}</option>
+                    {{range $.UIAllowedPotionEffects}}
+                    <option value="{{.Name}}" {{if eq $current .Name}}selected{{end}}>{{.Name}}</option>
+                    <option class="option-description" disabled>&nbsp;&nbsp;└─ {{.Description}}</option>
                     {{end}}
                 </select>
                 <br />
