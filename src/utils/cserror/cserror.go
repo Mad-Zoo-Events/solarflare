@@ -24,12 +24,12 @@ var (
 	// InvalidEffectType | effect type does not exist
 	InvalidEffectType = ErrorType{"InvalidEffectType", 13}
 
-	// Eyecandy | received error response from Eyecandy
-	Eyecandy = ErrorType{"Eyecandy", 20}
-	// FailedOnEyecandyAll | failed to execute request on all Eyecandy instances
-	FailedOnEyecandyAll = ErrorType{"FailedOnEyecandyAll", 21}
-	// FailedOnEyecandySome | failed to execute request on some Eyecandy instances
-	FailedOnEyecandySome = ErrorType{"FailedOnEyecandySome", 22}
+	// Aurora | received error response from Aurora
+	Aurora = ErrorType{"Aurora", 20}
+	// FailedOnAuroraAll | failed to execute request on all Aurora instances
+	FailedOnAuroraAll = ErrorType{"FailedOnAuroraAll", 21}
+	// FailedOnAuroraSome | failed to execute request on some Aurora instances
+	FailedOnAuroraSome = ErrorType{"FailedOnAuroraSome", 22}
 
 	// Database | unknown error from the database
 	Database = ErrorType{"Database", 30}

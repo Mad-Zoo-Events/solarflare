@@ -12,7 +12,7 @@ type ControlPanel struct {
 	RegisteredServerCount int
 }
 
-// Server contains information about aN eyecandy plugin server
+// Server contains information about an Aurora plugin server
 type Server struct {
 	Address string
 }
