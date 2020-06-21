@@ -55,6 +55,10 @@ span.orange {
     color: var(--orange);
 }
 
+span.green {
+    color: var(--green);
+}
+
 hr {
     border       : none;
     border-bottom: 2px dashed var(--gray);
@@ -93,25 +97,26 @@ button.trigger {
 }
 
 button.cyan {
-    color           : var(--font);
     background-color: var(--cyan);
     border          : 2px solid var(--cyan);
 }
 
 button.magenta {
-    color           : var(--font);
     background-color: var(--magenta);
     border          : 2px solid var(--magenta);
 }
 
 button.orange {
-    color           : var(--font);
     background-color: var(--orange);
     border          : 2px solid var(--orange);
 }
 
+button.green {
+    background-color: var(--green);
+    border          : 2px solid var(--green);
+}
+
 button.darker-cyan {
-    color           : var(--font);
     background-color: var(--darker-cyan);
     border          : 2px solid var(--darker-cyan);
 }
@@ -152,7 +157,7 @@ button.disabled {
 
 .footer-buttons {
     display              : grid;
-    grid-template-columns: max-content max-content max-content;
+    grid-template-columns: max-content max-content max-content max-content;
     gap                  : 1em;
 }
 
@@ -229,6 +234,11 @@ td.type-header {
     border-bottom: 2px solid var(--orange);
 }
 
+.type-header-green {
+    color        : var(--green);
+    border-bottom: 2px solid var(--green);
+}
+
 .id-column {
     font-size: x-small;
 }
@@ -273,6 +283,10 @@ select {
     padding         : 0.5em;
     border          : none;
     background-color: var(--dark-gray);
+}
+
+.option-description{
+    font-style: italic;
 }
 
 label {

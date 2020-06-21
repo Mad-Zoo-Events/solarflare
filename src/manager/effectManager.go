@@ -60,7 +60,7 @@ func RunPotionEffect(preset model.PotionEffectPreset, action model.Action) error
 		return cserror.New(cserror.Encoding, "Failed to marshal request", err)
 	}
 
-	endpoint := fmt.Sprintf("%s/%s?id=%s", timeshiftEffectEndpoint, string(action), preset.ID)
+	endpoint := fmt.Sprintf("%s/%s?id=%s", potionEffectEndpoint, string(action), preset.ID)
 
 	return client.ExecuteEffect(endpoint, body)
 }
