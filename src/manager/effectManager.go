@@ -13,6 +13,7 @@ const (
 	particleEffectEndpoint  = "/effects/particle"
 	dragonEffectEndpoint    = "/effects/dragon"
 	timeshiftEffectEndpoint = "/effects/time"
+	potionEffectEndpoint    = "/effects/potion"
 	stopEndpoint            = "/effects/stop"
 )
 
@@ -43,6 +44,18 @@ func RunDragonEffect(preset model.DragonEffectPreset, action model.Action) error
 // RunTimeshiftEffect compiles a timeshift effect request and executes it on all servers
 func RunTimeshiftEffect(preset model.TimeshiftEffectPreset, action model.Action) error {
 	body, err := json.Marshal(preset.TimeshiftEffect)
+	if err != nil {
+		return cserror.New(cserror.Encoding, "Failed to marshal request", err)
+	}
+
+	endpoint := fmt.Sprintf("%s/%s?id=%s", timeshiftEffectEndpoint, string(action), preset.ID)
+
+	return client.ExecuteEffect(endpoint, body)
+}
+
+// RunPotionEffect compiles a potion effect request and executes it on all servers
+func RunPotionEffect(preset model.PotionEffectPreset, action model.Action) error {
+	body, err := json.Marshal(preset.PotionEffects)
 	if err != nil {
 		return cserror.New(cserror.Encoding, "Failed to marshal request", err)
 	}

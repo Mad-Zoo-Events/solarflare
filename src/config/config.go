@@ -9,6 +9,7 @@ type Config struct {
 	ParticleEffectPresets  []model.ParticleEffectPreset
 	DragonEffectPresets    []model.DragonEffectPreset
 	TimeshiftEffectPresets []model.TimeshiftEffectPreset
+	PotionEffectPresets    []model.PotionEffectPreset
 	Servers                []model.Server
 }
 

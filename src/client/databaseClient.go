@@ -20,6 +20,8 @@ const (
 	DragonEffectPresetsTable = "presets_dragon-effects"
 	// TimeshiftEffectPresetsTable table where timeshift effects are stored
 	TimeshiftEffectPresetsTable = "presets_timeshift-effects"
+	// PotionEffectPresetsTable table where potion effects are stored
+	PotionEffectPresetsTable = "presets_potion-effects"
 )
 
 var (
@@ -116,6 +118,33 @@ func GetTimeshiftEffectPresets() (presets []model.TimeshiftEffectPreset) {
 		}
 
 		preset.TransformToUI()
+
+		presets = append(presets, preset)
+	}
+
+	return
+}
+
+// GetPotionEffectPresets retrieves all potion effect presets from the database
+func GetPotionEffectPresets() (presets []model.PotionEffectPreset) {
+	tableName := PotionEffectPresetsTable
+
+	result, err := db.Scan(&dynamodb.ScanInput{
+		TableName: &tableName,
+	})
+	if err != nil {
+		cserror.New(cserror.DatabaseCRUD, "Failed to read potion effect presets", err)
+		return nil
+	}
+
+	for _, item := range result.Items {
+		preset := model.PotionEffectPreset{}
+
+		err = dynamodbattribute.UnmarshalMap(item, &preset)
+		if err != nil {
+			cserror.New(cserror.DatabaseUnmarshal, "Failed to unmarshal potion effect preset", err)
+			continue
+		}
 
 		presets = append(presets, preset)
 	}
