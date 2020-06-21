@@ -76,6 +76,11 @@ func (preset *ParticleEffectPreset) TransformToUI() {
 		effect.UIRegionRandomize = region.Randomize
 		effect.UIRegionRegionType = region.RegionType
 	}
+
+	if preset.KeyBinding != 0 {
+		preset.UIKeyBinding = string(preset.KeyBinding)
+	}
+
 	preset.UIAllowedParticleEffects = MinecraftParticleEffects
 	preset.UIAllowedRegionTypes = RegionTypes
 }
@@ -91,11 +96,10 @@ func convertDensity(density float64, fromUI bool) float64 {
 	return (density - n) / m
 }
 
-// TramsformFromUI transforms UI specific values to the main model
-func (preset *TimeshiftEffectPreset) TramsformFromUI() {
-	for i := range preset.TimeshiftEffects {
-		effect := &preset.TimeshiftEffects[i]
-		effect.Amount = effect.UIPercentOfDayToSkipPerSecond * 12
+// TransformToUI transforms sets UI specific values from the main model
+func (preset *DragonEffectPreset) TransformToUI() {
+	if preset.KeyBinding != 0 {
+		preset.UIKeyBinding = string(preset.KeyBinding)
 	}
 }
 
@@ -105,9 +109,25 @@ func (preset *TimeshiftEffectPreset) TransformToUI() {
 		effect := &preset.TimeshiftEffects[i]
 		effect.UIPercentOfDayToSkipPerSecond = effect.Amount / 12
 	}
+
+	if preset.KeyBinding != 0 {
+		preset.UIKeyBinding = string(preset.KeyBinding)
+	}
+}
+
+// TramsformFromUI transforms UI specific values to the main model
+func (preset *TimeshiftEffectPreset) TramsformFromUI() {
+	for i := range preset.TimeshiftEffects {
+		effect := &preset.TimeshiftEffects[i]
+		effect.Amount = effect.UIPercentOfDayToSkipPerSecond * 12
+	}
 }
 
 // TransformToUI transforms sets UI specific values from the main model
 func (preset *PotionEffectPreset) TransformToUI() {
+	if preset.KeyBinding != 0 {
+		preset.UIKeyBinding = string(preset.KeyBinding)
+	}
+
 	preset.UIAllowedPotionEffects = MinecraftPotionEffects
 }
