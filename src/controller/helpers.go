@@ -45,3 +45,12 @@ func unmarshalTimeshiftPreset(preset *model.TimeshiftEffectPreset, values url.Va
 
 	return nil
 }
+
+func unmarshalPotionPreset(preset *model.PotionEffectPreset, values url.Values) error {
+	err := decoder.Decode(preset, values)
+	if err != nil {
+		return cserror.New(cserror.Encoding, "Error parsing data from UI request", err)
+	}
+
+	return nil
+}
