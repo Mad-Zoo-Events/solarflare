@@ -19,6 +19,7 @@ func load() {
 	cfg.DragonEffectPresets = client.GetDragonEffectPresets()
 	cfg.TimeshiftEffectPresets = client.GetTimeshiftEffectPresets()
 	cfg.TimeshiftEffectPresets = client.GetTimeshiftEffectPresets()
+	cfg.PotionEffectPresets = client.GetPotionEffectPresets()
 	cfg.Servers = []model.Server{
 		model.Server{
 			// Address: "http://3.133.229.78:8001", //hospital public
