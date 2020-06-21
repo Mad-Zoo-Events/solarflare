@@ -44,9 +44,10 @@
                 </select>
                 <br />
 
-                <label>Amplifier: <span id="potion-amplifier">{{.Amplifier}}</span></label>
+                <label>Amplifier: <span class="indexed-input" id="potion-amplifier-{{$index}}">{{.Amplifier}}</span></label>
                 <input class="indexed-input" name="effect[{{$index}}].amplifier" type="range" max="255" min="1" step="1"
-                    value="{{.Amplifier}}" onchange='updateRangeValue("potion-amplifier", this.value);' />
+                    value="{{.Amplifier}}" data-index="{{$index}}"
+                    onchange='updateRangeValue("potion-amplifier", this);' />
                 <br />
             </div>
             <br />

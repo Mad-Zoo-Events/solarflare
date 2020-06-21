@@ -43,7 +43,7 @@ func RunDragonEffect(preset model.DragonEffectPreset, action model.Action) error
 
 // RunTimeshiftEffect compiles a timeshift effect request and executes it on all servers
 func RunTimeshiftEffect(preset model.TimeshiftEffectPreset, action model.Action) error {
-	body, err := json.Marshal(preset.TimeshiftEffect)
+	body, err := json.Marshal(preset.TimeshiftEffects)
 	if err != nil {
 		return cserror.New(cserror.Encoding, "Failed to marshal request", err)
 	}

@@ -84,10 +84,19 @@ addEffectInput = (formId) => {
     const form = document.getElementById(formId);
     const newEffectsHolder = document.getElementsByClassName("effect-box")[0].cloneNode(true);
 
+    // adjust IDs of the new effect's inputs and range labels
     const inputs = newEffectsHolder.getElementsByClassName("indexed-input");
     for (let index = 0; index < inputs.length; index++) {
         const element = inputs[index];
-        element.name = element.name.replace(0, next);
+        if (element.name) {
+            element.name = element.name.replace(0, next); // for input fields
+        }
+        if (element.getAttribute("data-index")) {
+            element.setAttribute("data-index", next); // for range inputs
+        }
+        if (element.id) {
+            element.id = element.id.replace(0, next); // for corresponding range input labels
+        }
     }
 
     form.appendChild(newEffectsHolder);
@@ -97,6 +106,10 @@ removeEffectInput = (index) => {
     document.getElementsByClassName("effect-box")[Number(index)].remove();
 }
 
-updateRangeValue = (labelId, value) => {
-    document.getElementById(labelId).innerHTML = value;
+updateRangeValue = (labelId, range) => {
+    const index = range.getAttribute("data-index");
+    console.log(index);
+    const id = `${labelId}-${index}`;
+    console.log(id);
+    document.getElementById(id).innerHTML = range.value;
 }
