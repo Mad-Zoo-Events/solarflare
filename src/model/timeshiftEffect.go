@@ -5,7 +5,11 @@ type TimeshiftEffectPreset struct {
 	ID               string            `json:"id" form:"id"`
 	DisplayName      string            `json:"displayName" form:"displayName"`
 	Description      string            `json:"description" form:"description"`
+	KeyBinding       rune              `json:"keyBinding" form:"keyBinding"`
 	TimeshiftEffects []TimeshiftEffect `json:"timeshiftEffects" form:"effect"`
+
+	// UI specific models
+	UIKeyBinding string `json:"-" form:"-"`
 }
 
 // TimeshiftEffect contains parameters for the timeshift effect

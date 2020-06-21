@@ -124,6 +124,7 @@ func RenderPresetModifier(writer http.ResponseWriter, effectType model.EffectTyp
 			p.DragonEffects = []model.DragonEffect{model.DragonEffect{}}
 		}
 
+		p.TransformToUI()
 		err = template.Execute(writer, p)
 	case model.EffectTypeTimeshift:
 		p := model.TimeshiftEffectPreset{}
