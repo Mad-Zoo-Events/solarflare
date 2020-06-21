@@ -38,6 +38,14 @@ func UpsertPresetAPI(effectType string, body []byte) (*string, error) {
 		}
 
 		return manager.UpsertTimeshiftEffectPreset(preset)
+	case model.EffectTypePotion:
+		preset := model.PotionEffectPreset{}
+
+		if err := json.Unmarshal(body, &preset); err != nil {
+			return nil, cserror.New(cserror.Encoding, "Error unmarshalling potion effect preset request", err)
+		}
+
+		return manager.UpsertPotionEffectPreset(preset)
 	}
 
 	return nil, cserror.New(cserror.InvalidEffectType, effectType, nil)
@@ -70,6 +78,14 @@ func UpsertPresetUI(effectType string, values url.Values) (*string, error) {
 		}
 
 		return manager.UpsertTimeshiftEffectPreset(preset)
+	case model.EffectTypePotion:
+		preset := model.PotionEffectPreset{}
+
+		if err := unmarshalPotionPreset(&preset, values); err != nil {
+			return nil, err
+		}
+
+		return manager.UpsertPotionEffectPreset(preset)
 	}
 
 	return nil, cserror.New(cserror.InvalidEffectType, effectType, nil)
@@ -95,6 +111,11 @@ func DeletePreset(effectType, id string) error {
 		err = client.DeleteEffectPreset(client.TimeshiftEffectPresetsTable, id)
 		if err == nil {
 			cfg.TimeshiftEffectPresets = client.GetTimeshiftEffectPresets()
+		}
+	case model.EffectTypePotion:
+		err = client.DeleteEffectPreset(client.PotionEffectPresetsTable, id)
+		if err == nil {
+			cfg.PotionEffectPresets = client.GetPotionEffectPresets()
 		}
 	default:
 		err = cserror.New(cserror.InvalidEffectType, effectType, nil)
