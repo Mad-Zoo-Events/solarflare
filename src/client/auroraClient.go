@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strconv"
 	"sync"
 	"time"
 
@@ -57,7 +58,7 @@ func executeEffect(client *http.Client, url string, body *[]byte, wg *sync.WaitG
 
 	if response.StatusCode < 200 || response.StatusCode >= 400 {
 		responseMessage, _ := ioutil.ReadAll(response.Body)
-		sferror.New(sferror.Aurora, "Error received from Aurora", errors.New(string(responseMessage)))
+		sferror.New(sferror.Aurora, "Error "+strconv.Itoa(response.StatusCode)+" received from Aurora", errors.New(string(responseMessage)))
 		*errCount++
 		return
 	}
