@@ -5,18 +5,18 @@
     --background-alpha: rgba(8, 8, 8, 0.8);
     --dark-gray       : #333;
     --darker-gray     : #222;
-    --gray            : gray;
+    --gray            : #888;
     --font            : #dfffff;
 
     --green        : #0eaf2c;
-    --green-alpha  : rgba(14, 175, 44, 0.1);
-    --orange       : #f5a700;
-    --orange-alpha : rgba(245, 167, 0, 0.1);
+    --green-alpha  : rgba(14, 175, 44, 0.15);
+    --orange       : #f56200;
+    --orange-alpha : rgba(245, 98, 0, 0.15);
     --red          : #ec2323;
     --cyan         : #1ba1e2;
-    --cyan-alpha   : rgba(27, 161, 226, 0.1);
+    --cyan-alpha   : rgba(27, 161, 226, 0.15);
     --magenta      : #b90383;
-    --magenta-alpha: rgba(185, 3, 131, 0.1);
+    --magenta-alpha: rgba(185, 3, 131, 0.15);
 
     --darker-magenta: #52002c;
     --darker-cyan   : #0b3c55;
@@ -26,6 +26,8 @@ body {
     background-color: var(--background);
     color           : var(--font);
     font-family     : sans-serif;
+    padding         : 0;
+    margin          : 0;
 
     background-image   : linear-gradient(30deg, var(--background2) 12%, transparent 12.5%, transparent 87%, var(--background2) 87.5%, var(--background2)), linear-gradient(150deg, var(--background2) 12%, transparent 12.5%, transparent 87%, var(--background2) 87.5%, var(--background2)), linear-gradient(30deg, var(--background2) 12%, transparent 12.5%, transparent 87%, var(--background2) 87.5%, var(--background2)), linear-gradient(150deg, var(--background2) 12%, transparent 12.5%, transparent 87%, var(--background2) 87.5%, var(--background2)), linear-gradient(60deg, var(--background3) 25%, transparent 25.5%, transparent 75%, var(--background3) 75%, var(--background3)), linear-gradient(60deg, var(--background3) 25%, transparent 25.5%, transparent 75%, var(--background3) 75%, var(--background3));
     background-size    : 80px 140px;
@@ -48,7 +50,7 @@ body {
 
 .controls-holder {
     text-align: center;
-    padding   : 0.5em;
+    padding   : 1em;
 }
 
 .controls-header {
@@ -118,33 +120,41 @@ hr {
 button {
     margin-top: 0.5em;
     width     : 100%;
-    padding   : 1em 0.8em;
+    padding   : 0.8em 0.6em;
     cursor    : pointer;
 
     color           : var(--font);
-    background-color: var(--dark-gray);
+    background-color: var(--darker-gray);
     font-size       : 1em;
     font-variant    : small-caps;
 }
 
 button.start {
-    color : var(--green);
-    border: 2px solid var(--green);
+    color     : var(--green);
+    font-size : large;
+    border    : none;
+    box-shadow: 0 0 0.3em var(--green);
 }
 
 button.stop {
-    color : var(--red);
-    border: 2px solid var(--red);
+    color     : var(--red);
+    font-size : large;
+    border    : none;
+    box-shadow: 0 0 0.3em var(--red);
 }
 
 button.restart {
-    color : var(--orange);
-    border: 2px solid var(--orange);
+    color     : var(--orange);
+    font-size : large;
+    border    : none;
+    box-shadow: 0 0 0.3em var(--orange);
 }
 
 button.trigger {
-    color : var(--cyan);
-    border: 2px solid var(--cyan);
+    color     : var(--cyan);
+    font-size : large;
+    border    : none;
+    box-shadow: 0 0 0.3em var(--cyan);
 }
 
 button.cyan {
@@ -292,6 +302,11 @@ td.type-header {
 
 .id-column {
     font-size: x-small;
+}
+
+.key-column {
+    font-size : larger;
+    text-align: center;
 }
 
 .effects-column {
