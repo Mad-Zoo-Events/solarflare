@@ -1,6 +1,7 @@
 const STATUS_UPDATE_INTERVAL = 30000;
 
 var counters = new Map();
+var activeKeys = new Set();
 
 init = () => {
     setInterval(doStatusUpdate, STATUS_UPDATE_INTERVAL);
@@ -134,9 +135,20 @@ checkKeyBinding = (source) => {
     }
 }
 
-
 handleKeypress = (event) => {
     event = event || window.event;
     var charCode = event.which || event.keyCode;
-    addToLog("Key pressed: ", String.fromCharCode(charCode));
+
+    var buttonsToTrigger;
+    if (activeKeys.has(charCode)) {
+        buttonsToTrigger = document.getElementsByClassName(`stop key-binding-${charCode}`);
+        activeKeys.delete(charCode);
+    } else {
+        buttonsToTrigger = document.getElementsByClassName(`start key-binding-${charCode}`);
+        activeKeys.add(charCode,);
+    }
+
+    for (let i = 0; i < buttonsToTrigger.length; i++) {
+        buttonsToTrigger[i].click();
+    }
 }
