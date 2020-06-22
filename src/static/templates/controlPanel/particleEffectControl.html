@@ -6,9 +6,9 @@
 
     <button type="button" class="trigger"
         onclick='doEffect("particle", "{{.ID}}", "{{.DisplayName}}", "trigger")'>trigger</button>
-    <button type="button" class="start" id="start-{{.ID}}"
+    <button type="button" class="start key-binding-{{.KeyBinding}}" id="start-{{.ID}}"
         onclick='doEffect("particle", "{{.ID}}", "{{.DisplayName}}", "start")'>start</button>
-    <button type="button" class="stop"
+    <button type="button" class="stop key-binding-{{.KeyBinding}}"
         onclick='doEffect("particle", "{{.ID}}", "{{.DisplayName}}", "stop")'>stop</button>
 </div>
 {{end}}

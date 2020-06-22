@@ -4,11 +4,11 @@
     <hr />
     {{if .UIKeyBinding}}<span>► {{.UIKeyBinding}} ◄</span>{{end}}
 
-    <button type="button" class="start" id="start-{{.ID}}"
+    <button type="button" class="start key-binding-{{.KeyBinding}}" id="start-{{.ID}}"
         onclick='doEffect("dragon", "{{.ID}}", "{{.DisplayName}}", "start")'>start</button>
     <button type="button" class="restart"
         onclick='doEffect("dragon", "{{.ID}}", "{{.DisplayName}}", "restart")'>restart</button>
-    <button type="button" class="stop"
+    <button type="button" class="stop key-binding-{{.KeyBinding}}"
         onclick='doEffect("dragon", "{{.ID}}", "{{.DisplayName}}", "stop")'>stop</button>
 </div>
 {{end}}
