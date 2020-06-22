@@ -143,7 +143,7 @@ func RenderPresetModifier(writer http.ResponseWriter, effectType model.EffectTyp
 		if id != "" {
 			p = preset.(model.PotionEffectPreset)
 		} else {
-			p.PotionEffects = []model.PotionEffect{model.PotionEffect{}}
+			p.PotionEffects = []model.PotionEffect{model.PotionEffect{Amplifier: 1}}
 		}
 
 		p.TransformToUI()

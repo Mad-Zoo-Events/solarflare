@@ -45,7 +45,7 @@
                     </span>% of Minecraft day per second</label>
                 <input class="indexed-input" name="effect[{{$index}}].percentToSkip" data-index="{{$index}}"
                     type="range" max="100" min="-100" step="1" placeholder="0"
-                    value="{{.UIPercentOfDayToSkipPerSecond}}" onchange='updateRangeValue("timeshift-range", this);' />
+                    value="{{.UIPercentOfDayToSkipPerSecond}}" oninput='updateRangeValue("timeshift-range", this);' />
             </div>
             <br />
             {{end}}
