@@ -14,7 +14,7 @@ const (
 	dragonEffectEndpoint    = "/effects/dragon"
 	timeshiftEffectEndpoint = "/effects/time"
 	potionEffectEndpoint    = "/effects/potion"
-	stopEndpoint            = "/effects/stop"
+	effectsEndpoint         = "/effects"
 )
 
 // RunParticleEffect compiles a particle effect request and executes it on all servers
@@ -67,6 +67,6 @@ func RunPotionEffect(preset model.PotionEffectPreset, action model.Action) error
 
 // StopEffect stops an effect by ID
 func StopEffect(id string) error {
-	endpoint := fmt.Sprintf("%s?id=%s", stopEndpoint, id)
+	endpoint := fmt.Sprintf("%s/%s/stop", effectsEndpoint, id)
 	return client.ExecuteEffect(endpoint, nil)
 }
