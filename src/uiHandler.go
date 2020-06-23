@@ -4,11 +4,10 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/eynorey/solarflare/src/model"
-
 	"github.com/gorilla/mux"
 
 	"github.com/eynorey/solarflare/src/controller"
+	"github.com/eynorey/solarflare/src/model"
 	"github.com/eynorey/solarflare/src/utils/sferror"
 )
 

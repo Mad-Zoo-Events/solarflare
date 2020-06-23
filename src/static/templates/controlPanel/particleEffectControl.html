@@ -1,4 +1,5 @@
 {{define "particleEffectControl"}}
+
 <div class="visual-control" title="{{.Description}}">
     <span>{{.DisplayName}}</span>
     <hr />
@@ -11,4 +12,5 @@
     <button type="button" class="stop key-binding-{{.KeyBinding}}"
         onclick='doEffect("particle", "{{.ID}}", "{{.DisplayName}}", "stop")'>stop</button>
 </div>
+
 {{end}}

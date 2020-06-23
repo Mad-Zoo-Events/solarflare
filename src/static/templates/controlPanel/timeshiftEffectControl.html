@@ -1,4 +1,5 @@
 {{define "timeshiftControl"}}
+
 <div class="visual-control" title="{{.Description}}">
     <span>{{.DisplayName}}</span>
     <hr />
@@ -9,4 +10,5 @@
     <button type="button" class="stop key-binding-{{.KeyBinding}}"
         onclick='doEffect("timeshift", "{{.ID}}", "{{.DisplayName}}", "stop")'>stop</button>
 </div>
+
 {{end}}
