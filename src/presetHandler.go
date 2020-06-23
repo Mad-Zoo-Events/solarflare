@@ -5,9 +5,10 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/gorilla/mux"
+
 	"github.com/eynorey/solarflare/src/controller"
 	"github.com/eynorey/solarflare/src/utils/sferror"
-	"github.com/gorilla/mux"
 )
 
 // PresetMutationHandler handles requests to create a new preset

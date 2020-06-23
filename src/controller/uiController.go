@@ -11,8 +11,9 @@ import (
 )
 
 const (
-	controlPanelPath  = "static/templates/controlPanel/"
-	presetManagerPath = "static/templates/presetManager/"
+	templatesPath     = "static/templates/"
+	controlPanelPath  = templatesPath + "controlPanel/"
+	presetManagerPath = templatesPath + "presetManager/"
 )
 
 // RenderControlPanel renders the control panel based on templates
@@ -23,6 +24,7 @@ func RenderControlPanel(writer http.ResponseWriter) error {
 		controlPanelPath+"dragonEffectControl.html",
 		controlPanelPath+"timeshiftEffectControl.html",
 		controlPanelPath+"potionEffectControl.html",
+		templatesPath+"shared.html",
 	)
 	if err != nil {
 		return sferror.New(sferror.Template, "Error loading control panel templates", err)
@@ -48,7 +50,8 @@ func RenderControlPanel(writer http.ResponseWriter) error {
 // RenderPresetManager renders the preset management page based on templates
 func RenderPresetManager(writer http.ResponseWriter) error {
 	template, err := template.ParseFiles(
-		presetManagerPath + "presetManager.html",
+		presetManagerPath+"presetManager.html",
+		templatesPath+"shared.html",
 	)
 	if err != nil {
 		return sferror.New(sferror.Template, "Error loading preset manager template", err)
@@ -92,7 +95,11 @@ func RenderPresetModifier(writer http.ResponseWriter, effectType model.EffectTyp
 		return sferror.New(sferror.InvalidEffectType, string(effectType), err)
 	}
 
-	template, err := template.ParseFiles(presetManagerPath + presetName)
+	template, err := template.ParseFiles(
+		presetManagerPath+presetName,
+		presetManagerPath+"shared.html",
+		templatesPath+"shared.html",
+	)
 	if err != nil {
 		return sferror.New(sferror.Template, "Error loading preset modification template", err)
 	}
