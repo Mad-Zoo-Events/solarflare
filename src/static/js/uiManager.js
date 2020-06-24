@@ -12,7 +12,7 @@ var clockTapRestartTimeout;
 
 init = () => {
     setInterval(doStatusUpdate, STATUS_UPDATE_INTERVAL);
-    restartClock();
+    setClock();
 }
 
 addToLog = (action, displayName, errMsg) => {
@@ -167,7 +167,7 @@ updateClockBPM = (id, value) => {
     document.getElementById(id).value = Number(value);
 }
 
-restartClock = (millis) => {
+setClock = (millis) => {
     if (!millis) {
         const th = document.getElementById("clock-th-input").value;
         const bpm = document.getElementById("clock-bpm-input").value;
@@ -179,10 +179,14 @@ restartClock = (millis) => {
     clock = setInterval(doWhateverTheClockDoes, millis);
 }
 
-doWhateverTheClockDoes = () => {
+doWhateverTheClockDoes = (restartNow) => {
     clockLastRun = Date.now();
-    const cName = "clock-indicator-off";
-    const indicator = document.getElementById("clock-indicator")
+    const cName = "clock-indicator-on";
+    const indicator = document.getElementById("clock-indicator");
+    if (restartNow === true) {
+        indicator.classList.add(cName);
+        return;
+    }
     indicator.classList.contains(cName) ? indicator.classList.remove(cName) : indicator.classList.add(cName);
 }
 
@@ -217,12 +221,17 @@ clockTap = () => {
     document.getElementById("clock-bpm-range").value = bpmNew;
 
     // update clock at next run
-    restartClock(millisNew);
+    setClock(millisNew);
 
     // reset
     clearTimeout(clockTapResetTimeout);
     clockTapResetTimeout = setTimeout(() => {
         clockTapLast = undefined;
         clockTapMillis = [];
-    }, 2000);
+    }, millisNew*2);    
+}
+
+restartClock = () => {
+    doWhateverTheClockDoes(true);
+    setClock();
 }
