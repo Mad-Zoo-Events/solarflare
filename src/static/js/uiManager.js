@@ -2,6 +2,7 @@ const STATUS_UPDATE_INTERVAL = 30000;
 
 var counters = new Map();
 var activeKeys = new Set();
+var activeClocks = new Set();
 
 var clock;
 var clockLastRun;
@@ -25,6 +26,8 @@ addToLog = (action, displayName, errMsg) => {
     logWindow.innerHTML = logLine + logWindow.innerHTML;
 }
 
+// ================ STATUS UPDATE ================
+
 updateStatus = (serverCount) => {
     document.getElementById('status-server-count').innerHTML = serverCount;
 }
@@ -32,6 +35,8 @@ updateStatus = (serverCount) => {
 updateResponseTime = (millis) => {
     document.getElementById('status-last-request-time').innerHTML = `${millis} ms`;
 }
+
+// ================ COUNTER ================
 
 counter = async (id, action) => {
     if (action === "start") {
@@ -84,6 +89,8 @@ resetStartButton = async (startButton) => {
     startButton.innerHTML = "start";
 }
 
+// ================ PRESET MANAGEMENT ================
+
 confirmDelete = (id, effectType, displayName) => {
     const r = confirm(`WARNING!\nAre you sure you want to delete "${displayName}"?`);
     if (r === true) {
@@ -129,6 +136,8 @@ updateRangeValue = (labelId, range) => {
     console.log(id);
     document.getElementById(id).innerHTML = range.value;
 }
+
+// ================ KEY BINDINGS ================
 
 setKeyBinding = (event, source) => {
     event = event || window.event;
@@ -183,11 +192,20 @@ doWhateverTheClockDoes = (restartNow) => {
     clockLastRun = Date.now();
     const cName = "clock-indicator-on";
     const indicator = document.getElementById("clock-indicator");
-    if (restartNow === true) {
+
+    if (restartNow === true || !indicator.classList.contains(cName)) {
         indicator.classList.add(cName);
-        return;
+        activeClocks.forEach((id) => {
+            document.getElementById("clock-"+id).classList.add("clock-on");
+            document.getElementById("start-"+id).click();
+        })
+    } else {
+        indicator.classList.remove(cName);
+        activeClocks.forEach((id) => {
+            document.getElementById("clock-"+id).classList.remove("clock-on");
+            document.getElementById("stop-"+id).click();
+        })
     }
-    indicator.classList.contains(cName) ? indicator.classList.remove(cName) : indicator.classList.add(cName);
 }
 
 clockTap = () => {
@@ -234,4 +252,13 @@ clockTap = () => {
 restartClock = () => {
     doWhateverTheClockDoes(true);
     setClock();
+}
+
+attachClock = (id) => {
+    if (activeClocks.has(id)) {
+        activeClocks.delete(id);
+        document.getElementById("clock-"+id).classList.remove("clock-on");
+    } else {
+        activeClocks.add(id);
+    }
 }
