@@ -3,8 +3,16 @@ const STATUS_UPDATE_INTERVAL = 30000;
 var counters = new Map();
 var activeKeys = new Set();
 
+var clock;
+var clockLastRun;
+var clockTapMillis = new Array();
+var clockTapLast;
+var clockTapResetTimeout;
+var clockTapRestartTimeout;
+
 init = () => {
     setInterval(doStatusUpdate, STATUS_UPDATE_INTERVAL);
+    restartClock();
 }
 
 addToLog = (action, displayName, errMsg) => {
@@ -78,7 +86,7 @@ resetStartButton = async (startButton) => {
 
 confirmDelete = (id, effectType, displayName) => {
     const r = confirm(`WARNING!\nAre you sure you want to delete "${displayName}"?`);
-    if (r == true) {
+    if (r === true) {
         doDeletePreset(id, effectType);
     }
 }
@@ -151,4 +159,70 @@ handleKeypress = (event) => {
     for (let i = 0; i < buttonsToTrigger.length; i++) {
         buttonsToTrigger[i].click();
     }
+}
+
+// ================ CLOCK ================
+
+updateClockBPM = (id, value) => {
+    document.getElementById(id).value = Number(value);
+}
+
+restartClock = (millis) => {
+    if (!millis) {
+        const th = document.getElementById("clock-th-input").value;
+        const bpm = document.getElementById("clock-bpm-input").value;
+
+        millis = 60000 / bpm * th;
+    }
+
+    clearInterval(clock);
+    clock = setInterval(doWhateverTheClockDoes, millis);
+}
+
+doWhateverTheClockDoes = () => {
+    clockLastRun = Date.now();
+    const cName = "clock-indicator-off";
+    const indicator = document.getElementById("clock-indicator")
+    indicator.classList.contains(cName) ? indicator.classList.remove(cName) : indicator.classList.add(cName);
+}
+
+clockTap = () => {
+    const th = document.getElementById("clock-th-input").value;
+    const now = Date.now();
+
+    // stop clock
+    clearInterval(clock);
+    // run once
+    if (now - clockLastRun > 100) {
+        doWhateverTheClockDoes();        
+    }
+
+    if (!clockTapLast) {
+        clockTapLast = now;
+        return;
+    }
+
+    if (clockTapMillis.length >= 4) {
+        clockTapMillis.shift();
+    }
+
+    clockTapMillis.push(now - clockTapLast);
+
+    clockTapLast = now;
+
+    const millisNew = clockTapMillis.reduce((a, b) => a + b) / clockTapMillis.length;
+    const bpmNew = Math.round(60000 / millisNew * th);
+
+    document.getElementById("clock-bpm-input").value = bpmNew;
+    document.getElementById("clock-bpm-range").value = bpmNew;
+
+    // update clock at next run
+    restartClock(millisNew);
+
+    // reset
+    clearTimeout(clockTapResetTimeout);
+    clockTapResetTimeout = setTimeout(() => {
+        clockTapLast = undefined;
+        clockTapMillis = [];
+    }, 2000);
 }
