@@ -258,7 +258,9 @@ attachClock = (id) => {
     if (activeClocks.has(id)) {
         activeClocks.delete(id);
         document.getElementById("clock-"+id).classList.remove("clock-on");
+        document.getElementById("clock-"+id).classList.remove("clock-attached");
     } else {
         activeClocks.add(id);
+        document.getElementById("clock-"+id).classList.add("clock-attached");
     }
 }
