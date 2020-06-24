@@ -2,7 +2,6 @@ package main
 
 import (
 	"io/ioutil"
-	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -14,8 +13,6 @@ import (
 // PresetMutationHandler handles requests to create a new preset
 func PresetMutationHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		log.Print(">> Preset Mutation handler called")
-
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
 			err = sferror.New(sferror.Encoding, "Error reading preset request body", err)
@@ -43,8 +40,6 @@ func PresetMutationHandler() http.HandlerFunc {
 // PresetMutationUIHandler handles requests from the UI to create a new preset
 func PresetMutationUIHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		log.Print(">> Preset Mutation UI handler called")
-
 		err := r.ParseForm()
 		if err != nil {
 			err = sferror.New(sferror.Encoding, "Error parsing form from UI", err)
@@ -72,8 +67,6 @@ func PresetMutationUIHandler() http.HandlerFunc {
 // PresetDeletionHandler deletes a preset
 func PresetDeletionHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		log.Print(">> Preset Deletion handler called")
-
 		vars := mux.Vars(r)
 
 		err := controller.DeletePreset(vars["effectType"], vars["id"])

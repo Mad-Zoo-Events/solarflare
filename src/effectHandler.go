@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -14,8 +13,6 @@ import (
 // EffectHandler handles requests to execute effect presets
 func EffectHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		log.Print(">> Effect handler called")
-
 		vars := mux.Vars(r)
 		var (
 			action     = vars["action"]

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -14,8 +13,6 @@ import (
 // ControlPanelHandler builds the control panel from templates
 func ControlPanelHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		log.Print(">> Control Panel handler called")
-
 		err := controller.RenderControlPanel(w)
 		if err != nil {
 			writeResponse(w, 500, sferror.GetErrorResponse(err))
@@ -26,8 +23,6 @@ func ControlPanelHandler() http.HandlerFunc {
 // CPPresetManagerHandler builds the preset management page from templates
 func CPPresetManagerHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		log.Print(">> Control Panel Preset handler called")
-
 		err := controller.RenderPresetManager(w)
 		if err != nil {
 			writeResponse(w, 500, sferror.GetErrorResponse(err))
@@ -38,8 +33,6 @@ func CPPresetManagerHandler() http.HandlerFunc {
 // CPPresetHandler builds the page to create or modify a preset
 func CPPresetHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		log.Print(">> Control Panel Preset handler called")
-
 		vars := mux.Vars(r)
 		var (
 			effectType = vars["effectType"]
