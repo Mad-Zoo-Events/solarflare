@@ -14,10 +14,22 @@ import (
 	"github.com/eynorey/solarflare/src/utils/sferror"
 )
 
+var client *http.Client
+
+func init() {
+	tr := &http.Transport{
+		MaxIdleConnsPerHost: 20,
+	}
+	client = &http.Client{
+		Timeout:   time.Duration(5 * time.Second),
+		Transport: tr,
+	}
+}
+
 // ExecuteEffect executes an effect on all servers
 func ExecuteEffect(endpoint string, body []byte) error {
 	cfg := config.Get()
-	client := &http.Client{Timeout: time.Duration(5 * time.Second)}
+
 	errCount := 0
 
 	var wg sync.WaitGroup
@@ -25,7 +37,7 @@ func ExecuteEffect(endpoint string, body []byte) error {
 	for _, server := range cfg.Servers {
 		url := server.Address + endpoint
 		wg.Add(1)
-		go executeEffect(client, url, &body, &wg, &errCount)
+		go executeEffect(url, &body, &wg, &errCount)
 	}
 
 	wg.Wait()
@@ -40,9 +52,10 @@ func ExecuteEffect(endpoint string, body []byte) error {
 	return nil
 }
 
-func executeEffect(client *http.Client, url string, body *[]byte, wg *sync.WaitGroup, errCount *int) {
+func executeEffect(url string, body *[]byte, wg *sync.WaitGroup, errCount *int) {
 	defer wg.Done()
 	request, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(*body))
+	request.Header.Add("Idempotency-Key", "oof.")
 	if err != nil {
 		sferror.New(sferror.Encoding, "Error compiling request to Aurora", err)
 		*errCount++
