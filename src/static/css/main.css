@@ -211,18 +211,22 @@ button.disabled {
     border    : 2px solid var(--gray);
 }
 
-#clock-holder {
+h3 {
+    margin-top: 0;
+}
 
+#clock-holder button {
+    width:  calc(50% - 0.15em);
 }
 
 #clock-indicator {
     width: 100%;
     height: 1em;
-    background-color: var(--font);
+    margin-bottom: 0.5em;
 }
 
-.clock-indicator-off {
-    opacity: 0;
+.clock-indicator-on {
+    background-color: var(--font);
 }
 
 #status-window {
