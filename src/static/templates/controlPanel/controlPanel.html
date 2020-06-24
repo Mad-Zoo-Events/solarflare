@@ -32,6 +32,21 @@
     </div>
     <div class="footer">
         <div id="log-window"></div>
+        <div id="clock-holder">
+            <input id="clock-bpm-input" value="175" type="number" min="40" max="200" step="1" oninput='updateClockBPM("clock-bpm-range", this.value);' onchange='restartClock();' />
+            <input id="clock-bpm-range" value="175" type="range" min="40" max="200" step="1" oninput='updateClockBPM("clock-bpm-input", this.value);' onchange='restartClock();' />
+            <select id="clock-th-input" onchange='restartClock();'>
+                <option value="16">4/1</option>
+                <option value="8">2/1</option>
+                <option value="4">1/1</option>
+                <option value="2">1/2</option>
+                <option value="1" selected>1/4</option>
+                <option value="0.5">1/8</option>
+                <option value="0.25">1/16</option>
+            </select>
+            <button class="cyan" onclick='clockTap();'>TAP</button>
+            <div id="clock-indicator"></div>
+        </div>
         <div id="status-window">
             <h3>Status</h3>
             <table>
