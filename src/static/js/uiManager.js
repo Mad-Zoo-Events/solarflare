@@ -177,15 +177,17 @@ updateClockBPM = (id, value) => {
 }
 
 setClock = (millis) => {
-    if (!millis) {
-        const th = document.getElementById("clock-th-input").value;
-        const bpm = document.getElementById("clock-bpm-input").value;
+    const th = document.getElementById("clock-th-input").value;
+    const bpm = document.getElementById("clock-bpm-input").value;
 
+    if (!millis) {
         millis = 60000 / bpm * th;
     }
 
     clearInterval(clock);
     clock = setInterval(doWhateverTheClockDoes, millis);
+    
+    doSetClockSpeed(bpm, th);
 }
 
 doWhateverTheClockDoes = (restartNow) => {
@@ -197,13 +199,11 @@ doWhateverTheClockDoes = (restartNow) => {
         indicator.classList.add(cName);
         activeClocks.forEach((id) => {
             document.getElementById("clock-"+id).classList.add("clock-on");
-            document.getElementById("start-"+id).click();
         })
     } else {
         indicator.classList.remove(cName);
         activeClocks.forEach((id) => {
             document.getElementById("clock-"+id).classList.remove("clock-on");
-            document.getElementById("stop-"+id).click();
         })
     }
 }
@@ -212,12 +212,7 @@ clockTap = () => {
     const th = document.getElementById("clock-th-input").value;
     const now = Date.now();
 
-    // stop clock
     clearInterval(clock);
-    // run once
-    if (now - clockLastRun > 100) {
-        doWhateverTheClockDoes();        
-    }
 
     if (!clockTapLast) {
         clockTapLast = now;
@@ -238,8 +233,8 @@ clockTap = () => {
     document.getElementById("clock-bpm-input").value = bpmNew;
     document.getElementById("clock-bpm-range").value = bpmNew;
 
-    // update clock at next run
     setClock(millisNew);
+    doSetClockSpeed(bpmNew, th);
 
     // reset
     clearTimeout(clockTapResetTimeout);
@@ -250,17 +245,19 @@ clockTap = () => {
 }
 
 restartClock = () => {
-    doWhateverTheClockDoes(true);
-    setClock();
 }
 
-attachClock = (id) => {
+attachClock = (id, effectType) => {
     if (activeClocks.has(id)) {
         activeClocks.delete(id);
         document.getElementById("clock-"+id).classList.remove("clock-on");
         document.getElementById("clock-"+id).classList.remove("clock-attached");
+
+        doClockSubscription(id, effectType, "unsubscribe");
     } else {
         activeClocks.add(id);
         document.getElementById("clock-"+id).classList.add("clock-attached");
+
+        doClockSubscription(id, effectType, "subscribe");
     }
 }
