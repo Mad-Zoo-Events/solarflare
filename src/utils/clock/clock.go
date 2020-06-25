@@ -23,11 +23,10 @@ type clock struct {
 }
 
 // Start starts a new clock with the specified millisecond interval
-func Start(milliseconds float64) {
+func Start(bpm int, multiplier float64) {
 	tickTock = &clock{
-		interval: time.Duration(milliseconds * 1000000),
-		action:   model.StartEffectAction,
-		stop:     false,
+		action: model.StartEffectAction,
+		stop:   false,
 
 		particleEffects:  make(map[string]model.ParticleEffectPreset),
 		dragonEffects:    make(map[string]model.DragonEffectPreset),
@@ -35,12 +34,20 @@ func Start(milliseconds float64) {
 		potionEffects:    make(map[string]model.PotionEffectPreset),
 	}
 
+	SetSpeed(bpm, multiplier)
+
 	go tickTock.run()
 }
 
 // Stop stops the clock
 func Stop() {
 	tickTock.stop = true
+}
+
+// SetSpeed sets a new speed for the clock
+func SetSpeed(bpm int, multiplier float64) {
+	millis := 60000 / float64(bpm) * multiplier
+	tickTock.interval = time.Duration(millis * 1000000)
 }
 
 // SubscribeEffect registers an effect to the clock

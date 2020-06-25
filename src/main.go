@@ -9,6 +9,7 @@ import (
 	"github.com/eynorey/solarflare/src/client"
 	"github.com/eynorey/solarflare/src/config"
 	"github.com/eynorey/solarflare/src/model"
+	"github.com/eynorey/solarflare/src/utils/clock"
 )
 
 // loads data from the database into the config
@@ -26,6 +27,8 @@ func load() {
 			Address: "http://172.31.41.5:8001", //hospital private
 		},
 	}
+
+	clock.Start(128, 1)
 }
 
 // writes the response header and a response body if supplied
@@ -62,6 +65,11 @@ func main() {
 	router.Handle("/presets/{effectType}-ui", PresetMutationUIHandler()).Methods(http.MethodPost)
 	router.Handle("/presets/{effectType}", PresetMutationHandler()).Methods(http.MethodPost)
 	router.Handle("/presets/{effectType}/{id}", PresetDeletionHandler()).Methods(http.MethodDelete)
+
+	// clock
+	router.Handle("/clock/{bpm}/{multiplier}", ClockSpeedHandler()).Methods(http.MethodPut)
+	router.Handle("/clock/{effectType}/{id}", ClockSubscriptionHandler(model.SubscribeClockAction)).Methods(http.MethodPost)
+	router.Handle("/clock/{effectType}/{id}", ClockSubscriptionHandler(model.UnsubscribeClockAction)).Methods(http.MethodDelete)
 
 	// web UI
 	staticDir := "/static/"
