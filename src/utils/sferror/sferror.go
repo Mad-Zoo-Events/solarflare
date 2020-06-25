@@ -42,6 +42,11 @@ var (
 	// DatabaseNotFound | the requested entry could not be found on the database
 	DatabaseNotFound = ErrorType{"DatabaseNotFound", 34}
 
+	// ClockInvalidBPM | invalid bpm value for the clock
+	ClockInvalidBPM = ErrorType{"ClockInvalidBPM", 40}
+	// ClockInvalidAction | invalid action for the clock
+	ClockInvalidAction = ErrorType{"ClockInvalidAction", 41}
+
 	// Internal | unknown internal error
 	Internal = ErrorType{"Internal", 90}
 	// Encoding | encoding error

@@ -45,6 +45,16 @@ const (
 	StopEffectAction = Action("stop")
 )
 
+// ClockAction represents an action to be performed on the clock
+type ClockAction string
+
+const (
+	// SubscribeClockAction subscribes a visual effect to the clock
+	SubscribeClockAction = ClockAction("subscribe")
+	// UnsubscribeClockAction unsubscribes a visual effect from the clock
+	UnsubscribeClockAction = ClockAction("unsubscribe")
+)
+
 // ================ RESPONSE MODELS ================ //
 
 // StatusResponse returns information on the service and the plugin network to the consumer
