@@ -5,7 +5,7 @@ var activeKeys = new Set();
 var activeClocks = new Set();
 
 var clock;
-var clockLastRun;
+var clockInterval;
 var clockTapMillis = new Array();
 var clockTapLast;
 var clockTapResetTimeout;
@@ -32,7 +32,9 @@ updateStatus = (response) => {
     const { registeredServerCount, clockSpeedBpm, clockSpeedMultiplier } = response;
     document.getElementById('status-server-count').innerHTML = registeredServerCount;
 
-    setClockControls(clockSpeedBpm, clockSpeedMultiplier);
+    clockInterval = 60000 / clockSpeedBpm * clockSpeedMultiplier;
+    updateClockControls(clockSpeedBpm, clockSpeedMultiplier);
+    restartUIClock();
 }
 
 updateResponseTime = (millis) => {
@@ -183,11 +185,13 @@ changeClockSpeed = () => {
     bpm = document.getElementById("clock-bpm-input").value;
     mult = document.getElementById("clock-th-input").value;
 
-    setClockControls(bpm, mult);
+    clockInterval = 60000 / bpm * mult;
+
+    updateClockControls(bpm, mult);
     doSetClockSpeed(bpm, mult);
 }
 
-setClockControls = (bpm, mult) => {
+updateClockControls = (bpm, mult) => {
     document.getElementById("clock-bpm-input").value = bpm;
     document.getElementById("clock-bpm-range").value = bpm;
 
@@ -201,13 +205,10 @@ setClockControls = (bpm, mult) => {
         }
     }
 
-    clearInterval(clock);
-    millis = 60000 / bpm * mult;
-    clock = setInterval(doWhateverTheClockDoes, millis);
+    restartUIClock();
 }
 
 doWhateverTheClockDoes = (restartNow) => {
-    clockLastRun = Date.now();
     const cName = "clock-indicator-on";
     const indicator = document.getElementById("clock-indicator");
 
@@ -244,7 +245,8 @@ clockTap = () => {
     const millisNew = clockTapMillis.reduce((a, b) => a + b) / clockTapMillis.length;
     const bpmNew = Math.round(60000 / millisNew * th);
 
-    setClockControls(bpmNew, th);
+    clockInterval = millisNew;
+    updateClockControls(bpmNew, th);
     doSetClockSpeed(bpmNew, th);
 
     // reset
@@ -255,8 +257,13 @@ clockTap = () => {
     }, millisNew * 2);
 }
 
-restartClock = () => {
+restartUIClock = () => {
+    clearInterval(clock);
+    clock = setInterval(doWhateverTheClockDoes, clockInterval);
+    doWhateverTheClockDoes(true);
 }
+
+restartClock = () => doRestartClock(restartUIClock)
 
 attachClock = (id, effectType) => {
     if (activeClocks.has(id)) {
