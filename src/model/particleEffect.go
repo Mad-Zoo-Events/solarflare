@@ -51,15 +51,15 @@ type UIRegionType struct {
 
 // RegionTypes is a list of all supported region types
 var RegionTypes = []UIRegionType{
-	UIRegionType{
+	{
 		Name:        "POINTS",
 		Description: "One particle at each specified point",
 	},
-	UIRegionType{
+	{
 		Name:        "CUBOID",
 		Description: "Inside a cuboid specified by two points",
 	},
-	UIRegionType{
+	{
 		Name:        "EQUATION",
 		Description: "In a shape described by an equation around one point",
 	},

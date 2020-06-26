@@ -29,55 +29,55 @@ type UIPotionEffectType struct {
 
 // MinecraftPotionEffects is a list of all supported Minecraft potion effects
 var MinecraftPotionEffects = []UIPotionEffectType{
-	UIPotionEffectType{
+	{
 		Name:        "BLINDNESS",
 		Description: "Blinds an entity",
 	},
-	UIPotionEffectType{
+	{
 		Name:        "DOLPHINS_GRACE",
 		Description: "Squee'ek uh'k kk'kkkk squeek eee'eek",
 	},
-	UIPotionEffectType{
+	{
 		Name:        "GLOWING",
 		Description: "Outlines the entity so that it can be seen from afar",
 	},
-	UIPotionEffectType{
+	{
 		Name:        "INVISIBILITY",
 		Description: "Grants invisibility",
 	},
-	UIPotionEffectType{
+	{
 		Name:        "JUMP",
 		Description: "(= jump_boost) Increases jump height",
 	},
-	UIPotionEffectType{
+	{
 		Name:        "LEVITATION",
 		Description: "Causes the entity to float into the air",
 	},
-	UIPotionEffectType{
+	{
 		Name:        "CONFUSION",
 		Description: "(= nausea) Warps vision on the client",
 	},
-	UIPotionEffectType{
+	{
 		Name:        "NIGHT_VISION",
 		Description: "Allows an entity to see in the dark",
 	},
-	UIPotionEffectType{
+	{
 		Name:        "DAMAGE_RESISTANCE",
 		Description: "(= resistance) Decreases damage dealt to an entity",
 	},
-	UIPotionEffectType{
+	{
 		Name:        "SLOW_FALLING",
 		Description: "Slows entity fall rate",
 	},
-	UIPotionEffectType{
+	{
 		Name:        "SLOW",
 		Description: "(= slowness) Decreases movement speed",
 	},
-	UIPotionEffectType{
+	{
 		Name:        "SPEED",
 		Description: "Increases movement speed",
 	},
-	UIPotionEffectType{
+	{
 		Name:        "WATER_BREATHING",
 		Description: "Allows breathing underwater",
 	},

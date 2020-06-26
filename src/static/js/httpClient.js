@@ -25,7 +25,7 @@ doEffect = async (effectType, id, displayName, action) => {
 
     startTime = Date.now();
     request.send();
-}
+};
 
 doStatusUpdate = async () => {
     const request = new XMLHttpRequest();
@@ -40,7 +40,7 @@ doStatusUpdate = async () => {
     });
 
     request.send();
-}
+};
 
 doDeletePreset = async (id, effectType) => {
     const request = new XMLHttpRequest();
@@ -52,7 +52,7 @@ doDeletePreset = async (id, effectType) => {
     });
 
     request.send();
-}
+};
 
 doRestartClock = async (callback) => {
     const request = new XMLHttpRequest();
@@ -60,7 +60,7 @@ doRestartClock = async (callback) => {
     request.addEventListener('load', callback);
 
     request.send();
-}
+};
 
 doClockSync = async (callback) => {
     const request = new XMLHttpRequest();
@@ -68,22 +68,22 @@ doClockSync = async (callback) => {
     request.addEventListener('load', callback);
 
     request.send();
-}
+};
 
 doSetClockSpeed = async (bpm, multiplier) => {
     const request = new XMLHttpRequest();
     request.open("PUT", `${CLOCK_ENDPOINT}/${bpm}/${multiplier}`);
 
     request.send();
-}
+};
 
 doClockSubscription = async (id, effectType, action) => {
-    const method = action === "subscribe" ? "POST" : "DELETE"
+    const method = action === "subscribe" ? "POST" : "DELETE";
 
     const request = new XMLHttpRequest();
     request.open(method, `${CLOCK_ENDPOINT}/${effectType}/${id}`);
 
     request.send();
-}
+};
 
 navigate = (endpoint) => window.location.href = endpoint;
