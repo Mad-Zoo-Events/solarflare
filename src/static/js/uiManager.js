@@ -17,17 +17,17 @@ init = () => {
     doClockSync(restartUIClock);
     setInterval(doStatusUpdate, STATUS_UPDATE_INTERVAL);
     setInterval(() => doClockSync(restartUIClock), CLOCK_SYNC_INTERVAL);
-}
+};
 
 addToLog = (action, displayName, errMsg) => {
     const logWindow = document.getElementById('log-window');
 
     const timestamp = new Date().toLocaleTimeString();
     const msg = `${action} <b>${displayName}</b> ${errMsg ? "failed: " + errMsg : "succeeded"}`;
-    const logLine = `<span class="log-message">${timestamp} | <span class="${errMsg ? "failure" : "success"}">${msg}</span></span>`
+    const logLine = `<span class="log-message">${timestamp} | <span class="${errMsg ? "failure" : "success"}">${msg}</span></span>`;
 
     logWindow.innerHTML = logLine + logWindow.innerHTML;
-}
+};
 
 // ================ STATUS UPDATE ================
 
@@ -38,11 +38,11 @@ updateStatus = (response) => {
     clockInterval = 60000 / clockSpeedBpm * clockSpeedMultiplier;
     updateClockControls(clockSpeedBpm, clockSpeedMultiplier);
     restartUIClock();
-}
+};
 
 updateResponseTime = (millis) => {
     document.getElementById('status-last-request-time').innerHTML = `${millis} ms`;
-}
+};
 
 // ================ COUNTER ================
 
@@ -52,7 +52,7 @@ counter = async (id, action) => {
     } else if (action === "stop") {
         stopCounter(id);
     }
-}
+};
 
 startCounter = (id) => {
     const startButton = document.getElementById(`start-${id}`);
@@ -64,7 +64,7 @@ startCounter = (id) => {
         seconds++;
         startButton.innerHTML = seconds;
     }, 1000);
-}
+};
 
 stopCounter = (id) => {
     if (id === "all") {
@@ -89,13 +89,13 @@ stopCounter = (id) => {
     counters.delete(id);
 
     resetStartButton(document.getElementById(`start-${id}`));
-}
+};
 
 resetStartButton = async (startButton) => {
     startButton.disabled = false;
     startButton.classList.remove("disabled");
     startButton.innerHTML = "start";
-}
+};
 
 // ================ PRESET MANAGEMENT ================
 
@@ -104,7 +104,7 @@ confirmDelete = (id, effectType, displayName) => {
     if (r === true) {
         doDeletePreset(id, effectType);
     }
-}
+};
 
 addEffectInput = (formId) => {
     const next = document.getElementsByClassName("effect-box").length;
@@ -127,7 +127,7 @@ addEffectInput = (formId) => {
     }
 
     form.appendChild(newEffectsHolder);
-}
+};
 
 removeEffectInput = (element) => {
     if (document.getElementsByClassName("effect-box").length > 1) {
@@ -135,7 +135,7 @@ removeEffectInput = (element) => {
     } else {
         alert("Gotta keep at least one effect!\n(what's the point otherwise!?)");
     }
-}
+};
 
 updateRangeValue = (labelId, range) => {
     const index = range.getAttribute("data-index");
@@ -143,7 +143,7 @@ updateRangeValue = (labelId, range) => {
     const id = `${labelId}-${index}`;
     console.log(id);
     document.getElementById(id).innerHTML = range.value;
-}
+};
 
 // ================ KEY BINDINGS ================
 
@@ -152,13 +152,13 @@ setKeyBinding = (event, source) => {
     var charCode = event.which || event.keyCode;
     document.getElementById("key-binding").value = charCode;
     source.value = String.fromCharCode(charCode);
-}
+};
 
 checkKeyBinding = (source) => {
     if (source.value === "") {
         document.getElementById("key-binding").value = 0;
     }
-}
+};
 
 handleKeypress = (event) => {
     event = event || window.event;
@@ -176,13 +176,13 @@ handleKeypress = (event) => {
     for (let i = 0; i < buttonsToTrigger.length; i++) {
         buttonsToTrigger[i].click();
     }
-}
+};
 
 // ================ CLOCK ================
 
 updateClockBPM = (id, value) => {
     document.getElementById(id).value = Number(value);
-}
+};
 
 changeClockSpeed = () => {
     bpm = document.getElementById("clock-bpm-input").value;
@@ -192,7 +192,7 @@ changeClockSpeed = () => {
 
     updateClockControls(bpm, mult);
     doSetClockSpeed(bpm, mult);
-}
+};
 
 updateClockControls = (bpm, mult) => {
     document.getElementById("clock-bpm-input").value = bpm;
@@ -209,7 +209,7 @@ updateClockControls = (bpm, mult) => {
     }
 
     restartUIClock();
-}
+};
 
 doWhateverTheClockDoes = (restartNow) => {
     const cName = "clock-indicator-on";
@@ -219,14 +219,14 @@ doWhateverTheClockDoes = (restartNow) => {
         indicator.classList.add(cName);
         activeClocks.forEach((id) => {
             document.getElementById("clock-" + id).classList.add("clock-on");
-        })
+        });
     } else {
         indicator.classList.remove(cName);
         activeClocks.forEach((id) => {
             document.getElementById("clock-" + id).classList.remove("clock-on");
-        })
+        });
     }
-}
+};
 
 clockTap = () => {
     const th = document.getElementById("clock-th-input").value;
@@ -258,15 +258,15 @@ clockTap = () => {
         clockTapLast = undefined;
         clockTapMillis = [];
     }, millisNew * 2);
-}
+};
 
 restartUIClock = () => {
     clearInterval(clock);
     clock = setInterval(doWhateverTheClockDoes, clockInterval);
     doWhateverTheClockDoes(true);
-}
+};
 
-restartClock = () => doRestartClock(restartUIClock)
+restartClock = () => doRestartClock(restartUIClock);
 
 attachClock = (id, effectType) => {
     if (activeClocks.has(id)) {
@@ -281,4 +281,4 @@ attachClock = (id, effectType) => {
 
         doClockSubscription(id, effectType, "subscribe");
     }
-}
+};

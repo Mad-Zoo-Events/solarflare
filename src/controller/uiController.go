@@ -117,7 +117,7 @@ func RenderPresetModifier(writer http.ResponseWriter, effectType model.EffectTyp
 		if id != "" {
 			p = preset.(model.ParticleEffectPreset)
 		} else {
-			p.ParticleEffects = []model.ParticleEffect{model.ParticleEffect{}}
+			p.ParticleEffects = []model.ParticleEffect{{}}
 		}
 
 		p.TransformToUI()
@@ -128,7 +128,7 @@ func RenderPresetModifier(writer http.ResponseWriter, effectType model.EffectTyp
 		if id != "" {
 			p = preset.(model.DragonEffectPreset)
 		} else {
-			p.DragonEffects = []model.DragonEffect{model.DragonEffect{}}
+			p.DragonEffects = []model.DragonEffect{{}}
 		}
 
 		p.TransformToUI()
@@ -139,7 +139,7 @@ func RenderPresetModifier(writer http.ResponseWriter, effectType model.EffectTyp
 		if id != "" {
 			p = preset.(model.TimeshiftEffectPreset)
 		} else {
-			p.TimeshiftEffects = []model.TimeshiftEffect{model.TimeshiftEffect{}}
+			p.TimeshiftEffects = []model.TimeshiftEffect{{}}
 		}
 
 		p.TransformToUI()
@@ -150,7 +150,7 @@ func RenderPresetModifier(writer http.ResponseWriter, effectType model.EffectTyp
 		if id != "" {
 			p = preset.(model.PotionEffectPreset)
 		} else {
-			p.PotionEffects = []model.PotionEffect{model.PotionEffect{Amplifier: 1}}
+			p.PotionEffects = []model.PotionEffect{{Amplifier: 1}}
 		}
 
 		p.TransformToUI()
