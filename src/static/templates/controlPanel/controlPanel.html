@@ -38,6 +38,7 @@
             <input id="clock-bpm-input" type="number" min="40" max="200" step="1" oninput='updateClockBPM("clock-bpm-range", this.value);' onchange='changeClockSpeed();' />
             <input id="clock-bpm-range" type="range" min="40" max="200" step="1" oninput='updateClockBPM("clock-bpm-input", this.value);' onchange='changeClockSpeed();' />
             <select id="clock-th-input" onchange='changeClockSpeed();'>
+                <option value="32">8/1</option>
                 <option value="16">4/1</option>
                 <option value="8">2/1</option>
                 <option value="4">1/1</option>
@@ -45,6 +46,7 @@
                 <option value="1">1/4</option>
                 <option value="0.5">1/8</option>
                 <option value="0.25">1/16</option>
+                <option value="0.125">1/32</option>
             </select>
             <button class="cyan" onclick='clockTap();'>TAP</button>
             <button class="cyan" onclick='restartClock();'>Restart</button>
