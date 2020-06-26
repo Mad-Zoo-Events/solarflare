@@ -12,9 +12,12 @@ import (
 var tickTock *clock
 
 type clock struct {
-	interval time.Duration
-	action   model.Action
-	stop     bool
+	interval   time.Duration
+	bpm        int
+	multiplier float64
+
+	action model.Action
+	stop   bool
 
 	particleEffects  map[string]model.ParticleEffectPreset
 	dragonEffects    map[string]model.DragonEffectPreset
@@ -46,8 +49,16 @@ func Stop() {
 
 // SetSpeed sets a new speed for the clock
 func SetSpeed(bpm int, multiplier float64) {
+	tickTock.bpm = bpm
+	tickTock.multiplier = multiplier
+
 	millis := 60000 / float64(bpm) * multiplier
 	tickTock.interval = time.Duration(millis * 1000000)
+}
+
+// GetSpeed gets the current clock speed
+func GetSpeed() (bpm int, multiplier float64) {
+	return tickTock.bpm, tickTock.multiplier
 }
 
 // SubscribeEffect registers an effect to the clock

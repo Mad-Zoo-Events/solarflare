@@ -1,4 +1,4 @@
-const STATUS_UPDATE_INTERVAL = 30000;
+const STATUS_UPDATE_INTERVAL = 10000;
 
 var counters = new Map();
 var activeKeys = new Set();
@@ -12,8 +12,8 @@ var clockTapResetTimeout;
 var clockTapRestartTimeout;
 
 init = () => {
+    doStatusUpdate();
     setInterval(doStatusUpdate, STATUS_UPDATE_INTERVAL);
-    setClock();
 }
 
 addToLog = (action, displayName, errMsg) => {
@@ -28,8 +28,11 @@ addToLog = (action, displayName, errMsg) => {
 
 // ================ STATUS UPDATE ================
 
-updateStatus = (serverCount) => {
-    document.getElementById('status-server-count').innerHTML = serverCount;
+updateStatus = (response) => {
+    const { registeredServerCount, clockSpeedBpm, clockSpeedMultiplier } = response;
+    document.getElementById('status-server-count').innerHTML = registeredServerCount;
+
+    setClockControls(clockSpeedBpm, clockSpeedMultiplier);
 }
 
 updateResponseTime = (millis) => {
@@ -176,18 +179,31 @@ updateClockBPM = (id, value) => {
     document.getElementById(id).value = Number(value);
 }
 
-setClock = (millis) => {
-    const th = document.getElementById("clock-th-input").value;
-    const bpm = document.getElementById("clock-bpm-input").value;
+changeClockSpeed = () => {
+    bpm = document.getElementById("clock-bpm-input").value;
+    mult = document.getElementById("clock-th-input").value;
 
-    if (!millis) {
-        millis = 60000 / bpm * th;
+    setClockControls(bpm, mult);
+    doSetClockSpeed(bpm, mult);
+}
+
+setClockControls = (bpm, mult) => {
+    document.getElementById("clock-bpm-input").value = bpm;
+    document.getElementById("clock-bpm-range").value = bpm;
+
+    const thOptions = document.getElementById("clock-th-input").children;
+    for (let i = 0; i < thOptions.length; i++) {
+        const element = thOptions[i];
+        if (element.value == mult) {
+            element.selected = true;
+        } else {
+            element.selected = false;
+        }
     }
 
     clearInterval(clock);
+    millis = 60000 / bpm * mult;
     clock = setInterval(doWhateverTheClockDoes, millis);
-    
-    doSetClockSpeed(bpm, th);
 }
 
 doWhateverTheClockDoes = (restartNow) => {
@@ -198,12 +214,12 @@ doWhateverTheClockDoes = (restartNow) => {
     if (restartNow === true || !indicator.classList.contains(cName)) {
         indicator.classList.add(cName);
         activeClocks.forEach((id) => {
-            document.getElementById("clock-"+id).classList.add("clock-on");
+            document.getElementById("clock-" + id).classList.add("clock-on");
         })
     } else {
         indicator.classList.remove(cName);
         activeClocks.forEach((id) => {
-            document.getElementById("clock-"+id).classList.remove("clock-on");
+            document.getElementById("clock-" + id).classList.remove("clock-on");
         })
     }
 }
@@ -211,8 +227,6 @@ doWhateverTheClockDoes = (restartNow) => {
 clockTap = () => {
     const th = document.getElementById("clock-th-input").value;
     const now = Date.now();
-
-    clearInterval(clock);
 
     if (!clockTapLast) {
         clockTapLast = now;
@@ -230,10 +244,7 @@ clockTap = () => {
     const millisNew = clockTapMillis.reduce((a, b) => a + b) / clockTapMillis.length;
     const bpmNew = Math.round(60000 / millisNew * th);
 
-    document.getElementById("clock-bpm-input").value = bpmNew;
-    document.getElementById("clock-bpm-range").value = bpmNew;
-
-    setClock(millisNew);
+    setClockControls(bpmNew, th);
     doSetClockSpeed(bpmNew, th);
 
     // reset
@@ -241,7 +252,7 @@ clockTap = () => {
     clockTapResetTimeout = setTimeout(() => {
         clockTapLast = undefined;
         clockTapMillis = [];
-    }, millisNew*2);    
+    }, millisNew * 2);
 }
 
 restartClock = () => {
@@ -250,13 +261,13 @@ restartClock = () => {
 attachClock = (id, effectType) => {
     if (activeClocks.has(id)) {
         activeClocks.delete(id);
-        document.getElementById("clock-"+id).classList.remove("clock-on");
-        document.getElementById("clock-"+id).classList.remove("clock-attached");
+        document.getElementById("clock-" + id).classList.remove("clock-on");
+        document.getElementById("clock-" + id).classList.remove("clock-attached");
 
         doClockSubscription(id, effectType, "unsubscribe");
     } else {
         activeClocks.add(id);
-        document.getElementById("clock-"+id).classList.add("clock-attached");
+        document.getElementById("clock-" + id).classList.add("clock-attached");
 
         doClockSubscription(id, effectType, "subscribe");
     }

@@ -59,7 +59,9 @@ const (
 
 // StatusResponse returns information on the service and the plugin network to the consumer
 type StatusResponse struct {
-	RegisteredServerCount int `json:"registeredServerCount"`
+	RegisteredServerCount int     `json:"registeredServerCount"`
+	ClockSpeedBPM         int     `json:"clockSpeedBpm"`
+	ClockSpeedMultiplier  float64 `json:"clockSpeedMultiplier"`
 }
 
 // Error returns an error

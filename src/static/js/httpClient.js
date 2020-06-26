@@ -33,7 +33,7 @@ doStatusUpdate = async () => {
     request.addEventListener('load', () => {
         if (request.status === 200) {
             const resp = JSON.parse(request.responseText);
-            updateStatus(resp.registeredServerCount);
+            updateStatus(resp);
         } else {
             addToLog("[BACKEND]", "Retrieve status update", request.responseText);
         }
