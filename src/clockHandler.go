@@ -11,6 +11,14 @@ import (
 	"github.com/eynorey/solarflare/src/utils/sferror"
 )
 
+// ClockSyncHandler waits for the next clock start and then returns
+func ClockSyncHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		clock.WaitForNextStart()
+		writeResponse(w, 204, nil)
+	}
+}
+
 // ClockRestartHandler restarts the clock
 func ClockRestartHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {

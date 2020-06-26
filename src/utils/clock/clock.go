@@ -1,6 +1,7 @@
 package clock
 
 import (
+	"sync"
 	"time"
 
 	"github.com/eynorey/solarflare/src/utils"
@@ -10,6 +11,7 @@ import (
 )
 
 var tickTock *clock
+var wg sync.WaitGroup
 
 type clock struct {
 	interval   time.Duration
@@ -18,6 +20,7 @@ type clock struct {
 
 	action model.Action
 	stop   bool
+	sync   bool
 
 	particleEffects  map[string]model.ParticleEffectPreset
 	dragonEffects    map[string]model.DragonEffectPreset
@@ -117,6 +120,15 @@ func UnsubscribeEffect(id string, effectType model.EffectType) error {
 	return nil
 }
 
+// WaitForNextStart waits for the next "start" run on the clock
+func WaitForNextStart() {
+	wg.Add(1)
+	tickTock.sync = true
+	wg.Wait()
+	tickTock.sync = false
+	return
+}
+
 func (c *clock) run() {
 	for {
 		if c.stop {
@@ -125,6 +137,9 @@ func (c *clock) run() {
 
 		if c.action == model.StartEffectAction {
 			go c.tick()
+			if c.sync {
+				wg.Done()
+			}
 		} else {
 			go c.tock()
 		}
