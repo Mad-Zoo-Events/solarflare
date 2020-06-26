@@ -67,6 +67,8 @@ func main() {
 	router.Handle("/presets/{effectType}/{id}", PresetDeletionHandler()).Methods(http.MethodDelete)
 
 	// clock
+	router.Handle("/clock/sync", ClockSyncHandler()).Methods(http.MethodGet)
+	router.Handle("/clock/restart", ClockRestartHandler()).Methods(http.MethodPost)
 	router.Handle("/clock/{bpm}/{multiplier}", ClockSpeedHandler()).Methods(http.MethodPut)
 	router.Handle("/clock/{effectType}/{id}", ClockSubscriptionHandler(model.SubscribeClockAction)).Methods(http.MethodPost)
 	router.Handle("/clock/{effectType}/{id}", ClockSubscriptionHandler(model.UnsubscribeClockAction)).Methods(http.MethodDelete)
