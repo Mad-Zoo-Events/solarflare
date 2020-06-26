@@ -1,4 +1,5 @@
-const STATUS_UPDATE_INTERVAL = 10000;
+const STATUS_UPDATE_INTERVAL = 30000;
+const CLOCK_SYNC_INTERVAL = 10000;
 
 var counters = new Map();
 var activeKeys = new Set();
@@ -13,7 +14,9 @@ var clockTapRestartTimeout;
 
 init = () => {
     doStatusUpdate();
+    doClockSync(restartUIClock);
     setInterval(doStatusUpdate, STATUS_UPDATE_INTERVAL);
+    setInterval(() => doClockSync(restartUIClock), CLOCK_SYNC_INTERVAL);
 }
 
 addToLog = (action, displayName, errMsg) => {

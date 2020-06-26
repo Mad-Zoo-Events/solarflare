@@ -62,6 +62,14 @@ doRestartClock = async (callback) => {
     request.send();
 }
 
+doClockSync = async (callback) => {
+    const request = new XMLHttpRequest();
+    request.open("GET", `${CLOCK_ENDPOINT}/sync`);
+    request.addEventListener('load', callback);
+
+    request.send();
+}
+
 doSetClockSpeed = async (bpm, multiplier) => {
     const request = new XMLHttpRequest();
     request.open("PUT", `${CLOCK_ENDPOINT}/${bpm}/${multiplier}`);
