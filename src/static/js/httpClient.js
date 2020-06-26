@@ -54,6 +54,14 @@ doDeletePreset = async (id, effectType) => {
     request.send();
 }
 
+doRestartClock = async (callback) => {
+    const request = new XMLHttpRequest();
+    request.open("POST", `${CLOCK_ENDPOINT}/restart`);
+    request.addEventListener('load', callback);
+
+    request.send();
+}
+
 doSetClockSpeed = async (bpm, multiplier) => {
     const request = new XMLHttpRequest();
     request.open("PUT", `${CLOCK_ENDPOINT}/${bpm}/${multiplier}`);

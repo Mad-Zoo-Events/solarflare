@@ -11,6 +11,15 @@ import (
 	"github.com/eynorey/solarflare/src/utils/sferror"
 )
 
+// ClockRestartHandler restarts the clock
+func ClockRestartHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		clock.Restart()
+
+		writeResponse(w, 204, nil)
+	}
+}
+
 // ClockSpeedHandler sets the speed of the clock to a specific bpm count
 func ClockSpeedHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {

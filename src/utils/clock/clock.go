@@ -47,6 +47,25 @@ func Stop() {
 	tickTock.stop = true
 }
 
+// Restart stops the running clock and starts a new one
+func Restart() {
+	// create a new clock
+	newClock := *tickTock
+	newClock.action = model.StartEffectAction
+
+	// stop the old one
+	tickTock.stop = true
+
+	// start the new one
+	go newClock.run()
+
+	// wait for the old one to stop
+	time.Sleep(tickTock.interval)
+
+	// and set the global clock to the new one
+	tickTock = &newClock
+}
+
 // SetSpeed sets a new speed for the clock
 func SetSpeed(bpm int, multiplier float64) {
 	tickTock.bpm = bpm
