@@ -8,6 +8,8 @@ const CLOCK_ENDPOINT = `${BASE_URL}/clock`;
 const CP_ENDPOINT = `${BASE_URL}/controlpanel`;
 const CP_PRESETS_ENDPOINT = `${CP_ENDPOINT}/presets`;
 
+// ================ EFFECTS ================
+
 var startTime;
 
 doEffect = async (effectType, id, displayName, action) => {
@@ -27,6 +29,11 @@ doEffect = async (effectType, id, displayName, action) => {
     request.send();
 };
 
+doStopAll = () => {
+    doClockSubscription("particle", "all", "stop", () => doEffect("particle", "all", "stop all", "stop"));
+    //TODO: attachClock remove all
+};
+
 doStatusUpdate = async () => {
     const request = new XMLHttpRequest();
     request.open("GET", STATUS_ENDPOINT);
@@ -42,6 +49,8 @@ doStatusUpdate = async () => {
     request.send();
 };
 
+// ================ PRESET MANAGEMENT ================
+
 doDeletePreset = async (id, effectType) => {
     const request = new XMLHttpRequest();
     request.open("DELETE", `${PRESETS_ENDPOINT}/${effectType}/${id}`);
@@ -53,6 +62,8 @@ doDeletePreset = async (id, effectType) => {
 
     request.send();
 };
+
+// ================ CLOCK ================
 
 doRestartClock = async (callback) => {
     const request = new XMLHttpRequest();
@@ -77,13 +88,14 @@ doSetClockSpeed = async (bpm, multiplier) => {
     request.send();
 };
 
-doClockSubscription = async (id, effectType, action) => {
+doClockSubscription = async (effectType, id, action, callback) => {
     const method = action === "subscribe" ? "POST" : "DELETE";
 
     const request = new XMLHttpRequest();
     request.open(method, `${CLOCK_ENDPOINT}/${effectType}/${id}`);
+    if (callback) {
+        request.addEventListener('load', callback);
+    }
 
     request.send();
 };
-
-navigate = (endpoint) => window.location.href = endpoint;

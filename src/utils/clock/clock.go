@@ -1,6 +1,7 @@
 package clock
 
 import (
+	"log"
 	"sync"
 	"time"
 
@@ -90,6 +91,11 @@ func SubscribeEffect(id string, effectType model.EffectType) error {
 		return err
 	}
 
+	// Wait until the effects are stopped
+	if tickTock.action == model.StopEffectAction {
+		time.Sleep(tickTock.interval)
+	}
+
 	switch effectType {
 	case model.EffectTypeParticle:
 		tickTock.particleEffects[id] = p.(model.ParticleEffectPreset)
@@ -105,7 +111,20 @@ func SubscribeEffect(id string, effectType model.EffectType) error {
 }
 
 // UnsubscribeEffect unsubscribes an effect from the clock
-func UnsubscribeEffect(id string, effectType model.EffectType) error {
+func UnsubscribeEffect(id string, effectType model.EffectType) {
+	// Wait until the effects are stopped
+	if tickTock.action == model.StopEffectAction {
+		time.Sleep(tickTock.interval)
+	}
+
+	if id == "all" {
+		tickTock.particleEffects = make(map[string]model.ParticleEffectPreset)
+		tickTock.dragonEffects = make(map[string]model.DragonEffectPreset)
+		tickTock.timeshiftEffects = make(map[string]model.TimeshiftEffectPreset)
+		tickTock.potionEffects = make(map[string]model.PotionEffectPreset)
+		return
+	}
+
 	switch effectType {
 	case model.EffectTypeParticle:
 		delete(tickTock.particleEffects, id)
@@ -116,8 +135,6 @@ func UnsubscribeEffect(id string, effectType model.EffectType) error {
 	case model.EffectTypePotion:
 		delete(tickTock.potionEffects, id)
 	}
-
-	return nil
 }
 
 // WaitForNextStart waits for the next "start" run on the clock
@@ -159,6 +176,7 @@ func (c *clock) tick() {
 		go manager.RunTimeshiftEffect(e, c.action)
 	}
 	for _, e := range c.potionEffects {
+		log.Println("start")
 		go manager.RunPotionEffect(e, c.action)
 	}
 
@@ -176,6 +194,7 @@ func (c *clock) tock() {
 		go manager.StopEffect(e.ID)
 	}
 	for _, e := range c.potionEffects {
+		log.Println("stop")
 		go manager.StopEffect(e.ID)
 	}
 

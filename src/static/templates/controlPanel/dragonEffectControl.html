@@ -11,7 +11,7 @@
         onclick='doEffect("dragon", "{{.ID}}", "{{.DisplayName}}", "restart")'>restart</button>
     <button type="button" class="stop key-binding-{{.KeyBinding}}" id="stop-{{.ID}}"
         onclick='doEffect("dragon", "{{.ID}}", "{{.DisplayName}}", "stop")'>stop</button>
-    <button type="button" class="clock" id="clock-{{.ID}}" onclick='attachClock("{{.ID}}", "dragon")'>clock</button>
+    <button type="button" class="clock" id="clock-{{.ID}}" onclick='attachClock("dragon", "{{.ID}}")'>clock</button>
 </div>
 
 {{end}}

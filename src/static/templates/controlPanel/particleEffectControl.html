@@ -11,7 +11,7 @@
         onclick='doEffect("particle", "{{.ID}}", "{{.DisplayName}}", "start")'>start</button>
     <button type="button" class="stop key-binding-{{.KeyBinding}}" id="stop-{{.ID}}"
         onclick='doEffect("particle", "{{.ID}}", "{{.DisplayName}}", "stop")'>stop</button>
-    <button type="button" class="clock" id="clock-{{.ID}}" onclick='attachClock("{{.ID}}", "particle")'>clock</button>
+    <button type="button" class="clock" id="clock-{{.ID}}" onclick='attachClock("particle", "{{.ID}}")'>clock</button>
 </div>
 
 {{end}}
