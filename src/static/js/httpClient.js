@@ -31,7 +31,7 @@ doEffect = async (effectType, id, displayName, action) => {
 
 doStopAll = () => {
     doClockSubscription("particle", "all", "stop", () => doEffect("particle", "all", "stop all", "stop"));
-    //TODO: attachClock remove all
+    detachClockAll();
 };
 
 doStatusUpdate = async () => {

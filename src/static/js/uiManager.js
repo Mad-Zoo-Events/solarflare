@@ -284,3 +284,10 @@ attachClock = (effectType, id) => {
         doClockSubscription(effectType, id, "subscribe");
     }
 };
+
+detachClockAll = () => activeClocks.forEach((id) => {
+    activeClocks.delete(id);
+    document.getElementById("clock-" + id).classList.remove("clock-on");
+    document.getElementById("clock-" + id).classList.remove("clock-attached");
+});
+detachClockAll

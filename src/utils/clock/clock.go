@@ -1,7 +1,6 @@
 package clock
 
 import (
-	"log"
 	"sync"
 	"time"
 
@@ -176,7 +175,6 @@ func (c *clock) tick() {
 		go manager.RunTimeshiftEffect(e, c.action)
 	}
 	for _, e := range c.potionEffects {
-		log.Println("start")
 		go manager.RunPotionEffect(e, c.action)
 	}
 
@@ -194,7 +192,6 @@ func (c *clock) tock() {
 		go manager.StopEffect(e.ID)
 	}
 	for _, e := range c.potionEffects {
-		log.Println("stop")
 		go manager.StopEffect(e.ID)
 	}
 
