@@ -29,6 +29,8 @@ addToLog = (action, displayName, errMsg) => {
     logWindow.innerHTML = logLine + logWindow.innerHTML;
 };
 
+navigate = (endpoint) => window.location.href = endpoint;
+
 // ================ STATUS UPDATE ================
 
 updateStatus = (response) => {
@@ -268,17 +270,17 @@ restartUIClock = () => {
 
 restartClock = () => doRestartClock(restartUIClock);
 
-attachClock = (id, effectType) => {
+attachClock = (effectType, id) => {
     if (activeClocks.has(id)) {
         activeClocks.delete(id);
         document.getElementById("clock-" + id).classList.remove("clock-on");
         document.getElementById("clock-" + id).classList.remove("clock-attached");
 
-        doClockSubscription(id, effectType, "unsubscribe");
+        doClockSubscription(effectType, id, "unsubscribe");
     } else {
         activeClocks.add(id);
         document.getElementById("clock-" + id).classList.add("clock-attached");
 
-        doClockSubscription(id, effectType, "subscribe");
+        doClockSubscription(effectType, id, "subscribe");
     }
 };
