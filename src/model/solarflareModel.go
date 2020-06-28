@@ -10,6 +10,7 @@ type ControlPanel struct {
 	PotionEffectPresets    []PotionEffectPreset
 
 	RegisteredServerCount int
+	AppVersion            string
 }
 
 // Server contains information about an Aurora plugin server
