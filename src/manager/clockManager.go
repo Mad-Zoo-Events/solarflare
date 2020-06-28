@@ -16,9 +16,11 @@ type clock struct {
 	bpm        int
 	multiplier float64
 
-	action model.Action
-	stop   bool
-	sync   bool
+	nextAction model.Action
+
+	stop      bool
+	syncStart bool
+	syncStop  bool
 
 	particleEffects  map[string]model.ParticleEffectPreset
 	dragonEffects    map[string]model.DragonEffectPreset
@@ -26,11 +28,9 @@ type clock struct {
 	potionEffects    map[string]model.PotionEffectPreset
 }
 
-// StartClock starts a new clock with the specified millisecond interval
-func StartClock(bpm int, multiplier float64) {
+func init() {
 	tickTock = &clock{
-		action: model.StartEffectAction,
-		stop:   false,
+		nextAction: model.StartEffectAction,
 
 		particleEffects:  make(map[string]model.ParticleEffectPreset),
 		dragonEffects:    make(map[string]model.DragonEffectPreset),
@@ -38,30 +38,22 @@ func StartClock(bpm int, multiplier float64) {
 		potionEffects:    make(map[string]model.PotionEffectPreset),
 	}
 
-	SetClockSpeed(bpm, multiplier)
+	SetClockSpeed(128, 1)
 
 	go tickTock.run()
-}
-
-// StopClock stops the clock
-func StopClock() {
-	tickTock.stop = true
 }
 
 // RestartClock stops the running clock and starts a new one
 func RestartClock() {
 	// create a new clock
 	newClock := *tickTock
-	newClock.action = model.StartEffectAction
+	newClock.nextAction = model.StartEffectAction
 
 	// stop the old one
 	tickTock.stop = true
 
 	// start the new one
 	go newClock.run()
-
-	// wait for the old one to stop
-	time.Sleep(tickTock.interval)
 
 	// and set the global clock to the new one
 	tickTock = &newClock
@@ -71,9 +63,7 @@ func RestartClock() {
 func SetClockSpeed(bpm int, multiplier float64) {
 	tickTock.bpm = bpm
 	tickTock.multiplier = multiplier
-
-	millis := 60000 / float64(bpm) * multiplier
-	tickTock.interval = time.Duration(millis * 1000000)
+	tickTock.interval = time.Minute / time.Duration(bpm) * time.Duration(multiplier)
 }
 
 // GetClockSpeed gets the current clock speed
@@ -81,17 +71,14 @@ func GetClockSpeed() (bpm int, multiplier float64) {
 	return tickTock.bpm, tickTock.multiplier
 }
 
-// ClockSubscribeEffect registers an effect to the clock
-func ClockSubscribeEffect(id string, effectType model.EffectType) error {
+// SubscribeEffectToClock registers an effect to the clock
+func SubscribeEffectToClock(id string, effectType model.EffectType) error {
 	p, err := utils.FindPreset(id, effectType)
 	if err != nil {
 		return err
 	}
 
-	// Wait until the effects are stopped
-	if tickTock.action == model.StopEffectAction {
-		time.Sleep(tickTock.interval)
-	}
+	waitForStop()
 
 	switch effectType {
 	case model.EffectTypeParticle:
@@ -107,12 +94,9 @@ func ClockSubscribeEffect(id string, effectType model.EffectType) error {
 	return nil
 }
 
-// ClockUnsubscribeEffect unsubscribes an effect from the clock
-func ClockUnsubscribeEffect(id string, effectType model.EffectType) {
-	// Wait until the effects are stopped
-	if tickTock.action == model.StopEffectAction {
-		time.Sleep(tickTock.interval)
-	}
+// UnsubscribeEffectFromClock unsubscribes an effect from the clock
+func UnsubscribeEffectFromClock(id string, effectType model.EffectType) {
+	waitForStop()
 
 	if id == "all" {
 		tickTock.particleEffects = make(map[string]model.ParticleEffectPreset)
@@ -134,12 +118,25 @@ func ClockUnsubscribeEffect(id string, effectType model.EffectType) {
 	}
 }
 
-// ClockWaitForNextStart waits for the next "start" run on the clock
-func ClockWaitForNextStart() {
+// ClockSync returns after waiting for the next "start" run on the clock
+func ClockSync() {
+	waitForStart()
+	return
+}
+
+func waitForStart() {
 	wg.Add(1)
-	tickTock.sync = true
+	tickTock.syncStart = true
 	wg.Wait()
-	tickTock.sync = false
+	tickTock.syncStart = false
+	return
+}
+
+func waitForStop() {
+	wg.Add(1)
+	tickTock.syncStop = true
+	wg.Wait()
+	tickTock.syncStop = false
 	return
 }
 
@@ -149,13 +146,16 @@ func (c *clock) run() {
 			return
 		}
 
-		if c.action == model.StartEffectAction {
+		if c.nextAction == model.StartEffectAction {
 			go c.tick()
-			if c.sync {
+			if c.syncStart {
 				wg.Done()
 			}
 		} else {
 			go c.tock()
+			if c.syncStop {
+				wg.Done()
+			}
 		}
 
 		time.Sleep(c.interval)
@@ -164,19 +164,19 @@ func (c *clock) run() {
 
 func (c *clock) tick() {
 	for _, e := range c.particleEffects {
-		go RunParticleEffect(e, c.action)
+		go RunParticleEffect(e, c.nextAction)
 	}
 	for _, e := range c.dragonEffects {
-		go RunDragonEffect(e, c.action)
+		go RunDragonEffect(e, c.nextAction)
 	}
 	for _, e := range c.timeshiftEffects {
-		go RunTimeshiftEffect(e, c.action)
+		go RunTimeshiftEffect(e, c.nextAction)
 	}
 	for _, e := range c.potionEffects {
-		go RunPotionEffect(e, c.action)
+		go RunPotionEffect(e, c.nextAction)
 	}
 
-	c.action = model.StopEffectAction
+	c.nextAction = model.StopEffectAction
 }
 
 func (c *clock) tock() {
@@ -193,5 +193,5 @@ func (c *clock) tock() {
 		go StopEffect(e.ID)
 	}
 
-	c.action = model.StartEffectAction
+	c.nextAction = model.StartEffectAction
 }
