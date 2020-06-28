@@ -9,12 +9,26 @@ phases:
   install:
     runtime-versions:
       golang: 1.13
+      nodejs: 12
+    commands:
+      - npm install terser -g
+      - npm install clean-css-cli -g
   build:
     commands:
       - cd $CODEBUILD_SRC_DIR/src
       - go build -mod vendor -o ../bin/application -i github.com/eynorey/solarflare/src
       - chmod 755 ../bin/application
       - mv static ../
+  post_build:
+    commands:
+      - cd $CODEBUILD_SRC_DIR/static/js
+      - terser --compress --mangle -- httpClient.js > httpClient_min.js
+      - terser --compress --mangle -- uiManager.js > uiManager_min.js
+      - mv httpClient_min.js httpClient.js
+      - mv uiManager_min.js uiManager.js
+      - cd ../css
+      - cleancss -o main_min.css main.css
+      - mv main_min.css main.css
 artifacts:
   files:
     - .ebextensions/*
