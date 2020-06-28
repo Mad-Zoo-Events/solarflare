@@ -13,25 +13,25 @@ func FindPreset(id string, effectType model.EffectType) (interface{}, error) {
 	cfg := config.Get()
 
 	switch effectType {
-	case model.EffectTypeParticle:
+	case model.ParticleEffectType:
 		for _, p := range cfg.ParticleEffectPresets {
 			if p.ID == id {
 				return p, nil
 			}
 		}
-	case model.EffectTypeDragon:
+	case model.DragonEffectType:
 		for _, p := range cfg.DragonEffectPresets {
 			if p.ID == id {
 				return p, nil
 			}
 		}
-	case model.EffectTypeTimeshift:
+	case model.TimeshiftEffectType:
 		for _, p := range cfg.TimeshiftEffectPresets {
 			if p.ID == id {
 				return p, nil
 			}
 		}
-	case model.EffectTypePotion:
+	case model.PotionEffectType:
 		for _, p := range cfg.PotionEffectPresets {
 			if p.ID == id {
 				return p, nil

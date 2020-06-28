@@ -21,28 +21,28 @@ type Server struct {
 type EffectType string
 
 const (
-	// EffectTypeParticle represents a particle effect
-	EffectTypeParticle = EffectType("particle")
-	// EffectTypeDragon represents the dragon effect
-	EffectTypeDragon = EffectType("dragon")
-	// EffectTypeTimeshift represents the timeshift effect
-	EffectTypeTimeshift = EffectType("timeshift")
-	// EffectTypePotion represents the potion effect
-	EffectTypePotion = EffectType("potion")
+	// ParticleEffectType represents a particle effect
+	ParticleEffectType = EffectType("particle")
+	// DragonEffectType represents the dragon effect
+	DragonEffectType = EffectType("dragon")
+	// TimeshiftEffectType represents the timeshift effect
+	TimeshiftEffectType = EffectType("timeshift")
+	// PotionEffectType represents the potion effect
+	PotionEffectType = EffectType("potion")
 )
 
-// Action represents the action to be performed on the visual effect (e.g. start, stop, restart...)
-type Action string
+// EffectAction represents the action to be performed on the visual effect (e.g. start, stop, restart...)
+type EffectAction string
 
 const (
 	// TriggerEffectAction triggers a visual effect
-	TriggerEffectAction = Action("trigger")
+	TriggerEffectAction = EffectAction("trigger")
 	// StartEffectAction starts a visual effect
-	StartEffectAction = Action("start")
+	StartEffectAction = EffectAction("start")
 	// RestartEffectAction restarts a visual effect
-	RestartEffectAction = Action("restart")
+	RestartEffectAction = EffectAction("restart")
 	// StopEffectAction stops a visual effect
-	StopEffectAction = Action("stop")
+	StopEffectAction = EffectAction("stop")
 )
 
 // ClockAction represents an action to be performed on the clock

@@ -6,26 +6,26 @@ import (
 )
 
 // IsAllowedOn checks whether the effect type passed is valid for the given action
-func (action Action) IsAllowedOn(effectType EffectType) bool {
+func (action EffectAction) IsAllowedOn(effectType EffectType) bool {
 	switch effectType {
-	case EffectTypeParticle:
+	case ParticleEffectType:
 		if action == TriggerEffectAction ||
 			action == StartEffectAction ||
 			action == StopEffectAction {
 			return true
 		}
-	case EffectTypeDragon:
+	case DragonEffectType:
 		if action == StartEffectAction ||
 			action == RestartEffectAction ||
 			action == StopEffectAction {
 			return true
 		}
-	case EffectTypeTimeshift:
+	case TimeshiftEffectType:
 		if action == StartEffectAction ||
 			action == StopEffectAction {
 			return true
 		}
-	case EffectTypePotion:
+	case PotionEffectType:
 		if action == StartEffectAction ||
 			action == StopEffectAction {
 			return true

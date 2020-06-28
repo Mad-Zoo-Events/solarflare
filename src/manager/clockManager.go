@@ -16,7 +16,7 @@ type clock struct {
 	bpm        int
 	multiplier float64
 
-	nextAction model.Action
+	nextAction model.EffectAction
 
 	stop      bool
 	syncStart bool
@@ -81,13 +81,13 @@ func SubscribeEffectToClock(id string, effectType model.EffectType) error {
 	waitForStop()
 
 	switch effectType {
-	case model.EffectTypeParticle:
+	case model.ParticleEffectType:
 		tickTock.particleEffects[id] = p.(model.ParticleEffectPreset)
-	case model.EffectTypeDragon:
+	case model.DragonEffectType:
 		tickTock.dragonEffects[id] = p.(model.DragonEffectPreset)
-	case model.EffectTypeTimeshift:
+	case model.TimeshiftEffectType:
 		tickTock.timeshiftEffects[id] = p.(model.TimeshiftEffectPreset)
-	case model.EffectTypePotion:
+	case model.PotionEffectType:
 		tickTock.potionEffects[id] = p.(model.PotionEffectPreset)
 	}
 
@@ -107,13 +107,13 @@ func UnsubscribeEffectFromClock(id string, effectType model.EffectType) {
 	}
 
 	switch effectType {
-	case model.EffectTypeParticle:
+	case model.ParticleEffectType:
 		delete(tickTock.particleEffects, id)
-	case model.EffectTypeDragon:
+	case model.DragonEffectType:
 		delete(tickTock.dragonEffects, id)
-	case model.EffectTypeTimeshift:
+	case model.TimeshiftEffectType:
 		delete(tickTock.timeshiftEffects, id)
-	case model.EffectTypePotion:
+	case model.PotionEffectType:
 		delete(tickTock.potionEffects, id)
 	}
 }
