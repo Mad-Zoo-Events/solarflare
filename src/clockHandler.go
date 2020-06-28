@@ -14,7 +14,7 @@ import (
 // ClockSyncHandler waits for the next clock start and then returns
 func ClockSyncHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		manager.ClockWaitForNextStart()
+		manager.ClockSync()
 		writeResponse(w, 204, nil)
 	}
 }
@@ -70,9 +70,9 @@ func ClockSubscriptionHandler(action model.ClockAction) http.HandlerFunc {
 
 		switch action {
 		case model.SubscribeClockAction:
-			manager.ClockSubscribeEffect(id, model.EffectType(effectType))
+			manager.SubscribeEffectToClock(id, model.EffectType(effectType))
 		case model.UnsubscribeClockAction:
-			manager.ClockUnsubscribeEffect(id, model.EffectType(effectType))
+			manager.UnsubscribeEffectFromClock(id, model.EffectType(effectType))
 		default:
 			err := sferror.New(sferror.ClockInvalidAction, "invlid clock action: "+effectType, nil)
 			writeResponse(w, 400, sferror.GetErrorResponse(err))
