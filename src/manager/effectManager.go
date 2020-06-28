@@ -18,7 +18,7 @@ const (
 )
 
 // RunParticleEffect compiles a particle effect request and executes it on all servers
-func RunParticleEffect(preset model.ParticleEffectPreset, action model.Action) error {
+func RunParticleEffect(preset model.ParticleEffectPreset, action model.EffectAction) error {
 	body, err := json.Marshal(preset.ParticleEffects)
 	if err != nil {
 		return sferror.New(sferror.Encoding, "Failed to marshal request", err)
@@ -30,7 +30,7 @@ func RunParticleEffect(preset model.ParticleEffectPreset, action model.Action) e
 }
 
 // RunDragonEffect compiles a dragon effect request and executes it on all servers
-func RunDragonEffect(preset model.DragonEffectPreset, action model.Action) error {
+func RunDragonEffect(preset model.DragonEffectPreset, action model.EffectAction) error {
 	body, err := json.Marshal(preset.DragonEffects)
 	if err != nil {
 		return sferror.New(sferror.Encoding, "Failed to marshal request", err)
@@ -42,7 +42,7 @@ func RunDragonEffect(preset model.DragonEffectPreset, action model.Action) error
 }
 
 // RunTimeshiftEffect compiles a timeshift effect request and executes it on all servers
-func RunTimeshiftEffect(preset model.TimeshiftEffectPreset, action model.Action) error {
+func RunTimeshiftEffect(preset model.TimeshiftEffectPreset, action model.EffectAction) error {
 	body, err := json.Marshal(preset.TimeshiftEffects)
 	if err != nil {
 		return sferror.New(sferror.Encoding, "Failed to marshal request", err)
@@ -54,7 +54,7 @@ func RunTimeshiftEffect(preset model.TimeshiftEffectPreset, action model.Action)
 }
 
 // RunPotionEffect compiles a potion effect request and executes it on all servers
-func RunPotionEffect(preset model.PotionEffectPreset, action model.Action) error {
+func RunPotionEffect(preset model.PotionEffectPreset, action model.EffectAction) error {
 	body, err := json.Marshal(preset.PotionEffects)
 	if err != nil {
 		return sferror.New(sferror.Encoding, "Failed to marshal request", err)

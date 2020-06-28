@@ -14,7 +14,7 @@ import (
 // UpsertPresetAPI inserts a new preset or updates an existing one from an API request
 func UpsertPresetAPI(effectType string, body []byte) (*string, error) {
 	switch model.EffectType(effectType) {
-	case model.EffectTypeParticle:
+	case model.ParticleEffectType:
 		preset := model.ParticleEffectPreset{}
 
 		if err := json.Unmarshal(body, &preset); err != nil {
@@ -22,7 +22,7 @@ func UpsertPresetAPI(effectType string, body []byte) (*string, error) {
 		}
 
 		return manager.UpsertParticleEffectPreset(preset)
-	case model.EffectTypeDragon:
+	case model.DragonEffectType:
 		preset := model.DragonEffectPreset{}
 
 		if err := json.Unmarshal(body, &preset); err != nil {
@@ -30,7 +30,7 @@ func UpsertPresetAPI(effectType string, body []byte) (*string, error) {
 		}
 
 		return manager.UpsertDragonEffectPreset(preset)
-	case model.EffectTypeTimeshift:
+	case model.TimeshiftEffectType:
 		preset := model.TimeshiftEffectPreset{}
 
 		if err := json.Unmarshal(body, &preset); err != nil {
@@ -38,7 +38,7 @@ func UpsertPresetAPI(effectType string, body []byte) (*string, error) {
 		}
 
 		return manager.UpsertTimeshiftEffectPreset(preset)
-	case model.EffectTypePotion:
+	case model.PotionEffectType:
 		preset := model.PotionEffectPreset{}
 
 		if err := json.Unmarshal(body, &preset); err != nil {
@@ -54,7 +54,7 @@ func UpsertPresetAPI(effectType string, body []byte) (*string, error) {
 // UpsertPresetUI inserts a new preset or updates an existing one from a UI request
 func UpsertPresetUI(effectType string, values url.Values) (*string, error) {
 	switch model.EffectType(effectType) {
-	case model.EffectTypeParticle:
+	case model.ParticleEffectType:
 		preset := model.ParticleEffectPreset{}
 
 		if err := unmarshalParticlePreset(&preset, values); err != nil {
@@ -62,7 +62,7 @@ func UpsertPresetUI(effectType string, values url.Values) (*string, error) {
 		}
 
 		return manager.UpsertParticleEffectPreset(preset)
-	case model.EffectTypeDragon:
+	case model.DragonEffectType:
 		preset := model.DragonEffectPreset{}
 
 		if err := unmarshalDragonPreset(&preset, values); err != nil {
@@ -70,7 +70,7 @@ func UpsertPresetUI(effectType string, values url.Values) (*string, error) {
 		}
 
 		return manager.UpsertDragonEffectPreset(preset)
-	case model.EffectTypeTimeshift:
+	case model.TimeshiftEffectType:
 		preset := model.TimeshiftEffectPreset{}
 
 		if err := unmarshalTimeshiftPreset(&preset, values); err != nil {
@@ -78,7 +78,7 @@ func UpsertPresetUI(effectType string, values url.Values) (*string, error) {
 		}
 
 		return manager.UpsertTimeshiftEffectPreset(preset)
-	case model.EffectTypePotion:
+	case model.PotionEffectType:
 		preset := model.PotionEffectPreset{}
 
 		if err := unmarshalPotionPreset(&preset, values); err != nil {
@@ -97,22 +97,22 @@ func DeletePreset(effectType, id string) error {
 	var err error
 
 	switch model.EffectType(effectType) {
-	case model.EffectTypeParticle:
+	case model.ParticleEffectType:
 		err = client.DeleteEffectPreset(client.ParticleEffectPresetsTable, id)
 		if err == nil {
 			cfg.ParticleEffectPresets = client.GetParticleEffectPresets()
 		}
-	case model.EffectTypeDragon:
+	case model.DragonEffectType:
 		err = client.DeleteEffectPreset(client.DragonEffectPresetsTable, id)
 		if err == nil {
 			cfg.DragonEffectPresets = client.GetDragonEffectPresets()
 		}
-	case model.EffectTypeTimeshift:
+	case model.TimeshiftEffectType:
 		err = client.DeleteEffectPreset(client.TimeshiftEffectPresetsTable, id)
 		if err == nil {
 			cfg.TimeshiftEffectPresets = client.GetTimeshiftEffectPresets()
 		}
-	case model.EffectTypePotion:
+	case model.PotionEffectType:
 		err = client.DeleteEffectPreset(client.PotionEffectPresetsTable, id)
 		if err == nil {
 			cfg.PotionEffectPresets = client.GetPotionEffectPresets()

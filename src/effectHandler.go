@@ -20,7 +20,7 @@ func EffectHandler() http.HandlerFunc {
 			effectType = vars["effectType"]
 		)
 
-		err := controller.RunEffect(id, model.EffectType(effectType), model.Action(action))
+		err := controller.RunEffect(id, model.EffectType(effectType), model.EffectAction(action))
 		if err != nil {
 			switch sferror.GetErrorType(err) {
 			case sferror.PresetNotFound:

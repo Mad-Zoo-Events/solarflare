@@ -10,7 +10,7 @@ import (
 )
 
 // RunEffect runs an effect on Aurora
-func RunEffect(id string, effectType model.EffectType, action model.Action) error {
+func RunEffect(id string, effectType model.EffectType, action model.EffectAction) error {
 	if !action.IsAllowedOn(effectType) {
 		return sferror.New(sferror.ActionNotAllowed, fmt.Sprintf("Action %s is not allowed for on type %s", action, effectType), nil)
 	}
@@ -25,13 +25,13 @@ func RunEffect(id string, effectType model.EffectType, action model.Action) erro
 	}
 
 	switch effectType {
-	case model.EffectTypeParticle:
+	case model.ParticleEffectType:
 		return manager.RunParticleEffect(preset.(model.ParticleEffectPreset), action)
-	case model.EffectTypeDragon:
+	case model.DragonEffectType:
 		return manager.RunDragonEffect(preset.(model.DragonEffectPreset), action)
-	case model.EffectTypeTimeshift:
+	case model.TimeshiftEffectType:
 		return manager.RunTimeshiftEffect(preset.(model.TimeshiftEffectPreset), action)
-	case model.EffectTypePotion:
+	case model.PotionEffectType:
 		return manager.RunPotionEffect(preset.(model.PotionEffectPreset), action)
 	}
 

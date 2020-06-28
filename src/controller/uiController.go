@@ -83,13 +83,13 @@ func RenderPresetModifier(writer http.ResponseWriter, effectType model.EffectTyp
 	)
 
 	switch effectType {
-	case model.EffectTypeParticle:
+	case model.ParticleEffectType:
 		presetName = "particlePresetModification.html"
-	case model.EffectTypeDragon:
+	case model.DragonEffectType:
 		presetName = "dragonPresetModification.html"
-	case model.EffectTypeTimeshift:
+	case model.TimeshiftEffectType:
 		presetName = "timeshiftPresetModification.html"
-	case model.EffectTypePotion:
+	case model.PotionEffectType:
 		presetName = "potionPresetModification.html"
 	default:
 		return sferror.New(sferror.InvalidEffectType, string(effectType), err)
@@ -111,7 +111,7 @@ func RenderPresetModifier(writer http.ResponseWriter, effectType model.EffectTyp
 	}
 
 	switch effectType {
-	case model.EffectTypeParticle:
+	case model.ParticleEffectType:
 		p := model.ParticleEffectPreset{}
 
 		if id != "" {
@@ -122,7 +122,7 @@ func RenderPresetModifier(writer http.ResponseWriter, effectType model.EffectTyp
 
 		p.TransformToUI()
 		err = template.Execute(writer, p)
-	case model.EffectTypeDragon:
+	case model.DragonEffectType:
 		p := model.DragonEffectPreset{}
 
 		if id != "" {
@@ -133,7 +133,7 @@ func RenderPresetModifier(writer http.ResponseWriter, effectType model.EffectTyp
 
 		p.TransformToUI()
 		err = template.Execute(writer, p)
-	case model.EffectTypeTimeshift:
+	case model.TimeshiftEffectType:
 		p := model.TimeshiftEffectPreset{}
 
 		if id != "" {
@@ -144,7 +144,7 @@ func RenderPresetModifier(writer http.ResponseWriter, effectType model.EffectTyp
 
 		p.TransformToUI()
 		err = template.Execute(writer, p)
-	case model.EffectTypePotion:
+	case model.PotionEffectType:
 		p := model.PotionEffectPreset{}
 
 		if id != "" {
