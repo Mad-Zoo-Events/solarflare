@@ -6,15 +6,15 @@ import (
 
 	"github.com/gorilla/mux"
 
+	"github.com/eynorey/solarflare/src/manager"
 	"github.com/eynorey/solarflare/src/model"
-	"github.com/eynorey/solarflare/src/utils/clock"
 	"github.com/eynorey/solarflare/src/utils/sferror"
 )
 
 // ClockSyncHandler waits for the next clock start and then returns
 func ClockSyncHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		clock.WaitForNextStart()
+		manager.ClockWaitForNextStart()
 		writeResponse(w, 204, nil)
 	}
 }
@@ -22,7 +22,7 @@ func ClockSyncHandler() http.HandlerFunc {
 // ClockRestartHandler restarts the clock
 func ClockRestartHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		clock.Restart()
+		manager.RestartClock()
 
 		writeResponse(w, 204, nil)
 	}
@@ -52,7 +52,7 @@ func ClockSpeedHandler() http.HandlerFunc {
 			return
 		}
 
-		clock.SetSpeed(bpm, mult)
+		manager.SetClockSpeed(bpm, mult)
 
 		writeResponse(w, 204, nil)
 	}
@@ -70,9 +70,9 @@ func ClockSubscriptionHandler(action model.ClockAction) http.HandlerFunc {
 
 		switch action {
 		case model.SubscribeClockAction:
-			clock.SubscribeEffect(id, model.EffectType(effectType))
+			manager.ClockSubscribeEffect(id, model.EffectType(effectType))
 		case model.UnsubscribeClockAction:
-			clock.UnsubscribeEffect(id, model.EffectType(effectType))
+			manager.ClockUnsubscribeEffect(id, model.EffectType(effectType))
 		default:
 			err := sferror.New(sferror.ClockInvalidAction, "invlid clock action: "+effectType, nil)
 			writeResponse(w, 400, sferror.GetErrorResponse(err))

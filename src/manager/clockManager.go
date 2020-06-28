@@ -1,13 +1,11 @@
-package clock
+package manager
 
 import (
 	"sync"
 	"time"
 
-	"github.com/eynorey/solarflare/src/utils"
-
-	"github.com/eynorey/solarflare/src/manager"
 	"github.com/eynorey/solarflare/src/model"
+	"github.com/eynorey/solarflare/src/utils"
 )
 
 var tickTock *clock
@@ -28,8 +26,8 @@ type clock struct {
 	potionEffects    map[string]model.PotionEffectPreset
 }
 
-// Start starts a new clock with the specified millisecond interval
-func Start(bpm int, multiplier float64) {
+// StartClock starts a new clock with the specified millisecond interval
+func StartClock(bpm int, multiplier float64) {
 	tickTock = &clock{
 		action: model.StartEffectAction,
 		stop:   false,
@@ -40,18 +38,18 @@ func Start(bpm int, multiplier float64) {
 		potionEffects:    make(map[string]model.PotionEffectPreset),
 	}
 
-	SetSpeed(bpm, multiplier)
+	SetClockSpeed(bpm, multiplier)
 
 	go tickTock.run()
 }
 
-// Stop stops the clock
-func Stop() {
+// StopClock stops the clock
+func StopClock() {
 	tickTock.stop = true
 }
 
-// Restart stops the running clock and starts a new one
-func Restart() {
+// RestartClock stops the running clock and starts a new one
+func RestartClock() {
 	// create a new clock
 	newClock := *tickTock
 	newClock.action = model.StartEffectAction
@@ -69,8 +67,8 @@ func Restart() {
 	tickTock = &newClock
 }
 
-// SetSpeed sets a new speed for the clock
-func SetSpeed(bpm int, multiplier float64) {
+// SetClockSpeed sets a new speed for the clock
+func SetClockSpeed(bpm int, multiplier float64) {
 	tickTock.bpm = bpm
 	tickTock.multiplier = multiplier
 
@@ -78,13 +76,13 @@ func SetSpeed(bpm int, multiplier float64) {
 	tickTock.interval = time.Duration(millis * 1000000)
 }
 
-// GetSpeed gets the current clock speed
-func GetSpeed() (bpm int, multiplier float64) {
+// GetClockSpeed gets the current clock speed
+func GetClockSpeed() (bpm int, multiplier float64) {
 	return tickTock.bpm, tickTock.multiplier
 }
 
-// SubscribeEffect registers an effect to the clock
-func SubscribeEffect(id string, effectType model.EffectType) error {
+// ClockSubscribeEffect registers an effect to the clock
+func ClockSubscribeEffect(id string, effectType model.EffectType) error {
 	p, err := utils.FindPreset(id, effectType)
 	if err != nil {
 		return err
@@ -109,8 +107,8 @@ func SubscribeEffect(id string, effectType model.EffectType) error {
 	return nil
 }
 
-// UnsubscribeEffect unsubscribes an effect from the clock
-func UnsubscribeEffect(id string, effectType model.EffectType) {
+// ClockUnsubscribeEffect unsubscribes an effect from the clock
+func ClockUnsubscribeEffect(id string, effectType model.EffectType) {
 	// Wait until the effects are stopped
 	if tickTock.action == model.StopEffectAction {
 		time.Sleep(tickTock.interval)
@@ -136,8 +134,8 @@ func UnsubscribeEffect(id string, effectType model.EffectType) {
 	}
 }
 
-// WaitForNextStart waits for the next "start" run on the clock
-func WaitForNextStart() {
+// ClockWaitForNextStart waits for the next "start" run on the clock
+func ClockWaitForNextStart() {
 	wg.Add(1)
 	tickTock.sync = true
 	wg.Wait()
@@ -166,16 +164,16 @@ func (c *clock) run() {
 
 func (c *clock) tick() {
 	for _, e := range c.particleEffects {
-		go manager.RunParticleEffect(e, c.action)
+		go RunParticleEffect(e, c.action)
 	}
 	for _, e := range c.dragonEffects {
-		go manager.RunDragonEffect(e, c.action)
+		go RunDragonEffect(e, c.action)
 	}
 	for _, e := range c.timeshiftEffects {
-		go manager.RunTimeshiftEffect(e, c.action)
+		go RunTimeshiftEffect(e, c.action)
 	}
 	for _, e := range c.potionEffects {
-		go manager.RunPotionEffect(e, c.action)
+		go RunPotionEffect(e, c.action)
 	}
 
 	c.action = model.StopEffectAction
@@ -183,16 +181,16 @@ func (c *clock) tick() {
 
 func (c *clock) tock() {
 	for _, e := range c.particleEffects {
-		go manager.StopEffect(e.ID)
+		go StopEffect(e.ID)
 	}
 	for _, e := range c.dragonEffects {
-		go manager.StopEffect(e.ID)
+		go StopEffect(e.ID)
 	}
 	for _, e := range c.timeshiftEffects {
-		go manager.StopEffect(e.ID)
+		go StopEffect(e.ID)
 	}
 	for _, e := range c.potionEffects {
-		go manager.StopEffect(e.ID)
+		go StopEffect(e.ID)
 	}
 
 	c.action = model.StartEffectAction

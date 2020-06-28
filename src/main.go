@@ -8,8 +8,8 @@ import (
 
 	"github.com/eynorey/solarflare/src/client"
 	"github.com/eynorey/solarflare/src/config"
+	"github.com/eynorey/solarflare/src/manager"
 	"github.com/eynorey/solarflare/src/model"
-	"github.com/eynorey/solarflare/src/utils/clock"
 )
 
 // loads data from the database into the config
@@ -22,15 +22,15 @@ func load() {
 	cfg.TimeshiftEffectPresets = client.GetTimeshiftEffectPresets()
 	cfg.PotionEffectPresets = client.GetPotionEffectPresets()
 	cfg.Servers = []model.Server{
-		{
-			Address: "http://172.31.41.5:8001", //hospital private
-		},
 		// {
-		// 	Address: "http://3.133.229.78:8001", //hospital public
+		// 	Address: "http://172.31.41.5:8001", //hospital private
 		// },
+		{
+			Address: "http://3.133.229.78:8001", //hospital public
+		},
 	}
 
-	clock.Start(128, 1)
+	manager.StartClock(128, 1)
 }
 
 // writes the response header and a response body if supplied
