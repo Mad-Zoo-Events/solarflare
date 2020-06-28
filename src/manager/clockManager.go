@@ -1,7 +1,6 @@
 package manager
 
 import (
-	"sync"
 	"time"
 
 	"github.com/eynorey/solarflare/src/model"
@@ -11,7 +10,7 @@ import (
 const millisPerSecond = 60000
 
 var tickTock *clock
-var wg sync.WaitGroup
+var clk *time.Ticker
 
 type clock struct {
 	interval   time.Duration
@@ -20,7 +19,7 @@ type clock struct {
 
 	nextAction model.EffectAction
 
-	stop      bool
+	notify    chan bool
 	syncStart bool
 	syncStop  bool
 
@@ -38,36 +37,28 @@ func init() {
 		dragonEffects:    make(map[string]model.DragonEffectPreset),
 		timeshiftEffects: make(map[string]model.TimeshiftEffectPreset),
 		potionEffects:    make(map[string]model.PotionEffectPreset),
+
+		notify: make(chan bool),
 	}
 
-	SetClockSpeed(128, 1)
+	setSpeed(128, 1)
+
+	clk = time.NewTicker(tickTock.interval)
 
 	go tickTock.run()
 }
 
 // RestartClock stops the running clock and starts a new one
 func RestartClock() {
-	// create a new clock
-	newClock := *tickTock
-	newClock.nextAction = model.StartEffectAction
-
-	// stop the old one
-	tickTock.stop = true
-
-	// start the new one
-	go newClock.run()
-
-	// and set the global clock to the new one
-	tickTock = &newClock
+	clk.Stop()
+	clk = time.NewTicker(tickTock.interval)
+	go tickTock.run()
 }
 
 // SetClockSpeed sets a new speed for the clock
 func SetClockSpeed(bpm int, multiplier float64) {
-	tickTock.bpm = bpm
-	tickTock.multiplier = multiplier
-
-	millis := millisPerSecond / float64(bpm) * multiplier
-	tickTock.interval = time.Duration(millis) * time.Millisecond
+	setSpeed(bpm, multiplier)
+	RestartClock()
 }
 
 // GetClockSpeed gets the current clock speed
@@ -125,38 +116,42 @@ func UnsubscribeEffectFromClock(id string, effectType model.EffectType) {
 // ClockSync returns after waiting for the next "start" run on the clock
 func ClockSync() {
 	waitForStart()
-	return
+}
+
+func setSpeed(bpm int, multiplier float64) {
+	tickTock.bpm = bpm
+	tickTock.multiplier = multiplier
+
+	millis := millisPerSecond / float64(bpm) * multiplier
+	tickTock.interval = time.Duration(millis) * time.Millisecond
 }
 
 func waitForStart() {
-	wg.Add(1)
 	tickTock.syncStart = true
-	wg.Wait()
+	<-tickTock.notify
 	tickTock.syncStart = false
-	return
 }
 
 func waitForStop() {
-	wg.Add(1)
 	tickTock.syncStop = true
-	wg.Wait()
+	<-tickTock.notify
 	tickTock.syncStop = false
-	return
 }
 
 func (c *clock) run() {
-	for {
-		if c.stop {
-			return
-		}
-
-		if c.nextAction == model.StartEffectAction {
+	for range clk.C {
+		switch c.nextAction {
+		case model.StartEffectAction:
+			if c.syncStart {
+				c.notify <- true
+			}
 			go c.tick()
-		} else {
+		case model.StopEffectAction:
+			if c.syncStop {
+				c.notify <- true
+			}
 			go c.tock()
 		}
-
-		time.Sleep(c.interval)
 	}
 }
 
@@ -174,9 +169,6 @@ func (c *clock) tick() {
 		go RunPotionEffect(e, c.nextAction)
 	}
 
-	if c.syncStart {
-		wg.Done()
-	}
 	c.nextAction = model.StopEffectAction
 }
 
@@ -194,8 +186,5 @@ func (c *clock) tock() {
 		go StopEffect(e.ID)
 	}
 
-	if c.syncStop {
-		wg.Done()
-	}
 	c.nextAction = model.StartEffectAction
 }
