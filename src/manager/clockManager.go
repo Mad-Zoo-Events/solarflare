@@ -8,6 +8,8 @@ import (
 	"github.com/eynorey/solarflare/src/utils"
 )
 
+const millisPerSecond = 60000
+
 var tickTock *clock
 var wg sync.WaitGroup
 
@@ -63,7 +65,9 @@ func RestartClock() {
 func SetClockSpeed(bpm int, multiplier float64) {
 	tickTock.bpm = bpm
 	tickTock.multiplier = multiplier
-	tickTock.interval = time.Minute / time.Duration(bpm) * time.Duration(multiplier)
+
+	millis := millisPerSecond / float64(bpm) * multiplier
+	tickTock.interval = time.Duration(millis) * time.Millisecond
 }
 
 // GetClockSpeed gets the current clock speed
