@@ -148,14 +148,8 @@ func (c *clock) run() {
 
 		if c.nextAction == model.StartEffectAction {
 			go c.tick()
-			if c.syncStart {
-				wg.Done()
-			}
 		} else {
 			go c.tock()
-			if c.syncStop {
-				wg.Done()
-			}
 		}
 
 		time.Sleep(c.interval)
@@ -176,6 +170,9 @@ func (c *clock) tick() {
 		go RunPotionEffect(e, c.nextAction)
 	}
 
+	if c.syncStart {
+		wg.Done()
+	}
 	c.nextAction = model.StopEffectAction
 }
 
@@ -193,5 +190,8 @@ func (c *clock) tock() {
 		go StopEffect(e.ID)
 	}
 
+	if c.syncStop {
+		wg.Done()
+	}
 	c.nextAction = model.StartEffectAction
 }
