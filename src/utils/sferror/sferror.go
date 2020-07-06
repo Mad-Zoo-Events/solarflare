@@ -47,6 +47,11 @@ var (
 	// ClockInvalidAction | invalid action for the clock
 	ClockInvalidAction = ErrorType{"ClockInvalidAction", 41}
 
+	// SocketOpen | error opening a new websocket
+	SocketOpen = ErrorType{"SocketOpen", 50}
+	// SocketSendUpdate | error when sending a UI update through a websocket
+	SocketSendUpdate = ErrorType{"SocketSendUpdate", 51}
+
 	// Internal | unknown internal error
 	Internal = ErrorType{"Internal", 90}
 	// Encoding | encoding error
