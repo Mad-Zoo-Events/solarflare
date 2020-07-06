@@ -26,7 +26,12 @@ func RunParticleEffect(preset model.ParticleEffectPreset, action model.EffectAct
 
 	endpoint := fmt.Sprintf("%s/%s/%s", particleEffectEndpoint, preset.ID, string(action))
 
-	return client.ExecuteEffect(endpoint, body)
+	err = client.ExecuteEffect(endpoint, body)
+	if err == nil {
+		sendUpdate(preset.ID, action)
+	}
+
+	return err
 }
 
 // RunDragonEffect compiles a dragon effect request and executes it on all servers
@@ -38,7 +43,12 @@ func RunDragonEffect(preset model.DragonEffectPreset, action model.EffectAction)
 
 	endpoint := fmt.Sprintf("%s/%s/%s", dragonEffectEndpoint, preset.ID, string(action))
 
-	return client.ExecuteEffect(endpoint, body)
+	err = client.ExecuteEffect(endpoint, body)
+	if err == nil {
+		sendUpdate(preset.ID, action)
+	}
+
+	return err
 }
 
 // RunTimeshiftEffect compiles a timeshift effect request and executes it on all servers
@@ -50,7 +60,12 @@ func RunTimeshiftEffect(preset model.TimeshiftEffectPreset, action model.EffectA
 
 	endpoint := fmt.Sprintf("%s/%s/%s", timeshiftEffectEndpoint, preset.ID, string(action))
 
-	return client.ExecuteEffect(endpoint, body)
+	err = client.ExecuteEffect(endpoint, body)
+	if err == nil {
+		sendUpdate(preset.ID, action)
+	}
+
+	return err
 }
 
 // RunPotionEffect compiles a potion effect request and executes it on all servers
@@ -62,11 +77,34 @@ func RunPotionEffect(preset model.PotionEffectPreset, action model.EffectAction)
 
 	endpoint := fmt.Sprintf("%s/%s/%s", potionEffectEndpoint, preset.ID, string(action))
 
-	return client.ExecuteEffect(endpoint, body)
+	err = client.ExecuteEffect(endpoint, body)
+	if err == nil {
+		sendUpdate(preset.ID, action)
+	}
+
+	return err
 }
 
 // StopEffect stops an effect by ID
 func StopEffect(id string) error {
 	endpoint := fmt.Sprintf("%s/%s/stop", effectsEndpoint, id)
-	return client.ExecuteEffect(endpoint, nil)
+
+	err := client.ExecuteEffect(endpoint, nil)
+	if err == nil {
+		sendUpdate(id, model.StopEffectAction)
+	}
+
+	return err
+}
+
+func sendUpdate(id string, action model.EffectAction) {
+	update := model.UIUpdate{
+		UpdateType: model.EffectUpdateType,
+		EffectUpdate: &model.EffectUpdate{
+			ID:     id,
+			Action: action,
+		},
+	}
+
+	SendUIUpdate(update)
 }

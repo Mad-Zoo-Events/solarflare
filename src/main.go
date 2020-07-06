@@ -21,12 +21,12 @@ func load() {
 	cfg.TimeshiftEffectPresets = client.GetTimeshiftEffectPresets()
 	cfg.PotionEffectPresets = client.GetPotionEffectPresets()
 	cfg.Servers = []model.Server{
-		{
-			Address: "http://172.31.41.5:8001", //hospital private
-		},
 		// {
-		// 	Address: "http://3.133.229.78:8001", //hospital public
+		// 	Address: "http://172.31.41.5:8001", //hospital private
 		// },
+		{
+			Address: "http://3.133.229.78:8001", //hospital public
+		},
 	}
 }
 
@@ -81,6 +81,9 @@ func main() {
 
 	router.Handle("/controlpanel/presets/{effectType}/new", CPPresetHandler()).Methods(http.MethodGet)
 	router.Handle("/controlpanel/presets/{effectType}/modify/{id}", CPPresetHandler()).Methods(http.MethodGet)
+
+	// websocket
+	router.Handle("/socket", SocketHandler())
 
 	log.Print("Starting server listening on port 5000")
 	http.ListenAndServe(":5000", router)
