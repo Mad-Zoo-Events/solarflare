@@ -27,9 +27,8 @@ func RunParticleEffect(preset model.ParticleEffectPreset, action model.EffectAct
 	endpoint := fmt.Sprintf("%s/%s/%s", particleEffectEndpoint, preset.ID, string(action))
 
 	err = client.ExecuteEffect(endpoint, body)
-	if err == nil {
-		sendUpdate(preset.ID, action)
-	}
+
+	sendUpdate(preset.ID, preset.DisplayName, action, err)
 
 	return err
 }
@@ -44,9 +43,8 @@ func RunDragonEffect(preset model.DragonEffectPreset, action model.EffectAction)
 	endpoint := fmt.Sprintf("%s/%s/%s", dragonEffectEndpoint, preset.ID, string(action))
 
 	err = client.ExecuteEffect(endpoint, body)
-	if err == nil {
-		sendUpdate(preset.ID, action)
-	}
+
+	sendUpdate(preset.ID, preset.DisplayName, action, err)
 
 	return err
 }
@@ -61,9 +59,8 @@ func RunTimeshiftEffect(preset model.TimeshiftEffectPreset, action model.EffectA
 	endpoint := fmt.Sprintf("%s/%s/%s", timeshiftEffectEndpoint, preset.ID, string(action))
 
 	err = client.ExecuteEffect(endpoint, body)
-	if err == nil {
-		sendUpdate(preset.ID, action)
-	}
+
+	sendUpdate(preset.ID, preset.DisplayName, action, err)
 
 	return err
 }
@@ -78,9 +75,8 @@ func RunPotionEffect(preset model.PotionEffectPreset, action model.EffectAction)
 	endpoint := fmt.Sprintf("%s/%s/%s", potionEffectEndpoint, preset.ID, string(action))
 
 	err = client.ExecuteEffect(endpoint, body)
-	if err == nil {
-		sendUpdate(preset.ID, action)
-	}
+
+	sendUpdate(preset.ID, preset.DisplayName, action, err)
 
 	return err
 }
@@ -90,20 +86,24 @@ func StopEffect(id string) error {
 	endpoint := fmt.Sprintf("%s/%s/stop", effectsEndpoint, id)
 
 	err := client.ExecuteEffect(endpoint, nil)
-	if err == nil {
-		sendUpdate(id, model.StopEffectAction)
-	}
+
+	sendUpdate(id, "all effects", model.StopEffectAction, err)
 
 	return err
 }
 
-func sendUpdate(id string, action model.EffectAction) {
+func sendUpdate(id, dispalyName string, action model.EffectAction, err error) {
 	update := model.UIUpdate{
 		UpdateType: model.EffectUpdateType,
 		EffectUpdate: &model.EffectUpdate{
-			ID:     id,
-			Action: action,
+			ID:          id,
+			DisplayName: dispalyName,
+			Action:      action,
 		},
+	}
+
+	if err != nil {
+		update.EffectUpdate.ErrorMessage = err.Error()
 	}
 
 	SendUIUpdate(update)
