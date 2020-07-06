@@ -87,7 +87,7 @@ func StopEffect(id string) error {
 
 	err := client.ExecuteEffect(endpoint, nil)
 
-	sendUpdate(id, "all effects", model.StopEffectAction, err)
+	sendUpdate(id, "", model.StopEffectAction, err)
 
 	return err
 }
