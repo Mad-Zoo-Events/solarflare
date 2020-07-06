@@ -14,6 +14,9 @@ type UIUpdate struct {
 
 // EffectUpdate is the model used to send updates on effect actions to the UI
 type EffectUpdate struct {
-	ID     string       `json:"id"`
-	Action EffectAction `json:"action"`
+	ID          string       `json:"id"`
+	DisplayName string       `json:"dispalyName"`
+	Action      EffectAction `json:"action"`
+
+	ErrorMessage string `json:"errorMessage"`
 }
