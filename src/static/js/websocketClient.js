@@ -19,11 +19,14 @@ handleMessage = (data) => {
 
     switch (updateType) {
         case "effect":
-            const {id, action} = data.effectUpdate;
-            alert(action, id);
-            break;
-    
-        default:
+            const {id, displayName, action, errorMessage} = data.effectUpdate;
+
+            addToLog(action, displayName, errorMessage);
+            
+            if (!errorMessage) {
+                counter(id, action);
+            }
+
             break;
     }
 }
