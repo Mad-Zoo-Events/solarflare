@@ -48,5 +48,8 @@ github.com/google/uuid
 # github.com/gorilla/mux v1.7.4
 ## explicit
 github.com/gorilla/mux
+# github.com/gorilla/websocket v1.4.2
+## explicit
+github.com/gorilla/websocket
 # github.com/jmespath/go-jmespath v0.3.0
 github.com/jmespath/go-jmespath
