@@ -16,13 +16,7 @@ doEffect = async (effectType, id, displayName, action) => {
     const request = new XMLHttpRequest();
     request.open("POST", `${EFFECTS_ENDPOINT}/${effectType}/${id}/${action}`);
     request.addEventListener('load', () => {
-        if (request.status >= 200 && request.status < 400) {
-            addToLog(action, displayName);
-            counter(id, action);
-            updateResponseTime(Date.now() - startTime);
-        } else {
-            addToLog(action, displayName, request.responseText);
-        }
+        updateResponseTime(Date.now() - startTime);
     });
 
     startTime = Date.now();
