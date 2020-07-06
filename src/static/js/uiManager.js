@@ -17,6 +17,7 @@ init = () => {
     doClockSync(restartUIClock);
     setInterval(doStatusUpdate, STATUS_UPDATE_INTERVAL);
     setInterval(() => doClockSync(restartUIClock), CLOCK_SYNC_INTERVAL);
+    openWebsocket();
 };
 
 addToLog = (action, displayName, errMsg) => {
