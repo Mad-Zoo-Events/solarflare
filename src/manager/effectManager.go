@@ -28,7 +28,7 @@ func RunParticleEffect(preset model.ParticleEffectPreset, action model.EffectAct
 
 	err = client.ExecuteEffect(endpoint, body)
 
-	sendUpdate(preset.ID, preset.DisplayName, action, err)
+	sendEffectUpdate(preset.ID, preset.DisplayName, action, err)
 
 	return err
 }
@@ -44,7 +44,7 @@ func RunDragonEffect(preset model.DragonEffectPreset, action model.EffectAction)
 
 	err = client.ExecuteEffect(endpoint, body)
 
-	sendUpdate(preset.ID, preset.DisplayName, action, err)
+	sendEffectUpdate(preset.ID, preset.DisplayName, action, err)
 
 	return err
 }
@@ -60,7 +60,7 @@ func RunTimeshiftEffect(preset model.TimeshiftEffectPreset, action model.EffectA
 
 	err = client.ExecuteEffect(endpoint, body)
 
-	sendUpdate(preset.ID, preset.DisplayName, action, err)
+	sendEffectUpdate(preset.ID, preset.DisplayName, action, err)
 
 	return err
 }
@@ -76,7 +76,7 @@ func RunPotionEffect(preset model.PotionEffectPreset, action model.EffectAction)
 
 	err = client.ExecuteEffect(endpoint, body)
 
-	sendUpdate(preset.ID, preset.DisplayName, action, err)
+	sendEffectUpdate(preset.ID, preset.DisplayName, action, err)
 
 	return err
 }
@@ -87,12 +87,12 @@ func StopEffect(id string) error {
 
 	err := client.ExecuteEffect(endpoint, nil)
 
-	sendUpdate(id, "", model.StopEffectAction, err)
+	sendEffectUpdate(id, "", model.StopEffectAction, err)
 
 	return err
 }
 
-func sendUpdate(id, dispalyName string, action model.EffectAction, err error) {
+func sendEffectUpdate(id, dispalyName string, action model.EffectAction, err error) {
 	update := model.UIUpdate{
 		UpdateType: model.EffectUpdateType,
 		EffectUpdate: &model.EffectUpdate{

@@ -273,15 +273,8 @@ restartClock = () => doRestartClock(restartUIClock);
 
 attachClock = (effectType, id) => {
     if (activeClocks.has(id)) {
-        activeClocks.delete(id);
-        document.getElementById("clock-" + id).classList.remove("clock-on");
-        document.getElementById("clock-" + id).classList.remove("clock-attached");
-
         doClockSubscription(effectType, id, "unsubscribe");
     } else {
-        activeClocks.add(id);
-        document.getElementById("clock-" + id).classList.add("clock-attached");
-
         doClockSubscription(effectType, id, "subscribe");
     }
 };

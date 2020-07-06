@@ -15,18 +15,28 @@ openWebsocket = () => {
 }
 
 handleMessage = (data) => {
-    const {updateType} = data;
+    const { effectUpdate, clockUpdate } = data;
 
-    switch (updateType) {
-        case "effect":
-            const {id, displayName, action, errorMessage} = data.effectUpdate;
+    if (effectUpdate) {
+        const { id, displayName, action, errorMessage } = effectUpdate;
 
-            addToLog(action, displayName, errorMessage);
-            
-            if (!errorMessage) {
-                counter(id, action);
-            }
+        addToLog(action, displayName, errorMessage);
 
-            break;
+        if (!errorMessage) {
+            counter(id, action);
+        }
+    }
+
+    if (clockUpdate) {
+        const { id, action } = clockUpdate;
+
+        if (!activeClocks.has(id)) {
+            activeClocks.add(id);
+            document.getElementById("clock-" + id).classList.add("clock-attached");
+        } else {
+            activeClocks.delete(id);
+            document.getElementById("clock-" + id).classList.remove("clock-on");
+            document.getElementById("clock-" + id).classList.remove("clock-attached");
+        }
     }
 }

@@ -86,6 +86,8 @@ func SubscribeEffectToClock(id string, effectType model.EffectType) error {
 		tickTock.potionEffects[id] = p.(model.PotionEffectPreset)
 	}
 
+	sendClockUpdate(id, model.SubscribeClockAction)
+
 	return nil
 }
 
@@ -111,6 +113,8 @@ func UnsubscribeEffectFromClock(id string, effectType model.EffectType) {
 	case model.PotionEffectType:
 		delete(tickTock.potionEffects, id)
 	}
+
+	sendClockUpdate(id, model.UnsubscribeClockAction)
 }
 
 // ClockSync returns after waiting for the next "start" run on the clock
@@ -187,4 +191,16 @@ func (c *clock) tock() {
 	}
 
 	c.nextAction = model.StartEffectAction
+}
+
+func sendClockUpdate(id string, action model.ClockAction) {
+	update := model.UIUpdate{
+		UpdateType: model.EffectUpdateType,
+		ClockUpdate: &model.ClockUpdate{
+			ID:     id,
+			Action: action,
+		},
+	}
+
+	SendUIUpdate(update)
 }
