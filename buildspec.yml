@@ -24,8 +24,10 @@ phases:
       - cd $CODEBUILD_SRC_DIR/static/js
       - terser --compress --mangle -- httpClient.js > httpClient_min.js
       - terser --compress --mangle -- uiManager.js > uiManager_min.js
+      - terser --compress --mangle -- websocketClient.js > websocketClient_min.js
       - mv httpClient_min.js httpClient.js
       - mv uiManager_min.js uiManager.js
+      - mv websocketClient_min.js websocketClient.js
       - cd ../css
       - cleancss -o main_min.css main.css
       - mv main_min.css main.css
