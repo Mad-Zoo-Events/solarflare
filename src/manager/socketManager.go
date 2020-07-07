@@ -1,6 +1,8 @@
 package manager
 
 import (
+	"sync"
+
 	"github.com/google/uuid"
 	"github.com/gorilla/websocket"
 
@@ -8,17 +10,29 @@ import (
 	"github.com/eynorey/solarflare/src/utils/sferror"
 )
 
-var conns = make(map[uuid.UUID]*websocket.Conn, 0)
+type connection struct {
+	conn *websocket.Conn
+	mu   sync.Mutex
+}
+
+var conns = make(map[uuid.UUID]*connection, 0)
 
 // AddSocket adds a new socket to the pool
 func AddSocket(conn *websocket.Conn) {
-	conns[uuid.New()] = conn
+	conns[uuid.New()] = &connection{
+		conn: conn,
+	}
 }
 
 // SendUIUpdate sends an update to the UI through each web socket
 func SendUIUpdate(update model.UIUpdate) {
 	for id := range conns {
-		err := conns[id].WriteJSON(update)
+		c := conns[id]
+
+		c.mu.Lock()
+		defer c.mu.Unlock()
+
+		err := c.conn.WriteJSON(update)
 		if err != nil {
 			sferror.New(sferror.SocketSendUpdate, "Error sending an update through the web socket - Closing", err)
 			closeSocket(id)
@@ -27,6 +41,6 @@ func SendUIUpdate(update model.UIUpdate) {
 }
 
 func closeSocket(id uuid.UUID) {
-	conns[id].Close()
+	conns[id].conn.Close()
 	delete(conns, id)
 }
