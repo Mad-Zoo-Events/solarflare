@@ -6,9 +6,9 @@
     {{if .UIKeyBinding}}<span>► {{.UIKeyBinding}} ◄</span>{{end}}
 
     <button type="button" class="start key-binding-{{.KeyBinding}}" id="start-{{.ID}}"
-        onclick='doEffect("timeshift", "{{.ID}}", "{{.DisplayName}}", "start")'>start</button>
+        onclick='doEffect("timeshift", "{{.ID}}", "start")'>start</button>
     <button type="button" class="stop key-binding-{{.KeyBinding}}" id="stop-{{.ID}}"
-        onclick='doEffect("timeshift", "{{.ID}}", "{{.DisplayName}}", "stop")'>stop</button>
+        onclick='doEffect("timeshift", "{{.ID}}", "stop")'>stop</button>
     <button type="button" class="clock" id="clock-{{.ID}}" onclick='attachClock("timeshift", "{{.ID}}")'>clock</button>
 </div>
 

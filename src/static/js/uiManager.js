@@ -284,4 +284,3 @@ detachClockAll = () => activeClocks.forEach((id) => {
     document.getElementById("clock-" + id).classList.remove("clock-on");
     document.getElementById("clock-" + id).classList.remove("clock-attached");
 });
-detachClockAll

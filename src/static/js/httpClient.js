@@ -12,7 +12,7 @@ const CP_PRESETS_ENDPOINT = `${CP_ENDPOINT}/presets`;
 
 var startTime;
 
-doEffect = async (effectType, id, displayName, action) => {
+doEffect = async (effectType, id, action) => {
     const request = new XMLHttpRequest();
     request.open("POST", `${EFFECTS_ENDPOINT}/${effectType}/${id}/${action}`);
     request.addEventListener('load', () => {
