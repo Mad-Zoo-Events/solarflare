@@ -20,15 +20,25 @@ handleMessage = (data) => {
     if (effectUpdate) {
         const { id, displayName, action, errorMessage } = effectUpdate;
 
-        addToLog(action, displayName, errorMessage);
+        if (id === "all") {
+            detachClockAll();
+            document.getElementById("stop-all-button").disabled = false;
+            document.getElementById("stop-all-button").classList.remove("disabled");
+
+            addToLog("=>", "STOP EVERYTHING");
+        } else {
+            addToLog(action, displayName, errorMessage);
+        }
 
         if (!errorMessage) {
             counter(id, action);
         }
+
+        return;
     }
 
     if (clockUpdate) {
-        const { id, action } = clockUpdate;
+        const { id } = clockUpdate;
 
         if (!activeClocks.has(id)) {
             activeClocks.add(id);
@@ -38,5 +48,7 @@ handleMessage = (data) => {
             document.getElementById("clock-" + id).classList.remove("clock-on");
             document.getElementById("clock-" + id).classList.remove("clock-attached");
         }
+
+        return;
     }
 }

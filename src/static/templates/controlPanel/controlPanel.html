@@ -35,8 +35,10 @@
         <div id="clock-holder">
             <h3>Clock</h3>
             <div id="clock-indicator"></div>
-            <input id="clock-bpm-input" type="number" min="40" max="200" step="1" oninput='updateClockBPM("clock-bpm-range", this.value);' onchange='changeClockSpeed();' />
-            <input id="clock-bpm-range" type="range" min="40" max="200" step="1" oninput='updateClockBPM("clock-bpm-input", this.value);' onchange='changeClockSpeed();' />
+            <input id="clock-bpm-input" type="number" min="40" max="200" step="1"
+                oninput='updateClockBPM("clock-bpm-range", this.value);' onchange='changeClockSpeed();' />
+            <input id="clock-bpm-range" type="range" min="40" max="200" step="1"
+                oninput='updateClockBPM("clock-bpm-input", this.value);' onchange='changeClockSpeed();' />
             <select id="clock-th-input" onchange='changeClockSpeed();'>
                 <option value="32">8/1</option>
                 <option value="16">4/1</option>
@@ -89,8 +91,7 @@
             </table>
         </div>
         <div class="master-controls">
-            <button class="stop" type="button"
-                onclick='doStopAll();'>stop&nbsp;all</button>
+            <button id="stop-all-button" class="stop" type="button" onclick='doStopAll();'>stop&nbsp;all</button>
             <button class="darker-cyan" type="button" onclick='navigate(CP_PRESETS_ENDPOINT);'>Manage
                 Presets</button>
         </div>

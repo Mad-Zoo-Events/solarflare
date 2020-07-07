@@ -161,16 +161,16 @@ func (c *clock) run() {
 
 func (c *clock) tick() {
 	for _, e := range c.particleEffects {
-		go RunParticleEffect(e, c.nextAction)
+		go RunParticleEffect(e, c.nextAction, false)
 	}
 	for _, e := range c.dragonEffects {
-		go RunDragonEffect(e, c.nextAction)
+		go RunDragonEffect(e, c.nextAction, false)
 	}
 	for _, e := range c.timeshiftEffects {
-		go RunTimeshiftEffect(e, c.nextAction)
+		go RunTimeshiftEffect(e, c.nextAction, false)
 	}
 	for _, e := range c.potionEffects {
-		go RunPotionEffect(e, c.nextAction)
+		go RunPotionEffect(e, c.nextAction, false)
 	}
 
 	c.nextAction = model.StopEffectAction
@@ -178,16 +178,16 @@ func (c *clock) tick() {
 
 func (c *clock) tock() {
 	for _, e := range c.particleEffects {
-		go StopEffect(e.ID)
+		go StopEffect(e.ID, false)
 	}
 	for _, e := range c.dragonEffects {
-		go StopEffect(e.ID)
+		go StopEffect(e.ID, false)
 	}
 	for _, e := range c.timeshiftEffects {
-		go StopEffect(e.ID)
+		go StopEffect(e.ID, false)
 	}
 	for _, e := range c.potionEffects {
-		go StopEffect(e.ID)
+		go StopEffect(e.ID, false)
 	}
 
 	c.nextAction = model.StartEffectAction
@@ -195,7 +195,6 @@ func (c *clock) tock() {
 
 func sendClockUpdate(id string, action model.ClockAction) {
 	update := model.UIUpdate{
-		UpdateType: model.EffectUpdateType,
 		ClockUpdate: &model.ClockUpdate{
 			ID:     id,
 			Action: action,
