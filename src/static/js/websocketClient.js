@@ -1,7 +1,7 @@
 var socket;
 
 openWebsocket = () => {
-    socket = new WebSocket("ws://localhost:5000/socket");
+    socket = new WebSocket(`wss://${window.location.host}/socket`);
     socket.onopen = () => {
         document.getElementById("status-connection-status").innerHTML = "Connected";
         document.getElementById("status-connection-status").classList.replace("orange", "green");
