@@ -1,17 +1,7 @@
 package model
 
-// UpdateType describes the type of update sent to the UI
-type UpdateType string
-
-// EffectUpdateType represents an action that was triggered on an effect
-const EffectUpdateType UpdateType = "effect"
-
-// ClockUpdateType represents an attachment to the clock
-const ClockUpdateType UpdateType = "clock"
-
 // UIUpdate is the model used to send updates to the UI
 type UIUpdate struct {
-	UpdateType   UpdateType    `json:"updateType"`
 	EffectUpdate *EffectUpdate `json:"effectUpdate"`
 	ClockUpdate  *ClockUpdate  `json:"clockUpdate"`
 }

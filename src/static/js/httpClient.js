@@ -24,8 +24,9 @@ doEffect = async (effectType, id, action) => {
 };
 
 doStopAll = () => {
-    doClockSubscription("particle", "all", "stop", () => doEffect("particle", "all", "stop all", "stop"));
-    detachClockAll();
+    document.getElementById("stop-all-button").disabled = true;
+    document.getElementById("stop-all-button").classList.add("disabled");
+    doEffect("particle", "all", "stop");
 };
 
 doStatusUpdate = async () => {
@@ -82,11 +83,14 @@ doSetClockSpeed = async (bpm, multiplier) => {
     request.send();
 };
 
-doClockSubscription = async (effectType, id, action) => {
+doClockSubscription = async (effectType, id, action, callback) => {
     const method = action === "subscribe" ? "POST" : "DELETE";
 
     const request = new XMLHttpRequest();
     request.open(method, `${CLOCK_ENDPOINT}/${effectType}/${id}`);
+    if (callback) {
+        request.addEventListener('load', callback);
+    }
 
     request.send();
 };
