@@ -1,15 +1,18 @@
 var socket;
 
-openWebsocket = () => {
+openWebsocket = async () => {
     socket = new WebSocket(`wss://${window.location.host}/socket`);
     socket.onopen = () => {
         document.getElementById("status-connection-status").innerHTML = "Connected";
         document.getElementById("status-connection-status").classList.replace("orange", "green");
     };
     socket.onclose = () => {
-        document.getElementById("status-connection-status").innerHTML = "Disconnected... please reload";
+        openWebsocket();
+    };
+    socket.onerror = () => {
+        document.getElementById("status-connection-status").innerHTML = "Connection lost...";
         document.getElementById("status-connection-status").classList.replace("green", "orange");
-    }
+    };
 
     socket.onmessage = (e) => handleMessage(JSON.parse(e.data));
 }
