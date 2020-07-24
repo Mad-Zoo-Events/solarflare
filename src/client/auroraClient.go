@@ -56,6 +56,7 @@ func executeEffect(url string, body *[]byte, wg *sync.WaitGroup, errCount *int) 
 	defer wg.Done()
 	request, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(*body))
 	request.Header.Add("Idempotency-Key", "oof.")
+	request.Header.Add("Content-Type", "application/json")
 	if err != nil {
 		sferror.New(sferror.Encoding, "Error compiling request to Aurora", err)
 		*errCount++
