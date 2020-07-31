@@ -11,7 +11,10 @@
             "mode": "auto",
             "port": 5000,
             "cwd": "${workspaceFolder}/src",
-            "program": "${workspaceFolder}/src"
+            "program": "${workspaceFolder}/src",
+            "env": {
+                "AWS_PROFILE": "mze"
+            }
         }
     ]
 }

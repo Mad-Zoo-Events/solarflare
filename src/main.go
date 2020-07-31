@@ -24,8 +24,14 @@ func load() {
 		{
 			Address: "http://172.31.41.5:8001", //hospital private
 		},
+		{
+			Address: "http://172.31.31.155:8001", //hospital16 private
+		},
 		// {
 		// 	Address: "http://3.133.229.78:8001", //hospital public
+		// },
+		// {
+		// 	Address: "http://18.218.90.77:8001", //hospital16 public
 		// },
 	}
 }
