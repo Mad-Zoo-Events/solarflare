@@ -21,9 +21,9 @@ func load() {
 	cfg.TimeshiftEffectPresets = client.GetTimeshiftEffectPresets()
 	cfg.PotionEffectPresets = client.GetPotionEffectPresets()
 	cfg.Servers = []model.Server{
-		{
-			Address: "http://172.31.41.5:8001", //hospital private
-		},
+		// {
+		// 	Address: "http://172.31.41.5:8001", //hospital private
+		// },
 		{
 			Address: "http://172.31.31.155:8001", //hospital16 private
 		},
