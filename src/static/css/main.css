@@ -253,6 +253,7 @@ h3 {
 }
 
 .master-controls {
+    text-align : center;
     padding    : 0 1em;
     border-left: 2px dashed var(--gray);
 }

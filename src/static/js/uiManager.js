@@ -167,6 +167,10 @@ handleKeypress = (event) => {
     event = event || window.event;
     var charCode = event.which || event.keyCode;
 
+    if (charCode === 48) { //character '0'
+        document.getElementById(`stop-all-button`).click();
+    }
+
     var buttonsToTrigger;
     if (activeKeys.has(charCode)) {
         buttonsToTrigger = document.getElementsByClassName(`stop key-binding-${charCode}`);
