@@ -264,7 +264,7 @@ clockTap = () => {
     clockTapLast = now;
 
     const millisNew = clockTapMillis.reduce((a, b) => a + b) / clockTapMillis.length;
-    const bpmNew = Math.round(60000 / millisNew * th);
+    const bpmNew = (60000 / millisNew * th).toFixed(1);
 
     clockInterval = millisNew;
     updateClockControls(bpmNew, th);

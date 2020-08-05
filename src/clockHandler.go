@@ -38,7 +38,7 @@ func ClockSpeedHandler() http.HandlerFunc {
 			multStr = vars["multiplier"]
 		)
 
-		bpm, err := strconv.Atoi(bpmStr)
+		bpm, err := strconv.ParseFloat(bpmStr, 64)
 		if err != nil {
 			err = sferror.New(sferror.ClockInvalidBPM, "invlid BPM value: "+bpmStr, nil)
 			writeResponse(w, 400, sferror.GetErrorResponse(err))

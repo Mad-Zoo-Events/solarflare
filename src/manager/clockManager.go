@@ -14,7 +14,7 @@ var clk *time.Ticker
 
 type clock struct {
 	interval   time.Duration
-	bpm        int
+	bpm        float64
 	multiplier float64
 
 	nextAction model.EffectAction
@@ -56,13 +56,13 @@ func RestartClock() {
 }
 
 // SetClockSpeed sets a new speed for the clock
-func SetClockSpeed(bpm int, multiplier float64) {
+func SetClockSpeed(bpm float64, multiplier float64) {
 	setSpeed(bpm, multiplier)
 	RestartClock()
 }
 
 // GetClockSpeed gets the current clock speed
-func GetClockSpeed() (bpm int, multiplier float64) {
+func GetClockSpeed() (bpm float64, multiplier float64) {
 	return tickTock.bpm, tickTock.multiplier
 }
 
@@ -122,7 +122,7 @@ func ClockSync() {
 	waitForStart()
 }
 
-func setSpeed(bpm int, multiplier float64) {
+func setSpeed(bpm float64, multiplier float64) {
 	tickTock.bpm = bpm
 	tickTock.multiplier = multiplier
 
