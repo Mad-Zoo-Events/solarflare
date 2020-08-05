@@ -167,8 +167,14 @@ handleKeypress = (event) => {
     event = event || window.event;
     var charCode = event.which || event.keyCode;
 
-    if (charCode === 48) { //character '0'
+    if (charCode === 48) { // character '0'
         document.getElementById(`stop-all-button`).click();
+        return;
+    }
+
+    if (charCode === 43) { // character '+'
+        document.getElementById(`clock-tap-button`).click();
+        return;
     }
 
     var buttonsToTrigger;
