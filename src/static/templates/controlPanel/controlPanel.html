@@ -50,8 +50,8 @@
                 <option value="0.25">1/16</option>
                 <option value="0.125">1/32</option>
             </select>
-            <button id="clock-tap-button" class="cyan" onclick='clockTap();'>TAP (Ctrl)</button>
-            <button class="cyan" onclick='restartClock();'>Restart</button>
+            <button id="clock-tap-button" class="cyan" onclick='clockTap();'>►&nbsp;+&nbsp;◄<br/>TAP</button>
+            <button id="clock-restart-button" class="cyan" onclick='restartClock();'>►&nbsp;-&nbsp;◄<br/>Restart</button>
         </div>
         <div id="status-window">
             <h3>Status</h3>
@@ -91,8 +91,7 @@
             </table>
         </div>
         <div class="master-controls">
-            <span>► 0 ◄</span>
-            <button id="stop-all-button" class="stop" type="button" onclick='doStopAll();'>stop&nbsp;all</button>
+            <button id="stop-all-button" class="stop" type="button" onclick='doStopAll();'>►&nbsp;0&nbsp;◄<br/>stop&nbsp;all</button>
             <button class="darker-cyan" type="button" onclick='navigate(CP_PRESETS_ENDPOINT);'>Manage
                 Presets</button>
         </div>

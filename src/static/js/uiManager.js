@@ -177,6 +177,11 @@ handleKeypress = (event) => {
         return;
     }
 
+    if (charCode === 45) { // character '-'
+        document.getElementById(`clock-restart-button`).click();
+        return;
+    }
+
     var buttonsToTrigger;
     if (activeKeys.has(charCode)) {
         buttonsToTrigger = document.getElementsByClassName(`stop key-binding-${charCode}`);
