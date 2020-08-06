@@ -30,6 +30,11 @@ func (action EffectAction) IsAllowedOn(effectType EffectType) bool {
 			action == StopEffectAction {
 			return true
 		}
+	case BossbarEffectType:
+		if action == SetBossbarAction ||
+			action == ClearBossbarAction {
+			return true
+		}
 	}
 
 	return false
