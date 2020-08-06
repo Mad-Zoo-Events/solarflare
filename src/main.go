@@ -22,17 +22,11 @@ func load() {
 	cfg.PotionEffectPresets = client.GetPotionEffectPresets()
 	cfg.Servers = []model.Server{
 		// {
-		// 	Address: "http://172.31.41.5:8001", //hospital private
+		// 	Address: "http://172.31.31.155:8001", //hospital private
 		// },
 		{
-			Address: "http://172.31.31.155:8001", //hospital16 private
+			Address: "http://18.218.90.77:8001", //hospital public
 		},
-		// {
-		// 	Address: "http://3.133.229.78:8001", //hospital public
-		// },
-		// {
-		// 	Address: "http://18.218.90.77:8001", //hospital16 public
-		// },
 	}
 }
 
@@ -65,6 +59,7 @@ func main() {
 
 	// effect execution
 	router.Handle("/effects/{effectType}/{id}/{action}", EffectHandler()).Methods(http.MethodPost)
+	router.Handle("/bossbar/{action}", BossbarHandler()).Methods(http.MethodPost)
 
 	// preset management
 	router.Handle("/presets/{effectType}-ui", PresetMutationUIHandler()).Methods(http.MethodPost)

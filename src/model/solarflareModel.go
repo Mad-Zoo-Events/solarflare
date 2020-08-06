@@ -8,6 +8,7 @@ type ControlPanel struct {
 	DragonEffectPresets    []DragonEffectPreset
 	TimeshiftEffectPresets []TimeshiftEffectPreset
 	PotionEffectPresets    []PotionEffectPreset
+	MinecraftColors        []MinecraftColor
 
 	RegisteredServerCount int
 	AppVersion            string
@@ -30,6 +31,8 @@ const (
 	TimeshiftEffectType = EffectType("timeshift")
 	// PotionEffectType represents the potion effect
 	PotionEffectType = EffectType("potion")
+	// BossbarEffectType represents the bossbar effect
+	BossbarEffectType = EffectType("bossbar")
 )
 
 // EffectAction represents the action to be performed on the visual effect (e.g. start, stop, restart...)
@@ -44,6 +47,10 @@ const (
 	RestartEffectAction = EffectAction("restart")
 	// StopEffectAction stops a visual effect
 	StopEffectAction = EffectAction("stop")
+	// SetBossbarAction sets the bossbar text and color
+	SetBossbarAction = EffectAction("set")
+	// ClearBossbarAction removes the bossbar
+	ClearBossbarAction = EffectAction("clear")
 )
 
 // ClockAction represents an action to be performed on the clock
@@ -55,6 +62,20 @@ const (
 	// UnsubscribeClockAction unsubscribes a visual effect from the clock
 	UnsubscribeClockAction = ClockAction("unsubscribe")
 )
+
+// MinecraftColor represents a Minecraft color
+type MinecraftColor string
+
+// MinecraftColors is a list of all supported Minecraft colors
+var MinecraftColors = []MinecraftColor{
+	MinecraftColor("BLUE"),
+	MinecraftColor("GREEN"),
+	MinecraftColor("PINK"),
+	MinecraftColor("PURPLE"),
+	MinecraftColor("RED"),
+	MinecraftColor("WHITE"),
+	MinecraftColor("YELLOW"),
+}
 
 // ================ RESPONSE MODELS ================ //
 

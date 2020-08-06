@@ -42,8 +42,10 @@ func RenderControlPanel(writer http.ResponseWriter) error {
 		DragonEffectPresets:    cfg.DragonEffectPresets,
 		TimeshiftEffectPresets: cfg.TimeshiftEffectPresets,
 		PotionEffectPresets:    cfg.PotionEffectPresets,
+		MinecraftColors:        model.MinecraftColors,
 		RegisteredServerCount:  len(cfg.Servers),
-		AppVersion:             appVersion,
+
+		AppVersion: appVersion,
 	}
 
 	err = template.Execute(writer, data)
