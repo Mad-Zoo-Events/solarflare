@@ -75,9 +75,9 @@ stopCounter = (id) => {
     if (id === "all") {
         for (const key in counters) {
             clearInterval(counters[key]);
-            counters.delete(key);
         }
 
+        counters.clear();
         const buttons = document.getElementsByClassName("start");
         for (let i = 0; i < buttons.length; i++) {
             resetStartButton(buttons[i]);

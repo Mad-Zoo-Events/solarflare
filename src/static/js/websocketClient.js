@@ -26,6 +26,7 @@ handleMessage = (data) => {
 
         if (id === "all") {
             detachClockAll();
+            activeKeys.clear();
             document.getElementById("stop-all-button").disabled = false;
             document.getElementById("stop-all-button").classList.remove("disabled");
 
