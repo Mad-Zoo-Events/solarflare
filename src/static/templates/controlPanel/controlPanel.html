@@ -50,7 +50,7 @@
     <div class="footer">
         <div id="log-window"></div>
         <div id="clock-holder">
-            <h3>Clock</h3>
+            <h3 id="clock-title">Clock</h3>
             <div id="clock-indicator"></div>
             <input id="clock-bpm-input" type="number" min="40" max="200" step="0.1"
                 oninput='updateClockBPM("clock-bpm-range", this.value);' onchange='changeClockSpeed();' />
@@ -68,8 +68,8 @@
                 <option value="0.125">1/32</option>
             </select>
             <button id="clock-tap-button" class="cyan" onclick='clockTap();'>►&nbsp;+&nbsp;◄<br />TAP</button>
-            <button id="clock-restart-button" class="cyan"
-                onclick='restartClock();'>►&nbsp;-&nbsp;◄<br />Restart</button>
+            <!-- <button id="clock-restart-button" class="cyan"
+                onclick='restartClock();'>►&nbsp;-&nbsp;◄<br />Restart</button> -->
         </div>
         <div id="status-window">
             <h3>Status</h3>

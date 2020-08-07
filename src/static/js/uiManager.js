@@ -184,7 +184,7 @@ handleKeypress = (event) => {
     }
 
     if (charCode === 45) { // character '-'
-        document.getElementById(`clock-restart-button`).click();
+        // document.getElementById(`clock-restart-button`).click();
         return;
     }
 
