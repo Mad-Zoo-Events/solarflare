@@ -4,6 +4,22 @@
 {{template "header"}}
 
 <body onload="init()" onkeypress='handleKeypress(event);'>
+    <div class="header">
+        <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+        <span class="bossbar-header">Boss Bar</span>
+        <form id="bossbar-form" method="POST" action="/bossbar/set" target="dummyframe">
+            <input type="text" name="bossbar-text" placeholder="Boss Bar Text">
+            <select name="bossbar-color">
+                {{range $.MinecraftColors}}
+                <option value="{{.}}">{{.}}</option>
+                {{end}}
+            </select>
+            <button class="bossbar-button" type="button"
+                onclick='document.getElementById("bossbar-form").submit();'>Update</button>
+            <button class="bossbar-button" type="button" onclick='doClearBossbar();'>Hide</button>
+        </form>
+    </div>
+    </div>
     <div class="main-controls-holder">
         <div class="controls-holder particle-controls">
             <span class="controls-header cyan">Particle</span>
@@ -50,8 +66,9 @@
                 <option value="0.25">1/16</option>
                 <option value="0.125">1/32</option>
             </select>
-            <button id="clock-tap-button" class="cyan" onclick='clockTap();'>►&nbsp;+&nbsp;◄<br/>TAP</button>
-            <button id="clock-restart-button" class="cyan" onclick='restartClock();'>►&nbsp;-&nbsp;◄<br/>Restart</button>
+            <button id="clock-tap-button" class="cyan" onclick='clockTap();'>►&nbsp;+&nbsp;◄<br />TAP</button>
+            <button id="clock-restart-button" class="cyan"
+                onclick='restartClock();'>►&nbsp;-&nbsp;◄<br />Restart</button>
         </div>
         <div id="status-window">
             <h3>Status</h3>
@@ -91,7 +108,8 @@
             </table>
         </div>
         <div class="master-controls">
-            <button id="stop-all-button" class="stop" type="button" onclick='doStopAll();'>►&nbsp;0&nbsp;◄<br/>stop&nbsp;all</button>
+            <button id="stop-all-button" class="stop" type="button"
+                onclick='doStopAll();'>►&nbsp;0&nbsp;◄<br />stop&nbsp;all</button>
             <button class="darker-cyan" type="button" onclick='navigate(CP_PRESETS_ENDPOINT);'>Manage
                 Presets</button>
         </div>

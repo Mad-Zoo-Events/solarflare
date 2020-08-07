@@ -1,6 +1,7 @@
 const BASE_URL = `${window.location.origin}`;
 const STATUS_ENDPOINT = `${BASE_URL}/status`;
 const EFFECTS_ENDPOINT = `${BASE_URL}/effects`;
+const BOSSBAR_ENDPOINT = `${BASE_URL}/bossbar`;
 const PRESETS_ENDPOINT = `${BASE_URL}/presets`;
 
 const CLOCK_ENDPOINT = `${BASE_URL}/clock`;
@@ -40,6 +41,13 @@ doStatusUpdate = async () => {
             addToLog("[BACKEND]", "Retrieve status update", request.responseText);
         }
     });
+
+    request.send();
+};
+
+doClearBossbar = async () => {
+    const request = new XMLHttpRequest();
+    request.open("POST", `${BOSSBAR_ENDPOINT}/clear`);
 
     request.send();
 };
