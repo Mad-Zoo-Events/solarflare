@@ -2,6 +2,7 @@ var socket;
 
 openWebsocket = async () => {
     socket = new WebSocket(`wss://${window.location.host}/socket`);
+    // socket = new WebSocket(`ws://localhost:5000/socket`);
     socket.onopen = () => {
         document.getElementById("status-connection-status").innerHTML = "Connected";
         document.getElementById("status-connection-status").classList.replace("orange", "green");
@@ -15,7 +16,7 @@ openWebsocket = async () => {
     };
 
     socket.onmessage = (e) => handleMessage(JSON.parse(e.data));
-}
+};
 
 handleMessage = (data) => {
     const { effectUpdate, clockUpdate } = data;
@@ -29,6 +30,10 @@ handleMessage = (data) => {
             document.getElementById("stop-all-button").classList.remove("disabled");
 
             addToLog("=>", "STOP EVERYTHING");
+        } else if (id === "bossbar") {
+            const parts = displayName.split("௵");
+            document.getElementById("bossbar-text").value = parts[0];
+            document.getElementById("bossbar-color").value = parts[1];
         } else {
             addToLog(action, displayName, errorMessage);
         }
@@ -54,4 +59,4 @@ handleMessage = (data) => {
 
         return;
     }
-}
+};
