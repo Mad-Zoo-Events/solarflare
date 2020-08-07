@@ -24,7 +24,7 @@ func SetBossbar(bossbarRequest model.BossbarRequest, sendUpdate bool) error {
 
 	if sendUpdate {
 		// I can do better than this
-		sendEffectUpdate("bossbar", bossbarRequest.Title+"௵"+string(bossbarRequest.Color), "CLEAR", err)
+		sendEffectUpdate("bossbar", bossbarRequest.Title+"௵"+string(bossbarRequest.Color), "SET", err)
 	}
 
 	return err
