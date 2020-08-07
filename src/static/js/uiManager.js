@@ -12,6 +12,8 @@ var clockTapLast;
 var clockTapResetTimeout;
 var clockTapRestartTimeout;
 
+var suppressHotkeys = false;
+
 init = () => {
     doStatusUpdate();
     doClockSync(restartUIClock);
@@ -164,6 +166,10 @@ checkKeyBinding = (source) => {
 };
 
 handleKeypress = (event) => {
+    if (suppressHotkeys) {
+        return;
+    }
+
     event = event || window.event;
     var charCode = event.which || event.keyCode;
 

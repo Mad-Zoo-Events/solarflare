@@ -8,8 +8,9 @@
         <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
         <span class="bossbar-header">Boss Bar</span>
         <form id="bossbar-form" method="POST" action="/bossbar/set" target="dummyframe">
-            <input type="text" name="bossbar-text" placeholder="Boss Bar Text">
-            <select name="bossbar-color">
+            <input id="bossbar-text" type="text" name="bossbar-text" placeholder="Boss Bar Text"
+                onfocus='suppressHotkeys=true' onblur='suppressHotkeys=false'>
+            <select id="bossbar-color" name="bossbar-color">
                 {{range $.MinecraftColors}}
                 <option value="{{.}}">{{.}}</option>
                 {{end}}
