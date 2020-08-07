@@ -15,7 +15,7 @@ const (
 
 // SetBossbar compiles a bossbar update request and executes it on all servers
 func SetBossbar(bossbarRequest model.BossbarRequest, sendUpdate bool) error {
-	body, err := json.Marshal(bossbarRequest)
+	body, err := json.Marshal([]model.BossbarRequest{bossbarRequest})
 	if err != nil {
 		return sferror.New(sferror.Encoding, "Failed to marshal request", err)
 	}
@@ -32,7 +32,7 @@ func SetBossbar(bossbarRequest model.BossbarRequest, sendUpdate bool) error {
 
 // ClearBossbar compiles a bossbar clear request and executes it on all servers
 func ClearBossbar(sendUpdate bool) error {
-	err := client.ExecuteEffect(clearBossbarEndpoint, nil)
+	err := client.ExecuteEffect(clearBossbarEndpoint, []byte("erase yourself."))
 
 	if sendUpdate {
 		sendEffectUpdate("bossbar", "", "CLEAR", err)
