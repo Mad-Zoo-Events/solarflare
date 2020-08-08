@@ -18,8 +18,8 @@ type LaserEffectPreset struct {
 // If a destination point is specified as well, the laser will be an end laser.
 type LaserEffect struct {
 	// Predefined point where the laser originates
-	StartPointID int `json:"start" form:"originPointId"`
+	StartPointID int `json:"start" form:"startPointId"`
 	// Predefined point where the laser goes to
 	// If provided, it will turn the laser into an end laser
-	EndPointID *int `json:"end" form:"destinationPointId"`
+	EndPointID *int `json:"end" form:"endPointId"`
 }
