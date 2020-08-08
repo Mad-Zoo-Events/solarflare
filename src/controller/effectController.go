@@ -37,6 +37,8 @@ func RunEffect(id string, effectType model.EffectType, action model.EffectAction
 		return manager.RunTimeshiftEffect(preset.(model.TimeshiftEffectPreset), action, true)
 	case model.PotionEffectType:
 		return manager.RunPotionEffect(preset.(model.PotionEffectPreset), action, true)
+	case model.TargetedLaserEffectType, model.EndLaserEffectType:
+		return manager.RunLaserEffect(preset.(model.LaserEffectPreset), action, true)
 	}
 
 	return sferror.New(sferror.InvalidEffectType, string(effectType), nil)

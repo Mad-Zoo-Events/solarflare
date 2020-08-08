@@ -31,6 +31,10 @@ const (
 	TimeshiftEffectType = EffectType("timeshift")
 	// PotionEffectType represents the potion effect
 	PotionEffectType = EffectType("potion")
+	// EndLaserEffectType represents the endlaser effect
+	EndLaserEffectType = EffectType("endlaser")
+	// TargetedLaserEffectType represents the targeted laser effect
+	TargetedLaserEffectType = EffectType("targetedlaser")
 	// BossbarEffectType represents the bossbar effect
 	BossbarEffectType = EffectType("bossbar")
 )

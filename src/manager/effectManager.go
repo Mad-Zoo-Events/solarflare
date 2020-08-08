@@ -10,11 +10,13 @@ import (
 )
 
 const (
-	particleEffectEndpoint  = "/effects/particle"
-	dragonEffectEndpoint    = "/effects/dragon"
-	timeshiftEffectEndpoint = "/effects/time"
-	potionEffectEndpoint    = "/effects/potion"
-	effectsEndpoint         = "/effects"
+	particleEffectEndpoint      = "/effects/particle"
+	dragonEffectEndpoint        = "/effects/dragon"
+	timeshiftEffectEndpoint     = "/effects/time"
+	potionEffectEndpoint        = "/effects/potion"
+	targetedlaserEffectEndpoint = "/effects/targetedlaser"
+	endlaserEffectEndpoint      = "/effects/laser"
+	effectsEndpoint             = "/effects"
 )
 
 // RunParticleEffect compiles a particle effect request and executes it on all servers
@@ -79,6 +81,29 @@ func RunPotionEffect(preset model.PotionEffectPreset, action model.EffectAction,
 	}
 
 	endpoint := fmt.Sprintf("%s/%s/%s", potionEffectEndpoint, preset.ID, string(action))
+
+	err = client.ExecuteEffect(endpoint, body)
+
+	if sendUpdate {
+		sendEffectUpdate(preset.ID, preset.DisplayName, action, err)
+	}
+
+	return err
+}
+
+// RunLaserEffect compiles a laser effect request and executes it on all servers
+func RunLaserEffect(preset model.LaserEffectPreset, action model.EffectAction, sendUpdate bool) error {
+	body, err := json.Marshal(preset.LaserEffects)
+	if err != nil {
+		return sferror.New(sferror.Encoding, "Failed to marshal request", err)
+	}
+
+	laserEndpoint := targetedlaserEffectEndpoint
+	if preset.LaserEffects[0].EndPointID != nil {
+		laserEndpoint = endlaserEffectEndpoint
+	}
+
+	endpoint := fmt.Sprintf("%s/%s/%s", laserEndpoint, preset.ID, string(action))
 
 	err = client.ExecuteEffect(endpoint, body)
 
