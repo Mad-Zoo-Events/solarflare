@@ -10,7 +10,9 @@ type Config struct {
 	DragonEffectPresets    []model.DragonEffectPreset
 	TimeshiftEffectPresets []model.TimeshiftEffectPreset
 	PotionEffectPresets    []model.PotionEffectPreset
-	Servers                []model.Server
+	LaserEffectPresets     []model.LaserEffectPreset
+
+	Servers []model.Server
 }
 
 var cfg Config
