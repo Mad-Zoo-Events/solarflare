@@ -37,7 +37,7 @@ func FindPreset(id string, effectType model.EffectType) (interface{}, error) {
 				return p, nil
 			}
 		}
-	case model.EndLaserEffectType, model.TargetedLaserEffectType:
+	case model.LaserEffectType:
 		for _, p := range cfg.LaserEffectPresets {
 			if p.ID == id {
 				return p, nil

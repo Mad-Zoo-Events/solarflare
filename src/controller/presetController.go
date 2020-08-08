@@ -46,7 +46,7 @@ func UpsertPresetAPI(effectType string, body []byte) (*string, error) {
 		}
 
 		return manager.UpsertPotionEffectPreset(preset)
-	case model.EndLaserEffectType, model.TargetedLaserEffectType:
+	case model.LaserEffectType:
 		preset := model.LaserEffectPreset{}
 
 		if err := json.Unmarshal(body, &preset); err != nil {
@@ -94,7 +94,7 @@ func UpsertPresetUI(effectType string, values url.Values) (*string, error) {
 		}
 
 		return manager.UpsertPotionEffectPreset(preset)
-	case model.EndLaserEffectType, model.TargetedLaserEffectType:
+	case model.LaserEffectType:
 		preset := model.LaserEffectPreset{}
 
 		if err := unmarshalLaserPreset(&preset, values); err != nil {
