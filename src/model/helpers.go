@@ -30,6 +30,17 @@ func (action EffectAction) IsAllowedOn(effectType EffectType) bool {
 			action == StopEffectAction {
 			return true
 		}
+	case TargetedLaserEffectType:
+		if action == StartEffectAction ||
+			action == StopEffectAction {
+			return true
+		}
+	case EndLaserEffectType:
+		if action == StartEffectAction ||
+			action == StopEffectAction ||
+			action == TriggerEffectAction {
+			return true
+		}
 	case BossbarEffectType:
 		if action == SetBossbarAction ||
 			action == ClearBossbarAction {
