@@ -37,6 +37,12 @@ func FindPreset(id string, effectType model.EffectType) (interface{}, error) {
 				return p, nil
 			}
 		}
+	case model.EndLaserEffectType, model.TargetedLaserEffectType:
+		for _, p := range cfg.LaserEffectPresets {
+			if p.ID == id {
+				return p, nil
+			}
+		}
 	default:
 		return nil, sferror.New(sferror.InvalidEffectType, string(effectType), nil)
 	}
