@@ -54,3 +54,12 @@ func unmarshalPotionPreset(preset *model.PotionEffectPreset, values url.Values) 
 
 	return nil
 }
+
+func unmarshalLaserPreset(preset *model.LaserEffectPreset, values url.Values) error {
+	err := decoder.Decode(preset, values)
+	if err != nil {
+		return sferror.New(sferror.Encoding, "Error parsing data from UI request", err)
+	}
+
+	return nil
+}

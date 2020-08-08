@@ -76,6 +76,23 @@ func UpsertPotionEffectPreset(preset model.PotionEffectPreset) (*string, error) 
 	return &preset.ID, nil
 }
 
+// UpsertLaserEffectPreset creates or updates a laser effect preset in the database
+func UpsertLaserEffectPreset(preset model.LaserEffectPreset) (*string, error) {
+	if preset.ID == "" {
+		preset.ID = uuid.New().String()
+	}
+
+	err := client.UpsertEffectPreset(client.LaserEffectPresetsTable, preset)
+	if err != nil {
+		return nil, err
+	}
+
+	cfg := config.Get()
+	cfg.LaserEffectPresets = client.GetLaserEffectPresets()
+
+	return &preset.ID, nil
+}
+
 // DeletePreset deletes a preset from the database
 func DeletePreset(tableName, id string) error {
 	return client.DeleteEffectPreset(tableName, id)

@@ -22,6 +22,8 @@ const (
 	TimeshiftEffectPresetsTable = "presets_timeshift-effects"
 	// PotionEffectPresetsTable table where potion effects are stored
 	PotionEffectPresetsTable = "presets_potion-effects"
+	// LaserEffectPresetsTable table where laser effects are stored
+	LaserEffectPresetsTable = "presets_laser-effects"
 )
 
 var (
@@ -148,6 +150,33 @@ func GetPotionEffectPresets() (presets []model.PotionEffectPreset) {
 		}
 
 		preset.TransformToUI()
+		presets = append(presets, preset)
+	}
+
+	return
+}
+
+// GetLaserEffectPresets retrieves all laser effect presets from the database
+func GetLaserEffectPresets() (presets []model.LaserEffectPreset) {
+	tableName := LaserEffectPresetsTable
+
+	result, err := db.Scan(&dynamodb.ScanInput{
+		TableName: &tableName,
+	})
+	if err != nil {
+		sferror.New(sferror.DatabaseCRUD, "Failed to read laser effect presets", err)
+		return
+	}
+
+	for _, item := range result.Items {
+		preset := model.LaserEffectPreset{}
+
+		err = dynamodbattribute.UnmarshalMap(item, &preset)
+		if err != nil {
+			sferror.New(sferror.DatabaseUnmarshal, "Failed to unmarshal laser effect preset", err)
+			continue
+		}
+
 		presets = append(presets, preset)
 	}
 

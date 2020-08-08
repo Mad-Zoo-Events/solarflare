@@ -46,6 +46,14 @@ func UpsertPresetAPI(effectType string, body []byte) (*string, error) {
 		}
 
 		return manager.UpsertPotionEffectPreset(preset)
+	case model.EndLaserEffectType, model.TargetedLaserEffectType:
+		preset := model.LaserEffectPreset{}
+
+		if err := json.Unmarshal(body, &preset); err != nil {
+			return nil, sferror.New(sferror.Encoding, "Error unmarshalling laser effect preset request", err)
+		}
+
+		return manager.UpsertLaserEffectPreset(preset)
 	}
 
 	return nil, sferror.New(sferror.InvalidEffectType, effectType, nil)
@@ -86,6 +94,14 @@ func UpsertPresetUI(effectType string, values url.Values) (*string, error) {
 		}
 
 		return manager.UpsertPotionEffectPreset(preset)
+	case model.EndLaserEffectType, model.TargetedLaserEffectType:
+		preset := model.LaserEffectPreset{}
+
+		if err := unmarshalLaserPreset(&preset, values); err != nil {
+			return nil, err
+		}
+
+		return manager.UpsertLaserEffectPreset(preset)
 	}
 
 	return nil, sferror.New(sferror.InvalidEffectType, effectType, nil)
