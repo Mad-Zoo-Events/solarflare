@@ -8,6 +8,7 @@ type ControlPanel struct {
 	DragonEffectPresets    []DragonEffectPreset
 	TimeshiftEffectPresets []TimeshiftEffectPreset
 	PotionEffectPresets    []PotionEffectPreset
+	LaserEffectPresets     []LaserEffectPreset
 	MinecraftColors        []MinecraftColor
 
 	RegisteredServerCount int
@@ -31,10 +32,8 @@ const (
 	TimeshiftEffectType = EffectType("timeshift")
 	// PotionEffectType represents the potion effect
 	PotionEffectType = EffectType("potion")
-	// EndLaserEffectType represents the endlaser effect
-	EndLaserEffectType = EffectType("endlaser")
-	// TargetedLaserEffectType represents the targeted laser effect
-	TargetedLaserEffectType = EffectType("targetedlaser")
+	// LaserEffectType represents both the targeted and end laser effect
+	LaserEffectType = EffectType("laser")
 	// BossbarEffectType represents the bossbar effect
 	BossbarEffectType = EffectType("bossbar")
 )
