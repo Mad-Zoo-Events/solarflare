@@ -6,7 +6,7 @@
 <body>
     <div class="preset-edit-main">
         <h1>{{if .ID}} Edit {{else}} Create New {{end}} <span class="indigo">{{.DisplayName}} </span> Laser Preset</h1>
-        <span class="magenta"><b>NOTE: </b>
+        <!-- <span class="magenta"><b>NOTE: </b>
             <ul>
                 <li>If you only provide an <b>Origin Point ID</b>, the effect will be a <b>targeted guardian laser</b>
                     originating from that point</li>
@@ -16,9 +16,18 @@
                     effects in one preset!</li>
                 <li>(I'll improve that in the future ;)</li>
             </ul>
-        </span>
+        </span> -->
         <form class="preset-form" id="laser-preset-form" method="POST" action="/presets/laser-ui">
             {{template "sharedPresetModificationInputs" .}}
+
+            <label id="laser-type-flag">End Laser</label>
+            <input type="checkbox" name="isEndLaser" onchange="handleLaserTypeChecked(this.checked)" checked />
+            <br />
+
+            <label id="laser-targeting-flag">Connects the two points specified</label>
+            <input type="checkbox" name="isNonPlayerTargeting" onchange="handleTargetingChecked(this.checked)"
+                checked />
+            <br />
 
             <label>Effects</label>
             {{range $index, $element := .LaserEffects}}
@@ -26,14 +35,15 @@
                 <span class="armor-stand">
                     <span class="delete-effect" onclick='removeEffectInput(this);'>🗑</span>
                 </span>
+                <br />
 
                 <label>Origin Point ID</label>
                 <input class="indexed-input" name="effect[{{$index}}].startPointId" type="number"
                     value="{{.StartPointID}}" />
                 <br />
 
-                <label>Destination Point ID</label>
-                <input class="indexed-input" name="effect[{{$index}}].endPointId" type="number"
+                <label class="destination-point-label">Destination Point ID</label>
+                <input class="indexed-input destination-point-input" name="effect[{{$index}}].endPointId" type="number"
                     value="{{.EndPointID}}" />
                 <br />
             </div>
