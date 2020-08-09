@@ -6,30 +6,22 @@
 <body>
     <div class="preset-edit-main">
         <h1>{{if .ID}} Edit {{else}} Create New {{end}} <span class="indigo">{{.DisplayName}} </span> Laser Preset</h1>
-        <!-- <span class="magenta"><b>NOTE: </b>
-            <ul>
-                <li>If you only provide an <b>Origin Point ID</b>, the effect will be a <b>targeted guardian laser</b>
-                    originating from that point</li>
-                <li>If you also provide a <b>Destination Point ID</b>, the effect will be a <b>guardian laser</b>
-                    connecting the two points</li>
-                <li>As of now, these two types <b>cannot be mixed</b>, so please use only one-point or only two-point
-                    effects in one preset!</li>
-                <li>(I'll improve that in the future ;)</li>
-            </ul>
-        </span> -->
         <form class="preset-form" id="laser-preset-form" method="POST" action="/presets/laser-ui">
             {{template "sharedPresetModificationInputs" .}}
 
             <label id="laser-type-flag">End Laser</label>
-            <input type="checkbox" name="isEndLaser" onchange="handleLaserTypeChecked(this.checked)" checked />
+            <input type="checkbox" name="isEndLaser" onchange="handleLaserTypeChecked(this.checked)"
+                {{if .IsEndLaser}}checked{{end}} />
             <br />
 
             <label id="laser-targeting-flag">Connects the two points specified</label>
-            <input type="checkbox" name="isNonPlayerTargeting" onchange="handleTargetingChecked(this.checked)"
-                checked />
+            <input type="checkbox" id="laser-targeting-checkbox" name="isNonPlayerTargeting"
+                onchange="handleTargetingChecked(this.checked)" {{if .IsNonPlayerTargeting}}checked{{end}}
+                {{if .IsEndLaser}}disabled{{end}} />
             <br />
 
             <label>Effects</label>
+            {{$current := .}}
             {{range $index, $element := .LaserEffects}}
             <div class="effect-box">
                 <span class="armor-stand">
@@ -42,10 +34,12 @@
                     value="{{.StartPointID}}" />
                 <br />
 
+                {{if $current.IsNonPlayerTargeting}}
                 <label class="destination-point-label">Destination Point ID</label>
                 <input class="indexed-input destination-point-input" name="effect[{{$index}}].endPointId" type="number"
                     value="{{.EndPointID}}" />
                 <br />
+                {{end}}
             </div>
             <br />
             {{end}}

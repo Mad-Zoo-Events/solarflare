@@ -177,6 +177,8 @@ func RenderPresetModifier(writer http.ResponseWriter, effectType model.EffectTyp
 		if id != "" {
 			p = preset.(model.LaserEffectPreset)
 		} else {
+			p.IsEndLaser = true
+			p.IsNonPlayerTargeting = true
 			p.LaserEffects = []model.LaserEffect{{}}
 		}
 

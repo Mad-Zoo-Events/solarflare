@@ -61,5 +61,7 @@ func unmarshalLaserPreset(preset *model.LaserEffectPreset, values url.Values) er
 		return sferror.New(sferror.Encoding, "Error parsing data from UI request", err)
 	}
 
+	preset.TransformFromUI()
+
 	return nil
 }
