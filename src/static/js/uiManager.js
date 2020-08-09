@@ -150,6 +150,39 @@ updateRangeValue = (labelId, range) => {
     document.getElementById(id).innerHTML = range.value;
 };
 
+handleLaserTypeChecked = (checked) => {
+    if (checked) {
+        document.getElementById("laser-type-flag").innerHTML = "End Laser";
+    } else {
+        document.getElementById("laser-type-flag").innerHTML = "Guardian Laser";
+    }
+}
+
+handleTargetingChecked = (checked) => {
+    const flag = document.getElementById("laser-targeting-flag");
+    const labels = document.getElementsByClassName("destination-point-label");
+    const inputs = document.getElementsByClassName("destination-point-input");
+    if (checked) {
+        flag.innerHTML = "Connects the two points specified";
+        for (let i = 0; i < labels.length; i++) {
+            labels[i].style.display = "block";
+        }
+        for (let i = 0; i < inputs.length; i++) {
+            inputs[i].value = "";
+            inputs[i].style.display = "block";
+        }
+    } else {
+        flag.innerHTML = "Targets a random player";
+        for (let i = 0; i < labels.length; i++) {
+            labels[i].style.display = "none";
+        }
+        for (let i = 0; i < inputs.length; i++) {
+            inputs[i].value = "";
+            inputs[i].style.display = "none";
+        }
+    }
+}
+
 // ================ KEY BINDINGS ================
 
 setKeyBinding = (event, source) => {
