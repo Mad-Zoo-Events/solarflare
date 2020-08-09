@@ -27,6 +27,7 @@ type clock struct {
 	dragonEffects    map[string]model.DragonEffectPreset
 	timeshiftEffects map[string]model.TimeshiftEffectPreset
 	potionEffects    map[string]model.PotionEffectPreset
+	laserEffects     map[string]model.LaserEffectPreset
 }
 
 func init() {
@@ -37,6 +38,7 @@ func init() {
 		dragonEffects:    make(map[string]model.DragonEffectPreset),
 		timeshiftEffects: make(map[string]model.TimeshiftEffectPreset),
 		potionEffects:    make(map[string]model.PotionEffectPreset),
+		laserEffects:     make(map[string]model.LaserEffectPreset),
 
 		notify: make(chan bool),
 	}
@@ -84,6 +86,8 @@ func SubscribeEffectToClock(id string, effectType model.EffectType) error {
 		tickTock.timeshiftEffects[id] = p.(model.TimeshiftEffectPreset)
 	case model.PotionEffectType:
 		tickTock.potionEffects[id] = p.(model.PotionEffectPreset)
+	case model.LaserEffectType:
+		tickTock.laserEffects[id] = p.(model.LaserEffectPreset)
 	}
 
 	sendClockUpdate(id, model.SubscribeClockAction)
@@ -100,6 +104,7 @@ func UnsubscribeEffectFromClock(id string, effectType model.EffectType) {
 		tickTock.dragonEffects = make(map[string]model.DragonEffectPreset)
 		tickTock.timeshiftEffects = make(map[string]model.TimeshiftEffectPreset)
 		tickTock.potionEffects = make(map[string]model.PotionEffectPreset)
+		tickTock.laserEffects = make(map[string]model.LaserEffectPreset)
 		return
 	}
 
@@ -112,6 +117,8 @@ func UnsubscribeEffectFromClock(id string, effectType model.EffectType) {
 		delete(tickTock.timeshiftEffects, id)
 	case model.PotionEffectType:
 		delete(tickTock.potionEffects, id)
+	case model.LaserEffectType:
+		delete(tickTock.laserEffects, id)
 	}
 
 	sendClockUpdate(id, model.UnsubscribeClockAction)
@@ -172,6 +179,9 @@ func (c *clock) tick() {
 	for _, e := range c.potionEffects {
 		go RunPotionEffect(e, c.nextAction, false)
 	}
+	for _, e := range c.laserEffects {
+		go RunLaserEffect(e, c.nextAction, false)
+	}
 
 	c.nextAction = model.StopEffectAction
 }
@@ -187,6 +197,9 @@ func (c *clock) tock() {
 		go StopEffect(e.ID, false)
 	}
 	for _, e := range c.potionEffects {
+		go StopEffect(e.ID, false)
+	}
+	for _, e := range c.laserEffects {
 		go StopEffect(e.ID, false)
 	}
 
