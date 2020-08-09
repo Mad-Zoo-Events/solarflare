@@ -133,6 +133,11 @@ func DeletePreset(effectType, id string) error {
 		if err == nil {
 			cfg.PotionEffectPresets = client.GetPotionEffectPresets()
 		}
+	case model.LaserEffectType:
+		err = client.DeleteEffectPreset(client.LaserEffectPresetsTable, id)
+		if err == nil {
+			cfg.LaserEffectPresets = client.GetLaserEffectPresets()
+		}
 	default:
 		err = sferror.New(sferror.InvalidEffectType, effectType, nil)
 	}
