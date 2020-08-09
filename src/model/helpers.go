@@ -149,3 +149,10 @@ func (preset *LaserEffectPreset) TransformFromUI() {
 		preset.IsNonPlayerTargeting = true
 	}
 }
+
+// TransformToUI transforms UI specific values to the main model
+func (preset *LaserEffectPreset) TransformToUI() {
+	if preset.KeyBinding != 0 {
+		preset.UIKeyBinding = string(preset.KeyBinding)
+	}
+}

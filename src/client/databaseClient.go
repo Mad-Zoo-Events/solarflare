@@ -120,8 +120,6 @@ func GetTimeshiftEffectPresets() (presets []model.TimeshiftEffectPreset) {
 		}
 
 		preset.TransformToUI()
-
-		preset.TransformToUI()
 		presets = append(presets, preset)
 	}
 
@@ -177,6 +175,7 @@ func GetLaserEffectPresets() (presets []model.LaserEffectPreset) {
 			continue
 		}
 
+		preset.TransformToUI()
 		presets = append(presets, preset)
 	}
 

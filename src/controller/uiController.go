@@ -182,6 +182,7 @@ func RenderPresetModifier(writer http.ResponseWriter, effectType model.EffectTyp
 			p.LaserEffects = []model.LaserEffect{{}}
 		}
 
+		p.TransformToUI()
 		err = template.Execute(writer, p)
 	}
 
