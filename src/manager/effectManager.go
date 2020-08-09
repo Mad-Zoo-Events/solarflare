@@ -15,7 +15,7 @@ const (
 	timeshiftEffectEndpoint     = "/effects/time"
 	potionEffectEndpoint        = "/effects/potion"
 	targetedlaserEffectEndpoint = "/effects/targetedlaser"
-	endlaserEffectEndpoint      = "/effects/laser"
+	laserEffectEndpoint         = "/effects/laser"
 	effectsEndpoint             = "/effects"
 )
 
@@ -100,7 +100,7 @@ func RunLaserEffect(preset model.LaserEffectPreset, action model.EffectAction, s
 
 	laserEndpoint := targetedlaserEffectEndpoint
 	if preset.LaserEffects[0].EndPointID != nil {
-		laserEndpoint = endlaserEffectEndpoint
+		laserEndpoint = laserEffectEndpoint
 	}
 
 	endpoint := fmt.Sprintf("%s/%s/%s", laserEndpoint, preset.ID, string(action))

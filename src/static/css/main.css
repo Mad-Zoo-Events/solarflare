@@ -14,6 +14,8 @@
     --orange-alpha : rgba(245, 98, 0, 0.15);
     --red          : #ec2323;
     --cyan         : #1ba1e2;
+    --indigo       : #6a00ff;
+    --indigo-alpha : rgba(106, 0, 255, 0.15);
     --cyan-alpha   : rgba(27, 161, 226, 0.15);
     --magenta      : #b90383;
     --magenta-alpha: rgba(185, 3, 131, 0.15);
@@ -42,7 +44,7 @@ body {
 
     grid-template-areas:
         "particle    particle"
-        "dragon      dragon"
+        "dragon      laser"
         "timeshift   potion";
 
     margin-top   : 3em;
@@ -70,6 +72,11 @@ body {
 .dragon-controls {
     grid-area       : dragon;
     background-color: var(--magenta-alpha);
+}
+
+.laser-controls {
+    grid-area       : laser;
+    background-color: var(--indigo-alpha);
 }
 
 .timeshift-controls {
@@ -102,6 +109,10 @@ span.cyan {
 
 span.magenta {
     color: var(--magenta);
+}
+
+span.indigo {
+    color: var(--indigo);
 }
 
 span.orange {
@@ -189,6 +200,11 @@ button.magenta {
     border          : 2px solid var(--magenta);
 }
 
+button.indigo {
+    background-color: var(--indigo);
+    border          : 2px solid var(--indigo);
+}
+
 button.orange {
     background-color: var(--orange);
     border          : 2px solid var(--orange);
@@ -261,9 +277,9 @@ h3 {
 }
 
 #clock-holder {
-    display: grid;
+    display              : grid;
     grid-template-columns: min-content auto min-content;
-    grid-template-areas:
+    grid-template-areas  :
         'title  title  title'
         'ticker ticker ticker'
         'bpm    slider divider'
@@ -310,7 +326,7 @@ h3 {
 
 .footer-buttons {
     display              : grid;
-    grid-template-columns: max-content max-content max-content max-content;
+    grid-template-columns: max-content max-content max-content max-content max-content;
     gap                  : 1em;
 }
 
@@ -381,6 +397,11 @@ td.type-header {
 .type-header-magenta {
     color        : var(--magenta);
     border-bottom: 2px solid var(--magenta);
+}
+
+.type-header-indigo {
+    color        : var(--indigo);
+    border-bottom: 2px solid var(--indigo);
 }
 
 .type-header-orange {

@@ -25,6 +25,7 @@ func RenderControlPanel(writer http.ResponseWriter) error {
 		controlPanelPath+"dragonEffectControl.html",
 		controlPanelPath+"timeshiftEffectControl.html",
 		controlPanelPath+"potionEffectControl.html",
+		controlPanelPath+"laserEffectControl.html",
 		templatesPath+"shared.html",
 	)
 	if err != nil {
@@ -42,8 +43,10 @@ func RenderControlPanel(writer http.ResponseWriter) error {
 		DragonEffectPresets:    cfg.DragonEffectPresets,
 		TimeshiftEffectPresets: cfg.TimeshiftEffectPresets,
 		PotionEffectPresets:    cfg.PotionEffectPresets,
-		MinecraftColors:        model.MinecraftColors,
-		RegisteredServerCount:  len(cfg.Servers),
+		LaserEffectPresets:     cfg.LaserEffectPresets,
+
+		MinecraftColors:       model.MinecraftColors,
+		RegisteredServerCount: len(cfg.Servers),
 
 		AppVersion: appVersion,
 	}
@@ -72,7 +75,9 @@ func RenderPresetManager(writer http.ResponseWriter) error {
 		DragonEffectPresets:    cfg.DragonEffectPresets,
 		TimeshiftEffectPresets: cfg.TimeshiftEffectPresets,
 		PotionEffectPresets:    cfg.PotionEffectPresets,
-		RegisteredServerCount:  len(cfg.Servers),
+		LaserEffectPresets:     cfg.LaserEffectPresets,
+
+		RegisteredServerCount: len(cfg.Servers),
 	}
 
 	err = template.Execute(writer, data)
@@ -100,6 +105,8 @@ func RenderPresetModifier(writer http.ResponseWriter, effectType model.EffectTyp
 		presetName = "timeshiftPresetModification.html"
 	case model.PotionEffectType:
 		presetName = "potionPresetModification.html"
+	case model.LaserEffectType:
+		presetName = "laserPresetModification.html"
 	default:
 		return sferror.New(sferror.InvalidEffectType, string(effectType), err)
 	}
@@ -163,6 +170,16 @@ func RenderPresetModifier(writer http.ResponseWriter, effectType model.EffectTyp
 		}
 
 		p.TransformToUI()
+		err = template.Execute(writer, p)
+	case model.LaserEffectType:
+		p := model.LaserEffectPreset{}
+
+		if id != "" {
+			p = preset.(model.LaserEffectPreset)
+		} else {
+			p.LaserEffects = []model.LaserEffect{{}}
+		}
+
 		err = template.Execute(writer, p)
 	}
 
