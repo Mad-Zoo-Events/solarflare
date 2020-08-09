@@ -22,12 +22,12 @@ func load() {
 	cfg.PotionEffectPresets = client.GetPotionEffectPresets()
 	cfg.LaserEffectPresets = client.GetLaserEffectPresets()
 	cfg.Servers = []model.Server{
-		// {
-		// 	Address: "http://172.31.31.155:8001", //hospital private
-		// },
 		{
-			Address: "http://18.218.90.77:8001", //hospital public
+			Address: "http://172.31.31.155:8001", //hospital private
 		},
+		// {
+		// 	Address: "http://18.218.90.77:8001", //hospital public
+		// },
 	}
 }
 
