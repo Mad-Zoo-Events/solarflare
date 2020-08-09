@@ -5,8 +5,9 @@
     <hr />
     {{if .UIKeyBinding}}<span>► {{.UIKeyBinding}} ◄</span>{{end}}
 
-    <button type="button" class="trigger"
-        onclick='doEffect("laser", "{{.ID}}", "trigger")'>color</button>
+    {{if not .IsEndLaser}}
+    <button type="button" class="trigger" onclick='doEffect("laser", "{{.ID}}", "trigger")'>color</button>
+    {{end}}
     <button type="button" class="start key-binding-{{.KeyBinding}}" id="start-{{.ID}}"
         onclick='doEffect("laser", "{{.ID}}", "start")'>start</button>
     <button type="button" class="stop key-binding-{{.KeyBinding}}" id="stop-{{.ID}}"
