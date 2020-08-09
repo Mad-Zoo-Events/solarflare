@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+
+{{template "header"}}
+
+<body>
+    <div class="preset-edit-main">
+        <h1>{{if .ID}} Edit {{else}} Create New {{end}} <span class="indigo">{{.DisplayName}} </span> Laser Preset</h1>
+        <span class="magenta"><b>NOTE: </b>
+            <ul>
+                <li>If you only provide an <b>Origin Point ID</b>, the effect will be a <b>targeted guardian laser</b>
+                    originating from that point</li>
+                <li>If you also provide a <b>Destination Point ID</b>, the effect will be a <b>guardian laser</b>
+                    connecting the two points</li>
+                <li>As of now, these two types <b>cannot be mixed</b>, so please use only one-point or only two-point
+                    effects in one preset!</li>
+                <li>(I'll improve that in the future ;)</li>
+            </ul>
+        </span>
+        <form class="preset-form" id="laser-preset-form" method="POST" action="/presets/laser-ui">
+            {{template "sharedPresetModificationInputs" .}}
+
+            <label>Effects</label>
+            {{range $index, $element := .LaserEffects}}
+            <div class="effect-box">
+                <span class="armor-stand">
+                    <span class="delete-effect" onclick='removeEffectInput(this);'>🗑</span>
+                </span>
+
+                <label>Origin Point ID</label>
+                <input class="indexed-input" name="effect[{{$index}}].startPointId" type="number"
+                    value="{{.StartPointID}}" />
+                <br />
+
+                <label>Destination Point ID</label>
+                <input class="indexed-input" name="effect[{{$index}}].endPointId" type="number"
+                    value="{{.EndPointID}}" />
+                <br />
+            </div>
+            <br />
+            {{end}}
+        </form>
+        <div class="add-effect" onclick='addEffectInput("laser-preset-form");'>+</div>
+    </div>
+
+    <div class="footer">
+        <div></div>
+        <div></div>
+        <button class="cyan" type="button"
+            onclick='document.getElementById("laser-preset-form").submit();'>Save</button>
+        <div class="master-controls">
+            <button class="darker-cyan" type="button" onclick='navigate(CP_PRESETS_ENDPOINT);'>Cancel</button>
+        </div>
+    </div>
+</body>
+
+</html>

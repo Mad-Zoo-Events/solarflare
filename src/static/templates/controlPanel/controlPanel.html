@@ -34,6 +34,12 @@
             {{template "dragonControl" .}}
             {{end}}
         </div>
+        <div class="controls-holder laser-controls">
+            <span class="controls-header indigo">Laser</span>
+            {{range .LaserEffectPresets}}
+            {{template "laserControl" .}}
+            {{end}}
+        </div>
         <div class="controls-holder timeshift-controls">
             <span class="controls-header orange">Timeshift</span>
             {{range .TimeshiftEffectPresets}}

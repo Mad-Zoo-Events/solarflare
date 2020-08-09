@@ -15,11 +15,10 @@ type LaserEffectPreset struct {
 // LaserEffect contains information on start and potential end point of the laser
 // If only the origin point is specified, the laser will be a player-targeting laser
 // originating from that point.
-// If a destination point is specified as well, the laser will be an end laser.
+// If a destination point is specified as well, the laser will connect the two points.
 type LaserEffect struct {
 	// Predefined point where the laser originates
 	StartPointID int `json:"start" form:"startPointId"`
-	// Predefined point where the laser goes to
-	// If provided, it will turn the laser into an end laser
+	// Predefined point where the laser goes to, if specified
 	EndPointID *int `json:"end" form:"endPointId"`
 }
