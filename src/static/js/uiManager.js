@@ -151,10 +151,15 @@ updateRangeValue = (labelId, range) => {
 };
 
 handleLaserTypeChecked = (checked) => {
+    const flag = document.getElementById("laser-type-flag");
+    const targetingCheckbox = document.getElementById("laser-targeting-checkbox");
     if (checked) {
-        document.getElementById("laser-type-flag").innerHTML = "End Laser";
+        flag.innerHTML = "End Laser";
+        targetingCheckbox.checked = true;
+        targetingCheckbox.disabled = true;
     } else {
-        document.getElementById("laser-type-flag").innerHTML = "Guardian Laser";
+        flag.innerHTML = "Guardian Laser";
+        targetingCheckbox.disabled = false;
     }
 }
 

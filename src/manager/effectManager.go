@@ -16,6 +16,7 @@ const (
 	potionEffectEndpoint        = "/effects/potion"
 	targetedlaserEffectEndpoint = "/effects/targetedlaser"
 	laserEffectEndpoint         = "/effects/laser"
+	endlaserEffectEndpoint      = "/effects/endlaser"
 	effectsEndpoint             = "/effects"
 )
 
@@ -99,8 +100,14 @@ func RunLaserEffect(preset model.LaserEffectPreset, action model.EffectAction, s
 	}
 
 	laserEndpoint := targetedlaserEffectEndpoint
-	if preset.LaserEffects[0].EndPointID != nil {
-		laserEndpoint = laserEffectEndpoint
+	if preset.IsEndLaser {
+		laserEndpoint = endlaserEffectEndpoint
+	} else {
+		if preset.IsNonPlayerTargeting {
+			laserEndpoint = laserEffectEndpoint
+		} else {
+			laserEndpoint = targetedlaserEffectEndpoint
+		}
 	}
 
 	endpoint := fmt.Sprintf("%s/%s/%s", laserEndpoint, preset.ID, string(action))

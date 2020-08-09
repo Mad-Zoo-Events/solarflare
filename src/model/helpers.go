@@ -142,3 +142,10 @@ func (preset *PotionEffectPreset) TransformToUI() {
 
 	preset.UIAllowedPotionEffects = MinecraftPotionEffects
 }
+
+// TransformFromUI transforms UI specific values to the main model
+func (preset *LaserEffectPreset) TransformFromUI() {
+	if preset.IsEndLaser {
+		preset.IsNonPlayerTargeting = true
+	}
+}

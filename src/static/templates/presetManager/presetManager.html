@@ -68,11 +68,12 @@
             <td class="key-column"><span class="indigo">{{.UIKeyBinding}}</span></td>
             <td>{{.DisplayName}}</td>
             <td>{{.Description}}</td>
+            {{$current := .}}
             <td class="effects-column">
                 {{range .LaserEffects}}
                 <span>→&nbsp;&nbsp;</span>
-                <span class="code">{{if not .EndPointID}}PLAYER TARGETING{{end}}</span>
-                <span></span>
+                <span class="code">{{if $current.IsEndLaser}}END LASER{{else}}GUARDIAN LASER{{end}}</span>
+                <span>{{if not $current.IsNonPlayerTargeting}}Targeting{{end}}</span>
                 <span class="code">[{{.StartPointID}}{{if .EndPointID}} {{.EndPointID}}{{end}}]</span>
                 {{end}}
             </td>
