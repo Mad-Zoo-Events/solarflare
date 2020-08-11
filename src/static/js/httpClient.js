@@ -79,7 +79,17 @@ doRestartClock = async (callback) => {
 doClockSync = async (callback) => {
     const request = new XMLHttpRequest();
     request.open("GET", `${CLOCK_ENDPOINT}/sync`);
-    request.addEventListener('load', callback);
+    request.addEventListener('load', () => {
+        // The service responds exactly when the clock has started an ON cycle, so in order to
+        // make up for the network latency we can take the current clock speed, substract the
+        // average network latency and wait for that long until we restart the clock on the UI.
+        // This way the clock is perfectly in sync with the game from the perspective of the
+        // person controlling the visuals
+
+        const delay = (clockInterval && averageLatency) ? clockInterval - averageLatency : 0;
+
+        setTimeout(callback, delay);
+    });
 
     request.send();
 };

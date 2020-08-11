@@ -14,6 +14,9 @@ var clockTapRestartTimeout;
 
 var suppressHotkeys = false;
 
+var effectDelayMillis = new Array();
+var averageLatency;
+
 init = () => {
     doStatusUpdate();
     doClockSync(restartUIClock);
@@ -46,7 +49,15 @@ updateStatus = (response) => {
 };
 
 updateResponseTime = (millis) => {
+    if (effectDelayMillis.length > 10) {
+        effectDelayMillis.shift();
+    }
+    effectDelayMillis.push(millis);
+
+    averageLatency = (effectDelayMillis.reduce((a, b) => a + b) / effectDelayMillis.length).toFixed(0);
+
     document.getElementById('status-last-request-time').innerHTML = `${millis} ms`;
+    document.getElementById('status-average-request-time').innerHTML = `${averageLatency} ms`;
 };
 
 // ================ COUNTER ================
