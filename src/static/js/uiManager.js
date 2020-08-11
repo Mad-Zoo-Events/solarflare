@@ -331,11 +331,14 @@ restartUIClock = () => {
 restartClock = () => doRestartClock(restartUIClock);
 
 attachClock = (effectType, id) => {
-    if (activeClocks.has(id)) {
-        doClockSubscription(effectType, id, "unsubscribe");
-    } else {
-        doClockSubscription(effectType, id, "subscribe");
+    let action = activeClocks.has(id) ? "unsubscribe" : "subscribe"
+
+    if (counters[id]) {
+        action += "running"
+        stopCounter(id);
     }
+
+    doClockSubscription(effectType, id, action);
 };
 
 detachClockAll = () => activeClocks.forEach((id) => {

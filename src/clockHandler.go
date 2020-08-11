@@ -59,20 +59,23 @@ func ClockSpeedHandler() http.HandlerFunc {
 }
 
 // ClockSubscriptionHandler handles subscribing and unsubscribing effects on the clock
-func ClockSubscriptionHandler(action model.ClockAction) http.HandlerFunc {
+func ClockSubscriptionHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 
 		var (
+			action     = vars["action"]
 			effectType = vars["effectType"]
 			id         = vars["id"]
 		)
 
-		switch action {
+		switch model.ClockAction(action) {
 		case model.SubscribeClockAction:
-			manager.SubscribeEffectToClock(id, model.EffectType(effectType))
-		case model.UnsubscribeClockAction:
-			manager.UnsubscribeEffectFromClock(id, model.EffectType(effectType))
+			manager.SubscribeEffectToClock(id, model.EffectType(effectType), false)
+		case model.SubscribeRunningClockAction:
+			manager.SubscribeEffectToClock(id, model.EffectType(effectType), true)
+		case model.UnsubscribeClockAction, model.UnsubscribeRunningClockAction:
+			manager.UnsubscribeEffectFromClock(id, model.EffectType(effectType), false)
 		default:
 			err := sferror.New(sferror.ClockInvalidAction, "invlid clock action: "+effectType, nil)
 			writeResponse(w, 400, sferror.GetErrorResponse(err))
