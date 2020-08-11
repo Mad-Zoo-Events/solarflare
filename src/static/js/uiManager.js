@@ -217,7 +217,7 @@ handleKeypress = (event) => {
     }
 
     if (charCode === 43) { // character '+'
-        document.getElementById(`clock-tap-button`).click();
+        clockTap();
         return;
     }
 
@@ -256,9 +256,10 @@ changeClockSpeed = () => {
     doSetClockSpeed(bpm, mult);
 };
 
-updateClockControls = (bpm, mult) => {
+updateClockControls = async (bpm, mult) => {
     document.getElementById("clock-bpm-input").value = bpm;
     document.getElementById("clock-bpm-range").value = bpm;
+    document.getElementById("clock-indicator").innerHTML = `${clockInterval.toFixed(3)} ms`;
 
     const thOptions = document.getElementById("clock-th-input").children;
     for (let i = 0; i < thOptions.length; i++) {
@@ -290,21 +291,38 @@ doWhateverTheClockDoes = (restartNow) => {
     }
 };
 
+// The clock tap function works the following way:
+// - on the third tap it starts updating the BPM count and sends it to the backend
+// - it adds up to 10 taps to a queue to calculate the average of these
+// - after the clock has cycled three times with the updated speed, the queue is reset
+//   and it'll wait for three new taps again
 clockTap = () => {
     const th = document.getElementById("clock-th-input").value;
     const now = Date.now();
 
+    // if this is the first tap after a while, set last to now and return
     if (!clockTapLast) {
         clockTapLast = now;
+
         return;
     }
 
-    if (clockTapMillis.length >= 4) {
+    const diff = now - clockTapLast;
+
+    // if the tap queue is empty, push the first value and return
+    if (clockTapMillis.length == 0) {
+        clockTapMillis.push(diff);
+        clockTapLast = now;
+
+        return;
+    }
+
+    // keep at the most 10 taps in the queue to calculate the average
+    if (clockTapMillis.length > 10) {
         clockTapMillis.shift();
     }
 
-    clockTapMillis.push(now - clockTapLast);
-
+    clockTapMillis.push(diff);
     clockTapLast = now;
 
     const millisNew = clockTapMillis.reduce((a, b) => a + b) / clockTapMillis.length;
@@ -319,7 +337,7 @@ clockTap = () => {
     clockTapResetTimeout = setTimeout(() => {
         clockTapLast = undefined;
         clockTapMillis = [];
-    }, millisNew * 2);
+    }, millisNew * 3);
 };
 
 restartUIClock = () => {
