@@ -23,11 +23,9 @@ func load() {
 	cfg.LaserEffectPresets = client.GetLaserEffectPresets()
 	cfg.Servers = []model.Server{
 		{
+			// Address: "http://18.218.90.77:8001", //hospital public
 			Address: "http://172.31.31.155:8001", //hospital private
 		},
-		// {
-		// 	Address: "http://18.218.90.77:8001", //hospital public
-		// },
 	}
 }
 
@@ -71,8 +69,7 @@ func main() {
 	router.Handle("/clock/sync", ClockSyncHandler()).Methods(http.MethodGet)
 	router.Handle("/clock/restart", ClockRestartHandler()).Methods(http.MethodPost)
 	router.Handle("/clock/{bpm}/{multiplier}", ClockSpeedHandler()).Methods(http.MethodPut)
-	router.Handle("/clock/{effectType}/{id}", ClockSubscriptionHandler(model.SubscribeClockAction)).Methods(http.MethodPost)
-	router.Handle("/clock/{effectType}/{id}", ClockSubscriptionHandler(model.UnsubscribeClockAction)).Methods(http.MethodDelete)
+	router.Handle("/clock/{action}/{effectType}/{id}", ClockSubscriptionHandler()).Methods(http.MethodPost)
 
 	// web UI
 	staticDir := "/static/"

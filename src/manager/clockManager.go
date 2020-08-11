@@ -69,13 +69,17 @@ func GetClockSpeed() (bpm float64, multiplier float64) {
 }
 
 // SubscribeEffectToClock registers an effect to the clock
-func SubscribeEffectToClock(id string, effectType model.EffectType) error {
+func SubscribeEffectToClock(id string, effectType model.EffectType, isRunning bool) error {
 	p, err := utils.FindPreset(id, effectType)
 	if err != nil {
 		return err
 	}
 
-	waitForStop()
+	if isRunning {
+		waitForStart()
+	} else {
+		waitForStop()
+	}
 
 	switch effectType {
 	case model.ParticleEffectType:
@@ -96,8 +100,10 @@ func SubscribeEffectToClock(id string, effectType model.EffectType) error {
 }
 
 // UnsubscribeEffectFromClock unsubscribes an effect from the clock
-func UnsubscribeEffectFromClock(id string, effectType model.EffectType) {
-	waitForStop()
+func UnsubscribeEffectFromClock(id string, effectType model.EffectType, triggeredByStopAll bool) {
+	if !triggeredByStopAll {
+		waitForStop()
+	}
 
 	if id == "all" {
 		tickTock.particleEffects = make(map[string]model.ParticleEffectPreset)
@@ -153,14 +159,8 @@ func (c *clock) run() {
 	for range clk.C {
 		switch c.nextAction {
 		case model.StartEffectAction:
-			if c.syncStart {
-				c.notify <- true
-			}
 			go c.tick()
 		case model.StopEffectAction:
-			if c.syncStop {
-				c.notify <- true
-			}
 			go c.tock()
 		}
 	}
@@ -184,6 +184,10 @@ func (c *clock) tick() {
 	}
 
 	c.nextAction = model.StopEffectAction
+
+	if c.syncStart {
+		c.notify <- true
+	}
 }
 
 func (c *clock) tock() {
@@ -204,6 +208,10 @@ func (c *clock) tock() {
 	}
 
 	c.nextAction = model.StartEffectAction
+
+	if c.syncStop {
+		c.notify <- true
+	}
 }
 
 func sendClockUpdate(id string, action model.ClockAction) {
