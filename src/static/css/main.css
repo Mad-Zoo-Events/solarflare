@@ -28,6 +28,7 @@ body {
     background-color: var(--background);
     color           : var(--font);
     font-family     : sans-serif;
+    font-size       : 0.8em;
     padding         : 0;
     margin          : 0;
 
@@ -47,7 +48,7 @@ body {
         "dragon      laser"
         "timeshift   potion";
 
-    margin-top   : 3em;
+    margin-top   : 3.5em;
     margin-bottom: 15em;
 }
 
@@ -137,7 +138,6 @@ button {
 
     color           : var(--font);
     background-color: var(--darker-gray);
-    font-size       : 1em;
     font-variant    : small-caps;
 }
 
@@ -248,6 +248,42 @@ button.disabled {
 #bossbar-form {
     display    : inline-block;
     margin-left: 0.5em;
+}
+
+#bossbar-text {
+    width: 25em;
+}
+
+.popup {
+    position: relative;
+    display : inline-block;
+}
+
+.popup .popup-content {
+    visibility: hidden;
+
+    position: absolute;
+    top     : 150%;
+    z-index : 1;
+
+    padding         : 1em;
+    background-color: var(--background);
+    border-radius   : 1em;
+}
+
+.popup .show {
+    visibility: visible;
+}
+
+.bossbar-formatting-group {
+    height               : min-content;
+    display              : grid;
+    grid-template-columns: max-content max-content;
+    gap                  : 1em;
+}
+
+.bossbar-formatting-group span:nth-of-type(even) {
+    cursor: pointer;
 }
 
 /* ================ FOOTER ================ */

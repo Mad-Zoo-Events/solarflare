@@ -13,6 +13,7 @@ var clockTapResetTimeout;
 var clockTapRestartTimeout;
 
 var suppressHotkeys = false;
+var hoveringOverFormattingPopup = false;
 
 var effectDelayMillis = new Array();
 var averageLatency;
@@ -25,6 +26,10 @@ init = () => {
     openWebsocket();
 };
 
+navigate = (endpoint) => window.location.href = endpoint;
+
+// ================ OTHER UI UPDATES ================
+
 addToLog = (action, displayName, errMsg) => {
     const logWindow = document.getElementById('log-window');
 
@@ -35,7 +40,16 @@ addToLog = (action, displayName, errMsg) => {
     logWindow.innerHTML = logLine + logWindow.innerHTML;
 };
 
-navigate = (endpoint) => window.location.href = endpoint;
+toggleFormattingCodePopup = () => {
+    if (hoveringOverFormattingPopup) {
+        return;
+    }
+    document.getElementById("bossbar-formatting-popup").classList.toggle("show");
+}
+
+addFormatting = (code) => {
+    document.getElementById("bossbar-text").value += code;
+}
 
 // ================ STATUS UPDATE ================
 
