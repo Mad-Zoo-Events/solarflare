@@ -16,12 +16,12 @@ func SocketHandler() http.HandlerFunc {
 		if err != nil {
 			msg := "Error upgrading connection to websocket"
 			sferror.New(sferror.SocketOpen, msg, err)
-			writeResponse(w, 500, []byte(msg))
+			// writeResponse(w, 500, []byte(msg))
 			return
 		}
 
 		manager.AddSocket(conn)
 
-		writeResponse(w, 201, nil)
+		// writeResponse(w, 201, nil)
 	}
 }
