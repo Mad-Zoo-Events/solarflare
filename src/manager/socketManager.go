@@ -13,7 +13,7 @@ import (
 
 type connection struct {
 	conn *websocket.Conn
-	mu   sync.Mutex
+	mu   *sync.Mutex
 }
 
 var conns = make(map[uuid.UUID]*connection, 0)
@@ -23,6 +23,7 @@ func AddSocket(conn *websocket.Conn) {
 	log.Println("Adding socket connection")
 	conns[uuid.New()] = &connection{
 		conn: conn,
+		mu:   &sync.Mutex{},
 	}
 }
 
