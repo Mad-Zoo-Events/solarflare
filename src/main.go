@@ -85,5 +85,8 @@ func main() {
 	router.Handle("/socket", SocketHandler())
 
 	log.Print("Starting server listening on port 5000")
-	http.ListenAndServe(":5000", router)
+	err := http.ListenAndServe(":5000", router)
+	if err != nil {
+		log.Println("Error during ListenAndServe: " + err.Error())
+	}
 }

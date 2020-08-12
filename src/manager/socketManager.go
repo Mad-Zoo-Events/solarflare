@@ -1,6 +1,7 @@
 package manager
 
 import (
+	"log"
 	"sync"
 
 	"github.com/google/uuid"
@@ -19,6 +20,7 @@ var conns = make(map[uuid.UUID]*connection, 0)
 
 // AddSocket adds a new socket to the pool
 func AddSocket(conn *websocket.Conn) {
+	log.Println("Adding socket connection")
 	conns[uuid.New()] = &connection{
 		conn: conn,
 	}

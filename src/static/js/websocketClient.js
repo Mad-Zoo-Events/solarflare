@@ -8,7 +8,7 @@ openWebsocket = async () => {
         document.getElementById("status-connection-status").classList.replace("orange", "green");
     };
     socket.onclose = () => {
-        openWebsocket();
+        setTimeout(openWebsocket, 1000);
     };
     socket.onerror = () => {
         document.getElementById("status-connection-status").innerHTML = "Connection lost...";

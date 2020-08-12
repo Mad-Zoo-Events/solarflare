@@ -222,5 +222,5 @@ func sendClockUpdate(id string, action model.ClockAction) {
 		},
 	}
 
-	SendUIUpdate(update)
+	go SendUIUpdate(update)
 }
