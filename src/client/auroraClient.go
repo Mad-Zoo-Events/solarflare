@@ -71,6 +71,10 @@ func executeEffect(url string, body *[]byte, wg *sync.WaitGroup, errCount *int) 
 	}
 
 	if response.StatusCode < 200 || response.StatusCode >= 400 {
+		if response.StatusCode == 404 {
+			// swallow stop-race errors
+			return
+		}
 		responseMessage, _ := ioutil.ReadAll(response.Body)
 		sferror.New(sferror.Aurora, "Error "+strconv.Itoa(response.StatusCode)+" received from Aurora", errors.New(string(responseMessage)))
 		*errCount++

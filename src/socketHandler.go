@@ -12,7 +12,7 @@ import (
 // SocketHandler handles websocket requests for UI updates
 func SocketHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		conn, err := websocket.Upgrade(w, r, nil, 1024, 1024)
+		conn, err := websocket.Upgrade(w, r, nil, 131072, 131072) // 128 Kb
 		if err != nil {
 			msg := "Error upgrading connection to websocket"
 			sferror.New(sferror.SocketOpen, msg, err)
