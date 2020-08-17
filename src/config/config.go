@@ -13,6 +13,8 @@ type Config struct {
 	LaserEffectPresets     []model.LaserEffectPreset
 
 	Servers []model.Server
+
+	RunningOnDev bool
 }
 
 var cfg Config

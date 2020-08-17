@@ -36,6 +36,11 @@ func ExecuteEffect(endpoint string, body []byte) error {
 
 	for _, server := range cfg.Servers {
 		url := server.PrivateAddress + endpoint
+
+		if cfg.RunningOnDev {
+			url = server.PublicAddress + endpoint
+		}
+
 		wg.Add(1)
 		go executeEffect(url, &body, &wg, &errCount)
 	}
