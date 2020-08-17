@@ -14,7 +14,7 @@ func UpsertParticleEffectPreset(preset model.ParticleEffectPreset) (*string, err
 		preset.ID = uuid.New().String()
 	}
 
-	err := client.UpsertEffectPreset(client.ParticleEffectPresetsTable, preset)
+	err := client.UpsertItem(client.ParticleEffectPresetsTable, preset)
 	if err != nil {
 		return nil, err
 	}
@@ -31,7 +31,7 @@ func UpsertDragonEffectPreset(preset model.DragonEffectPreset) (*string, error) 
 		preset.ID = uuid.New().String()
 	}
 
-	err := client.UpsertEffectPreset(client.DragonEffectPresetsTable, preset)
+	err := client.UpsertItem(client.DragonEffectPresetsTable, preset)
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +48,7 @@ func UpsertTimeshiftEffectPreset(preset model.TimeshiftEffectPreset) (*string, e
 		preset.ID = uuid.New().String()
 	}
 
-	err := client.UpsertEffectPreset(client.TimeshiftEffectPresetsTable, preset)
+	err := client.UpsertItem(client.TimeshiftEffectPresetsTable, preset)
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +65,7 @@ func UpsertPotionEffectPreset(preset model.PotionEffectPreset) (*string, error) 
 		preset.ID = uuid.New().String()
 	}
 
-	err := client.UpsertEffectPreset(client.PotionEffectPresetsTable, preset)
+	err := client.UpsertItem(client.PotionEffectPresetsTable, preset)
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +82,7 @@ func UpsertLaserEffectPreset(preset model.LaserEffectPreset) (*string, error) {
 		preset.ID = uuid.New().String()
 	}
 
-	err := client.UpsertEffectPreset(client.LaserEffectPresetsTable, preset)
+	err := client.UpsertItem(client.LaserEffectPresetsTable, preset)
 	if err != nil {
 		return nil, err
 	}
@@ -95,5 +95,5 @@ func UpsertLaserEffectPreset(preset model.LaserEffectPreset) (*string, error) {
 
 // DeletePreset deletes a preset from the database
 func DeletePreset(tableName, id string) error {
-	return client.DeleteEffectPreset(tableName, id)
+	return client.DeleteItem(tableName, id)
 }

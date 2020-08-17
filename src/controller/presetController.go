@@ -114,27 +114,27 @@ func DeletePreset(effectType, id string) error {
 
 	switch model.EffectType(effectType) {
 	case model.ParticleEffectType:
-		err = client.DeleteEffectPreset(client.ParticleEffectPresetsTable, id)
+		err = client.DeleteItem(client.ParticleEffectPresetsTable, id)
 		if err == nil {
 			cfg.ParticleEffectPresets = client.GetParticleEffectPresets()
 		}
 	case model.DragonEffectType:
-		err = client.DeleteEffectPreset(client.DragonEffectPresetsTable, id)
+		err = client.DeleteItem(client.DragonEffectPresetsTable, id)
 		if err == nil {
 			cfg.DragonEffectPresets = client.GetDragonEffectPresets()
 		}
 	case model.TimeshiftEffectType:
-		err = client.DeleteEffectPreset(client.TimeshiftEffectPresetsTable, id)
+		err = client.DeleteItem(client.TimeshiftEffectPresetsTable, id)
 		if err == nil {
 			cfg.TimeshiftEffectPresets = client.GetTimeshiftEffectPresets()
 		}
 	case model.PotionEffectType:
-		err = client.DeleteEffectPreset(client.PotionEffectPresetsTable, id)
+		err = client.DeleteItem(client.PotionEffectPresetsTable, id)
 		if err == nil {
 			cfg.PotionEffectPresets = client.GetPotionEffectPresets()
 		}
 	case model.LaserEffectType:
-		err = client.DeleteEffectPreset(client.LaserEffectPresetsTable, id)
+		err = client.DeleteItem(client.LaserEffectPresetsTable, id)
 		if err == nil {
 			cfg.LaserEffectPresets = client.GetLaserEffectPresets()
 		}

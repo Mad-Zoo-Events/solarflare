@@ -182,8 +182,8 @@ func GetLaserEffectPresets() (presets []model.LaserEffectPreset) {
 	return
 }
 
-// UpsertEffectPreset adds an effect preset to the database
-func UpsertEffectPreset(tableName string, preset interface{}) error {
+// UpsertItem adds an effect preset to the database
+func UpsertItem(tableName string, preset interface{}) error {
 	item, err := dynamodbattribute.MarshalMap(preset)
 	if err != nil {
 		return sferror.New(sferror.DatabaseMarshal, "Failed to marshal effect preset", err)
@@ -200,8 +200,8 @@ func UpsertEffectPreset(tableName string, preset interface{}) error {
 	return nil
 }
 
-// DeleteEffectPreset deletes an effect preset from the database
-func DeleteEffectPreset(tableName, id string) error {
+// DeleteItem deletes an effect preset from the database
+func DeleteItem(tableName, id string) error {
 	_, err := db.DeleteItem(&dynamodb.DeleteItemInput{
 		Key: map[string]*dynamodb.AttributeValue{
 			"id": {
