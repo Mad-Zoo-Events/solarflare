@@ -8,7 +8,6 @@ import (
 
 	"github.com/eynorey/solarflare/src/client"
 	"github.com/eynorey/solarflare/src/config"
-	"github.com/eynorey/solarflare/src/model"
 )
 
 // loads data from the database into the config
@@ -21,12 +20,13 @@ func load() {
 	cfg.TimeshiftEffectPresets = client.GetTimeshiftEffectPresets()
 	cfg.PotionEffectPresets = client.GetPotionEffectPresets()
 	cfg.LaserEffectPresets = client.GetLaserEffectPresets()
-	cfg.Servers = []model.Server{
-		{
-			PublicAddress:  "http://18.218.90.77:8001",
-			PrivateAddress: "http://172.31.31.155:8001",
-		},
-	}
+	cfg.Servers = client.GetServers()
+	// cfg.Servers = []model.Server{
+	// 	{
+	// 		PublicAddress:  "http://18.218.90.77:8001",
+	// 		PrivateAddress: "http://172.31.31.155:8001",
+	// 	},
+	// }
 }
 
 // writes the response header and a response body if supplied

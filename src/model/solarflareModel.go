@@ -17,7 +17,7 @@ type ControlPanel struct {
 
 // Server contains information about an Aurora plugin server
 type Server struct {
-	ID             int    `json:"id"`
+	ID             string `json:"id"`
 	PrivateAddress string `json:"privateAddress"`
 	PublicAddress  string `json:"publicAddress"`
 }
