@@ -182,11 +182,11 @@ func GetLaserEffectPresets() (presets []model.LaserEffectPreset) {
 	return
 }
 
-// UpsertItem adds an effect preset to the database
+// UpsertItem updates or inserts an item on the database
 func UpsertItem(tableName string, preset interface{}) error {
 	item, err := dynamodbattribute.MarshalMap(preset)
 	if err != nil {
-		return sferror.New(sferror.DatabaseMarshal, "Failed to marshal effect preset", err)
+		return sferror.New(sferror.DatabaseMarshal, "Failed to marshal item", err)
 	}
 
 	_, err = db.PutItem(&dynamodb.PutItemInput{
@@ -194,13 +194,13 @@ func UpsertItem(tableName string, preset interface{}) error {
 		TableName: aws.String(tableName),
 	})
 	if err != nil {
-		return sferror.New(sferror.DatabaseCRUD, "Failed to upsert effect preset", err)
+		return sferror.New(sferror.DatabaseCRUD, "Failed to upsert item", err)
 	}
 
 	return nil
 }
 
-// DeleteItem deletes an effect preset from the database
+// DeleteItem deletes an item from the database
 func DeleteItem(tableName, id string) error {
 	_, err := db.DeleteItem(&dynamodb.DeleteItemInput{
 		Key: map[string]*dynamodb.AttributeValue{
@@ -214,10 +214,10 @@ func DeleteItem(tableName, id string) error {
 	if err != nil {
 		if aerr, ok := err.(awserr.Error); ok {
 			if aerr.Code() == dynamodb.ErrCodeResourceNotFoundException {
-				return sferror.New(sferror.DatabaseNotFound, fmt.Sprintf("Effect preset with %s des not exist", id), err)
+				return sferror.New(sferror.DatabaseNotFound, fmt.Sprintf("Item with %s des not exist", id), err)
 			}
 		}
-		return sferror.New(sferror.DatabaseCRUD, "Error deleting effect preset", err)
+		return sferror.New(sferror.DatabaseCRUD, "Error deleting item", err)
 	}
 
 	return nil

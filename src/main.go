@@ -23,8 +23,8 @@ func load() {
 	cfg.LaserEffectPresets = client.GetLaserEffectPresets()
 	cfg.Servers = []model.Server{
 		{
-			// Address: "http://18.218.90.77:8001", //hospital public
-			Address: "http://172.31.31.155:8001", //hospital private
+			PublicAddress:  "http://18.218.90.77:8001",
+			PrivateAddress: "http://172.31.31.155:8001",
 		},
 	}
 }
