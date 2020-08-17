@@ -17,7 +17,9 @@ type ControlPanel struct {
 
 // Server contains information about an Aurora plugin server
 type Server struct {
-	Address string
+	ID             int    `json:"id"`
+	PrivateAddress string `json:"privateAddress"`
+	PublicAddress  string `json:"publicAddress"`
 }
 
 // EffectType represents the type of visual effect

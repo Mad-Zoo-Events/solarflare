@@ -35,7 +35,7 @@ func ExecuteEffect(endpoint string, body []byte) error {
 	var wg sync.WaitGroup
 
 	for _, server := range cfg.Servers {
-		url := server.Address + endpoint
+		url := server.PrivateAddress + endpoint
 		wg.Add(1)
 		go executeEffect(url, &body, &wg, &errCount)
 	}
