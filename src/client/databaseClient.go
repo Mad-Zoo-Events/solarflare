@@ -24,6 +24,9 @@ const (
 	PotionEffectPresetsTable = "presets_potion-effects"
 	// LaserEffectPresetsTable table where laser effects are stored
 	LaserEffectPresetsTable = "presets_laser-effects"
+
+	// ServerTable table where server addresses to be called are stored
+	ServerTable = "servers"
 )
 
 var (
@@ -177,6 +180,33 @@ func GetLaserEffectPresets() (presets []model.LaserEffectPreset) {
 
 		preset.TransformToUI()
 		presets = append(presets, preset)
+	}
+
+	return
+}
+
+// GetServers retrieves all server addresses from the database
+func GetServers() (servers []model.Server) {
+	tableName := ServerTable
+
+	result, err := db.Scan(&dynamodb.ScanInput{
+		TableName: &tableName,
+	})
+	if err != nil {
+		sferror.New(sferror.DatabaseCRUD, "Failed to read server addresses", err)
+		return
+	}
+
+	for _, item := range result.Items {
+		server := model.Server{}
+
+		err = dynamodbattribute.UnmarshalMap(item, &server)
+		if err != nil {
+			sferror.New(sferror.DatabaseUnmarshal, "Failed to unmarshal server address", err)
+			continue
+		}
+
+		servers = append(servers, server)
 	}
 
 	return
