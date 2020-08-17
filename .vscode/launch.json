@@ -13,7 +13,8 @@
             "cwd": "${workspaceFolder}/src",
             "program": "${workspaceFolder}/src",
             "env": {
-                "AWS_PROFILE": "mze"
+                "AWS_PROFILE": "mze",
+                "ENVIRONMENT": "dev"
             }
         }
     ]

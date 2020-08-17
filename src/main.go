@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 
@@ -21,12 +22,11 @@ func load() {
 	cfg.PotionEffectPresets = client.GetPotionEffectPresets()
 	cfg.LaserEffectPresets = client.GetLaserEffectPresets()
 	cfg.Servers = client.GetServers()
-	// cfg.Servers = []model.Server{
-	// 	{
-	// 		PublicAddress:  "http://18.218.90.77:8001",
-	// 		PrivateAddress: "http://172.31.31.155:8001",
-	// 	},
-	// }
+
+	env := os.Getenv("ENVIRONMENT")
+	if env == "dev" {
+		cfg.RunningOnDev = true
+	}
 }
 
 // writes the response header and a response body if supplied
