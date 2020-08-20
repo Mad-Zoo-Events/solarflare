@@ -275,6 +275,12 @@ button.disabled {
     visibility: visible;
 }
 
+.reload-button {
+    cursor: pointer;
+    float : right;
+    height: 2.5em;
+}
+
 .bossbar-formatting-group {
     height               : min-content;
     display              : grid;
