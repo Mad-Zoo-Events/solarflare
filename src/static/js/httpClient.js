@@ -1,5 +1,6 @@
 const BASE_URL = `${window.location.origin}`;
 const STATUS_ENDPOINT = `${BASE_URL}/status`;
+const RELOAD_ENDPOINT = `${BASE_URL}/reload/servers`;
 const EFFECTS_ENDPOINT = `${BASE_URL}/effects`;
 const BOSSBAR_ENDPOINT = `${BASE_URL}/bossbar`;
 const PRESETS_ENDPOINT = `${BASE_URL}/presets`;
@@ -28,21 +29,6 @@ doStopAll = () => {
     document.getElementById("stop-all-button").disabled = true;
     document.getElementById("stop-all-button").classList.add("disabled");
     doEffect("particle", "all", "stop");
-};
-
-doStatusUpdate = async () => {
-    const request = new XMLHttpRequest();
-    request.open("GET", STATUS_ENDPOINT);
-    request.addEventListener('load', () => {
-        if (request.status === 200) {
-            const resp = JSON.parse(request.responseText);
-            updateStatus(resp);
-        } else {
-            addToLog("[BACKEND]", "Retrieve status update", request.responseText);
-        }
-    });
-
-    request.send();
 };
 
 doClearBossbar = async () => {
@@ -107,6 +93,33 @@ doClockSubscription = async (effectType, id, action, callback) => {
     if (callback) {
         request.addEventListener('load', callback);
     }
+
+    request.send();
+};
+
+// ================ NETWORK / STATUS ================
+
+doStatusUpdate = async () => {
+    const request = new XMLHttpRequest();
+    request.open("GET", STATUS_ENDPOINT);
+    request.addEventListener('load', () => {
+        if (request.status === 200) {
+            const resp = JSON.parse(request.responseText);
+            updateStatus(resp);
+        } else {
+            addToLog("[BACKEND]", "Retrieve status update", request.responseText);
+        }
+    });
+
+    request.send();
+};
+
+doReloadServerList = () => {
+    const request = new XMLHttpRequest();
+    request.open("POST", RELOAD_ENDPOINT);
+    request.addEventListener('load', () => {
+        doStatusUpdate();
+    });
 
     request.send();
 };

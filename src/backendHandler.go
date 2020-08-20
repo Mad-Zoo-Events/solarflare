@@ -32,3 +32,12 @@ func StatusHandler() http.HandlerFunc {
 		writeResponse(w, 200, resp)
 	}
 }
+
+// ReloadServerListHandler handles requests to reload the server list
+func ReloadServerListHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		controller.ReloadServerList()
+
+		writeResponse(w, 204, nil)
+	}
+}

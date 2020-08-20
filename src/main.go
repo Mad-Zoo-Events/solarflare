@@ -52,9 +52,10 @@ func main() {
 
 	router := mux.NewRouter()
 
-	// network status
+	// network / service
 	router.Handle("/health", HealthHandler()).Methods(http.MethodGet)
 	router.Handle("/status", StatusHandler()).Methods(http.MethodGet)
+	router.Handle("/reload/servers", ReloadServerListHandler()).Methods(http.MethodPost)
 
 	// effect execution
 	router.Handle("/effects/{effectType}/{id}/{action}", EffectHandler()).Methods(http.MethodPost)
