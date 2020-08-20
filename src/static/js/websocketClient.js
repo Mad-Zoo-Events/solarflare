@@ -1,8 +1,12 @@
 var socket;
 
 openWebsocket = async () => {
-    socket = new WebSocket(`wss://${window.location.host}/socket`);
-    // socket = new WebSocket(`ws://localhost:5000/socket`);
+    if (location.hostname === "localhost") {
+        socket = new WebSocket(`ws://localhost:5000/socket`);
+    } else {
+        socket = new WebSocket(`wss://${window.location.host}/socket`);
+    }
+
     socket.onopen = () => {
         document.getElementById("status-connection-status").innerHTML = "Connected";
         document.getElementById("status-connection-status").classList.replace("orange", "green");
@@ -19,7 +23,7 @@ openWebsocket = async () => {
 };
 
 handleMessage = (data) => {
-    const { effectUpdate, clockUpdate } = data;
+    const { effectUpdate, clockUpdate, statusUpdate } = data;
 
     if (effectUpdate) {
         const { id, displayName, action, errorMessage } = effectUpdate;
@@ -30,13 +34,13 @@ handleMessage = (data) => {
             document.getElementById("stop-all-button").disabled = false;
             document.getElementById("stop-all-button").classList.remove("disabled");
 
-            addToLog("=>", "STOP EVERYTHING");
+            logEffectMessage("=>", "STOP EVERYTHING");
         } else if (id === "bossbar") {
             const parts = displayName.split("௵");
             document.getElementById("bossbar-text").value = parts[0];
             document.getElementById("bossbar-color").value = parts[1];
         } else {
-            addToLog(action, displayName, errorMessage);
+            logEffectMessage(action, displayName, errorMessage);
         }
 
         if (!errorMessage) {
@@ -57,6 +61,15 @@ handleMessage = (data) => {
             document.getElementById("clock-" + id).classList.remove("clock-on");
             document.getElementById("clock-" + id).classList.remove("clock-attached");
         }
+
+        return;
+    }
+
+    if (statusUpdate) {
+        const { registeredServerCount } = statusUpdate;
+
+        document.getElementById("status-server-count").innerHTML = registeredServerCount;
+        logInfoMessage(`Server list reloaded - ${registeredServerCount} ${registeredServerCount === 1 ? "instance is" : "instances are"} now connected`);
 
         return;
     }
