@@ -392,6 +392,10 @@ h3 {
     color: var(--red);
 }
 
+.info-message {
+    color: var(--cyan);
+}
+
 /* ================ PRESET MANAGER ================ */
 .preset-table {
     max-width       : 100em;

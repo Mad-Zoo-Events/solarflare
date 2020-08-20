@@ -107,7 +107,7 @@ doStatusUpdate = async () => {
             const resp = JSON.parse(request.responseText);
             updateStatus(resp);
         } else {
-            addToLog("[BACKEND]", "Retrieve status update", request.responseText);
+            logInfoMessage(`FAILED to retrieve status update: ${request.responseText}`);
         }
     });
 

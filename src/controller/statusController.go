@@ -23,4 +23,12 @@ func GetStatus() model.StatusResponse {
 func ReloadServerList() {
 	cfg := config.Get()
 	cfg.Servers = client.GetServers()
+
+	update := model.UIUpdate{
+		StatusUpdate: &model.StatusUpdate{
+			RegisteredServerCount: len(cfg.Servers),
+		},
+	}
+
+	manager.SendUIUpdate(update)
 }

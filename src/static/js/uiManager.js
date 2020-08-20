@@ -30,7 +30,7 @@ navigate = (endpoint) => window.location.href = endpoint;
 
 // ================ OTHER UI UPDATES ================
 
-addToLog = (action, displayName, errMsg) => {
+logEffectMessage = (action, displayName, errMsg) => {
     const logWindow = document.getElementById('log-window');
 
     const timestamp = new Date().toLocaleTimeString();
@@ -40,16 +40,25 @@ addToLog = (action, displayName, errMsg) => {
     logWindow.innerHTML = logLine + logWindow.innerHTML;
 };
 
+logInfoMessage = (msg) => {
+    const logWindow = document.getElementById('log-window');
+
+    const timestamp = new Date().toLocaleTimeString();
+    const logLine = `<span class="log-message">${timestamp} | <span class="info-message"><b>[INFO]</b> ${msg}</span></span>`;
+
+    logWindow.innerHTML = logLine + logWindow.innerHTML;
+};
+
 toggleFormattingCodePopup = () => {
     if (hoveringOverFormattingPopup) {
         return;
     }
     document.getElementById("bossbar-formatting-popup").classList.toggle("show");
-}
+};
 
 addFormatting = (code) => {
     document.getElementById("bossbar-text").value += code;
-}
+};
 
 // ================ STATUS UPDATE ================
 
@@ -186,7 +195,7 @@ handleLaserTypeChecked = (checked) => {
         flag.innerHTML = "Guardian Laser";
         targetingCheckbox.disabled = false;
     }
-}
+};
 
 handleTargetingChecked = (checked) => {
     const flag = document.getElementById("laser-targeting-flag");
@@ -211,7 +220,7 @@ handleTargetingChecked = (checked) => {
             inputs[i].style.display = "none";
         }
     }
-}
+};
 
 // ================ KEY BINDINGS ================
 
@@ -374,10 +383,10 @@ restartUIClock = () => {
 restartClock = () => doRestartClock(restartUIClock);
 
 attachClock = (effectType, id) => {
-    let action = activeClocks.has(id) ? "unsubscribe" : "subscribe"
+    let action = activeClocks.has(id) ? "unsubscribe" : "subscribe";
 
     if (counters[id]) {
-        action += "running"
+        action += "running";
         stopCounter(id);
     }
 
