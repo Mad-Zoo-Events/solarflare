@@ -46,8 +46,6 @@ handleMessage = (data) => {
         if (!errorMessage) {
             counter(id, action);
         }
-
-        return;
     }
 
     if (clockUpdate) {
@@ -61,8 +59,6 @@ handleMessage = (data) => {
             document.getElementById("clock-" + id).classList.remove("clock-on");
             document.getElementById("clock-" + id).classList.remove("clock-attached");
         }
-
-        return;
     }
 
     if (clockSpeedUpdate) {
@@ -78,8 +74,6 @@ handleMessage = (data) => {
         clockInterval = 60000 / clockSpeedBpm * clockSpeedMultiplier;
         updateClockControls(clockSpeedBpm, clockSpeedMultiplier);
         restartUIClock();
-
-        return;
     }
 
     if (statusUpdate) {
@@ -87,7 +81,5 @@ handleMessage = (data) => {
 
         document.getElementById("status-server-count").innerHTML = registeredServerCount;
         logInfoMessage(`Server list reloaded - ${registeredServerCount} ${registeredServerCount === 1 ? "instance is" : "instances are"} now connected`);
-
-        return;
     }
 };

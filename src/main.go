@@ -54,7 +54,6 @@ func main() {
 
 	// network / service
 	router.Handle("/health", HealthHandler()).Methods(http.MethodGet)
-	router.Handle("/status", StatusHandler()).Methods(http.MethodGet)
 	router.Handle("/reload/servers", ReloadServerListHandler()).Methods(http.MethodPost)
 
 	// effect execution

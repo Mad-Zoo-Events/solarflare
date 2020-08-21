@@ -1,4 +1,3 @@
-const STATUS_UPDATE_INTERVAL = 30000;
 const CLOCK_SYNC_INTERVAL = 10000;
 
 var counters = new Map();
@@ -20,9 +19,7 @@ var effectDelayMillis = new Array();
 var averageLatency;
 
 init = () => {
-    doStatusUpdate();
     doClockSync(restartUIClock);
-    // setInterval(doStatusUpdate, STATUS_UPDATE_INTERVAL);
     setInterval(() => doClockSync(restartUIClock), CLOCK_SYNC_INTERVAL);
     openWebsocket();
 };

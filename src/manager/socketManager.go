@@ -7,6 +7,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/gorilla/websocket"
 
+	"github.com/eynorey/solarflare/src/config"
 	"github.com/eynorey/solarflare/src/model"
 	"github.com/eynorey/solarflare/src/utils/sferror"
 )
@@ -18,13 +19,29 @@ type connection struct {
 
 var conns = make(map[uuid.UUID]*connection, 0)
 
-// AddSocket adds a new socket to the pool
-func AddSocket(conn *websocket.Conn) {
-	log.Println("Adding socket connection")
+// RegisterSocket adds a new socket to the pool
+func RegisterSocket(conn *websocket.Conn) {
+	log.Println("Registering socket connection with " + conn.RemoteAddr().String())
 	conns[uuid.New()] = &connection{
 		conn: conn,
 		mu:   &sync.Mutex{},
 	}
+
+	// Send initial batch of UI updates
+	bpm, multiplier := GetClockSpeed()
+	cfg := config.Get()
+
+	update := model.UIUpdate{
+		StatusUpdate: &model.StatusUpdate{
+			RegisteredServerCount: len(cfg.Servers),
+		},
+		ClockSpeedUpdate: &model.ClockSpeedUpdate{
+			ClockSpeedBPM:        bpm,
+			ClockSpeedMultiplier: multiplier,
+		},
+	}
+
+	SendUIUpdate(update)
 }
 
 // SendUIUpdate sends an update to the UI through each web socket

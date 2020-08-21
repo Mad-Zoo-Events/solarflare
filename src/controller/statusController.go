@@ -7,18 +7,6 @@ import (
 	"github.com/eynorey/solarflare/src/model"
 )
 
-// GetStatus returns information on the service and network status
-func GetStatus() model.StatusResponse {
-	cfg := config.Get()
-	bpm, multiplier := manager.GetClockSpeed()
-
-	return model.StatusResponse{
-		RegisteredServerCount: len(cfg.Servers),
-		ClockSpeedBPM:         bpm,
-		ClockSpeedMultiplier:  multiplier,
-	}
-}
-
 // ReloadServerList triggers a reload of the server list
 func ReloadServerList() {
 	cfg := config.Get()

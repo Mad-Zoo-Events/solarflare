@@ -103,21 +103,6 @@ doClockSubscription = async (effectType, id, action, callback) => {
 
 // ================ NETWORK / STATUS ================
 
-doStatusUpdate = async () => {
-    const request = new XMLHttpRequest();
-    request.open("GET", STATUS_ENDPOINT);
-    request.addEventListener('load', () => {
-        if (request.status === 200) {
-            const resp = JSON.parse(request.responseText);
-            updateStatus(resp);
-        } else {
-            logInfoMessage(`FAILED to retrieve status update: ${request.responseText}`);
-        }
-    });
-
-    request.send();
-};
-
 doReloadServerList = () => {
     const request = new XMLHttpRequest();
     request.open("POST", RELOAD_ENDPOINT);

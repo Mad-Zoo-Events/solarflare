@@ -20,6 +20,6 @@ func SocketHandler() http.HandlerFunc {
 			return
 		}
 
-		manager.AddSocket(conn)
+		manager.RegisterSocket(conn)
 	}
 }

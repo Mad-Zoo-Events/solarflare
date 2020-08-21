@@ -88,13 +88,6 @@ var MinecraftColors = []MinecraftColor{
 
 // ================ RESPONSE MODELS ================ //
 
-// StatusResponse returns information on the service and the plugin network to the consumer
-type StatusResponse struct {
-	RegisteredServerCount int     `json:"registeredServerCount"`
-	ClockSpeedBPM         float64 `json:"clockSpeedBpm"`
-	ClockSpeedMultiplier  float64 `json:"clockSpeedMultiplier"`
-}
-
 // Error returns an error
 type Error struct {
 	Code    int64  `json:"code"`
