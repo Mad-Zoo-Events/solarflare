@@ -159,5 +159,5 @@ func sendEffectUpdate(id, dispalyName string, action model.EffectAction, err err
 		update.EffectUpdate.ErrorMessage = err.Error()
 	}
 
-	go SendUIUpdate(update)
+	SendUIUpdate(update)
 }

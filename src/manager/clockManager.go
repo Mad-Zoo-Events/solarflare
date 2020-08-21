@@ -85,9 +85,9 @@ func SubscribeEffectToClock(id string, effectType model.EffectType, isRunning bo
 	}
 
 	if isRunning {
-		waitForStart()
+		// waitForStart()
 	} else {
-		waitForStop()
+		// waitForStop()
 	}
 
 	switch effectType {
@@ -231,5 +231,5 @@ func sendClockUpdate(id string, action model.ClockAction) {
 		},
 	}
 
-	go SendUIUpdate(update)
+	SendUIUpdate(update)
 }

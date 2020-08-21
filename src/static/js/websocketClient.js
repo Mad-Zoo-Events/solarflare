@@ -16,12 +16,12 @@ openWebsocket = async () => {
         document.getElementById("status-connection-status").innerHTML = "Connected";
         document.getElementById("status-connection-status").classList.replace("orange", "green");
     };
-    socket.onclose = () => {
-        document.getElementById("status-connection-status").innerHTML = "Connection lost...";
-        document.getElementById("status-connection-status").classList.replace("green", "orange");
+    socket.onclose = (event) => {
+        logInfoMessage(`connection closed: ${event.code} ${event.reason} ${event.wasClean}`);
         setTimeout(openWebsocket, 1000);
     };
     socket.onerror = () => {
+        logInfoMessage(`connection closed: ${event}`);
         document.getElementById("status-connection-status").innerHTML = "Connection lost...";
         document.getElementById("status-connection-status").classList.replace("green", "orange");
     };

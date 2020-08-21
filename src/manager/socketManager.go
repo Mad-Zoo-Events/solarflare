@@ -47,16 +47,20 @@ func RegisterSocket(conn *websocket.Conn) {
 // SendUIUpdate sends an update to the UI through each web socket
 func SendUIUpdate(update model.UIUpdate) {
 	for id := range conns {
-		c := conns[id]
+		go sendUIUpdate(update, id)
+	}
+}
 
-		c.mu.Lock()
-		defer c.mu.Unlock()
+func sendUIUpdate(update model.UIUpdate, id uuid.UUID) {
+	c := conns[id]
 
-		err := c.conn.WriteJSON(update)
-		if err != nil {
-			sferror.New(sferror.SocketSendUpdate, "Error sending an update through the web socket - Closing", err)
-			closeSocket(id)
-		}
+	c.mu.Lock()
+	defer c.mu.Unlock()
+
+	err := c.conn.WriteJSON(update)
+	if err != nil {
+		sferror.New(sferror.SocketSendUpdate, "Error sending an update through the web socket - Closing", err)
+		closeSocket(id)
 	}
 }
 
