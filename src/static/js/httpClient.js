@@ -117,9 +117,6 @@ doStatusUpdate = async () => {
 doReloadServerList = () => {
     const request = new XMLHttpRequest();
     request.open("POST", RELOAD_ENDPOINT);
-    request.addEventListener('load', () => {
-        doStatusUpdate();
-    });
 
     request.send();
 };

@@ -21,7 +21,7 @@ var averageLatency;
 init = () => {
     doStatusUpdate();
     doClockSync(restartUIClock);
-    setInterval(doStatusUpdate, STATUS_UPDATE_INTERVAL);
+    // setInterval(doStatusUpdate, STATUS_UPDATE_INTERVAL);
     setInterval(() => doClockSync(restartUIClock), CLOCK_SYNC_INTERVAL);
     openWebsocket();
 };
