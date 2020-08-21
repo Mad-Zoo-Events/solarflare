@@ -11,6 +11,7 @@ var clockTapMillis = new Array();
 var clockTapLast;
 var clockTapResetTimeout;
 var clockTapRestartTimeout;
+var isClockSpeedInitiator = false;
 
 var suppressHotkeys = false;
 var hoveringOverFormattingPopup = false;

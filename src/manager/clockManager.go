@@ -61,6 +61,15 @@ func RestartClock() {
 func SetClockSpeed(bpm float64, multiplier float64) {
 	setSpeed(bpm, multiplier)
 	RestartClock()
+
+	update := model.UIUpdate{
+		ClockSpeedUpdate: &model.ClockSpeedUpdate{
+			ClockSpeedBPM:        bpm,
+			ClockSpeedMultiplier: multiplier,
+		},
+	}
+
+	SendUIUpdate(update)
 }
 
 // GetClockSpeed gets the current clock speed

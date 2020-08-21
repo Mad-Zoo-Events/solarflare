@@ -23,7 +23,7 @@ openWebsocket = async () => {
 };
 
 handleMessage = (data) => {
-    const { effectUpdate, clockUpdate, statusUpdate } = data;
+    const { effectUpdate, clockUpdate, clockSpeedUpdate, statusUpdate } = data;
 
     if (effectUpdate) {
         const { id, displayName, action, errorMessage } = effectUpdate;
@@ -61,6 +61,23 @@ handleMessage = (data) => {
             document.getElementById("clock-" + id).classList.remove("clock-on");
             document.getElementById("clock-" + id).classList.remove("clock-attached");
         }
+
+        return;
+    }
+
+    if (clockSpeedUpdate) {
+        // if the request to change the clock speed came from this host
+        // then no UI update is needed, so reset the flag and return
+        if (isClockSpeedInitiator) {
+            isClockSpeedInitiator = false;
+            return;
+        }
+
+        const { clockSpeedBpm, clockSpeedMultiplier } = clockSpeedUpdate;
+
+        clockInterval = 60000 / clockSpeedBpm * clockSpeedMultiplier;
+        updateClockControls(clockSpeedBpm, clockSpeedMultiplier);
+        restartUIClock();
 
         return;
     }
