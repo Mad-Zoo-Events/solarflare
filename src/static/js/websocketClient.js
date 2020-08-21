@@ -1,5 +1,10 @@
 var socket;
 
+window.onbeforeunload = function () {
+    websocket.onclose = function () { }; // disable onclose handler first
+    websocket.close();
+};
+
 openWebsocket = async () => {
     if (location.hostname === "localhost") {
         socket = new WebSocket(`ws://localhost:5000/socket`);
@@ -12,6 +17,8 @@ openWebsocket = async () => {
         document.getElementById("status-connection-status").classList.replace("orange", "green");
     };
     socket.onclose = () => {
+        document.getElementById("status-connection-status").innerHTML = "Connection lost...";
+        document.getElementById("status-connection-status").classList.replace("green", "orange");
         setTimeout(openWebsocket, 1000);
     };
     socket.onerror = () => {
