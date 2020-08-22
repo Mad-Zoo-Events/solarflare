@@ -110,9 +110,9 @@ func SubscribeEffectToClock(id string, effectType model.EffectType, isRunning bo
 
 // UnsubscribeEffectFromClock unsubscribes an effect from the clock
 func UnsubscribeEffectFromClock(id string, effectType model.EffectType, triggeredByStopAll bool) {
-	if !triggeredByStopAll {
-		waitForStop()
-	}
+	// if !triggeredByStopAll {
+	// 	waitForStop()
+	// }
 
 	if id == "all" {
 		tickTock.particleEffects = make(map[string]model.ParticleEffectPreset)
@@ -137,6 +137,8 @@ func UnsubscribeEffectFromClock(id string, effectType model.EffectType, triggere
 	}
 
 	sendClockUpdate(id, model.UnsubscribeClockAction)
+
+	StopEffect(id, false)
 }
 
 // ClockSync returns after waiting for the next "start" run on the clock
