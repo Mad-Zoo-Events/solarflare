@@ -32,7 +32,7 @@ func RenderControlPanel(writer http.ResponseWriter) error {
 		return sferror.New(sferror.Template, "Error loading control panel templates", err)
 	}
 
-	appVersion := "local"
+	appVersion := "HITV"
 	if v := os.Getenv("APP_VERSION"); v != "" {
 		appVersion = v
 	}
