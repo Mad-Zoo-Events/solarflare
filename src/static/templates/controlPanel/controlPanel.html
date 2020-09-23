@@ -3,7 +3,7 @@
 
 {{template "header"}}
 
-<body onload="init()" onkeypress='handleKeypress(event);'>
+<body onload="init()" onkeypress='handleKeypress(event);' onkeydown='handleKeydown(event);'>
     <div class="header">
         <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
         <span class="bossbar-header">Boss Bar</span>
@@ -59,6 +59,7 @@
                 onclick='document.getElementById("bossbar-form").submit();'>Update</button>
             <button class="bossbar-button" type="button" onclick='doClearBossbar();'>Hide</button>
         </form>
+        <span id="caps-warning">MAT! YOU GOT CAPS LOCK ON AGAIN!!</span>
         <img class="reload-button" src="/static/img/reload.png" alt="DANGER - reload servers"
             onclick='doReloadServerList();' />
     </div>

@@ -292,6 +292,14 @@ button.disabled {
     cursor: pointer;
 }
 
+#caps-warning {
+    color      : var(--red);
+    display    : none;
+    font-weight: bold;
+    font-size  : x-large;
+    margin     : auto 0 auto 0.5em;
+}
+
 /* ================ FOOTER ================ */
 .footer {
     position: fixed;

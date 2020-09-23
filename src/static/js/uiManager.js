@@ -235,6 +235,14 @@ checkKeyBinding = (source) => {
     }
 };
 
+handleKeydown = (event) => {
+    if (event.getModifierState('CapsLock')) {
+        document.getElementById("caps-warning").style.display = "inline-block";
+    } else {
+        document.getElementById("caps-warning").style.display = "none";
+    }
+};
+
 handleKeypress = (event) => {
     if (suppressHotkeys) {
         return;
