@@ -11,13 +11,15 @@ type ControlPanel struct {
 	LaserEffectPresets     []LaserEffectPreset
 	MinecraftColors        []MinecraftColor
 
-	RegisteredServerCount int
-	AppVersion            string
+	RegisteredServers []Server
+	AppVersion        string
 }
 
 // Server contains information about an Aurora plugin server
 type Server struct {
 	ID             string `json:"id"`
+	Name           string `json:"name"`
+	IsActive       bool   `json:"isActive"`
 	PrivateAddress string `json:"privateAddress"`
 	PublicAddress  string `json:"publicAddress"`
 }
