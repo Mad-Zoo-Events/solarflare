@@ -7,8 +7,7 @@
     <div class="header">
         {{template "bossbarForm" .}}
         <span id="caps-warning">MAT! YOU GOT CAPS LOCK ON AGAIN!!</span>
-        <img class="reload-button" src="/static/img/reload.png" alt="DANGER - reload servers"
-            onclick='doReloadServerList();' />
+        {{template "serverManager" .}}
     </div>
     <div class="main-controls-holder">
         <div class="controls-holder particle-controls">

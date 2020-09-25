@@ -1,6 +1,5 @@
 const BASE_URL = `${window.location.origin}`;
 const STATUS_ENDPOINT = `${BASE_URL}/status`;
-const RELOAD_ENDPOINT = `${BASE_URL}/reload/servers`;
 const EFFECTS_ENDPOINT = `${BASE_URL}/effects`;
 const BOSSBAR_ENDPOINT = `${BASE_URL}/bossbar`;
 const PRESETS_ENDPOINT = `${BASE_URL}/presets`;
@@ -102,10 +101,3 @@ doClockSubscription = async (effectType, id, action, callback) => {
 };
 
 // ================ NETWORK / STATUS ================
-
-doReloadServerList = () => {
-    const request = new XMLHttpRequest();
-    request.open("POST", RELOAD_ENDPOINT);
-
-    request.send();
-};

@@ -58,6 +58,10 @@ addFormatting = (code) => {
     document.getElementById("bossbar-text").value += code;
 };
 
+toggleServerManagerPopup = () => {
+    document.getElementById("server-manager-popup").classList.toggle("show");
+};
+
 // ================ STATUS UPDATE ================
 
 updateStatus = (response) => {

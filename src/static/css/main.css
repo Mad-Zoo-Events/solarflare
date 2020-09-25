@@ -275,12 +275,6 @@ button.disabled {
     visibility: visible;
 }
 
-.reload-button {
-    cursor: pointer;
-    float : right;
-    height: 2.5em;
-}
-
 .bossbar-formatting-group {
     height               : min-content;
     display              : grid;
@@ -290,6 +284,26 @@ button.disabled {
 
 .bossbar-formatting-group span:nth-of-type(even) {
     cursor: pointer;
+}
+
+.server-manager-button {
+    cursor: pointer;
+    height: 2.5em;
+}
+
+.server-manager-popup {
+    float: right;
+}
+
+.server-manager-popup .popup-content {
+    right: 1em;
+}
+
+.server-manager-group {
+    height               : min-content;
+    display              : grid;
+    grid-template-columns: max-content max-content;
+    gap                  : 1em;
 }
 
 #caps-warning {
