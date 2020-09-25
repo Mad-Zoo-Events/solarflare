@@ -108,7 +108,7 @@ startCounter = (id) => {
 };
 
 stopCounter = (id) => {
-    if (id === "all") {
+    if (id === "all" || id === "allnoclock") {
         for (const key in counters) {
             clearInterval(counters[key]);
         }
@@ -266,7 +266,7 @@ handleKeypress = (event) => {
     }
 
     if (charCode === 45) { // character '-'
-        // document.getElementById(`clock-restart-button`).click();
+        document.getElementById(`stop-all-no-clock-button`).click();
         return;
     }
 

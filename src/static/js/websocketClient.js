@@ -41,7 +41,13 @@ handleMessage = (data) => {
             document.getElementById("stop-all-button").disabled = false;
             document.getElementById("stop-all-button").classList.remove("disabled");
 
-            logEffectMessage("=>", "STOP EVERYTHING");
+            logEffectMessage("=>", "STOP EVERYTHING [W/ DETACH]");
+        } else if (id === "allnoclock") {
+            activeKeys.clear();
+            document.getElementById("stop-all-no-clock-button").disabled = false;
+            document.getElementById("stop-all-no-clock-button").classList.remove("disabled");
+
+            logEffectMessage("=>", "STOP EVERYTHING [W/O DETACH]");
         } else if (id === "bossbar") {
             const parts = displayName.split("௵");
             document.getElementById("bossbar-text").value = parts[0];

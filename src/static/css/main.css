@@ -153,6 +153,12 @@ button.stop {
     box-shadow: 0 0 0.3em var(--red);
 }
 
+button.stop2 {
+    color     : var(--orange);
+    border    : none;
+    box-shadow: 0 0 0.3em var(--orange);
+}
+
 button.restart {
     color     : var(--orange);
     border    : none;
@@ -400,6 +406,14 @@ h3 {
     text-align : center;
     padding    : 0 1em;
     border-left: 2px dashed var(--gray);
+
+    display              : grid;
+    grid-template-columns: 50% 50%;
+    gap                  : 0em 0.5em;
+}
+
+#manage-presets-button {
+    grid-column: 1 / span 2;
 }
 
 .log-message {

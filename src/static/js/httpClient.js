@@ -25,10 +25,16 @@ doEffect = async (effectType, id, action) => {
     request.send();
 };
 
-doStopAll = () => {
-    document.getElementById("stop-all-button").disabled = true;
-    document.getElementById("stop-all-button").classList.add("disabled");
-    doEffect("particle", "all", "stop");
+doStopAll = (detachClock) => {
+    if (detachClock) {
+        document.getElementById("stop-all-button").disabled = true;
+        document.getElementById("stop-all-button").classList.add("disabled");
+        doEffect("particle", "all", "stop");
+    } else {
+        document.getElementById("stop-all-no-clock-button").disabled = true;
+        document.getElementById("stop-all-no-clock-button").classList.add("disabled");
+        doEffect("particle", "allnoclock", "stop");
+    }
 };
 
 doClearBossbar = async () => {
