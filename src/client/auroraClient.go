@@ -35,6 +35,10 @@ func ExecuteEffect(endpoint string, body []byte) error {
 	var wg sync.WaitGroup
 
 	for _, server := range cfg.Servers {
+		if !server.IsActive {
+			continue
+		}
+
 		url := server.PrivateAddress + endpoint
 
 		if cfg.RunningOnDev {
