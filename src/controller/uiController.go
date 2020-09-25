@@ -49,6 +49,7 @@ func RenderControlPanel(writer http.ResponseWriter) error {
 
 		MinecraftColors:   model.MinecraftColors,
 		RegisteredServers: cfg.Servers,
+		ActiveServerCount: len(getActiveServerIDs()),
 
 		AppVersion: appVersion,
 	}

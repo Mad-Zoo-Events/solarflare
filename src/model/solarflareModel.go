@@ -12,6 +12,7 @@ type ControlPanel struct {
 	MinecraftColors        []MinecraftColor
 
 	RegisteredServers []Server
+	ActiveServerCount int
 	AppVersion        string
 }
 
@@ -72,6 +73,16 @@ const (
 	SubscribeRunningClockAction = ClockAction("subscriberunning")
 	// UnsubscribeRunningClockAction unsubscribes an already running visual effect from the clock
 	UnsubscribeRunningClockAction = ClockAction("unsubscriberunning")
+)
+
+// ServerAction represents an action to be performed for a server
+type ServerAction string
+
+const (
+	// EnableServerAction snables a server
+	EnableServerAction = ServerAction("enable")
+	// DisableServerAction disables a server
+	DisableServerAction = ServerAction("disable")
 )
 
 // MinecraftColor represents a Minecraft color

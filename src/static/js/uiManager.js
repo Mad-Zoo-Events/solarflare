@@ -65,8 +65,8 @@ toggleServerManagerPopup = () => {
 // ================ STATUS UPDATE ================
 
 updateStatus = (response) => {
-    const { registeredServerCount, clockSpeedBpm, clockSpeedMultiplier } = response;
-    document.getElementById('status-server-count').innerHTML = registeredServerCount;
+    const { activeServerCount, clockSpeedBpm, clockSpeedMultiplier } = response;
+    document.getElementById('status-server-count').innerHTML = activeServerCount;
 
     clockInterval = 60000 / clockSpeedBpm * clockSpeedMultiplier;
     updateClockControls(clockSpeedBpm, clockSpeedMultiplier);

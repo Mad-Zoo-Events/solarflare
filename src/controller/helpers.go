@@ -5,6 +5,7 @@ import (
 
 	"github.com/go-playground/form/v4"
 
+	"github.com/eynorey/solarflare/src/config"
 	"github.com/eynorey/solarflare/src/model"
 	"github.com/eynorey/solarflare/src/utils/sferror"
 )
@@ -64,4 +65,17 @@ func unmarshalLaserPreset(preset *model.LaserEffectPreset, values url.Values) er
 	preset.TransformFromUI()
 
 	return nil
+}
+
+func getActiveServerIDs() []string {
+	activeServerIDs := []string{}
+
+	cfg := config.Get()
+	for _, server := range cfg.Servers {
+		if server.IsActive {
+			activeServerIDs = append(activeServerIDs, server.ID)
+		}
+	}
+
+	return activeServerIDs
 }

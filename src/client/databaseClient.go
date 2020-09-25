@@ -213,8 +213,8 @@ func GetServers() (servers []model.Server) {
 }
 
 // UpsertItem updates or inserts an item on the database
-func UpsertItem(tableName string, preset interface{}) error {
-	item, err := dynamodbattribute.MarshalMap(preset)
+func UpsertItem(tableName string, payload interface{}) error {
+	item, err := dynamodbattribute.MarshalMap(payload)
 	if err != nil {
 		return sferror.New(sferror.DatabaseMarshal, "Failed to marshal item", err)
 	}

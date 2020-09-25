@@ -1,5 +1,6 @@
 const BASE_URL = `${window.location.origin}`;
 const STATUS_ENDPOINT = `${BASE_URL}/status`;
+const SERVERS_ENDPOINT = `${BASE_URL}/servers`;
 const EFFECTS_ENDPOINT = `${BASE_URL}/effects`;
 const BOSSBAR_ENDPOINT = `${BASE_URL}/bossbar`;
 const PRESETS_ENDPOINT = `${BASE_URL}/presets`;
@@ -101,3 +102,11 @@ doClockSubscription = async (effectType, id, action, callback) => {
 };
 
 // ================ NETWORK / STATUS ================
+
+doToggleServer = async (id, element) => {
+    const action = (element.checked) ? "enable" : "disable";
+
+    const request = new XMLHttpRequest();
+    request.open("PATCH", `${SERVERS_ENDPOINT}/${id}/${action}`);
+    request.send();
+};

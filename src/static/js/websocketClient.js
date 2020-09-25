@@ -84,9 +84,10 @@ handleMessage = (data) => {
     }
 
     if (statusUpdate) {
-        const { registeredServerCount } = statusUpdate;
+        const { activeServerIDs } = statusUpdate;
+        const activeServerCount = activeServerIDs.length;
 
-        document.getElementById("status-server-count").innerHTML = registeredServerCount;
-        logInfoMessage(`Server list loaded - ${registeredServerCount} ${registeredServerCount === 1 ? "instance is" : "instances are"} now connected`);
+        document.getElementById("status-server-count").innerHTML = activeServerCount;
+        logInfoMessage(`Server list updated - ${activeServerCount} ${activeServerCount === 1 ? "instance is" : "instances are"} now connected`);
     }
 };

@@ -8,7 +8,6 @@ import (
 	"github.com/google/uuid"
 	"github.com/gorilla/websocket"
 
-	"github.com/eynorey/solarflare/src/config"
 	"github.com/eynorey/solarflare/src/model"
 	"github.com/eynorey/solarflare/src/utils/sferror"
 )
@@ -33,12 +32,8 @@ func RegisterSocket(conn *websocket.Conn) {
 
 	// Send initial batch of UI updates
 	bpm, multiplier := GetClockSpeed()
-	cfg := config.Get()
 
 	update := model.UIUpdate{
-		StatusUpdate: &model.StatusUpdate{
-			RegisteredServerCount: len(cfg.Servers),
-		},
 		ClockSpeedUpdate: &model.ClockSpeedUpdate{
 			ClockSpeedBPM:        bpm,
 			ClockSpeedMultiplier: multiplier,
