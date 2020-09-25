@@ -15,13 +15,12 @@ import (
 func load() {
 	cfg := config.Get()
 
-	cfg.ParticleEffectPresets = client.GetParticleEffectPresets()
-	cfg.DragonEffectPresets = client.GetDragonEffectPresets()
-	cfg.TimeshiftEffectPresets = client.GetTimeshiftEffectPresets()
-	cfg.TimeshiftEffectPresets = client.GetTimeshiftEffectPresets()
-	cfg.PotionEffectPresets = client.GetPotionEffectPresets()
-	cfg.LaserEffectPresets = client.GetLaserEffectPresets()
 	cfg.Servers = client.GetServers()
+
+	cfg.Stages = []string{"mzitv", "stratos"}
+	cfg.SelectedStage = cfg.Stages[0]
+
+	client.ReloadAllPresets()
 
 	env := os.Getenv("ENVIRONMENT")
 	if env == "dev" {
@@ -55,6 +54,7 @@ func main() {
 	// network / service
 	router.Handle("/health", HealthHandler()).Methods(http.MethodGet)
 	router.Handle("/servers/{id}/{action}", ToggleServerHandler()).Methods(http.MethodPatch)
+	router.Handle("/selectstage/{stage}", SelectStageHandler()).Methods(http.MethodPost)
 
 	// effect execution
 	router.Handle("/effects/{effectType}/{id}/{action}", EffectHandler()).Methods(http.MethodPost)

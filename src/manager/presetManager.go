@@ -1,8 +1,6 @@
 package manager
 
 import (
-	"fmt"
-
 	"github.com/google/uuid"
 
 	"github.com/eynorey/solarflare/src/client"
@@ -12,16 +10,17 @@ import (
 
 // UpsertParticleEffectPreset creates or updates a particle effect preset in the database
 func UpsertParticleEffectPreset(preset model.ParticleEffectPreset) (*string, error) {
+	cfg := config.Get()
+
 	if preset.ID == "" {
 		preset.ID = uuid.New().String()
 	}
 
-	err := client.UpsertItem(fmt.Sprintf(client.ParticleEffectPresetsTable, client.CurrentEvent), preset)
+	err := client.UpsertItem(client.ParticleEffectPresetsTable, preset)
 	if err != nil {
 		return nil, err
 	}
 
-	cfg := config.Get()
 	cfg.ParticleEffectPresets = client.GetParticleEffectPresets()
 
 	return &preset.ID, nil
@@ -29,16 +28,17 @@ func UpsertParticleEffectPreset(preset model.ParticleEffectPreset) (*string, err
 
 // UpsertDragonEffectPreset creates or updates a dragon effect preset in the database
 func UpsertDragonEffectPreset(preset model.DragonEffectPreset) (*string, error) {
+	cfg := config.Get()
+
 	if preset.ID == "" {
 		preset.ID = uuid.New().String()
 	}
 
-	err := client.UpsertItem(fmt.Sprintf(client.DragonEffectPresetsTable, client.CurrentEvent), preset)
+	err := client.UpsertItem(client.DragonEffectPresetsTable, preset)
 	if err != nil {
 		return nil, err
 	}
 
-	cfg := config.Get()
 	cfg.DragonEffectPresets = client.GetDragonEffectPresets()
 
 	return &preset.ID, nil
@@ -46,16 +46,17 @@ func UpsertDragonEffectPreset(preset model.DragonEffectPreset) (*string, error) 
 
 // UpsertTimeshiftEffectPreset creates or updates a timeshift effect preset in the database
 func UpsertTimeshiftEffectPreset(preset model.TimeshiftEffectPreset) (*string, error) {
+	cfg := config.Get()
+
 	if preset.ID == "" {
 		preset.ID = uuid.New().String()
 	}
 
-	err := client.UpsertItem(fmt.Sprintf(client.TimeshiftEffectPresetsTable, client.CurrentEvent), preset)
+	err := client.UpsertItem(client.TimeshiftEffectPresetsTable, preset)
 	if err != nil {
 		return nil, err
 	}
 
-	cfg := config.Get()
 	cfg.TimeshiftEffectPresets = client.GetTimeshiftEffectPresets()
 
 	return &preset.ID, nil
@@ -63,16 +64,17 @@ func UpsertTimeshiftEffectPreset(preset model.TimeshiftEffectPreset) (*string, e
 
 // UpsertPotionEffectPreset creates or updates a potion effect preset in the database
 func UpsertPotionEffectPreset(preset model.PotionEffectPreset) (*string, error) {
+	cfg := config.Get()
+
 	if preset.ID == "" {
 		preset.ID = uuid.New().String()
 	}
 
-	err := client.UpsertItem(fmt.Sprintf(client.PotionEffectPresetsTable, client.CurrentEvent), preset)
+	err := client.UpsertItem(client.PotionEffectPresetsTable, preset)
 	if err != nil {
 		return nil, err
 	}
 
-	cfg := config.Get()
 	cfg.PotionEffectPresets = client.GetPotionEffectPresets()
 
 	return &preset.ID, nil
@@ -80,16 +82,17 @@ func UpsertPotionEffectPreset(preset model.PotionEffectPreset) (*string, error) 
 
 // UpsertLaserEffectPreset creates or updates a laser effect preset in the database
 func UpsertLaserEffectPreset(preset model.LaserEffectPreset) (*string, error) {
+	cfg := config.Get()
+
 	if preset.ID == "" {
 		preset.ID = uuid.New().String()
 	}
 
-	err := client.UpsertItem(fmt.Sprintf(client.LaserEffectPresetsTable, client.CurrentEvent), preset)
+	err := client.UpsertItem(client.LaserEffectPresetsTable, preset)
 	if err != nil {
 		return nil, err
 	}
 
-	cfg := config.Get()
 	cfg.LaserEffectPresets = client.GetLaserEffectPresets()
 
 	return &preset.ID, nil

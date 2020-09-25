@@ -9,6 +9,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
 
+	"github.com/eynorey/solarflare/src/config"
 	"github.com/eynorey/solarflare/src/model"
 	"github.com/eynorey/solarflare/src/utils/sferror"
 )
@@ -27,9 +28,6 @@ const (
 
 	// ServerTable table where server addresses to be called are stored
 	ServerTable = "servers"
-
-	// CurrentEvent is the name of the event to load tables for (hardcoded for now)
-	CurrentEvent = "mzitv"
 )
 
 var (
@@ -50,7 +48,8 @@ func init() {
 
 // GetParticleEffectPresets retrieves all particle effect presets from the database
 func GetParticleEffectPresets() (presets []model.ParticleEffectPreset) {
-	tableName := fmt.Sprintf(ParticleEffectPresetsTable, CurrentEvent)
+	cfg := config.Get()
+	tableName := fmt.Sprintf(ParticleEffectPresetsTable, cfg.SelectedStage)
 
 	result, err := db.Scan(&dynamodb.ScanInput{
 		TableName: &tableName,
@@ -78,7 +77,8 @@ func GetParticleEffectPresets() (presets []model.ParticleEffectPreset) {
 
 // GetDragonEffectPresets retrieves all dragon effect presets from the database
 func GetDragonEffectPresets() (presets []model.DragonEffectPreset) {
-	tableName := fmt.Sprintf(DragonEffectPresetsTable, CurrentEvent)
+	cfg := config.Get()
+	tableName := fmt.Sprintf(DragonEffectPresetsTable, cfg.SelectedStage)
 
 	result, err := db.Scan(&dynamodb.ScanInput{
 		TableName: &tableName,
@@ -106,7 +106,8 @@ func GetDragonEffectPresets() (presets []model.DragonEffectPreset) {
 
 // GetTimeshiftEffectPresets retrieves all timeshift effect presets from the database
 func GetTimeshiftEffectPresets() (presets []model.TimeshiftEffectPreset) {
-	tableName := fmt.Sprintf(TimeshiftEffectPresetsTable, CurrentEvent)
+	cfg := config.Get()
+	tableName := fmt.Sprintf(TimeshiftEffectPresetsTable, cfg.SelectedStage)
 
 	result, err := db.Scan(&dynamodb.ScanInput{
 		TableName: &tableName,
@@ -134,7 +135,8 @@ func GetTimeshiftEffectPresets() (presets []model.TimeshiftEffectPreset) {
 
 // GetPotionEffectPresets retrieves all potion effect presets from the database
 func GetPotionEffectPresets() (presets []model.PotionEffectPreset) {
-	tableName := fmt.Sprintf(PotionEffectPresetsTable, CurrentEvent)
+	cfg := config.Get()
+	tableName := fmt.Sprintf(PotionEffectPresetsTable, cfg.SelectedStage)
 
 	result, err := db.Scan(&dynamodb.ScanInput{
 		TableName: &tableName,
@@ -162,7 +164,8 @@ func GetPotionEffectPresets() (presets []model.PotionEffectPreset) {
 
 // GetLaserEffectPresets retrieves all laser effect presets from the database
 func GetLaserEffectPresets() (presets []model.LaserEffectPreset) {
-	tableName := fmt.Sprintf(LaserEffectPresetsTable, CurrentEvent)
+	cfg := config.Get()
+	tableName := fmt.Sprintf(LaserEffectPresetsTable, cfg.SelectedStage)
 
 	result, err := db.Scan(&dynamodb.ScanInput{
 		TableName: &tableName,
@@ -217,6 +220,9 @@ func GetServers() (servers []model.Server) {
 
 // UpsertItem updates or inserts an item on the database
 func UpsertItem(tableName string, payload interface{}) error {
+	cfg := config.Get()
+	table := fmt.Sprintf(tableName, cfg.SelectedStage)
+
 	item, err := dynamodbattribute.MarshalMap(payload)
 	if err != nil {
 		return sferror.New(sferror.DatabaseMarshal, "Failed to marshal item", err)
@@ -224,7 +230,7 @@ func UpsertItem(tableName string, payload interface{}) error {
 
 	_, err = db.PutItem(&dynamodb.PutItemInput{
 		Item:      item,
-		TableName: aws.String(tableName),
+		TableName: aws.String(table),
 	})
 	if err != nil {
 		return sferror.New(sferror.DatabaseCRUD, "Failed to upsert item", err)
@@ -235,13 +241,16 @@ func UpsertItem(tableName string, payload interface{}) error {
 
 // DeleteItem deletes an item from the database
 func DeleteItem(tableName, id string) error {
+	cfg := config.Get()
+	table := fmt.Sprintf(tableName, cfg.SelectedStage)
+
 	_, err := db.DeleteItem(&dynamodb.DeleteItemInput{
 		Key: map[string]*dynamodb.AttributeValue{
 			"id": {
 				S: aws.String(id),
 			},
 		},
-		TableName: aws.String(tableName),
+		TableName: aws.String(table),
 	})
 
 	if err != nil {
@@ -254,4 +263,16 @@ func DeleteItem(tableName, id string) error {
 	}
 
 	return nil
+}
+
+// ReloadAllPresets reloads all presets from the database
+func ReloadAllPresets() {
+	cfg := config.Get()
+
+	cfg.ParticleEffectPresets = GetParticleEffectPresets()
+	cfg.DragonEffectPresets = GetDragonEffectPresets()
+	cfg.TimeshiftEffectPresets = GetTimeshiftEffectPresets()
+	cfg.TimeshiftEffectPresets = GetTimeshiftEffectPresets()
+	cfg.PotionEffectPresets = GetPotionEffectPresets()
+	cfg.LaserEffectPresets = GetLaserEffectPresets()
 }

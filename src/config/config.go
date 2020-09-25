@@ -14,6 +14,9 @@ type Config struct {
 
 	Servers []model.Server
 
+	Stages        []string
+	SelectedStage string
+
 	RunningOnDev bool
 }
 
