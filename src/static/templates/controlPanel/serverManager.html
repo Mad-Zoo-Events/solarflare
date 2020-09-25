@@ -6,7 +6,7 @@
     <div class="popup-content server-manager-group" id="server-manager-popup">
 
         {{range .RegisteredServers}}
-        <input type="checkbox" name="{{.Name}}" {{if .IsActive}}checked{{end}}
+        <input type="checkbox" class="server-checkbox" name="{{.ID}}" {{if .IsActive}}checked{{end}}
             onchange='doToggleServer("{{.ID}}", this);'>
         <span>{{.Name}}</span>
         {{end}}

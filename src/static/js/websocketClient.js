@@ -87,6 +87,16 @@ handleMessage = (data) => {
         const { activeServerIDs } = statusUpdate;
         const activeServerCount = activeServerIDs.length;
 
+        const checkboxes = document.getElementsByClassName("server-checkbox");
+        for (let i = 0; i < checkboxes.length; i++) {
+            const checkbox = checkboxes[i];
+            if (activeServerIDs.includes(checkbox.name)) {
+                checkbox.checked = true;
+            } else {
+                checkbox.checked = false;
+            }
+        }
+
         document.getElementById("status-server-count").innerHTML = activeServerCount;
         logInfoMessage(`Server list updated - ${activeServerCount} ${activeServerCount === 1 ? "instance is" : "instances are"} now connected`);
     }
