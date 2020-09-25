@@ -17,11 +17,11 @@ openWebsocket = async () => {
         document.getElementById("status-connection-status").classList.replace("orange", "green");
     };
     socket.onclose = (event) => {
-        logInfoMessage(`connection closed: ${event.code} ${event.reason} ${event.wasClean}`);
+        logInfoMessage(`connection closed ${event.wasClean ? "" : "unexpectedly "}(${event.code}: ${event.reason})`);
         setTimeout(openWebsocket, 1000);
     };
     socket.onerror = () => {
-        logInfoMessage(`connection closed: ${event}`);
+        logInfoMessage(`connection closed due to an error`);
         document.getElementById("status-connection-status").innerHTML = "Connection lost...";
         document.getElementById("status-connection-status").classList.replace("green", "orange");
     };

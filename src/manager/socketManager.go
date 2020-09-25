@@ -47,7 +47,7 @@ func RegisterSocket(conn *websocket.Conn) {
 
 	SendUIUpdate(update)
 
-	keepAlive(conn, id)
+	go keepAlive(id)
 }
 
 // SendUIUpdate sends an update to the UI through each web socket
@@ -70,20 +70,26 @@ func sendUIUpdate(update model.UIUpdate, id uuid.UUID) {
 	}
 }
 
-func keepAlive(c *websocket.Conn, id uuid.UUID) {
-	go func() {
-		for {
-			time.Sleep(websocketTimeout * time.Second)
+func keepAlive(id uuid.UUID) {
+	c := conns[id]
+	for {
+		time.Sleep(websocketTimeout * time.Second)
 
-			err := c.WriteMessage(websocket.PingMessage, []byte{})
-			if err != nil {
-				closeSocket(id)
-			}
+		c.mu.Lock()
+		defer c.mu.Unlock()
+
+		err := c.conn.WriteMessage(websocket.PingMessage, []byte{})
+		if err != nil {
+			closeSocket(id)
 		}
-	}()
+	}
 }
 
 func closeSocket(id uuid.UUID) {
-	conns[id].conn.Close()
-	delete(conns, id)
+	if conns[id] != nil {
+		if conns[id].conn != nil {
+			conns[id].conn.Close()
+		}
+		delete(conns, id)
+	}
 }
