@@ -1,7 +1,16 @@
 {{define "serverManager"}}
 
-<div id="server-manager-box">
-    hello
+<div class="popup server-manager-popup">
+    <img class="server-manager-button" src="/static/img/servers.png" alt="Server Management"
+        onclick='toggleServerManagerPopup();' />
+    <div class="popup-content server-manager-group" id="server-manager-popup">
+
+        {{range .RegisteredServers}}
+        <input type="checkbox" name="{{.Name}}" {{if .IsActive}}checked{{end}}>
+        <span>{{.Name}}</span>
+        {{end}}
+    </div>
+
 </div>
 
 {{end}}
