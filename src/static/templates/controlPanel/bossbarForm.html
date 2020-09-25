@@ -1,0 +1,57 @@
+{{define "bossbarForm"}}
+
+<iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+<span class="bossbar-header">Boss Bar</span>
+<form id="bossbar-form" method="POST" action="/bossbar/set" target="dummyframe">
+    <div class="popup">
+        <input id="bossbar-text" type="text" name="bossbar-text" placeholder="Boss Bar Text" autocomplete="off"
+            onfocus='suppressHotkeys=true; toggleFormattingCodePopup();'
+            onblur='suppressHotkeys=false; toggleFormattingCodePopup();'>
+        <div class="popup-content bossbar-formatting-group" id="bossbar-formatting-popup" tabindex="0"
+            onmouseover='hoveringOverFormattingPopup=true;' onmouseout='hoveringOverFormattingPopup=false;'
+            onblur='toggleFormattingCodePopup();'>
+            <div class="bossbar-formatting-group">
+                <div>▼</div>
+                <div><b>First: color</b></div>
+                <span>§0</span><span onclick='addFormatting("§0");'
+                    style="color:#000000; text-shadow: 1px 1px gray;">Black</span>
+                <span>§1</span><span onclick='addFormatting("§1");' style="color:#0000AA">Dark Blue</span>
+                <span>§2</span><span onclick='addFormatting("§2");' style="color:#00AA00">Dark Green</span>
+                <span>§3</span><span onclick='addFormatting("§3");' style="color:#00AAAA">Dark Aqua</span>
+                <span>§4</span><span onclick='addFormatting("§4");' style="color:#AA0000">Dark Red</span>
+                <span>§5</span><span onclick='addFormatting("§5");' style="color:#AA00AA">Dark Purple</span>
+                <span>§6</span><span onclick='addFormatting("§6");' style="color:#FFAA00">Gold</span>
+                <span>§7</span><span onclick='addFormatting("§7");' style="color:#AAAAAA">Gray</span>
+                <span>§8</span><span onclick='addFormatting("§8");' style="color:#555555">Dark Gray</span>
+                <span>§9</span><span onclick='addFormatting("§9");' style="color:#5555DD">Blue</span>
+                <span>§a</span><span onclick='addFormatting("§a");' style="color:#55FF55">Green</span>
+                <span>§b</span><span onclick='addFormatting("§b");' style="color:#55FFFF">Aqua</span>
+                <span>§c</span><span onclick='addFormatting("§c");' style="color:#FF5555">Red</span>
+                <span>§d</span><span onclick='addFormatting("§d");' style="color:#FF55FF">Light Purple</span>
+                <span>§e</span><span onclick='addFormatting("§e");' style="color:#FFFF55">Yellow</span>
+                <span>§f</span><span onclick='addFormatting("§f");' style="color:#FFFFFF">White</span>
+            </div>
+            <div class="bossbar-formatting-group">
+                <div>▼</div>
+                <div><b>Then: formatting</b></div>
+                <span>§k</span><span onclick='addFormatting("§k");'>ö1%~#n</span>
+                <span>§l</span><span onclick='addFormatting("§l");' style="font-weight: bold">Bold</span>
+                <span>§m</span><span onclick='addFormatting("§m");'
+                    style="text-decoration: line-through">Strikethrough</span>
+                <span>§n</span><span onclick='addFormatting("§n");' style="text-decoration: underline">Underline</span>
+                <span>§o</span><span onclick='addFormatting("§o");' style="font-style: italic">Italic</span>
+                <span>§r</span><span onclick='addFormatting("§r");'>Reset</span>
+            </div>
+        </div>
+    </div>
+    <select id="bossbar-color" name="bossbar-color">
+        {{range $.MinecraftColors}}
+        <option value="{{.}}">{{.}}</option>
+        {{end}}
+    </select>
+    <button class="bossbar-button" type="button"
+        onclick='document.getElementById("bossbar-form").submit();'>Update</button>
+    <button class="bossbar-button" type="button" onclick='doClearBossbar();'>Hide</button>
+</form>
+
+{{end}}
