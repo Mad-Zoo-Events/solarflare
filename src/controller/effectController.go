@@ -17,7 +17,9 @@ func RunEffect(id string, effectType model.EffectType, action model.EffectAction
 
 	if action == model.StopEffectAction {
 		if id == "all" {
-			return manager.StopAll()
+			return manager.StopAll(true)
+		} else if id == "allnoclock" {
+			return manager.StopAll(false)
 		}
 
 		return manager.StopEffect(id, true)

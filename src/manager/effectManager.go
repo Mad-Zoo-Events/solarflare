@@ -135,13 +135,19 @@ func StopEffect(id string, sendUpdate bool) error {
 }
 
 // StopAll removes all clock subscriptions and stops all effects
-func StopAll() error {
-	UnsubscribeEffectFromClock("all", model.ParticleEffectType, true)
+func StopAll(detachClock bool) error {
+	if detachClock {
+		UnsubscribeEffectFromClock("all", model.ParticleEffectType, true)
+	}
 
 	endpoint := effectsEndpoint + "/all/stop"
 	err := client.ExecuteEffect(endpoint, nil)
 
-	sendEffectUpdate("all", "", model.StopEffectAction, nil)
+	if detachClock {
+		sendEffectUpdate("all", "", model.StopEffectAction, nil)
+	} else {
+		sendEffectUpdate("allnoclock", "", model.StopEffectAction, nil)
+	}
 
 	return err
 }
