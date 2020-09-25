@@ -1,6 +1,8 @@
 package manager
 
 import (
+	"fmt"
+
 	"github.com/google/uuid"
 
 	"github.com/eynorey/solarflare/src/client"
@@ -14,7 +16,7 @@ func UpsertParticleEffectPreset(preset model.ParticleEffectPreset) (*string, err
 		preset.ID = uuid.New().String()
 	}
 
-	err := client.UpsertItem(client.ParticleEffectPresetsTable, preset)
+	err := client.UpsertItem(fmt.Sprintf(client.ParticleEffectPresetsTable, client.CurrentEvent), preset)
 	if err != nil {
 		return nil, err
 	}
@@ -31,7 +33,7 @@ func UpsertDragonEffectPreset(preset model.DragonEffectPreset) (*string, error) 
 		preset.ID = uuid.New().String()
 	}
 
-	err := client.UpsertItem(client.DragonEffectPresetsTable, preset)
+	err := client.UpsertItem(fmt.Sprintf(client.DragonEffectPresetsTable, client.CurrentEvent), preset)
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +50,7 @@ func UpsertTimeshiftEffectPreset(preset model.TimeshiftEffectPreset) (*string, e
 		preset.ID = uuid.New().String()
 	}
 
-	err := client.UpsertItem(client.TimeshiftEffectPresetsTable, preset)
+	err := client.UpsertItem(fmt.Sprintf(client.TimeshiftEffectPresetsTable, client.CurrentEvent), preset)
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +67,7 @@ func UpsertPotionEffectPreset(preset model.PotionEffectPreset) (*string, error) 
 		preset.ID = uuid.New().String()
 	}
 
-	err := client.UpsertItem(client.PotionEffectPresetsTable, preset)
+	err := client.UpsertItem(fmt.Sprintf(client.PotionEffectPresetsTable, client.CurrentEvent), preset)
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +84,7 @@ func UpsertLaserEffectPreset(preset model.LaserEffectPreset) (*string, error) {
 		preset.ID = uuid.New().String()
 	}
 
-	err := client.UpsertItem(client.LaserEffectPresetsTable, preset)
+	err := client.UpsertItem(fmt.Sprintf(client.LaserEffectPresetsTable, client.CurrentEvent), preset)
 	if err != nil {
 		return nil, err
 	}

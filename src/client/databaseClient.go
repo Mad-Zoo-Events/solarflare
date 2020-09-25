@@ -15,18 +15,21 @@ import (
 
 const (
 	// ParticleEffectPresetsTable table where particle effects are stored
-	ParticleEffectPresetsTable = "presets_particle-effects"
+	ParticleEffectPresetsTable = "presets_%s_particle-effects"
 	// DragonEffectPresetsTable table where dragon effects are stored
-	DragonEffectPresetsTable = "presets_dragon-effects"
+	DragonEffectPresetsTable = "presets_%s_dragon-effects"
 	// TimeshiftEffectPresetsTable table where timeshift effects are stored
-	TimeshiftEffectPresetsTable = "presets_timeshift-effects"
+	TimeshiftEffectPresetsTable = "presets_%s_timeshift-effects"
 	// PotionEffectPresetsTable table where potion effects are stored
-	PotionEffectPresetsTable = "presets_potion-effects"
+	PotionEffectPresetsTable = "presets_%s_potion-effects"
 	// LaserEffectPresetsTable table where laser effects are stored
-	LaserEffectPresetsTable = "presets_laser-effects"
+	LaserEffectPresetsTable = "presets_%s_laser-effects"
 
 	// ServerTable table where server addresses to be called are stored
 	ServerTable = "servers"
+
+	// CurrentEvent is the name of the event to load tables for (hardcoded for now)
+	CurrentEvent = "mzitv"
 )
 
 var (
@@ -47,7 +50,7 @@ func init() {
 
 // GetParticleEffectPresets retrieves all particle effect presets from the database
 func GetParticleEffectPresets() (presets []model.ParticleEffectPreset) {
-	tableName := ParticleEffectPresetsTable
+	tableName := fmt.Sprintf(ParticleEffectPresetsTable, CurrentEvent)
 
 	result, err := db.Scan(&dynamodb.ScanInput{
 		TableName: &tableName,
@@ -75,7 +78,7 @@ func GetParticleEffectPresets() (presets []model.ParticleEffectPreset) {
 
 // GetDragonEffectPresets retrieves all dragon effect presets from the database
 func GetDragonEffectPresets() (presets []model.DragonEffectPreset) {
-	tableName := DragonEffectPresetsTable
+	tableName := fmt.Sprintf(DragonEffectPresetsTable, CurrentEvent)
 
 	result, err := db.Scan(&dynamodb.ScanInput{
 		TableName: &tableName,
@@ -103,7 +106,7 @@ func GetDragonEffectPresets() (presets []model.DragonEffectPreset) {
 
 // GetTimeshiftEffectPresets retrieves all timeshift effect presets from the database
 func GetTimeshiftEffectPresets() (presets []model.TimeshiftEffectPreset) {
-	tableName := TimeshiftEffectPresetsTable
+	tableName := fmt.Sprintf(TimeshiftEffectPresetsTable, CurrentEvent)
 
 	result, err := db.Scan(&dynamodb.ScanInput{
 		TableName: &tableName,
@@ -131,7 +134,7 @@ func GetTimeshiftEffectPresets() (presets []model.TimeshiftEffectPreset) {
 
 // GetPotionEffectPresets retrieves all potion effect presets from the database
 func GetPotionEffectPresets() (presets []model.PotionEffectPreset) {
-	tableName := PotionEffectPresetsTable
+	tableName := fmt.Sprintf(PotionEffectPresetsTable, CurrentEvent)
 
 	result, err := db.Scan(&dynamodb.ScanInput{
 		TableName: &tableName,
@@ -159,7 +162,7 @@ func GetPotionEffectPresets() (presets []model.PotionEffectPreset) {
 
 // GetLaserEffectPresets retrieves all laser effect presets from the database
 func GetLaserEffectPresets() (presets []model.LaserEffectPreset) {
-	tableName := LaserEffectPresetsTable
+	tableName := fmt.Sprintf(LaserEffectPresetsTable, CurrentEvent)
 
 	result, err := db.Scan(&dynamodb.ScanInput{
 		TableName: &tableName,
