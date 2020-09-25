@@ -34,5 +34,5 @@ type ClockSpeedUpdate struct {
 
 // StatusUpdate is the model used to send updates on network status to the UI
 type StatusUpdate struct {
-	RegisteredServerCount int `json:"registeredServerCount"`
+	ActiveServerIDs []string `json:"activeServerIDs"`
 }
