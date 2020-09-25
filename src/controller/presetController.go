@@ -2,6 +2,7 @@ package controller
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/url"
 
 	"github.com/eynorey/solarflare/src/client"
@@ -114,27 +115,27 @@ func DeletePreset(effectType, id string) error {
 
 	switch model.EffectType(effectType) {
 	case model.ParticleEffectType:
-		err = client.DeleteItem(client.ParticleEffectPresetsTable, id)
+		err = client.DeleteItem(fmt.Sprintf(client.ParticleEffectPresetsTable, client.CurrentEvent), id)
 		if err == nil {
 			cfg.ParticleEffectPresets = client.GetParticleEffectPresets()
 		}
 	case model.DragonEffectType:
-		err = client.DeleteItem(client.DragonEffectPresetsTable, id)
+		err = client.DeleteItem(fmt.Sprintf(client.DragonEffectPresetsTable, client.CurrentEvent), id)
 		if err == nil {
 			cfg.DragonEffectPresets = client.GetDragonEffectPresets()
 		}
 	case model.TimeshiftEffectType:
-		err = client.DeleteItem(client.TimeshiftEffectPresetsTable, id)
+		err = client.DeleteItem(fmt.Sprintf(client.TimeshiftEffectPresetsTable, client.CurrentEvent), id)
 		if err == nil {
 			cfg.TimeshiftEffectPresets = client.GetTimeshiftEffectPresets()
 		}
 	case model.PotionEffectType:
-		err = client.DeleteItem(client.PotionEffectPresetsTable, id)
+		err = client.DeleteItem(fmt.Sprintf(client.PotionEffectPresetsTable, client.CurrentEvent), id)
 		if err == nil {
 			cfg.PotionEffectPresets = client.GetPotionEffectPresets()
 		}
 	case model.LaserEffectType:
-		err = client.DeleteItem(client.LaserEffectPresetsTable, id)
+		err = client.DeleteItem(fmt.Sprintf(client.LaserEffectPresetsTable, client.CurrentEvent), id)
 		if err == nil {
 			cfg.LaserEffectPresets = client.GetLaserEffectPresets()
 		}
