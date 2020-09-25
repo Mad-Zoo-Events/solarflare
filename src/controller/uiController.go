@@ -47,8 +47,8 @@ func RenderControlPanel(writer http.ResponseWriter) error {
 		PotionEffectPresets:    cfg.PotionEffectPresets,
 		LaserEffectPresets:     cfg.LaserEffectPresets,
 
-		MinecraftColors:       model.MinecraftColors,
-		RegisteredServerCount: len(cfg.Servers),
+		MinecraftColors:   model.MinecraftColors,
+		RegisteredServers: cfg.Servers,
 
 		AppVersion: appVersion,
 	}
@@ -78,8 +78,6 @@ func RenderPresetManager(writer http.ResponseWriter) error {
 		TimeshiftEffectPresets: cfg.TimeshiftEffectPresets,
 		PotionEffectPresets:    cfg.PotionEffectPresets,
 		LaserEffectPresets:     cfg.LaserEffectPresets,
-
-		RegisteredServerCount: len(cfg.Servers),
 	}
 
 	err = template.Execute(writer, data)
