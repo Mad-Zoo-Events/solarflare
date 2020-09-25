@@ -32,3 +32,14 @@ func ToggleServerHandler() http.HandlerFunc {
 		writeResponse(w, 204, nil)
 	}
 }
+
+// SelectStageHandler handles requests to select a different data source for presets
+func SelectStageHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		vars := mux.Vars(r)
+
+		controller.SelectStage(vars["stage"])
+
+		writeResponse(w, 204, nil)
+	}
+}
