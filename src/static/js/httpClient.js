@@ -1,6 +1,7 @@
 const BASE_URL = `${window.location.origin}`;
 const STATUS_ENDPOINT = `${BASE_URL}/status`;
 const SERVERS_ENDPOINT = `${BASE_URL}/servers`;
+const SELECTSTAGE_ENDPOINT = `${BASE_URL}/selectstage`;
 const EFFECTS_ENDPOINT = `${BASE_URL}/effects`;
 const BOSSBAR_ENDPOINT = `${BASE_URL}/bossbar`;
 const PRESETS_ENDPOINT = `${BASE_URL}/presets`;
@@ -114,5 +115,15 @@ doToggleServer = async (id, element) => {
 
     const request = new XMLHttpRequest();
     request.open("PATCH", `${SERVERS_ENDPOINT}/${id}/${action}`);
+    request.send();
+};
+
+doSelectStage = async () => {
+    await doStopAll();
+
+    const stage = document.getElementById("stage-selector").value;
+
+    const request = new XMLHttpRequest();
+    request.open("POST", `${SELECTSTAGE_ENDPOINT}/${stage}`);
     request.send();
 };

@@ -6,7 +6,10 @@
 <body onload="init()" onkeypress='handleKeypress(event);' onkeydown='handleKeydown(event);'>
     <div class="header">
         {{template "bossbarForm" .}}
-        <span id="caps-warning">MAT! YOU GOT CAPS LOCK ON AGAIN!!</span>
+        {{template "stageSelector" .}}
+        <div id="caps-warning">
+            MAT! YOU GOT CAPS LOCK ON AGAIN!!
+        </div>
         {{template "serverManager" .}}
     </div>
     <div class="main-controls-holder">

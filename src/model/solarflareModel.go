@@ -13,7 +13,11 @@ type ControlPanel struct {
 
 	RegisteredServers []Server
 	ActiveServerCount int
-	AppVersion        string
+
+	Stages        []string
+	SelectedStage string
+
+	AppVersion string
 }
 
 // Server contains information about an Aurora plugin server
