@@ -403,7 +403,7 @@ h3 {
     gap                  : 1em;
 }
 
-.master-controls {
+.main-controls {
     text-align : center;
     padding    : 0 1em;
     border-left: 2px dashed var(--gray);
@@ -411,6 +411,12 @@ h3 {
     display              : grid;
     grid-template-columns: 50% 50%;
     gap                  : 0em 0.5em;
+}
+
+.primary-button {
+    text-align : center;
+    padding    : 0 1em;
+    border-left: 2px dashed var(--gray);
 }
 
 #manage-presets-button {
