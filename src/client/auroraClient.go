@@ -31,6 +31,7 @@ func ExecuteEffect(endpoint string, body []byte) error {
 	cfg := config.Get()
 
 	errCount := 0
+	serverCount := 0
 
 	var wg sync.WaitGroup
 
@@ -40,10 +41,11 @@ func ExecuteEffect(endpoint string, body []byte) error {
 		}
 
 		url := server.PrivateAddress + endpoint
-
 		if cfg.RunningOnDev {
 			url = server.PublicAddress + endpoint
 		}
+
+		serverCount++
 
 		wg.Add(1)
 		go executeEffect(url, &body, &wg, &errCount)
@@ -52,10 +54,10 @@ func ExecuteEffect(endpoint string, body []byte) error {
 	wg.Wait()
 
 	if errCount > 0 {
-		if errCount == len(cfg.Servers) {
+		if errCount == serverCount {
 			return sferror.New(sferror.FailedOnAuroraAll, "Command failed on all servers", nil)
 		}
-		return sferror.New(sferror.FailedOnAuroraSome, fmt.Sprintf("Command failed on %d out of %d servers", errCount, len(cfg.Servers)), nil)
+		return sferror.New(sferror.FailedOnAuroraSome, fmt.Sprintf("Command failed on %d out of %d servers", errCount, serverCount), nil)
 	}
 
 	return nil
