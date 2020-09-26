@@ -30,7 +30,7 @@ openWebsocket = async () => {
 };
 
 handleMessage = (data) => {
-    const { effectUpdate, clockUpdate, clockSpeedUpdate, statusUpdate } = data;
+    const { effectUpdate, clockUpdate, clockSpeedUpdate, statusUpdate, stageUpdate } = data;
 
     if (effectUpdate) {
         const { id, displayName, action, errorMessage } = effectUpdate;
@@ -105,5 +105,9 @@ handleMessage = (data) => {
 
         document.getElementById("status-server-count").innerHTML = activeServerCount;
         logInfoMessage(`Server list updated - ${activeServerCount} ${activeServerCount === 1 ? "instance is" : "instances are"} now connected`);
+    }
+
+    if (stageUpdate) {
+        window.location.reload();
     }
 };

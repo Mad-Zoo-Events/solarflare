@@ -22,6 +22,7 @@ func RenderControlPanel(writer http.ResponseWriter) error {
 	template, err := template.ParseFiles(
 		controlPanelPath+"controlPanel.html",
 		controlPanelPath+"bossbarForm.html",
+		controlPanelPath+"stageSelector.html",
 		controlPanelPath+"serverManager.html",
 		controlPanelPath+"particleEffectControl.html",
 		controlPanelPath+"dragonEffectControl.html",
@@ -50,6 +51,9 @@ func RenderControlPanel(writer http.ResponseWriter) error {
 		MinecraftColors:   model.MinecraftColors,
 		RegisteredServers: cfg.Servers,
 		ActiveServerCount: len(getActiveServerIDs()),
+
+		Stages:        cfg.Stages,
+		SelectedStage: cfg.SelectedStage,
 
 		AppVersion: appVersion,
 	}

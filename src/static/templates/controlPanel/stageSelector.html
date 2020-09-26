@@ -1,0 +1,11 @@
+{{define "stageSelector"}}
+
+<span class="header-title">Stage</span>
+<select id="stage-selector" onchange='doSelectStage();'>
+    {{$selected := .SelectedStage}}
+    {{range .Stages}}
+    <option value="{{.}}" {{if eq $selected .}}selected{{end}}>{{.}}</option>
+    {{end}}
+</select>
+
+{{end}}
