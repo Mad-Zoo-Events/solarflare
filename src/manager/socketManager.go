@@ -52,7 +52,7 @@ func SendUIUpdate(update model.UIUpdate) {
 	}
 }
 
-func sendUIUpdate(update model.UIUpdate, id uuid.UUID) {
+func sendUIUpdate(update model.UIUpdate, id uuid.UUID) bool {
 	c := conns[id]
 
 	c.mu.Lock()
@@ -61,17 +61,15 @@ func sendUIUpdate(update model.UIUpdate, id uuid.UUID) {
 	err := c.conn.WriteJSON(update)
 	if err != nil {
 		sferror.New(sferror.SocketSendUpdate, "Error sending an update through the web socket - Closing", err)
-		closeSocket(id)
+		return closeSocket(id)
 	}
+	return true
 }
 
 func keepAlive(id uuid.UUID) {
 	c := conns[id]
 	for {
 		time.Sleep(websocketTimeout * time.Second)
-
-		c.mu.Lock()
-		defer c.mu.Unlock()
 
 		err := c.conn.WriteMessage(websocket.PingMessage, []byte{})
 		if err != nil {
@@ -80,11 +78,12 @@ func keepAlive(id uuid.UUID) {
 	}
 }
 
-func closeSocket(id uuid.UUID) {
+func closeSocket(id uuid.UUID) bool {
 	if conns[id] != nil {
 		if conns[id].conn != nil {
 			conns[id].conn.Close()
 		}
 		delete(conns, id)
 	}
+	return true
 }
