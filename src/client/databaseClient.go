@@ -2,6 +2,7 @@ package client
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"
@@ -220,8 +221,12 @@ func GetServers() (servers []model.Server) {
 
 // UpsertItem updates or inserts an item on the database
 func UpsertItem(tableName string, payload interface{}) error {
-	cfg := config.Get()
-	table := fmt.Sprintf(tableName, cfg.SelectedStage)
+	table := tableName
+
+	if strings.Contains(tableName, "%s") {
+		cfg := config.Get()
+		table = fmt.Sprintf(tableName, cfg.SelectedStage)
+	}
 
 	item, err := dynamodbattribute.MarshalMap(payload)
 	if err != nil {
