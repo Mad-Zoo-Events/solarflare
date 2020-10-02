@@ -59,6 +59,19 @@ doDeletePreset = async (id, effectType) => {
     request.send();
 };
 
+doDuplicatePreset = async (id, effectType) => {
+    const request = new XMLHttpRequest();
+    request.open("POST", `${PRESETS_ENDPOINT}/${effectType}/${id}/duplicate`);
+    request.addEventListener('load', () => {
+        if (request.status === 201) {
+            location.reload();
+        }
+    });
+
+    request.send();
+};
+
+
 // ================ CLOCK ================
 
 doRestartClock = async (callback) => {

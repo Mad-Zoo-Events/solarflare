@@ -31,8 +31,9 @@
                 {{end}}
             </td>
             <td class="actions-column">
-                <span class="delete-action" onclick='confirmDelete("{{.ID}}", "particle", "{{.DisplayName}}")'>🗑</span>
-                <span class="edit-action" onclick='navigate(CP_PRESETS_ENDPOINT+"/particle/modify/{{.ID}}");'>🖉</span>
+                <span onclick='confirmDelete("{{.ID}}", "particle", "{{.DisplayName}}")'>🗑</span>
+                <span onclick='navigate(CP_PRESETS_ENDPOINT+"/particle/modify/{{.ID}}");'>🖉</span>
+                <span onclick='doDuplicatePreset("{{.ID}}", "particle");'>➕</span>
             </td>
         </tr>
         {{end}}
@@ -54,8 +55,9 @@
                 {{end}}
             </td>
             <td class="actions-column">
-                <span class="delete-action" onclick='confirmDelete("{{.ID}}", "dragon", "{{.DisplayName}}")'>🗑</span>
-                <span class="edit-action" onclick='navigate(CP_PRESETS_ENDPOINT+"/dragon/modify/{{.ID}}");'>🖉</span>
+                <span onclick='confirmDelete("{{.ID}}", "dragon", "{{.DisplayName}}")'>🗑</span>
+                <span onclick='navigate(CP_PRESETS_ENDPOINT+"/dragon/modify/{{.ID}}");'>🖉</span>
+                <span onclick='doDuplicatePreset("{{.ID}}", "dragon");'>➕</span>
             </td>
         </tr>
         {{end}}
@@ -78,8 +80,9 @@
                 {{end}}
             </td>
             <td class="actions-column">
-                <span class="delete-action" onclick='confirmDelete("{{.ID}}", "laser", "{{.DisplayName}}")'>🗑</span>
-                <span class="edit-action" onclick='navigate(CP_PRESETS_ENDPOINT+"/laser/modify/{{.ID}}");'>🖉</span>
+                <span onclick='confirmDelete("{{.ID}}", "laser", "{{.DisplayName}}")'>🗑</span>
+                <span onclick='navigate(CP_PRESETS_ENDPOINT+"/laser/modify/{{.ID}}");'>🖉</span>
+                <span onclick='doDuplicatePreset("{{.ID}}", "laser");'>➕</span>
             </td>
         </tr>
         {{end}}
@@ -101,9 +104,9 @@
                 {{end}}
             </td>
             <td class="actions-column">
-                <span class="delete-action"
-                    onclick='confirmDelete("{{.ID}}", "timeshift", "{{.DisplayName}}")'>🗑</span>
-                <span class="edit-action" onclick='navigate(CP_PRESETS_ENDPOINT+"/timeshift/modify/{{.ID}}");'>🖉</span>
+                <span onclick='confirmDelete("{{.ID}}", "timeshift", "{{.DisplayName}}")'>🗑</span>
+                <span onclick='navigate(CP_PRESETS_ENDPOINT+"/timeshift/modify/{{.ID}}");'>🖉</span>
+                <span onclick='doDuplicatePreset("{{.ID}}", "timeshift");'>➕</span>
             </td>
         </tr>
         {{end}}
@@ -125,8 +128,9 @@
                 {{end}}
             </td>
             <td class="actions-column">
-                <span class="delete-action" onclick='confirmDelete("{{.ID}}", "potion", "{{.DisplayName}}")'>🗑</span>
-                <span class="edit-action" onclick='navigate(CP_PRESETS_ENDPOINT+"/potion/modify/{{.ID}}");'>🖉</span>
+                <span onclick='confirmDelete("{{.ID}}", "potion", "{{.DisplayName}}")'>🗑</span>
+                <span onclick='navigate(CP_PRESETS_ENDPOINT+"/potion/modify/{{.ID}}");'>🖉</span>
+                <span onclick='doDuplicatePreset("{{.ID}}", "potion");'>➕</span>
             </td>
         </tr>
         {{end}}
