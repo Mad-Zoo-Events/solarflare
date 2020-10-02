@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"net/url"
 
+	"github.com/eynorey/solarflare/src/utils"
+
 	"github.com/eynorey/solarflare/src/client"
 	"github.com/eynorey/solarflare/src/config"
 	"github.com/eynorey/solarflare/src/manager"
@@ -138,6 +140,41 @@ func DeletePreset(effectType, id string) error {
 		if err == nil {
 			cfg.LaserEffectPresets = client.GetLaserEffectPresets()
 		}
+	default:
+		err = sferror.New(sferror.InvalidEffectType, effectType, nil)
+	}
+
+	return err
+}
+
+// DuplicatePreset duplicates a preset and reloads
+func DuplicatePreset(effectType, id string) error {
+	preset, err := utils.FindPreset(id, model.EffectType(effectType))
+	if err != nil {
+		return err
+	}
+
+	switch model.EffectType(effectType) {
+	case model.ParticleEffectType:
+		p := preset.(model.ParticleEffectPreset)
+		p.ID = ""
+		_, err = manager.UpsertParticleEffectPreset(p)
+	case model.DragonEffectType:
+		p := preset.(model.DragonEffectPreset)
+		p.ID = ""
+		_, err = manager.UpsertDragonEffectPreset(p)
+	case model.TimeshiftEffectType:
+		p := preset.(model.TimeshiftEffectPreset)
+		p.ID = ""
+		_, err = manager.UpsertTimeshiftEffectPreset(p)
+	case model.PotionEffectType:
+		p := preset.(model.PotionEffectPreset)
+		p.ID = ""
+		_, err = manager.UpsertPotionEffectPreset(p)
+	case model.LaserEffectType:
+		p := preset.(model.LaserEffectPreset)
+		p.ID = ""
+		_, err = manager.UpsertLaserEffectPreset(p)
 	default:
 		err = sferror.New(sferror.InvalidEffectType, effectType, nil)
 	}
