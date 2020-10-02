@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"net/http"
 	"strconv"
 
@@ -69,12 +70,18 @@ func ClockSubscriptionHandler() http.HandlerFunc {
 			id         = vars["id"]
 		)
 
+		request := &model.ClockSubscriptionRequest{}
+		err := json.NewDecoder(r.Body).Decode(&request)
+		if err != nil {
+			err = sferror.New(sferror.ClockInvalidRequestBody, "failed to parse clock request body", err)
+			writeResponse(w, 400, sferror.GetErrorResponse(err))
+			return
+		}
+
 		switch model.ClockAction(action) {
 		case model.SubscribeClockAction:
-			manager.SubscribeEffectToClock(id, model.EffectType(effectType), false)
-		case model.SubscribeRunningClockAction:
-			manager.SubscribeEffectToClock(id, model.EffectType(effectType), true)
-		case model.UnsubscribeClockAction, model.UnsubscribeRunningClockAction:
+			manager.SubscribeEffectToClock(id, model.EffectType(effectType), request.IsRunning)
+		case model.UnsubscribeClockAction:
 			manager.UnsubscribeEffectFromClock(id, model.EffectType(effectType), false)
 		default:
 			err := sferror.New(sferror.ClockInvalidAction, "invlid clock action: "+effectType, nil)
