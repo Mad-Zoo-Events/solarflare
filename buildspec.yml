@@ -8,8 +8,8 @@ env:
 phases:
   install:
     runtime-versions:
-      golang: 1.13
-      nodejs: 12
+      golang: latest
+      nodejs: latest
     commands:
       - npm install terser -g
       - npm install clean-css-cli -g
