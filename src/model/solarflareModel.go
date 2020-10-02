@@ -73,10 +73,6 @@ const (
 	SubscribeClockAction = ClockAction("subscribe")
 	// UnsubscribeClockAction unsubscribes a visual effect from the clock
 	UnsubscribeClockAction = ClockAction("unsubscribe")
-	// SubscribeRunningClockAction subscribes an already running visual effect to the clock
-	SubscribeRunningClockAction = ClockAction("subscriberunning")
-	// UnsubscribeRunningClockAction unsubscribes an already running visual effect from the clock
-	UnsubscribeRunningClockAction = ClockAction("unsubscriberunning")
 )
 
 // ServerAction represents an action to be performed for a server

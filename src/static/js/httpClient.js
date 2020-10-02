@@ -111,14 +111,14 @@ doSetClockSpeed = async (bpm, multiplier) => {
     request.send();
 };
 
-doClockSubscription = async (effectType, id, action, callback) => {
+doClockSubscription = async (effectType, id, action, isRunning) => {
     const request = new XMLHttpRequest();
     request.open("POST", `${CLOCK_ENDPOINT}/${action}/${effectType}/${id}`);
-    if (callback) {
-        request.addEventListener('load', callback);
-    }
+    const body = {
+        "isRunning": isRunning
+    };
 
-    request.send();
+    request.send(JSON.stringify(body));
 };
 
 // ================ NETWORK / STATUS ================

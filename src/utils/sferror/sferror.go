@@ -46,6 +46,8 @@ var (
 	ClockInvalidBPM = ErrorType{"ClockInvalidBPM", 40}
 	// ClockInvalidAction | invalid action for the clock
 	ClockInvalidAction = ErrorType{"ClockInvalidAction", 41}
+	// ClockInvalidRequestBody | invalid request body for a clock request
+	ClockInvalidRequestBody = ErrorType{"ClockInvalidRequestBody", 42}
 
 	// SocketOpen | error opening a new websocket
 	SocketOpen = ErrorType{"SocketOpen", 50}
