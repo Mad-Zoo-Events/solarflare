@@ -15,9 +15,8 @@ phases:
       - npm install clean-css-cli -g
   build:
     commands:
-      - echo "export APP_VERSION=$(date '+%F_%H-%M')" > environment
       - cd $CODEBUILD_SRC_DIR/src
-      - go build -mod vendor -o ../bin/application -i github.com/eynorey/solarflare/src
+      - go build -mod vendor -ldflags "-X github.com/eynorey/solarflare/src/config.appVersion=$(date -u '+%y%m%d-%H%M')" -o ../bin/application -i github.com/eynorey/solarflare/src
       - chmod 755 ../bin/application
       - mv static ../
   post_build:
@@ -37,4 +36,3 @@ artifacts:
     - .ebextensions/*
     - bin/application
     - static/**/*
-    - environment

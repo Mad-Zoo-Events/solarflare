@@ -3,7 +3,6 @@ package controller
 import (
 	"html/template"
 	"net/http"
-	"os"
 
 	"github.com/eynorey/solarflare/src/config"
 	"github.com/eynorey/solarflare/src/model"
@@ -35,11 +34,6 @@ func RenderControlPanel(writer http.ResponseWriter) error {
 		return sferror.New(sferror.Template, "Error loading control panel templates", err)
 	}
 
-	appVersion := "HITV"
-	if v := os.Getenv("APP_VERSION"); v != "" {
-		appVersion = v
-	}
-
 	cfg := config.Get()
 	data := model.ControlPanel{
 		ParticleEffectPresets:  cfg.ParticleEffectPresets,
@@ -55,7 +49,7 @@ func RenderControlPanel(writer http.ResponseWriter) error {
 		Stages:        cfg.Stages,
 		SelectedStage: cfg.SelectedStage,
 
-		AppVersion: appVersion,
+		AppVersion: cfg.AppVersion,
 	}
 
 	err = template.Execute(writer, data)

@@ -4,6 +4,13 @@ import (
 	"github.com/eynorey/solarflare/src/model"
 )
 
+func init() {
+	cfg.AppVersion = appVersion
+}
+
+// set at build time
+var appVersion = "local"
+
 // Config contains the server configuration
 type Config struct {
 	ParticleEffectPresets  []model.ParticleEffectPreset
@@ -18,6 +25,7 @@ type Config struct {
 	SelectedStage string
 
 	RunningOnDev bool
+	AppVersion   string
 }
 
 var cfg Config
