@@ -1,11 +1,18 @@
 package config
 
 import (
+	"os"
+
 	"github.com/eynorey/solarflare/src/model"
 )
 
 func init() {
 	cfg.AppVersion = appVersion
+
+	env := os.Getenv("ENVIRONMENT")
+	if env == "dev" {
+		cfg.RunningOnDev = true
+	}
 }
 
 // set at build time

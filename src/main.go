@@ -3,7 +3,6 @@ package main
 import (
 	"log"
 	"net/http"
-	"os"
 
 	"github.com/gorilla/mux"
 
@@ -21,11 +20,6 @@ func load() {
 	cfg.SelectedStage = cfg.Stages[1]
 
 	client.ReloadAllPresets()
-
-	env := os.Getenv("ENVIRONMENT")
-	if env == "dev" {
-		cfg.RunningOnDev = true
-	}
 }
 
 // writes the response header and a response body if supplied
