@@ -31,13 +31,8 @@ func writeResponse(w http.ResponseWriter, code int, body []byte) {
 	}
 }
 
-// returns an html page that immediately redirects the user to the endpoint specified
-func redirectTo(w http.ResponseWriter, endpoint string) {
-	w.WriteHeader(301)
-
-	resp := "<html><head><meta http-equiv=\"Refresh\" content=\"0; url='" + endpoint + "'\" /></head></html>"
-
-	w.Write([]byte(resp))
+func redirectTo(w http.ResponseWriter, r *http.Request, endpoint string) {
+	http.Redirect(w, r, endpoint, http.StatusFound)
 }
 
 func main() {

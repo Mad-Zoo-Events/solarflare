@@ -60,7 +60,7 @@ func PresetMutationUIHandler() http.HandlerFunc {
 			return
 		}
 
-		redirectTo(w, "/controlpanel/presets")
+		redirectTo(w, r, "/controlpanel/presets")
 	}
 }
 
