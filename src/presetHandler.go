@@ -85,3 +85,25 @@ func PresetDeletionHandler() http.HandlerFunc {
 		writeResponse(w, 200, nil)
 	}
 }
+
+// PresetDuplicationHandler duplicates a preset
+func PresetDuplicationHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		vars := mux.Vars(r)
+
+		err := controller.DuplicatePreset(vars["effectType"], vars["id"])
+		if err != nil {
+			switch sferror.GetErrorType(err) {
+			case sferror.DatabaseNotFound:
+				writeResponse(w, 404, sferror.GetErrorResponse(err))
+			case sferror.InvalidEffectType:
+				writeResponse(w, 400, sferror.GetErrorResponse(err))
+			default:
+				writeResponse(w, 500, sferror.GetErrorResponse(err))
+			}
+			return
+		}
+
+		writeResponse(w, http.StatusCreated, nil)
+	}
+}
