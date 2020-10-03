@@ -1,6 +1,7 @@
 package model
 
 import (
+	"math"
 	"strconv"
 	"strings"
 )
@@ -60,7 +61,7 @@ func (preset *ParticleEffectPreset) TramsformFromUI() {
 		}
 
 		effect.Region = Region{
-			Density:    convertDensity(float64(effect.UIRegionDensity), true),
+			Density:    convertDensity(effect.UIRegionDensity, true),
 			Equation:   effect.UIRegionEquation,
 			PointIDs:   pointIDs,
 			Randomize:  effect.UIRegionRandomize,
@@ -81,7 +82,7 @@ func (preset *ParticleEffectPreset) TransformToUI() {
 		}
 		pointIDs = strings.TrimSuffix(pointIDs, ",")
 
-		effect.UIRegionDensity = int(convertDensity(region.Density, false))
+		effect.UIRegionDensity = math.Round(convertDensity(region.Density, false)*10) / 10
 		effect.UIRegionEquation = region.Equation
 		effect.UIRegionPointIDs = pointIDs
 		effect.UIRegionRandomize = region.Randomize
@@ -97,8 +98,8 @@ func (preset *ParticleEffectPreset) TransformToUI() {
 }
 
 func convertDensity(density float64, fromUI bool) float64 {
-	m := 5.0404E-05
-	n := -4.0404E-05
+	m := 5.0404e-05
+	n := -4.0404e-05
 
 	if fromUI {
 		return m*density + n
