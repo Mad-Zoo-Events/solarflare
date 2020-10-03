@@ -2,7 +2,8 @@ const CLOCK_SYNC_INTERVAL = 10000;
 
 var counters = new Map();
 var activeKeys = new Set();
-var activeClocks = new Set();
+var activeOnbeatClocks = new Set();
+var activeOffbeatClocks = new Set();
 
 var clock;
 var clockInterval;
@@ -324,13 +325,13 @@ doWhateverTheClockDoes = (restartNow) => {
 
     if (restartNow === true || !indicator.classList.contains(cName)) {
         indicator.classList.add(cName);
-        activeClocks.forEach((id) => {
-            document.getElementById("clock-" + id).classList.add("clock-on");
+        activeOnbeatClocks.forEach((id) => {
+            document.getElementById("onbeatclock-" + id).classList.add("clock-on");
         });
     } else {
         indicator.classList.remove(cName);
-        activeClocks.forEach((id) => {
-            document.getElementById("clock-" + id).classList.remove("clock-on");
+        activeOnbeatClocks.forEach((id) => {
+            document.getElementById("onbeatclock-" + id).classList.remove("clock-on");
         });
     }
 };
@@ -393,7 +394,7 @@ restartUIClock = () => {
 restartClock = () => doRestartClock(restartUIClock);
 
 attachClock = (effectType, id) => {
-    let action = activeClocks.has(id) ? "unsubscribe" : "subscribe";
+    let action = activeOnbeatClocks.has(id) ? "unsubscribe" : "subscribe";
     let isRunning = false;
 
     if (counters[id]) {
@@ -404,8 +405,8 @@ attachClock = (effectType, id) => {
     doClockSubscription(effectType, id, action, isRunning);
 };
 
-detachClockAll = () => activeClocks.forEach((id) => {
-    activeClocks.delete(id);
-    document.getElementById("clock-" + id).classList.remove("clock-on");
-    document.getElementById("clock-" + id).classList.remove("clock-attached");
+detachClockAll = () => activeOnbeatClocks.forEach((id) => {
+    activeOnbeatClocks.delete(id);
+    document.getElementById("onbeatclock-" + id).classList.remove("clock-on");
+    document.getElementById("onbeatclock-" + id).classList.remove("clock-attached");
 });

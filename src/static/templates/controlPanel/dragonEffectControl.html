@@ -7,11 +7,15 @@
 
     <button type="button" class="start key-binding-{{.KeyBinding}}" id="start-{{.ID}}"
         onclick='doEffect("dragon", "{{.ID}}", "start")'>start</button>
-    <button type="button" class="restart"
-        onclick='doEffect("dragon", "{{.ID}}", "restart")'>restart</button>
+    <button type="button" class="restart" onclick='doEffect("dragon", "{{.ID}}", "restart")'>restart</button>
     <button type="button" class="stop key-binding-{{.KeyBinding}}" id="stop-{{.ID}}"
         onclick='doEffect("dragon", "{{.ID}}", "stop")'>stop</button>
-    <button type="button" class="clock" id="clock-{{.ID}}" onclick='attachClock("dragon", "{{.ID}}")'>clock</button>
+    <div class="clock-buttons">
+        <button type="button" class="clock" id="onbeatclock-{{.ID}}"
+            onclick='attachClock("dragon", "{{.ID}}")'>██</button>
+        <button type="button" class="clock" id="offbeatclock-{{.ID}}"
+            onclick='attachClock("dragon", "{{.ID}}")'>░░</button>
+    </div>
 </div>
 
 {{end}}

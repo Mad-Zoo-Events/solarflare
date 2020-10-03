@@ -95,9 +95,10 @@ body {
 }
 
 .visual-control {
-    display: inline-block;
-    width  : min-content;
-    padding: 0.1em;
+    display      : inline-block;
+    width        : min-content;
+    padding      : 0.1em;
+    margin-bottom: 0.5em;
 }
 
 .control-option {
@@ -171,10 +172,18 @@ button.trigger {
     box-shadow: 0 0 0.3em var(--cyan);
 }
 
+.clock-buttons {
+    margin-top           : 0.5em;
+    display              : grid;
+    grid-template-columns: 50% 50%;
+    box-shadow           : 0 0 0.3em var(--gray);
+}
+
 button.clock {
-    color     : var(--gray);
-    border    : none;
-    box-shadow: 0 0 0.3em var(--gray);
+    padding: 0.5em 0;
+    margin : 0;
+    color  : var(--gray);
+    border : none;
 }
 
 button.clock-on {
@@ -183,8 +192,7 @@ button.clock-on {
 }
 
 button.clock-attached {
-    color     : var(--font);
-    box-shadow: 0 0 0.3em var(--font);
+    color: var(--font);
 }
 
 button.bossbar-button {

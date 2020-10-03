@@ -9,7 +9,12 @@
         onclick='doEffect("timeshift", "{{.ID}}", "start")'>start</button>
     <button type="button" class="stop key-binding-{{.KeyBinding}}" id="stop-{{.ID}}"
         onclick='doEffect("timeshift", "{{.ID}}", "stop")'>stop</button>
-    <button type="button" class="clock" id="clock-{{.ID}}" onclick='attachClock("timeshift", "{{.ID}}")'>clock</button>
+    <div class="clock-buttons">
+        <button type="button" class="clock" id="onbeatclock-{{.ID}}"
+            onclick='attachClock("timeshift", "{{.ID}}")'>██</button>
+        <button type="button" class="clock" id="offbeatclock-{{.ID}}"
+            onclick='attachClock("timeshift", "{{.ID}}")'>░░</button>
+    </div>
 </div>
 
 {{end}}
