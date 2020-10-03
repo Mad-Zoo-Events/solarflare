@@ -152,10 +152,10 @@ confirmDelete = (id, effectType, displayName) => {
     }
 };
 
-addEffectInput = (formId) => {
+addEffectInput = () => {
     const effectBoxes = document.getElementsByClassName("effect-box");
     const next = Number(effectBoxes[effectBoxes.length - 1].getAttribute("data-index")) + 1;
-    const form = document.getElementById(formId);
+    const form = document.getElementById("preset-form");
     const newEffectsHolder = effectBoxes[0].cloneNode(true);
 
     // adjust IDs of the new effect's inputs and range labels

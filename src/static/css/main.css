@@ -23,6 +23,7 @@
 
     --darker-magenta: #52002c;
     --darker-cyan   : #0b3c55;
+    --darker-teal   : #004948;
 }
 
 body {
@@ -209,6 +210,11 @@ button.magenta {
 button.indigo {
     background-color: var(--indigo);
     border          : 2px solid var(--indigo);
+}
+
+button.darker-teal {
+    background-color: var(--darker-teal);
+    border          : 2px solid var(--darker-teal);
 }
 
 button.orange {
@@ -606,7 +612,7 @@ td.type-header {
     margin-bottom: 10em;
 }
 
-.preset-form {
+#preset-form {
     display              : grid;
     grid-template-columns: min-content auto;
 }

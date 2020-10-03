@@ -71,6 +71,25 @@ doDuplicatePreset = async (id, effectType) => {
     request.send();
 };
 
+doTestPreset = async () => {
+    const button = document.getElementById("test-button");
+    const form = document.getElementById("preset-form");
+    const action = form.getAttribute("action");
+
+    button.disabled = true;
+    button.classList.add("disabled");
+
+    form.setAttribute("action", `${action}/test`);
+    form.setAttribute("target", "dummyframe");
+    form.submit();
+    form.setAttribute("action", action);
+    form.removeAttribute("target");
+
+    setTimeout(() => {
+        button.disabled = false;
+        button.classList.remove("disabled");
+    }, 3100);
+};
 
 // ================ CLOCK ================
 
