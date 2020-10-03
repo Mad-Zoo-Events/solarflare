@@ -131,9 +131,14 @@ func RenderPresetModifier(writer http.ResponseWriter, effectType model.EffectTyp
 
 		if id != "" {
 			p = preset.(model.ParticleEffectPreset)
-			p.TransformToUI()
 		} else {
-			p.ParticleEffects = []model.ParticleEffect{model.ParticleEffect{UIRegionDensity: 1}}
+			p.ParticleEffects = []model.ParticleEffect{{}}
+		}
+
+		p.TransformToUI()
+
+		if id == "" {
+			p.ParticleEffects[0].UIRegionDensity = 1
 		}
 
 		err = template.Execute(writer, p)
