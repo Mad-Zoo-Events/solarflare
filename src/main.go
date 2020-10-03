@@ -48,6 +48,7 @@ func main() {
 	// effect execution
 	router.Handle("/effects/{effectType}/{id}/{action}", EffectHandler()).Methods(http.MethodPost)
 	router.Handle("/bossbar/{action}", BossbarHandler()).Methods(http.MethodPost)
+	router.Handle("/commands", CommandHandler()).Methods(http.MethodPost)
 
 	// preset management
 	router.Handle("/presets/{effectType}-ui", PresetMutationUIHandler()).Methods(http.MethodPost)
