@@ -37,11 +37,23 @@ The timeshift effect lets you control the daylight cycle in the game. You can sp
 
 You can trigger as many timeshift effects at the same time as you want. A neat side-effect of this is that the moon's shape reacts to that as it skips along the server time as well. For instance if you skip ahead and rewind with the exact same amount at the same time, the moon just rapidly skips through its cycles without the time of the day actually changing. Add a third time skip on top of that, and you have days flying by with a frenzy moon!
 
-#### Potion Effects
+#### Potion Effect
 
 You can apply one or multiple Minecraft potion effects to every player in the world at the same time.
 
 This can be used to turn the lights off with blindness, give players night vision (these two are a good combination), make them glow, become invisible (another combo that looks really cool), move really fast, get nausea... You get the idea.
+
+#### Laser Effect
+
+There are two tyes of lasers: **Guardian Beam** and **End Crystal Healing Beam**.
+
+Both can be set up to connect two specified points. The Guardian Beams can also be configured to be player-tracking, which means it will track a random player originating from the point specified.
+
+Guardian Beams slowly change colors once while they're active, going from a dark purple to a light green. You can restart the color change with the dedicated *COLOR* button on the Guardian laser controls.
+
+#### Bossbar
+
+The control panel has an input field for text to be displayed on an in-game boss bar. Next to a color selection of the bar itself, there are also formatting options which you can use to change the appearance of the text.
 
 ### Presets
 
@@ -58,6 +70,14 @@ The control panel is the browser-based user interface which interacts with the G
 Here you can execute, create, update and delete presets for the effects described above, monitor the network status and view your click-to-execution delay on the effects.
 
 It also logs a message indicating if the effect you just triggered successfully ran on all servers, or at least on how many of them.
+
+### Clock
+
+The clock is a ticker that always runs in the backend of the service. You can attach effects to the clock so that they are triggered in a specific rhythm.
+
+On the control panel you have the option to either manually set BPM and note length (e.g. 128 BPM 1/4 note) or use the TAP button to set BPM based on hearing the music.
+
+For each effect preset, there are two buttons beneath the other controls: The button on the left subscribes (or unsubscribes) the effect to the clock's ON-beat cycle; the button on the right to the OFF-beat cycle. The attached effect presets will then be toggled following the clock's rhythm.
 
 ## System Architecture
 
@@ -77,9 +97,7 @@ The basic workflow is as follows:
 
 This system can be used to cater a large number of Minecraft server instances at the same time. Thus, each instance needs to have the Aurora plugin installed and Solarflare must know the address of each instance.
 
-To automate this process, each Aurora instance will register itself at the Go service when it starts up by sending it's network address. The Go service maintains a list of registered servers and distributes traffic to all servers this way.
-
-*To be implemented*
+Server information is maintained on a dedicated DynamoDB table, and you can enable and disable servers which Solarflare will then send requests to on-thy-fly. There is a server icon in the top-right corner of the main control panel for that purpose.
 
 ## API Endpoints
 
@@ -117,6 +135,11 @@ There is no payload.
 - `stop`
 
 **Actions allowed on *potion effect* presets:**
+- `start`
+- `stop`
+
+**Actions allowed on *laser effect* presets:**
+- `color` *(only for Guardian Lasers)*
 - `start`
 - `stop`
 
