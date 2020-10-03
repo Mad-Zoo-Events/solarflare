@@ -14,7 +14,7 @@ func HealthHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		resp := "¯\\_(ツ)_/¯"
 
-		writeResponse(w, 200, []byte(resp))
+		writeResponse(w, http.StatusOK, []byte(resp))
 	}
 }
 
@@ -29,7 +29,7 @@ func ToggleServerHandler() http.HandlerFunc {
 
 		controller.ToggleServer(id, model.ServerAction(action))
 
-		writeResponse(w, 204, nil)
+		writeResponse(w, http.StatusNoContent, nil)
 	}
 }
 
@@ -40,6 +40,6 @@ func SelectStageHandler() http.HandlerFunc {
 
 		controller.SelectStage(vars["stage"])
 
-		writeResponse(w, 204, nil)
+		writeResponse(w, http.StatusNoContent, nil)
 	}
 }

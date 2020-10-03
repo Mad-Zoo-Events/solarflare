@@ -16,7 +16,7 @@ func PresetMutationHandler() http.HandlerFunc {
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
 			err = sferror.New(sferror.Encoding, "Error reading preset request body", err)
-			writeResponse(w, 400, sferror.GetErrorResponse(err))
+			writeResponse(w, http.StatusBadRequest, sferror.GetErrorResponse(err))
 			return
 		}
 
@@ -26,14 +26,14 @@ func PresetMutationHandler() http.HandlerFunc {
 		if err != nil {
 			switch sferror.GetErrorType(err) {
 			case sferror.InvalidEffectType:
-				writeResponse(w, 400, sferror.GetErrorResponse(err))
+				writeResponse(w, http.StatusBadRequest, sferror.GetErrorResponse(err))
 			default:
-				writeResponse(w, 500, sferror.GetErrorResponse(err))
+				writeResponse(w, http.StatusInternalServerError, sferror.GetErrorResponse(err))
 			}
 			return
 		}
 
-		writeResponse(w, 201, []byte(*id))
+		writeResponse(w, http.StatusCreated, []byte(*id))
 	}
 }
 
@@ -43,7 +43,7 @@ func PresetMutationUIHandler() http.HandlerFunc {
 		err := r.ParseForm()
 		if err != nil {
 			err = sferror.New(sferror.Encoding, "Error parsing form from UI", err)
-			writeResponse(w, 400, sferror.GetErrorResponse(err))
+			writeResponse(w, http.StatusBadRequest, sferror.GetErrorResponse(err))
 			return
 		}
 
@@ -53,9 +53,9 @@ func PresetMutationUIHandler() http.HandlerFunc {
 		if err != nil {
 			switch sferror.GetErrorType(err) {
 			case sferror.InvalidEffectType:
-				writeResponse(w, 400, sferror.GetErrorResponse(err))
+				writeResponse(w, http.StatusBadRequest, sferror.GetErrorResponse(err))
 			default:
-				writeResponse(w, 500, sferror.GetErrorResponse(err))
+				writeResponse(w, http.StatusInternalServerError, sferror.GetErrorResponse(err))
 			}
 			return
 		}
@@ -73,16 +73,16 @@ func PresetDeletionHandler() http.HandlerFunc {
 		if err != nil {
 			switch sferror.GetErrorType(err) {
 			case sferror.DatabaseNotFound:
-				writeResponse(w, 404, sferror.GetErrorResponse(err))
+				writeResponse(w, http.StatusNotFound, sferror.GetErrorResponse(err))
 			case sferror.InvalidEffectType:
-				writeResponse(w, 400, sferror.GetErrorResponse(err))
+				writeResponse(w, http.StatusBadRequest, sferror.GetErrorResponse(err))
 			default:
-				writeResponse(w, 500, sferror.GetErrorResponse(err))
+				writeResponse(w, http.StatusInternalServerError, sferror.GetErrorResponse(err))
 			}
 			return
 		}
 
-		writeResponse(w, 200, nil)
+		writeResponse(w, http.StatusOK, nil)
 	}
 }
 
@@ -95,11 +95,11 @@ func PresetDuplicationHandler() http.HandlerFunc {
 		if err != nil {
 			switch sferror.GetErrorType(err) {
 			case sferror.DatabaseNotFound:
-				writeResponse(w, 404, sferror.GetErrorResponse(err))
+				writeResponse(w, http.StatusNotFound, sferror.GetErrorResponse(err))
 			case sferror.InvalidEffectType:
-				writeResponse(w, 400, sferror.GetErrorResponse(err))
+				writeResponse(w, http.StatusBadRequest, sferror.GetErrorResponse(err))
 			default:
-				writeResponse(w, 500, sferror.GetErrorResponse(err))
+				writeResponse(w, http.StatusInternalServerError, sferror.GetErrorResponse(err))
 			}
 			return
 		}
