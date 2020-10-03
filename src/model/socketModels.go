@@ -7,6 +7,7 @@ type UIUpdate struct {
 	ClockSpeedUpdate *ClockSpeedUpdate `json:"clockSpeedUpdate"`
 	StatusUpdate     *StatusUpdate     `json:"statusUpdate"`
 	StageUpdate      *StageUpdate      `json:"stageUpdate"`
+	CommandUpdate    *CommandUpdate    `json:"commandUpdate"`
 }
 
 // EffectUpdate is the model used to send updates on effect actions to the UI
@@ -42,4 +43,11 @@ type StatusUpdate struct {
 // StageUpdate is the model used to send the update for when a different stage has been selected
 type StageUpdate struct {
 	SelectedStage string `json:"selectedStage"`
+}
+
+// CommandUpdate is the model used to send the update for when a command was executed
+type CommandUpdate struct {
+	Command string `json:"command"`
+
+	ErrorMessage string `json:"errorMessage"`
 }

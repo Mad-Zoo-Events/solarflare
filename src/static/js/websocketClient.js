@@ -32,7 +32,14 @@ openWebsocket = async () => {
 };
 
 handleMessage = (data) => {
-    const { effectUpdate, clockUpdate, clockSpeedUpdate, statusUpdate, stageUpdate } = data;
+    const {
+        effectUpdate,
+        clockUpdate,
+        clockSpeedUpdate,
+        statusUpdate,
+        stageUpdate,
+        commandUpdate
+    } = data;
 
     if (effectUpdate) {
         const { id, displayName, action, errorMessage } = effectUpdate;
@@ -122,5 +129,11 @@ handleMessage = (data) => {
 
     if (stageUpdate) {
         window.location.reload();
+    }
+
+    if (commandUpdate) {
+        const { command, errorMessage } = commandUpdate;
+
+        logEffectMessage("run command", command, errorMessage);
     }
 };
