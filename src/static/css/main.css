@@ -554,10 +554,14 @@ td.type-header {
     grid-template-columns: min-content auto;
 }
 
+.input-range-combo {
+    display              : grid;
+    grid-template-columns: min-content auto;
+}
+
 input[type=text],
 input[type=number],
 select {
-    grid-column     : 2;
     color           : var(--font);
     padding         : 0.5em;
     border          : none;

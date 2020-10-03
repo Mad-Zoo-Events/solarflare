@@ -141,6 +141,10 @@ resetStartButton = async (startButton) => {
 
 // ================ PRESET MANAGEMENT ================
 
+syncValue = (targetId, val) => {
+    document.getElementById(targetId).value = val;
+};
+
 confirmDelete = (id, effectType, displayName) => {
     const r = confirm(`WARNING!\nAre you sure you want to delete "${displayName}"?`);
     if (r === true) {
@@ -179,12 +183,10 @@ removeEffectInput = (element) => {
     }
 };
 
-updateRangeValue = (labelId, range) => {
+updateRangeValue = (targetId, range) => {
     const index = range.getAttribute("data-index");
-    console.log(index);
-    const id = `${labelId}-${index}`;
-    console.log(id);
-    document.getElementById(id).innerHTML = range.value;
+    const id = `${targetId}-${index}`;
+    document.getElementById(id).value = range.value;
 };
 
 handleLaserTypeChecked = (checked) => {
