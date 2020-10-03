@@ -1,0 +1,10 @@
+{{define "commandForm"}}
+
+<form id="command-form" method="POST" action="/command/run" target="dummyframe">
+    <span class="header-title">Run Command</span>
+    <input type="text" name="command-input" placeholder="/smite Mat_Zo" onfocus='suppressHotkeys=true;'
+        onblur='suppressHotkeys=false;'>
+    <button class="header-button" type="button" onclick='document.getElementById("command-form").submit();'>Run</button>
+</form>
+
+{{end}}

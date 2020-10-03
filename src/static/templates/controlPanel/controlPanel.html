@@ -4,13 +4,16 @@
 {{template "header"}}
 
 <body onload="init()" onkeypress='handleKeypress(event);' onkeydown='handleKeydown(event);'>
+    <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+
     <div class="header">
-        {{template "bossbarForm" .}}
-        {{template "stageSelector" .}}
-        <div id="caps-warning">
-            MAT! YOU GOT CAPS LOCK ON AGAIN!!
+        <div id="header-bossbar-control">{{template "bossbarForm" .}}</div>
+        <div id="header-command-control">{{template "commandForm" .}}</div>
+        <div id="header-stageselect-control">{{template "stageSelector" .}}</div>
+        <div id="header-serverselect-control">{{template "serverManager" .}}</div>
+        <div id="header-caps-control">
+            <div id="caps-warning">YOU GOT CAPS LOCK ON!!</div>
         </div>
-        {{template "serverManager" .}}
     </div>
     <div class="main-controls-holder">
         <div class="controls-holder particle-controls">

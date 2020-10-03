@@ -1,10 +1,9 @@
 {{define "bossbarForm"}}
 
-<iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-<span class="header-title">Boss Bar</span>
 <form id="bossbar-form" method="POST" action="/bossbar/set" target="dummyframe">
+    <span class="header-title">Boss Bar</span>
     <div class="popup">
-        <input id="bossbar-text" type="text" name="bossbar-text" placeholder="Boss Bar Text" autocomplete="off"
+        <input type="text" id="bossbar-text" name="bossbar-text" placeholder="Now Playing: Bob Ross" autocomplete="off"
             onfocus='suppressHotkeys=true; toggleFormattingCodePopup();'
             onblur='suppressHotkeys=false; toggleFormattingCodePopup();'>
         <div class="popup-content bossbar-formatting-group" id="bossbar-formatting-popup" tabindex="0"
@@ -49,9 +48,9 @@
         <option value="{{.}}">{{.}}</option>
         {{end}}
     </select>
-    <button class="bossbar-button" type="button"
+    <button class="header-button" type="button"
         onclick='document.getElementById("bossbar-form").submit();'>Update</button>
-    <button class="bossbar-button" type="button" onclick='doClearBossbar();'>Hide</button>
+    <button class="header-button" type="button" onclick='doClearBossbar();'>Hide</button>
 </form>
 
 {{end}}
