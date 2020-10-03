@@ -13,9 +13,10 @@
     --orange       : #f56200;
     --orange-alpha : rgba(245, 98, 0, 0.15);
     --red          : #ec2323;
-    --cyan         : #1ba1e2;
+    --teal         : #00aba9;
     --indigo       : #6a00ff;
     --indigo-alpha : rgba(106, 0, 255, 0.15);
+    --cyan         : #1ba1e2;
     --cyan-alpha   : rgba(27, 161, 226, 0.15);
     --magenta      : #b90383;
     --magenta-alpha: rgba(185, 3, 131, 0.15);
@@ -48,8 +49,8 @@ body {
         "dragon      laser"
         "timeshift   potion";
 
-    margin-top   : 3.5em;
-    margin-bottom: 15em;
+    padding-top   : 2.9em;
+    padding-bottom: 11.9em;
 }
 
 .controls-holder {
@@ -134,7 +135,7 @@ hr {
 button {
     margin-top: 0.5em;
     width     : 100%;
-    padding   : 0.8em 0.8em;
+    padding   : 0.8em;
     cursor    : pointer;
 
     color           : var(--font);
@@ -195,15 +196,6 @@ button.clock-attached {
     color: var(--font);
 }
 
-button.bossbar-button {
-    margin : 0;
-    width  : min-content;
-    padding: 0.2em;
-
-    background-color: var(--darker-cyan);
-    border          : 2px solid var(--darker-cyan);
-}
-
 button.cyan {
     background-color: var(--cyan);
     border          : 2px solid var(--cyan);
@@ -246,27 +238,44 @@ button.disabled {
     top     : 0em;
     right   : 0em;
     left    : 0em;
-    padding : 0.4em;
+
+    padding              : 0.3em;
+    display              : grid;
+    gap                  : 0 1em;
+    grid-template-columns: auto auto min-content min-content;
+    grid-template-rows   : auto auto;
+    grid-template-areas  :
+        'bossbar command stageselect serverselect'
+        'caps    caps    caps        caps';
 
     background-color: var(--background-alpha);
 }
 
+.header input[type=text] {
+    width     : 100%;
+    box-sizing: border-box;
+}
+
+button.header-button {
+    margin : unset;
+    height : 100%;
+    padding: unset;
+    width  : 100%;
+
+    background-color: var(--darker-cyan);
+    border          : 2px solid var(--darker-cyan);
+}
+
 .header-title {
-    margin      : auto 0;
-    font-size   : x-large;
+    font-size   : large;
     font-variant: small-caps;
     display     : inline-block;
-    margin      : 0.1em 0.3em 0 0.5em;
+    margin      : auto 0;
 
-    color: var(--cyan);
-}
+    border-left : 0.2em solid var(--teal);
+    padding-left: 0.2em;
 
-#bossbar-form {
-    display: inline-block;
-}
-
-#bossbar-text {
-    width: 25em;
+    color: var(--teal);
 }
 
 .popup {
@@ -290,6 +299,17 @@ button.disabled {
     visibility: visible;
 }
 
+/* Bossbar Control */
+#header-bossbar-control {
+    grid-area: bossbar;
+}
+
+#bossbar-form {
+    display              : grid;
+    gap                  : 0 0.5em;
+    grid-template-columns: max-content auto min-content 5em 5em;
+}
+
 .bossbar-formatting-group {
     height               : min-content;
     display              : grid;
@@ -301,17 +321,37 @@ button.disabled {
     cursor: pointer;
 }
 
-#caps-warning {
-    color      : var(--red);
-    display    : none;
-    font-weight: bold;
-    font-size  : large;
-    margin     : auto 1em;
+/* Command Control */
+#header-command-control {
+    grid-area: command;
+}
+
+#command-form {
+    display              : grid;
+    gap                  : 0 0.5em;
+    grid-template-columns: max-content auto 5em;
+}
+
+/* Stage Select Control */
+#header-stageselect-control {
+    grid-area            : stageselect;
+    display              : grid;
+    gap                  : 0 0.5em;
+    grid-template-columns: max-content min-content;
+}
+
+/* Server Select Control */
+#header-serverselect-control {
+    grid-area            : serverselect;
+    display              : grid;
+    gap                  : 0 0.5em;
+    grid-template-columns: max-content min-content;
 }
 
 .server-manager-button {
-    cursor: pointer;
-    height: 2.5em;
+    cursor     : pointer;
+    font-size  : 2em;
+    line-height: 1em;
 }
 
 .server-manager-popup {
@@ -327,6 +367,22 @@ button.disabled {
     display              : grid;
     grid-template-columns: max-content max-content;
     gap                  : 1em;
+}
+
+/* Capslock Warning Control */
+#header-caps-control {
+    grid-area: caps;
+}
+
+#caps-warning {
+    display: none;
+
+    padding    : 0.5em;
+    width      : 100%;
+    text-align : center;
+    font-size  : x-large;
+    font-weight: bold;
+    color      : var(--red);
 }
 
 /* ================ FOOTER ================ */
@@ -352,7 +408,8 @@ button.disabled {
 }
 
 h3 {
-    margin-top: 0;
+    margin-top   : 0;
+    margin-bottom: 0.2em;
 }
 
 #clock-holder {

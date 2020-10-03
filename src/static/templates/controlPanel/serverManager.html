@@ -1,8 +1,8 @@
 {{define "serverManager"}}
 
+<span class="header-title">Servers</span>
 <div class="popup server-manager-popup">
-    <img class="server-manager-button" src="/static/img/servers.png" alt="Server Management"
-        onclick='toggleServerManagerPopup();' />
+    <span class="server-manager-button" onclick='toggleServerManagerPopup();'>📡</span>
     <div class="popup-content server-manager-group" id="server-manager-popup">
 
         {{range .RegisteredServers}}

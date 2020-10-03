@@ -21,6 +21,7 @@ func RenderControlPanel(writer http.ResponseWriter) error {
 	template, err := template.ParseFiles(
 		controlPanelPath+"controlPanel.html",
 		controlPanelPath+"bossbarForm.html",
+		controlPanelPath+"commandForm.html",
 		controlPanelPath+"stageSelector.html",
 		controlPanelPath+"serverManager.html",
 		controlPanelPath+"particleEffectControl.html",
