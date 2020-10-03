@@ -55,6 +55,12 @@ Guardian Beams slowly change colors once while they're active, going from a dark
 
 The control panel has an input field for text to be displayed on an in-game boss bar. Next to a color selection of the bar itself, there are also formatting options which you can use to change the appearance of the text.
 
+#### Command Execution
+
+You can excute a one-shot command on all servers currently enabled using the command input field in the header bar of the control panel.
+
+The command should not contain a leading slash, but Solarflare will be stripping it off in case you forget about that ;)
+
 ### Presets
 
 Presets represent a compilation of effects of the same type to be controlled at the same time. For instance you could display hearts in a specific location and shape while also turning on the rain in a different shape.
@@ -97,7 +103,7 @@ The basic workflow is as follows:
 
 This system can be used to cater a large number of Minecraft server instances at the same time. Thus, each instance needs to have the Aurora plugin installed and Solarflare must know the address of each instance.
 
-Server information is maintained on a dedicated DynamoDB table, and you can enable and disable servers which Solarflare will then send requests to on-thy-fly. There is a server icon in the top-right corner of the main control panel for that purpose.
+Server information is maintained on a dedicated DynamoDB table, and you can enable and disable servers which Solarflare will then send requests to on-thy-fly. There is a 📡 Satellite Antenna icon in the top-right corner of the main control panel for that purpose.
 
 ## API Endpoints
 
