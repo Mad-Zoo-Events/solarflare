@@ -17,12 +17,16 @@
                     <span class="delete-effect" onclick='removeEffectInput(this);'>🗑</span>
                 </span>
 
-                <label>Skip <span class="indexed-input" id="timeshift-range-{{$index}}">
-                        {{.UIPercentOfDayToSkipPerSecond}}
-                    </span>% of Minecraft day per second</label>
-                <input class="indexed-input" name="effect[{{$index}}].percentToSkip" data-index="{{$index}}"
-                    type="range" max="1000" min="-1000" step="5" placeholder="0"
-                    value="{{.UIPercentOfDayToSkipPerSecond}}" oninput='updateRangeValue("timeshift-range", this);' />
+                <label>% of Minecraft day<br />to skip per second</label>
+                <div class="input-range-combo">
+                    <input type="number" max="1000" min="-1000" step="5" value="{{.UIPercentOfDayToSkipPerSecond}}"
+                        placeholder="0" class="indexed-input" id="timeshift-percent-{{$index}}" data-index="{{$index}}"
+                        oninput='updateRangeValue("timeshift-percent-range", this);' />
+                    <input type="range" max="1000" min="-1000" step="5" value="{{.UIPercentOfDayToSkipPerSecond}}"
+                        placeholder="0" class="indexed-input" id="timeshift-percent-range-{{$index}}"
+                        data-index="{{$index}}" name="effect[{{$index}}].percentToSkip"
+                        oninput='updateRangeValue("timeshift-percent", this);' />
+                </div>
             </div>
             <br />
             {{end}}
