@@ -2,6 +2,7 @@ package model
 
 import (
 	"math"
+	"reflect"
 	"strconv"
 	"strings"
 )
@@ -49,8 +50,12 @@ func (action EffectAction) IsAllowedOn(effectType EffectType) bool {
 
 // TramsformFromUI transforms UI specific values to the main model
 func (preset *ParticleEffectPreset) TramsformFromUI() {
-	for i := range preset.ParticleEffects {
+	for i := len(preset.ParticleEffects) - 1; i >= 0; i-- {
 		effect := &preset.ParticleEffects[i]
+		if reflect.DeepEqual(*effect, ParticleEffect{}) {
+			preset.ParticleEffects = append(preset.ParticleEffects[:i], preset.ParticleEffects[i+1:]...)
+			continue
+		}
 
 		pointIDs := []int{}
 		for _, p := range strings.Split(effect.UIRegionPointIDs, ",") {
