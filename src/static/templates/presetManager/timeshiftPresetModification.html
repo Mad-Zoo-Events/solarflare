@@ -7,7 +7,7 @@
     <div class="preset-edit-main">
         <h1>{{if .ID}} Edit {{else}} Create New {{end}} <span class="orange">{{.DisplayName}} </span> Timeshift Preset
         </h1>
-        <form class="preset-form" id="timeshift-preset-form" method="POST" action="/presets/timeshift-ui">
+        <form id="preset-form" method="POST" action="/presets/timeshift-ui">
             {{template "sharedPresetModificationInputs" .}}
 
             <label>Effects</label>
@@ -31,14 +31,13 @@
             <br />
             {{end}}
         </form>
-        <div class="add-effect" onclick='addEffectInput("timeshift-preset-form");'>+</div>
+        <div class="add-effect" onclick='addEffectInput();'>+</div>
     </div>
 
     <div class="footer">
         <div></div>
-        <div></div>
-        <button class="cyan" type="button"
-            onclick='document.getElementById("timeshift-preset-form").submit();'>Save</button>
+        <button id="test-button" class="darker-teal" type="button" onclick='doTestPreset();'>Test (3 seconds)</button>
+        <button class="cyan" type="button" onclick='document.getElementById("preset-form").submit();'>Save</button>
         <div class="primary-button">
             <button class="darker-cyan" type="button" onclick='navigate(CP_PRESETS_ENDPOINT);'>Cancel</button>
         </div>
