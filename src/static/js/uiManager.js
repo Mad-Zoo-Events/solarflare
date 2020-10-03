@@ -153,9 +153,10 @@ confirmDelete = (id, effectType, displayName) => {
 };
 
 addEffectInput = (formId) => {
-    const next = document.getElementsByClassName("effect-box").length;
+    const effectBoxes = document.getElementsByClassName("effect-box");
+    const next = Number(effectBoxes[effectBoxes.length - 1].getAttribute("data-index")) + 1;
     const form = document.getElementById(formId);
-    const newEffectsHolder = document.getElementsByClassName("effect-box")[0].cloneNode(true);
+    const newEffectsHolder = effectBoxes[0].cloneNode(true);
 
     // adjust IDs of the new effect's inputs and range labels
     const inputs = newEffectsHolder.getElementsByClassName("indexed-input");
@@ -171,6 +172,8 @@ addEffectInput = (formId) => {
             element.id = element.id.replace(0, next); // for corresponding range input labels
         }
     }
+
+    newEffectsHolder.setAttribute("data-index", next);
 
     form.appendChild(newEffectsHolder);
 };

@@ -12,7 +12,7 @@
 
             <label>Effects</label>
             {{range $index, $element := .DragonEffects}}
-            <div class="effect-box">
+            <div class="effect-box" data-index="{{$index}}">
                 <span class="armor-stand">
                     <span class="delete-effect" onclick='removeEffectInput(this);'>🗑</span>
                 </span>
