@@ -24,16 +24,16 @@ func EffectHandler() http.HandlerFunc {
 		if err != nil {
 			switch sferror.GetErrorType(err) {
 			case sferror.PresetNotFound:
-				writeResponse(w, 404, sferror.GetErrorResponse(err))
+				writeResponse(w, http.StatusNotFound, sferror.GetErrorResponse(err))
 			case sferror.ActionNotAllowed, sferror.InvalidEffectType:
-				writeResponse(w, 400, sferror.GetErrorResponse(err))
+				writeResponse(w, http.StatusBadRequest, sferror.GetErrorResponse(err))
 			default:
-				writeResponse(w, 500, sferror.GetErrorResponse(err))
+				writeResponse(w, http.StatusInternalServerError, sferror.GetErrorResponse(err))
 			}
 
 			return
 		}
 
-		writeResponse(w, 204, nil)
+		writeResponse(w, http.StatusNoContent, nil)
 	}
 }

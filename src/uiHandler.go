@@ -15,7 +15,7 @@ func ControlPanelHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		err := controller.RenderControlPanel(w)
 		if err != nil {
-			writeResponse(w, 500, sferror.GetErrorResponse(err))
+			writeResponse(w, http.StatusInternalServerError, sferror.GetErrorResponse(err))
 		}
 	}
 }
@@ -25,7 +25,7 @@ func CPPresetManagerHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		err := controller.RenderPresetManager(w)
 		if err != nil {
-			writeResponse(w, 500, sferror.GetErrorResponse(err))
+			writeResponse(w, http.StatusInternalServerError, sferror.GetErrorResponse(err))
 		}
 	}
 }
@@ -43,11 +43,11 @@ func CPPresetHandler() http.HandlerFunc {
 		if err != nil {
 			switch sferror.GetErrorType(err) {
 			case sferror.InvalidEffectType:
-				writeResponse(w, 400, sferror.GetErrorResponse(err))
+				writeResponse(w, http.StatusBadRequest, sferror.GetErrorResponse(err))
 			case sferror.PresetNotFound:
-				writeResponse(w, 404, sferror.GetErrorResponse(err))
+				writeResponse(w, http.StatusNotFound, sferror.GetErrorResponse(err))
 			default:
-				writeResponse(w, 500, sferror.GetErrorResponse(err))
+				writeResponse(w, http.StatusInternalServerError, sferror.GetErrorResponse(err))
 			}
 		}
 	}

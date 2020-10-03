@@ -16,7 +16,7 @@ import (
 func ClockSyncHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		manager.ClockSync()
-		writeResponse(w, 204, nil)
+		writeResponse(w, http.StatusNoContent, nil)
 	}
 }
 
@@ -25,7 +25,7 @@ func ClockRestartHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		manager.RestartClock()
 
-		writeResponse(w, 204, nil)
+		writeResponse(w, http.StatusNoContent, nil)
 	}
 }
 
@@ -42,20 +42,20 @@ func ClockSpeedHandler() http.HandlerFunc {
 		bpm, err := strconv.ParseFloat(bpmStr, 64)
 		if err != nil {
 			err = sferror.New(sferror.ClockInvalidBPM, "invlid BPM value: "+bpmStr, nil)
-			writeResponse(w, 400, sferror.GetErrorResponse(err))
+			writeResponse(w, http.StatusBadRequest, sferror.GetErrorResponse(err))
 			return
 		}
 
 		mult, err := strconv.ParseFloat(multStr, 64)
 		if err != nil {
 			err = sferror.New(sferror.ClockInvalidBPM, "invlid multiplier value: "+multStr, nil)
-			writeResponse(w, 400, sferror.GetErrorResponse(err))
+			writeResponse(w, http.StatusBadRequest, sferror.GetErrorResponse(err))
 			return
 		}
 
 		manager.SetClockSpeed(bpm, mult)
 
-		writeResponse(w, 204, nil)
+		writeResponse(w, http.StatusNoContent, nil)
 	}
 }
 
@@ -74,7 +74,7 @@ func ClockSubscriptionHandler() http.HandlerFunc {
 		err := json.NewDecoder(r.Body).Decode(&request)
 		if err != nil {
 			err = sferror.New(sferror.ClockInvalidRequestBody, "failed to parse clock request body", err)
-			writeResponse(w, 400, sferror.GetErrorResponse(err))
+			writeResponse(w, http.StatusBadRequest, sferror.GetErrorResponse(err))
 			return
 		}
 
@@ -85,10 +85,10 @@ func ClockSubscriptionHandler() http.HandlerFunc {
 			manager.UnsubscribeEffectFromClock(id, model.EffectType(effectType), request.OffBeat, false)
 		default:
 			err := sferror.New(sferror.ClockInvalidAction, "invlid clock action: "+effectType, nil)
-			writeResponse(w, 400, sferror.GetErrorResponse(err))
+			writeResponse(w, http.StatusBadRequest, sferror.GetErrorResponse(err))
 			return
 		}
 
-		writeResponse(w, 204, nil)
+		writeResponse(w, http.StatusNoContent, nil)
 	}
 }

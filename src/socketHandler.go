@@ -16,7 +16,7 @@ func SocketHandler() http.HandlerFunc {
 		if err != nil {
 			msg := "Error upgrading connection to websocket"
 			sferror.New(sferror.SocketOpen, msg, err)
-			writeResponse(w, 500, []byte(msg))
+			writeResponse(w, http.StatusInternalServerError, []byte(msg))
 			return
 		}
 

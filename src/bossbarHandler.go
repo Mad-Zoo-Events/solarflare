@@ -16,7 +16,7 @@ func BossbarHandler() http.HandlerFunc {
 		err := r.ParseForm()
 		if err != nil {
 			err = sferror.New(sferror.Encoding, "Error parsing the bossbar request", err)
-			writeResponse(w, 400, sferror.GetErrorResponse(err))
+			writeResponse(w, http.StatusBadRequest, sferror.GetErrorResponse(err))
 			return
 		}
 
@@ -26,14 +26,14 @@ func BossbarHandler() http.HandlerFunc {
 		if err != nil {
 			switch sferror.GetErrorType(err) {
 			case sferror.ActionNotAllowed, sferror.InvalidEffectType, sferror.Encoding:
-				writeResponse(w, 400, sferror.GetErrorResponse(err))
+				writeResponse(w, http.StatusBadRequest, sferror.GetErrorResponse(err))
 			default:
-				writeResponse(w, 500, sferror.GetErrorResponse(err))
+				writeResponse(w, http.StatusInternalServerError, sferror.GetErrorResponse(err))
 			}
 
 			return
 		}
 
-		writeResponse(w, 204, nil)
+		writeResponse(w, http.StatusNoContent, nil)
 	}
 }
