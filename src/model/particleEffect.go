@@ -22,11 +22,11 @@ type ParticleEffect struct {
 	Region Region `json:"region" form:"-"`
 
 	// UI specific models
-	UIRegionPointIDs   string `json:"-" form:"pointIds"`
-	UIRegionRegionType string `json:"-" form:"regionType"`
-	UIRegionRandomize  bool   `json:"-" form:"randomize"`
-	UIRegionDensity    int    `json:"-" form:"density"`
-	UIRegionEquation   string `json:"-" form:"equation"`
+	UIRegionPointIDs   string  `json:"-" form:"pointIds"`
+	UIRegionRegionType string  `json:"-" form:"regionType"`
+	UIRegionRandomize  bool    `json:"-" form:"randomize"`
+	UIRegionDensity    float64 `json:"-" form:"density"`
+	UIRegionEquation   string  `json:"-" form:"equation"`
 }
 
 // Region contains information on where and how to display the particle effect

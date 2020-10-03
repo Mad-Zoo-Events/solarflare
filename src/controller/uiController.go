@@ -131,11 +131,11 @@ func RenderPresetModifier(writer http.ResponseWriter, effectType model.EffectTyp
 
 		if id != "" {
 			p = preset.(model.ParticleEffectPreset)
+			p.TransformToUI()
 		} else {
-			p.ParticleEffects = []model.ParticleEffect{{}}
+			p.ParticleEffects = []model.ParticleEffect{model.ParticleEffect{UIRegionDensity: 1}}
 		}
 
-		p.TransformToUI()
 		err = template.Execute(writer, p)
 	case model.DragonEffectType:
 		p := model.DragonEffectPreset{}

@@ -46,8 +46,14 @@
                 <br />
 
                 <label>Particle density in the cuboid</label>
-                <input class="indexed-input" name="effect[{{$index}}].density" type="range" max="100" min="1" step="1"
-                    value="{{.UIRegionDensity}}" />
+                <div class="input-range-combo">
+                    <input type="number" max="100" min="1" step="0.1" value="{{.UIRegionDensity}}" class="indexed-input"
+                        id="particle-density-{{$index}}" data-index="{{$index}}"
+                        oninput='updateRangeValue("particle-density-range", this);' />
+                    <input type="range" max="100" min="1" step="0.1" value="{{.UIRegionDensity}}" class="indexed-input"
+                        id="particle-density-range-{{$index}}" data-index="{{$index}}" name="effect[{{$index}}].density"
+                        oninput='updateRangeValue("particle-density", this);' />
+                </div>
                 <br />
 
                 <label>Shape equation</label>
