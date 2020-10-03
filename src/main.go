@@ -52,6 +52,7 @@ func main() {
 
 	// preset management
 	router.Handle("/presets/{effectType}-ui", PresetMutationUIHandler()).Methods(http.MethodPost)
+	router.Handle("/presets/{effectType}-ui/test", PresetTestUIHandler()).Methods(http.MethodPost)
 	router.Handle("/presets/{effectType}", PresetMutationHandler()).Methods(http.MethodPost)
 	router.Handle("/presets/{effectType}/{id}", PresetDeletionHandler()).Methods(http.MethodDelete)
 	router.Handle("/presets/{effectType}/{id}/duplicate", PresetDuplicationHandler()).Methods(http.MethodPost)

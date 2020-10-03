@@ -107,3 +107,28 @@ func PresetDuplicationHandler() http.HandlerFunc {
 		writeResponse(w, http.StatusCreated, nil)
 	}
 }
+
+// PresetTestUIHandler handles requests from the UI to test a preset
+func PresetTestUIHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		err := r.ParseForm()
+		if err != nil {
+			err = sferror.New(sferror.Encoding, "Error parsing form from UI", err)
+			writeResponse(w, http.StatusBadRequest, sferror.GetErrorResponse(err))
+			return
+		}
+
+		vars := mux.Vars(r)
+
+		err = controller.TestPreset(vars["effectType"], r.PostForm)
+		if err != nil {
+			switch sferror.GetErrorType(err) {
+			case sferror.InvalidEffectType:
+				writeResponse(w, http.StatusBadRequest, sferror.GetErrorResponse(err))
+			default:
+				writeResponse(w, http.StatusInternalServerError, sferror.GetErrorResponse(err))
+			}
+			return
+		}
+	}
+}
