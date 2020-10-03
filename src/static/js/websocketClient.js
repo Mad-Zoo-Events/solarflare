@@ -1,8 +1,10 @@
 var socket;
 
 window.onbeforeunload = function () {
-    websocket.onclose = function () { }; // disable onclose handler first
-    websocket.close();
+    if (socket) {
+        socket.onclose = function () { }; // disable onclose handler first
+        socket.close();
+    }
 };
 
 openWebsocket = async () => {
