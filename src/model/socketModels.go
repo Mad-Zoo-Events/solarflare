@@ -20,8 +20,9 @@ type EffectUpdate struct {
 
 // ClockUpdate is the model used to send updates on clock subscriptions to the UI
 type ClockUpdate struct {
-	ID     string      `json:"id"`
-	Action ClockAction `json:"action"`
+	ID        string      `json:"id"`
+	IsOffBeat bool        `json:"isOffBeat"`
+	Action    ClockAction `json:"action"`
 }
 
 // ClockSpeedUpdate is the model used to send updates on clock subscriptions to the UI

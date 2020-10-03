@@ -111,11 +111,12 @@ doSetClockSpeed = async (bpm, multiplier) => {
     request.send();
 };
 
-doClockSubscription = async (effectType, id, action, isRunning) => {
+doClockSubscription = async (effectType, id, action, isRunning, offBeat) => {
     const request = new XMLHttpRequest();
     request.open("POST", `${CLOCK_ENDPOINT}/${action}/${effectType}/${id}`);
     const body = {
-        "isRunning": isRunning
+        "isRunning": isRunning,
+        "offBeat": offBeat
     };
 
     request.send(JSON.stringify(body));
