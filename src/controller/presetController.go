@@ -3,8 +3,10 @@ package controller
 import (
 	"encoding/json"
 	"net/url"
+	"time"
 
 	"github.com/eynorey/solarflare/src/utils"
+	"github.com/google/uuid"
 
 	"github.com/eynorey/solarflare/src/client"
 	"github.com/eynorey/solarflare/src/config"
@@ -180,4 +182,67 @@ func DuplicatePreset(effectType, id string) error {
 	}
 
 	return err
+}
+
+// TestPreset runs a preset from a UI request for three seconds
+func TestPreset(effectType string, values url.Values) error {
+	switch model.EffectType(effectType) {
+	case model.ParticleEffectType:
+		preset := model.ParticleEffectPreset{}
+		if err := unmarshalParticlePreset(&preset, values); err != nil {
+			return err
+		}
+		preset.ID = uuid.New().String()
+
+		if err := manager.RunParticleEffect(preset, model.StartEffectAction, false); err == nil {
+			time.Sleep(3 * time.Second)
+			return manager.StopEffect(preset.ID, false)
+		}
+	case model.DragonEffectType:
+		preset := model.DragonEffectPreset{}
+		if err := unmarshalDragonPreset(&preset, values); err != nil {
+			return err
+		}
+		preset.ID = uuid.New().String()
+
+		if err := manager.RunDragonEffect(preset, model.StartEffectAction, false); err == nil {
+			time.Sleep(3 * time.Second)
+			return manager.StopEffect(preset.ID, false)
+		}
+	case model.TimeshiftEffectType:
+		preset := model.TimeshiftEffectPreset{}
+		if err := unmarshalTimeshiftPreset(&preset, values); err != nil {
+			return err
+		}
+		preset.ID = uuid.New().String()
+
+		if err := manager.RunTimeshiftEffect(preset, model.StartEffectAction, false); err == nil {
+			time.Sleep(3 * time.Second)
+			return manager.StopEffect(preset.ID, false)
+		}
+	case model.PotionEffectType:
+		preset := model.PotionEffectPreset{}
+		if err := unmarshalPotionPreset(&preset, values); err != nil {
+			return err
+		}
+		preset.ID = uuid.New().String()
+
+		if err := manager.RunPotionEffect(preset, model.StartEffectAction, false); err == nil {
+			time.Sleep(3 * time.Second)
+			return manager.StopEffect(preset.ID, false)
+		}
+	case model.LaserEffectType:
+		preset := model.LaserEffectPreset{}
+		if err := unmarshalLaserPreset(&preset, values); err != nil {
+			return err
+		}
+		preset.ID = uuid.New().String()
+
+		if err := manager.RunLaserEffect(preset, model.StartEffectAction, false); err == nil {
+			time.Sleep(3 * time.Second)
+			return manager.StopEffect(preset.ID, false)
+		}
+	}
+
+	return sferror.New(sferror.InvalidEffectType, effectType, nil)
 }
