@@ -62,15 +62,26 @@ handleMessage = (data) => {
     }
 
     if (clockUpdate) {
-        const { id } = clockUpdate;
+        const { id, isOffBeat } = clockUpdate;
 
-        if (!activeOnbeatClocks.has(id)) {
-            activeOnbeatClocks.add(id);
-            document.getElementById("onbeatclock-" + id).classList.add("clock-attached");
+        if (isOffBeat) {
+            if (!activeOffbeatClocks.has(id)) {
+                activeOffbeatClocks.add(id);
+                document.getElementById("offbeatclock-" + id).classList.add("clock-attached");
+            } else {
+                activeOffbeatClocks.delete(id);
+                document.getElementById("offbeatclock-" + id).classList.remove("clock-on");
+                document.getElementById("offbeatclock-" + id).classList.remove("clock-attached");
+            }
         } else {
-            activeOnbeatClocks.delete(id);
-            document.getElementById("onbeatclock-" + id).classList.remove("clock-on");
-            document.getElementById("onbeatclock-" + id).classList.remove("clock-attached");
+            if (!activeOnbeatClocks.has(id)) {
+                activeOnbeatClocks.add(id);
+                document.getElementById("onbeatclock-" + id).classList.add("clock-attached");
+            } else {
+                activeOnbeatClocks.delete(id);
+                document.getElementById("onbeatclock-" + id).classList.remove("clock-on");
+                document.getElementById("onbeatclock-" + id).classList.remove("clock-attached");
+            }
         }
     }
 

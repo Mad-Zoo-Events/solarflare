@@ -78,7 +78,7 @@ func GetClockSpeed() (bpm float64, multiplier float64) {
 }
 
 // SubscribeEffectToClock registers an effect to the clock
-func SubscribeEffectToClock(id string, effectType model.EffectType, isRunning bool) error {
+func SubscribeEffectToClock(id string, effectType model.EffectType, isOffBeat, isRunning bool) error {
 	p, err := utils.FindPreset(id, effectType)
 	if err != nil {
 		return err
@@ -103,13 +103,13 @@ func SubscribeEffectToClock(id string, effectType model.EffectType, isRunning bo
 		tickTock.laserEffects[id] = p.(model.LaserEffectPreset)
 	}
 
-	sendClockUpdate(id, model.SubscribeClockAction)
+	sendClockUpdate(id, model.SubscribeClockAction, isOffBeat)
 
 	return nil
 }
 
 // UnsubscribeEffectFromClock unsubscribes an effect from the clock
-func UnsubscribeEffectFromClock(id string, effectType model.EffectType, triggeredByStopAll bool) {
+func UnsubscribeEffectFromClock(id string, effectType model.EffectType, isOffBeat, triggeredByStopAll bool) {
 	// if !triggeredByStopAll {
 	// 	waitForStop()
 	// }
@@ -136,7 +136,7 @@ func UnsubscribeEffectFromClock(id string, effectType model.EffectType, triggere
 		delete(tickTock.laserEffects, id)
 	}
 
-	sendClockUpdate(id, model.UnsubscribeClockAction)
+	sendClockUpdate(id, model.UnsubscribeClockAction, isOffBeat)
 
 	StopEffect(id, false)
 }
@@ -225,11 +225,12 @@ func (c *clock) tock() {
 	}
 }
 
-func sendClockUpdate(id string, action model.ClockAction) {
+func sendClockUpdate(id string, action model.ClockAction, isOffBeat bool) {
 	update := model.UIUpdate{
 		ClockUpdate: &model.ClockUpdate{
-			ID:     id,
-			Action: action,
+			ID:        id,
+			Action:    action,
+			IsOffBeat: isOffBeat,
 		},
 	}
 

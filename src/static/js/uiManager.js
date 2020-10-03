@@ -319,19 +319,25 @@ updateClockControls = async (bpm, mult) => {
     restartUIClock();
 };
 
-doWhateverTheClockDoes = (restartNow) => {
+doWhateverTheClockDoes = () => {
     const cName = "clock-indicator-on";
     const indicator = document.getElementById("clock-indicator");
 
-    if (restartNow === true || !indicator.classList.contains(cName)) {
+    if (!indicator.classList.contains(cName)) {
         indicator.classList.add(cName);
         activeOnbeatClocks.forEach((id) => {
             document.getElementById("onbeatclock-" + id).classList.add("clock-on");
+        });
+        activeOffbeatClocks.forEach((id) => {
+            document.getElementById("offbeatclock-" + id).classList.remove("clock-on");
         });
     } else {
         indicator.classList.remove(cName);
         activeOnbeatClocks.forEach((id) => {
             document.getElementById("onbeatclock-" + id).classList.remove("clock-on");
+        });
+        activeOffbeatClocks.forEach((id) => {
+            document.getElementById("offbeatclock-" + id).classList.add("clock-on");
         });
     }
 };
@@ -393,8 +399,14 @@ restartUIClock = () => {
 
 restartClock = () => doRestartClock(restartUIClock);
 
-attachClock = (effectType, id) => {
-    let action = activeOnbeatClocks.has(id) ? "unsubscribe" : "subscribe";
+attachClock = (effectType, id, isOffbeat) => {
+    let action;
+    if (isOffbeat) {
+        action = activeOffbeatClocks.has(id) ? "unsubscribe" : "subscribe";
+    } else {
+        action = activeOnbeatClocks.has(id) ? "unsubscribe" : "subscribe";
+    }
+
     let isRunning = false;
 
     if (counters[id]) {
@@ -402,11 +414,18 @@ attachClock = (effectType, id) => {
         stopCounter(id);
     }
 
-    doClockSubscription(effectType, id, action, isRunning);
+    doClockSubscription(effectType, id, action, isRunning, isOffbeat);
 };
 
-detachClockAll = () => activeOnbeatClocks.forEach((id) => {
-    activeOnbeatClocks.delete(id);
-    document.getElementById("onbeatclock-" + id).classList.remove("clock-on");
-    document.getElementById("onbeatclock-" + id).classList.remove("clock-attached");
-});
+detachClockAll = () => {
+    activeOnbeatClocks.forEach((id) => {
+        activeOnbeatClocks.delete(id);
+        document.getElementById("onbeatclock-" + id).classList.remove("clock-on");
+        document.getElementById("onbeatclock-" + id).classList.remove("clock-attached");
+    });
+    activeOffbeatClocks.forEach((id) => {
+        activeOffbeatClocks.delete(id);
+        document.getElementById("offbeatclock-" + id).classList.remove("clock-on");
+        document.getElementById("offbeatclock-" + id).classList.remove("clock-attached");
+    });
+};

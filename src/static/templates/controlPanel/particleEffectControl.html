@@ -12,9 +12,9 @@
         onclick='doEffect("particle", "{{.ID}}", "stop")'>stop</button>
     <div class="clock-buttons">
         <button type="button" class="clock" id="onbeatclock-{{.ID}}"
-            onclick='attachClock("particle", "{{.ID}}")'>██</button>
+            onclick='attachClock("particle", "{{.ID}}", false)'>██</button>
         <button type="button" class="clock" id="offbeatclock-{{.ID}}"
-            onclick='attachClock("particle", "{{.ID}}")'>░░</button>
+            onclick='attachClock("particle", "{{.ID}}", true)'>░░</button>
     </div>
 </div>
 
