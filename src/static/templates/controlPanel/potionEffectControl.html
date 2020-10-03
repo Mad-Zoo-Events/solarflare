@@ -9,7 +9,12 @@
         onclick='doEffect("potion", "{{.ID}}", "start")'>start</button>
     <button type="button" class="stop key-binding-{{.KeyBinding}}" id="stop-{{.ID}}"
         onclick='doEffect("potion", "{{.ID}}", "stop")'>stop</button>
-    <button type="button" class="clock" id="clock-{{.ID}}" onclick='attachClock("potion", "{{.ID}}")'>clock</button>
+    <div class="clock-buttons">
+        <button type="button" class="clock" id="onbeatclock-{{.ID}}"
+            onclick='attachClock("potion", "{{.ID}}")'>██</button>
+        <button type="button" class="clock" id="offbeatclock-{{.ID}}"
+            onclick='attachClock("potion", "{{.ID}}")'>░░</button>
+    </div>
 </div>
 
 {{end}}

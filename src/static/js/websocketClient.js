@@ -64,13 +64,13 @@ handleMessage = (data) => {
     if (clockUpdate) {
         const { id } = clockUpdate;
 
-        if (!activeClocks.has(id)) {
-            activeClocks.add(id);
-            document.getElementById("clock-" + id).classList.add("clock-attached");
+        if (!activeOnbeatClocks.has(id)) {
+            activeOnbeatClocks.add(id);
+            document.getElementById("onbeatclock-" + id).classList.add("clock-attached");
         } else {
-            activeClocks.delete(id);
-            document.getElementById("clock-" + id).classList.remove("clock-on");
-            document.getElementById("clock-" + id).classList.remove("clock-attached");
+            activeOnbeatClocks.delete(id);
+            document.getElementById("onbeatclock-" + id).classList.remove("clock-on");
+            document.getElementById("onbeatclock-" + id).classList.remove("clock-attached");
         }
     }
 

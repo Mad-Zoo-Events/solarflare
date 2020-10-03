@@ -5,13 +5,17 @@
     <hr />
     {{if .UIKeyBinding}}<span>► {{.UIKeyBinding}} ◄</span>{{end}}
 
-    <button type="button" class="trigger"
-        onclick='doEffect("particle", "{{.ID}}", "trigger")'>trigger</button>
+    <button type="button" class="trigger" onclick='doEffect("particle", "{{.ID}}", "trigger")'>trigger</button>
     <button type="button" class="start key-binding-{{.KeyBinding}}" id="start-{{.ID}}"
         onclick='doEffect("particle", "{{.ID}}", "start")'>start</button>
     <button type="button" class="stop key-binding-{{.KeyBinding}}" id="stop-{{.ID}}"
         onclick='doEffect("particle", "{{.ID}}", "stop")'>stop</button>
-    <button type="button" class="clock" id="clock-{{.ID}}" onclick='attachClock("particle", "{{.ID}}")'>clock</button>
+    <div class="clock-buttons">
+        <button type="button" class="clock" id="onbeatclock-{{.ID}}"
+            onclick='attachClock("particle", "{{.ID}}")'>██</button>
+        <button type="button" class="clock" id="offbeatclock-{{.ID}}"
+            onclick='attachClock("particle", "{{.ID}}")'>░░</button>
+    </div>
 </div>
 
 {{end}}
