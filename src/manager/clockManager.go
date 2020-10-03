@@ -12,6 +12,12 @@ const millisPerSecond = 60000
 var tickTock *clock
 var clk *time.Ticker
 
+type clockEffect struct {
+	isOffBeat bool
+	preset    interface{}
+	id        string
+}
+
 type clock struct {
 	interval   time.Duration
 	bpm        float64
@@ -23,22 +29,22 @@ type clock struct {
 	syncStart bool
 	syncStop  bool
 
-	particleEffects  map[string]model.ParticleEffectPreset
-	dragonEffects    map[string]model.DragonEffectPreset
-	timeshiftEffects map[string]model.TimeshiftEffectPreset
-	potionEffects    map[string]model.PotionEffectPreset
-	laserEffects     map[string]model.LaserEffectPreset
+	particleEffects  map[string]clockEffect
+	dragonEffects    map[string]clockEffect
+	timeshiftEffects map[string]clockEffect
+	potionEffects    map[string]clockEffect
+	laserEffects     map[string]clockEffect
 }
 
 func init() {
 	tickTock = &clock{
 		nextAction: model.StartEffectAction,
 
-		particleEffects:  make(map[string]model.ParticleEffectPreset),
-		dragonEffects:    make(map[string]model.DragonEffectPreset),
-		timeshiftEffects: make(map[string]model.TimeshiftEffectPreset),
-		potionEffects:    make(map[string]model.PotionEffectPreset),
-		laserEffects:     make(map[string]model.LaserEffectPreset),
+		particleEffects:  make(map[string]clockEffect),
+		dragonEffects:    make(map[string]clockEffect),
+		timeshiftEffects: make(map[string]clockEffect),
+		potionEffects:    make(map[string]clockEffect),
+		laserEffects:     make(map[string]clockEffect),
 
 		notify: make(chan bool),
 	}
@@ -90,17 +96,23 @@ func SubscribeEffectToClock(id string, effectType model.EffectType, isOffBeat, i
 		// waitForStop()
 	}
 
+	ce := clockEffect{
+		isOffBeat: isOffBeat,
+		preset:    p,
+		id:        id,
+	}
+
 	switch effectType {
 	case model.ParticleEffectType:
-		tickTock.particleEffects[id] = p.(model.ParticleEffectPreset)
+		tickTock.particleEffects[id] = ce
 	case model.DragonEffectType:
-		tickTock.dragonEffects[id] = p.(model.DragonEffectPreset)
+		tickTock.dragonEffects[id] = ce
 	case model.TimeshiftEffectType:
-		tickTock.timeshiftEffects[id] = p.(model.TimeshiftEffectPreset)
+		tickTock.timeshiftEffects[id] = ce
 	case model.PotionEffectType:
-		tickTock.potionEffects[id] = p.(model.PotionEffectPreset)
+		tickTock.potionEffects[id] = ce
 	case model.LaserEffectType:
-		tickTock.laserEffects[id] = p.(model.LaserEffectPreset)
+		tickTock.laserEffects[id] = ce
 	}
 
 	sendClockUpdate(id, model.SubscribeClockAction, isOffBeat)
@@ -115,11 +127,11 @@ func UnsubscribeEffectFromClock(id string, effectType model.EffectType, isOffBea
 	// }
 
 	if id == "all" {
-		tickTock.particleEffects = make(map[string]model.ParticleEffectPreset)
-		tickTock.dragonEffects = make(map[string]model.DragonEffectPreset)
-		tickTock.timeshiftEffects = make(map[string]model.TimeshiftEffectPreset)
-		tickTock.potionEffects = make(map[string]model.PotionEffectPreset)
-		tickTock.laserEffects = make(map[string]model.LaserEffectPreset)
+		tickTock.particleEffects = make(map[string]clockEffect)
+		tickTock.dragonEffects = make(map[string]clockEffect)
+		tickTock.timeshiftEffects = make(map[string]clockEffect)
+		tickTock.potionEffects = make(map[string]clockEffect)
+		tickTock.laserEffects = make(map[string]clockEffect)
 		return
 	}
 
@@ -179,19 +191,39 @@ func (c *clock) run() {
 
 func (c *clock) tick() {
 	for _, e := range c.particleEffects {
-		go RunParticleEffect(e, c.nextAction, false)
+		if e.isOffBeat {
+			go StopEffect(e.id, false)
+		} else {
+			go RunParticleEffect(e.preset.(model.ParticleEffectPreset), model.StartEffectAction, false)
+		}
 	}
 	for _, e := range c.dragonEffects {
-		go RunDragonEffect(e, c.nextAction, false)
+		if e.isOffBeat {
+			go StopEffect(e.id, false)
+		} else {
+			go RunDragonEffect(e.preset.(model.DragonEffectPreset), model.StartEffectAction, false)
+		}
 	}
 	for _, e := range c.timeshiftEffects {
-		go RunTimeshiftEffect(e, c.nextAction, false)
+		if e.isOffBeat {
+			go StopEffect(e.id, false)
+		} else {
+			go RunTimeshiftEffect(e.preset.(model.TimeshiftEffectPreset), model.StartEffectAction, false)
+		}
 	}
 	for _, e := range c.potionEffects {
-		go RunPotionEffect(e, c.nextAction, false)
+		if e.isOffBeat {
+			go StopEffect(e.id, false)
+		} else {
+			go RunPotionEffect(e.preset.(model.PotionEffectPreset), model.StartEffectAction, false)
+		}
 	}
 	for _, e := range c.laserEffects {
-		go RunLaserEffect(e, c.nextAction, false)
+		if e.isOffBeat {
+			go StopEffect(e.id, false)
+		} else {
+			go RunLaserEffect(e.preset.(model.LaserEffectPreset), model.StartEffectAction, false)
+		}
 	}
 
 	c.nextAction = model.StopEffectAction
@@ -203,19 +235,39 @@ func (c *clock) tick() {
 
 func (c *clock) tock() {
 	for _, e := range c.particleEffects {
-		go StopEffect(e.ID, false)
+		if e.isOffBeat {
+			go RunParticleEffect(e.preset.(model.ParticleEffectPreset), model.StartEffectAction, false)
+		} else {
+			go StopEffect(e.id, false)
+		}
 	}
 	for _, e := range c.dragonEffects {
-		go StopEffect(e.ID, false)
+		if e.isOffBeat {
+			go RunDragonEffect(e.preset.(model.DragonEffectPreset), model.StartEffectAction, false)
+		} else {
+			go StopEffect(e.id, false)
+		}
 	}
 	for _, e := range c.timeshiftEffects {
-		go StopEffect(e.ID, false)
+		if e.isOffBeat {
+			go RunTimeshiftEffect(e.preset.(model.TimeshiftEffectPreset), model.StartEffectAction, false)
+		} else {
+			go StopEffect(e.id, false)
+		}
 	}
 	for _, e := range c.potionEffects {
-		go StopEffect(e.ID, false)
+		if e.isOffBeat {
+			go RunPotionEffect(e.preset.(model.PotionEffectPreset), model.StartEffectAction, false)
+		} else {
+			go StopEffect(e.id, false)
+		}
 	}
 	for _, e := range c.laserEffects {
-		go StopEffect(e.ID, false)
+		if e.isOffBeat {
+			go RunLaserEffect(e.preset.(model.LaserEffectPreset), model.StartEffectAction, false)
+		} else {
+			go StopEffect(e.id, false)
+		}
 	}
 
 	c.nextAction = model.StartEffectAction
