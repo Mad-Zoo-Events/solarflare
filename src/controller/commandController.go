@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"encoding/json"
 	"net/url"
 	"strings"
 
@@ -30,13 +29,7 @@ func RunCommand(values url.Values) (err error) {
 		return
 	}
 
-	body, err := json.Marshal(commandRequest)
-	if err != nil {
-		err = sferror.New(sferror.Encoding, "Failed to marshal request", err)
-		return
-	}
-
-	err = client.ExecuteEffect(commandsEndpoint, body)
+	err = client.ExecuteEffect(commandsEndpoint, []byte(commandRequest.Command))
 
 	return
 }
