@@ -31,9 +31,10 @@
                 {{end}}
             </td>
             <td class="actions-column">
-                <span onclick='confirmDelete("{{.ID}}", "particle", "{{.DisplayName}}")'>🗑</span>
-                <span onclick='navigate(CP_PRESETS_ENDPOINT+"/particle/modify/{{.ID}}");'>🖉</span>
-                <span onclick='doDuplicatePreset("{{.ID}}", "particle");'>➕</span>
+                <i class="far fa-edit fa-lg" onclick='navigate(CP_PRESETS_ENDPOINT+"/particle/modify/{{.ID}}");'></i>
+                <i class="far fa-clone fa-lg" onclick='doDuplicatePreset("{{.ID}}", "particle");'></i>
+                <i class="far fa-trash-alt fa-lg"
+                    onclick='confirmDelete("{{.ID}}", "particle", "{{.DisplayName}}")'></i>
             </td>
         </tr>
         {{end}}
@@ -55,9 +56,9 @@
                 {{end}}
             </td>
             <td class="actions-column">
-                <span onclick='confirmDelete("{{.ID}}", "dragon", "{{.DisplayName}}")'>🗑</span>
-                <span onclick='navigate(CP_PRESETS_ENDPOINT+"/dragon/modify/{{.ID}}");'>🖉</span>
-                <span onclick='doDuplicatePreset("{{.ID}}", "dragon");'>➕</span>
+                <i class="far fa-edit fa-lg" onclick='navigate(CP_PRESETS_ENDPOINT+"/dragon/modify/{{.ID}}");'></i>
+                <i class="far fa-clone fa-lg" onclick='doDuplicatePreset("{{.ID}}", "dragon");'></i>
+                <i class="far fa-trash-alt fa-lg" onclick='confirmDelete("{{.ID}}", "dragon", "{{.DisplayName}}")'></i>
             </td>
         </tr>
         {{end}}
@@ -80,9 +81,9 @@
                 {{end}}
             </td>
             <td class="actions-column">
-                <span onclick='confirmDelete("{{.ID}}", "laser", "{{.DisplayName}}")'>🗑</span>
-                <span onclick='navigate(CP_PRESETS_ENDPOINT+"/laser/modify/{{.ID}}");'>🖉</span>
-                <span onclick='doDuplicatePreset("{{.ID}}", "laser");'>➕</span>
+                <i class="far fa-edit fa-lg" onclick='navigate(CP_PRESETS_ENDPOINT+"/laser/modify/{{.ID}}");'></i>
+                <i class="far fa-clone fa-lg" onclick='doDuplicatePreset("{{.ID}}", "laser");'></i>
+                <i class="far fa-trash-alt fa-lg" onclick='confirmDelete("{{.ID}}", "laser", "{{.DisplayName}}")'></i>
             </td>
         </tr>
         {{end}}
@@ -104,9 +105,10 @@
                 {{end}}
             </td>
             <td class="actions-column">
-                <span onclick='confirmDelete("{{.ID}}", "timeshift", "{{.DisplayName}}")'>🗑</span>
-                <span onclick='navigate(CP_PRESETS_ENDPOINT+"/timeshift/modify/{{.ID}}");'>🖉</span>
-                <span onclick='doDuplicatePreset("{{.ID}}", "timeshift");'>➕</span>
+                <i class="far fa-edit fa-lg" onclick='navigate(CP_PRESETS_ENDPOINT+"/timeshift/modify/{{.ID}}");'></i>
+                <i class="far fa-clone fa-lg" onclick='doDuplicatePreset("{{.ID}}", "timeshift");'></i>
+                <i class="far fa-trash-alt fa-lg"
+                    onclick='confirmDelete("{{.ID}}", "timeshift", "{{.DisplayName}}")'></i>
             </td>
         </tr>
         {{end}}
@@ -128,9 +130,9 @@
                 {{end}}
             </td>
             <td class="actions-column">
-                <span onclick='confirmDelete("{{.ID}}", "potion", "{{.DisplayName}}")'>🗑</span>
-                <span onclick='navigate(CP_PRESETS_ENDPOINT+"/potion/modify/{{.ID}}");'>🖉</span>
-                <span onclick='doDuplicatePreset("{{.ID}}", "potion");'>➕</span>
+                <i class="far fa-edit fa-lg" onclick='navigate(CP_PRESETS_ENDPOINT+"/potion/modify/{{.ID}}");'></i>
+                <i class="far fa-clone fa-lg" onclick='doDuplicatePreset("{{.ID}}", "potion");'></i>
+                <i class="far fa-trash-alt fa-lg" onclick='confirmDelete("{{.ID}}", "potion", "{{.DisplayName}}")'></i>
             </td>
         </tr>
         {{end}}

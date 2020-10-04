@@ -25,7 +25,7 @@
             {{range $index, $element := .LaserEffects}}
             <div class="effect-box" data-index="{{$index}}">
                 <span class="armor-stand">
-                    <span class="delete-effect" onclick='removeEffectInput(this);'>🗑</span>
+                    <i class="delete-effect far fa-trash-alt fa-lg" onclick='removeEffectInput(this);'></i>
                 </span>
                 <br />
 
@@ -44,7 +44,7 @@
             <br />
             {{end}}
         </form>
-        <div class="add-effect" onclick='addEffectInput();'>+</div>
+        <div class="add-effect"><i class="fas fa-plus fa-3x" onclick='addEffectInput();'></i></div>
     </div>
 
     <div class="footer">
