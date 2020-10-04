@@ -23,7 +23,7 @@ func RenderControlPanel(writer http.ResponseWriter) error {
 		controlPanelPath+"bossbarForm.html",
 		controlPanelPath+"commandForm.html",
 		controlPanelPath+"stageSelector.html",
-		controlPanelPath+"serverManager.html",
+		controlPanelPath+"headerButtons.html",
 		controlPanelPath+"particleEffectControl.html",
 		controlPanelPath+"dragonEffectControl.html",
 		controlPanelPath+"timeshiftEffectControl.html",
