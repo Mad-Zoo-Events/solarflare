@@ -422,6 +422,28 @@ attachClock = (effectType, id, isOffbeat) => {
     doClockSubscription(effectType, id, action, isRunning, isOffbeat);
 };
 
+attachClockUI = (id, isOffBeat) => {
+    if (isOffBeat) {
+        activeOffbeatClocks.add(id);
+        document.getElementById("offbeatclock-" + id).classList.add("clock-attached");
+    } else {
+        activeOnbeatClocks.add(id);
+        document.getElementById("onbeatclock-" + id).classList.add("clock-attached");
+    }
+};
+
+detachClockUI = (id, isOffBeat) => {
+    if (isOffBeat) {
+        activeOffbeatClocks.delete(id);
+        document.getElementById("offbeatclock-" + id).classList.remove("clock-on");
+        document.getElementById("offbeatclock-" + id).classList.remove("clock-attached");
+    } else {
+        activeOnbeatClocks.delete(id);
+        document.getElementById("onbeatclock-" + id).classList.remove("clock-on");
+        document.getElementById("onbeatclock-" + id).classList.remove("clock-attached");
+    }
+};
+
 detachClockAll = () => {
     activeOnbeatClocks.forEach((id) => {
         activeOnbeatClocks.delete(id);
