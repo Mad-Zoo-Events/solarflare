@@ -2,7 +2,7 @@
 
 <span class="header-title">Servers</span>
 <div class="popup server-manager-popup">
-    <span class="header-icon-button" onclick='toggleServerManagerPopup();'>📡</span>
+    <i class="header-icon fas fa-satellite-dish fa-2x"></i>
     <div class="popup-content server-manager-group" id="server-manager-popup">
 
         {{range .RegisteredServers}}
@@ -19,6 +19,6 @@
 {{define "presetManager"}}
 
 <span class="header-title">Presets</span>
-<span class="header-icon-button" onclick='navigate(CP_PRESETS_ENDPOINT);'>🎆</span>
+<i class="header-icon fas fa-cogs fa-2x"></i>
 
 {{end}}

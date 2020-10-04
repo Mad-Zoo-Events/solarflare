@@ -11,10 +11,10 @@
     <button type="button" class="stop key-binding-{{.KeyBinding}}" id="stop-{{.ID}}"
         onclick='doEffect("particle", "{{.ID}}", "stop")'>stop</button>
     <div class="clock-buttons">
-        <button type="button" class="clock" id="onbeatclock-{{.ID}}"
-            onclick='attachClock("particle", "{{.ID}}", false)'>██</button>
-        <button type="button" class="clock" id="offbeatclock-{{.ID}}"
-            onclick='attachClock("particle", "{{.ID}}", true)'>░░</button>
+        <i class="clock fas fa-circle fa-2x" id="onbeatclock-{{.ID}}"
+            onclick='attachClock("particle", "{{.ID}}", false)'></i>
+        <i class="clock far fa-circle fa-2x" id="offbeatclock-{{.ID}}"
+            onclick='attachClock("particle", "{{.ID}}", true)'></i>
     </div>
 </div>
 

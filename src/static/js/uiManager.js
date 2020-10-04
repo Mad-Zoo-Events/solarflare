@@ -328,21 +328,25 @@ doWhateverTheClockDoes = () => {
     const cName = "clock-indicator-on";
     const indicator = document.getElementById("clock-indicator");
 
-    if (!indicator.classList.contains(cName)) {
+    if (!indicator.classList.contains(cName)) { // ON
         indicator.classList.add(cName);
         activeOnbeatClocks.forEach((id) => {
-            document.getElementById("onbeatclock-" + id).classList.add("clock-on");
+            document.getElementById("onbeatclock-" + id).classList.add("fas");
+            document.getElementById("onbeatclock-" + id).classList.remove("far");
         });
         activeOffbeatClocks.forEach((id) => {
-            document.getElementById("offbeatclock-" + id).classList.remove("clock-on");
+            document.getElementById("offbeatclock-" + id).classList.add("far");
+            document.getElementById("offbeatclock-" + id).classList.remove("fas");
         });
-    } else {
+    } else { // OFF
         indicator.classList.remove(cName);
         activeOnbeatClocks.forEach((id) => {
-            document.getElementById("onbeatclock-" + id).classList.remove("clock-on");
+            document.getElementById("onbeatclock-" + id).classList.add("far");
+            document.getElementById("onbeatclock-" + id).classList.remove("fas");
         });
         activeOffbeatClocks.forEach((id) => {
-            document.getElementById("offbeatclock-" + id).classList.add("clock-on");
+            document.getElementById("offbeatclock-" + id).classList.add("fas");
+            document.getElementById("offbeatclock-" + id).classList.remove("far");
         });
     }
 };
@@ -441,11 +445,13 @@ attachClockUI = (id, isOffBeat) => {
 detachClockUI = (id, isOffBeat) => {
     if (isOffBeat) {
         activeOffbeatClocks.delete(id);
-        document.getElementById("offbeatclock-" + id).classList.remove("clock-on");
+        document.getElementById("offbeatclock-" + id).classList.remove("fas");
+        document.getElementById("offbeatclock-" + id).classList.add("far");
         document.getElementById("offbeatclock-" + id).classList.remove("clock-attached");
     } else {
         activeOnbeatClocks.delete(id);
-        document.getElementById("onbeatclock-" + id).classList.remove("clock-on");
+        document.getElementById("onbeatclock-" + id).classList.remove("far");
+        document.getElementById("onbeatclock-" + id).classList.add("fas");
         document.getElementById("onbeatclock-" + id).classList.remove("clock-attached");
     }
 };
