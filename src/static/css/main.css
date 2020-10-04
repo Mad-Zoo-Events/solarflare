@@ -594,12 +594,20 @@ td.type-header {
 }
 
 .actions-column {
-    font-size  : x-large;
     white-space: nowrap;
 }
 
-.actions-column span {
-    cursor: pointer;
+.actions-column i {
+    cursor     : pointer;
+    margin-left: 0.5em;
+}
+
+i.fa-trash-alt {
+    color: var(--red);
+}
+
+i.fa-clone {
+    color: var(--teal);
 }
 
 .code {
@@ -661,21 +669,15 @@ label {
 }
 
 .delete-effect {
-    position : absolute;
-    top      : -0.5em;
-    left     : -1.5em;
-    width    : min-content;
-    color    : var(--red);
-    cursor   : pointer;
-    font-size: xx-large;
+    position: absolute;
+    left    : -2.5em;
+    cursor  : pointer;
 }
 
 .add-effect {
-    margin    : 1em auto 0 auto;
-    width     : 50%;
-    text-align: center;
-    border    : 1px solid var(--green);
-    color     : var(--green);
-    cursor    : pointer;
-    font-size : xx-large;
+    margin : 1em auto 0 auto;
+    padding: 1em;
+    width  : min-content;
+    color  : var(--green);
+    cursor : pointer;
 }
