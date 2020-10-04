@@ -424,9 +424,15 @@ attachClock = (effectType, id, isOffbeat) => {
 
 attachClockUI = (id, isOffBeat) => {
     if (isOffBeat) {
+        if (activeOnbeatClocks.has(id)) {
+            detachClockUI(id, false);
+        }
         activeOffbeatClocks.add(id);
         document.getElementById("offbeatclock-" + id).classList.add("clock-attached");
     } else {
+        if (activeOffbeatClocks.has(id)) {
+            detachClockUI(id, true);
+        }
         activeOnbeatClocks.add(id);
         document.getElementById("onbeatclock-" + id).classList.add("clock-attached");
     }
