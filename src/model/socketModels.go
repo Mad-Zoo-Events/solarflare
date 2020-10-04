@@ -17,6 +17,8 @@ type EffectUpdate struct {
 	Action      EffectAction `json:"action"`
 
 	ErrorMessage string `json:"errorMessage"`
+
+	StopAll *StopAllRequest `json:"stopAll"`
 }
 
 // ClockUpdate is the model used to send updates on clock subscriptions to the UI

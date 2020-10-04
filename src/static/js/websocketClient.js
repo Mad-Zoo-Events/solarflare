@@ -42,33 +42,39 @@ handleMessage = (data) => {
     } = data;
 
     if (effectUpdate) {
-        const { id, displayName, action, errorMessage } = effectUpdate;
+        const { id, displayName, action, errorMessage, stopAll } = effectUpdate;
 
-        if (id === "all") {
-            detachClockAll();
-            activeKeys.clear();
-            document.getElementById("stop-all-button").disabled = false;
-            document.getElementById("stop-all-button").classList.remove("disabled");
+        if (stopAll) {
+            const { stopEffects, detachClocks } = stopAll;
 
-            logEffectMessage("=>", "STOP EVERYTHING [W/ DETACH]");
-        } else if (id === "allnoclock") {
-            activeKeys.clear();
-            document.getElementById("stop-all-no-clock-button").disabled = false;
-            document.getElementById("stop-all-no-clock-button").classList.remove("disabled");
+            if (detachClocks) {
+                detachClockAll();
+            }
 
-            logEffectMessage("=>", "STOP EVERYTHING [W/O DETACH]");
+            if (stopEffects) {
+                activeKeys.clear();
+                stopCounter("all");
+            }
+
+            const buttons = document.getElementsByClassName("stop-all-button");
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].disabled = false;
+                buttons[i].classList.remove("disabled");
+            }
+
+            logEffectMessage("=>", "STOP ALL");
         } else if (id === "bossbar") {
             const parts = displayName.split("௵");
             document.getElementById("bossbar-text").value = parts[0];
             document.getElementById("bossbar-color").value = parts[1];
         } else {
+            if (!errorMessage) {
+                counter(id, action);
+            }
+
             logEffectMessage(action, displayName, errorMessage);
         }
-
-        if (!errorMessage) {
-            counter(id, action);
-        }
-    }
+    };
 
     if (clockUpdate) {
         const { id, isOffBeat, action } = clockUpdate;

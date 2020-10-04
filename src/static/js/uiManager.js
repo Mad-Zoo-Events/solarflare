@@ -109,7 +109,7 @@ startCounter = (id) => {
 };
 
 stopCounter = (id) => {
-    if (id === "all" || id === "allnoclock") {
+    if (id === "all") {
         for (const key in counters) {
             clearInterval(counters[key]);
         }
@@ -262,7 +262,7 @@ handleKeypress = (event) => {
     var charCode = event.which || event.keyCode;
 
     if (charCode === 48) { // character '0'
-        document.getElementById(`stop-all-button`).click();
+        document.getElementById(`stop-everything-button`).click();
         return;
     }
 
@@ -272,7 +272,7 @@ handleKeypress = (event) => {
     }
 
     if (charCode === 45) { // character '-'
-        document.getElementById(`stop-all-no-clock-button`).click();
+        document.getElementById(`stop-all-effects-button`).click();
         return;
     }
 
@@ -457,14 +457,6 @@ detachClockUI = (id, isOffBeat) => {
 };
 
 detachClockAll = () => {
-    activeOnbeatClocks.forEach((id) => {
-        activeOnbeatClocks.delete(id);
-        document.getElementById("onbeatclock-" + id).classList.remove("clock-on");
-        document.getElementById("onbeatclock-" + id).classList.remove("clock-attached");
-    });
-    activeOffbeatClocks.forEach((id) => {
-        activeOffbeatClocks.delete(id);
-        document.getElementById("offbeatclock-" + id).classList.remove("clock-on");
-        document.getElementById("offbeatclock-" + id).classList.remove("clock-attached");
-    });
+    activeOnbeatClocks.forEach((id) => detachClockUI(id, false));
+    activeOffbeatClocks.forEach((id) => detachClockUI(id, true));
 };

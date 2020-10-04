@@ -156,7 +156,21 @@ button.stop {
     box-shadow: 0 0 0.3em var(--red);
 }
 
-button.stop2 {
+#stop-everything-button {
+    grid-column: 1 / span 2;
+
+    color     : var(--red);
+    border    : none;
+    box-shadow: 0 0 0.3em var(--red);
+}
+
+#stop-all-effects-button {
+    color     : var(--orange);
+    border    : none;
+    box-shadow: 0 0 0.3em var(--orange);
+}
+
+#detach-all-button {
     color     : var(--orange);
     border    : none;
     box-shadow: 0 0 0.3em var(--orange);
@@ -490,10 +504,6 @@ h3 {
     text-align : center;
     padding    : 0 1em;
     border-left: 2px dashed var(--gray);
-}
-
-#manage-presets-button {
-    grid-column: 1 / span 2;
 }
 
 .log-message {
