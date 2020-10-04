@@ -120,10 +120,12 @@
             </table>
         </div>
         <div class="main-controls">
-            <button id="stop-all-button" class="stop" type="button"
-                onclick='doStopAll(true);'>►&nbsp;0&nbsp;◄<br />stop&nbsp;all<br />(detach&nbsp;clock)</button>
-            <button id="stop-all-no-clock-button" class="stop2" type="button"
-                onclick='doStopAll(false);'>►&nbsp;-&nbsp;◄<br />stop&nbsp;all<br />(keep&nbsp;clock)</button>
+            <button id="stop-everything-button" class="stop-all-button" type="button"
+                onclick='doStopAll(this, true, true);'>►&nbsp;0&nbsp;◄<br />stop&nbsp;everything</button>
+            <button id="stop-all-effects-button" class="stop-all-button" type="button"
+                onclick='doStopAll(this, true, false);'>►&nbsp;-&nbsp;◄<br />stop&nbsp;effects</button>
+            <button id="detach-all-button" class="stop-all-button" type="button"
+                onclick='doStopAll(this, false, true);'>remove&nbsp;clocks</button>
         </div>
     </div>
 </body>

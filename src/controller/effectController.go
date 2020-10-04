@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"encoding/json"
 	"fmt"
 
 	"github.com/eynorey/solarflare/src/manager"
@@ -16,12 +17,6 @@ func RunEffect(id string, effectType model.EffectType, action model.EffectAction
 	}
 
 	if action == model.StopEffectAction {
-		if id == "all" {
-			return manager.StopAll(true)
-		} else if id == "allnoclock" {
-			return manager.StopAll(false)
-		}
-
 		return manager.StopEffect(id, true)
 	}
 
@@ -44,4 +39,14 @@ func RunEffect(id string, effectType model.EffectType, action model.EffectAction
 	}
 
 	return sferror.New(sferror.InvalidEffectType, string(effectType), nil)
+}
+
+// StopAll stops and/or detaches all effects
+func StopAll(body []byte) error {
+	request := &model.StopAllRequest{}
+	if err := json.Unmarshal(body, &request); err != nil {
+		return sferror.New(sferror.Encoding, "Error unmarshalling stopall request", err)
+	}
+
+	return manager.StopAll(request)
 }

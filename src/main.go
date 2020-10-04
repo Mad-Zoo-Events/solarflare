@@ -47,6 +47,7 @@ func main() {
 
 	// effect execution
 	router.Handle("/effects/{effectType}/{id}/{action}", EffectHandler()).Methods(http.MethodPost)
+	router.Handle("/effects/stopall", StopAllHandler()).Methods(http.MethodPost)
 	router.Handle("/bossbar/{action}", BossbarHandler()).Methods(http.MethodPost)
 	router.Handle("/commands", CommandHandler()).Methods(http.MethodPost)
 
