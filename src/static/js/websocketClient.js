@@ -71,26 +71,15 @@ handleMessage = (data) => {
     }
 
     if (clockUpdate) {
-        const { id, isOffBeat } = clockUpdate;
+        const { id, isOffBeat, action } = clockUpdate;
 
-        if (isOffBeat) {
-            if (!activeOffbeatClocks.has(id)) {
-                activeOffbeatClocks.add(id);
-                document.getElementById("offbeatclock-" + id).classList.add("clock-attached");
-            } else {
-                activeOffbeatClocks.delete(id);
-                document.getElementById("offbeatclock-" + id).classList.remove("clock-on");
-                document.getElementById("offbeatclock-" + id).classList.remove("clock-attached");
-            }
-        } else {
-            if (!activeOnbeatClocks.has(id)) {
-                activeOnbeatClocks.add(id);
-                document.getElementById("onbeatclock-" + id).classList.add("clock-attached");
-            } else {
-                activeOnbeatClocks.delete(id);
-                document.getElementById("onbeatclock-" + id).classList.remove("clock-on");
-                document.getElementById("onbeatclock-" + id).classList.remove("clock-attached");
-            }
+        switch (action) {
+            case "subscribe":
+                attachClockUI(id, isOffBeat);
+                break;
+            case "unsubscribe":
+                detachClockUI(id, isOffBeat);
+                break;
         }
     }
 
