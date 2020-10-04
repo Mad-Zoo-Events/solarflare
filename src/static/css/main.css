@@ -178,23 +178,15 @@ button.trigger {
     margin-top           : 0.5em;
     display              : grid;
     grid-template-columns: 50% 50%;
-    box-shadow           : 0 0 0.3em var(--gray);
 }
 
-button.clock {
-    padding: 0.5em 0;
-    margin : 0;
-    color  : var(--gray);
-    border : none;
+i.clock {
+    color: var(--gray);
 }
 
-button.clock-on {
-    background-color: var(--font);
-    color           : var(--darker-gray) !important;
-}
-
-button.clock-attached {
-    color: var(--font);
+i.clock-attached {
+    color      : var(--font);
+    text-shadow: 0 0 0.3em var(--gray);
 }
 
 button.cyan {
@@ -268,8 +260,8 @@ button.header-button {
     padding: unset;
     width  : 100%;
 
-    background-color: var(--darker-cyan);
-    border          : 2px solid var(--darker-cyan);
+    background-color: var(--darker-teal);
+    border          : 2px solid var(--darker-teal);
 }
 
 .header-title {
@@ -284,10 +276,8 @@ button.header-button {
     color: var(--teal);
 }
 
-.header-icon-button {
-    cursor     : pointer;
-    font-size  : 2em;
-    line-height: 1em;
+.header-icon {
+    color: var(--teal);
 }
 
 .popup {
@@ -358,6 +348,8 @@ button.header-button {
     display              : grid;
     gap                  : 0 0.5em;
     grid-template-columns: max-content min-content;
+
+    cursor: pointer;
 }
 
 .server-manager-popup {
@@ -375,12 +367,14 @@ button.header-button {
     gap                  : 1em;
 }
 
-/* Server Select Control */
+/* Preset Manager Control */
 #header-presetmanager-control {
     grid-area            : presetmanager;
     display              : grid;
     gap                  : 0 0.5em;
     grid-template-columns: max-content min-content;
+
+    cursor: pointer;
 }
 
 /* Capslock Warning Control */
