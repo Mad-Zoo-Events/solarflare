@@ -11,6 +11,7 @@
         <div id="header-command-control">{{template "commandForm" .}}</div>
         <div id="header-stageselect-control">{{template "stageSelector" .}}</div>
         <div id="header-serverselect-control">{{template "serverManager" .}}</div>
+        <div id="header-presetmanager-control">{{template "presetManager" .}}</div>
         <div id="header-caps-control">
             <div id="caps-warning">YOU GOT CAPS LOCK ON!!</div>
         </div>
@@ -122,9 +123,6 @@
                 onclick='doStopAll(true);'>►&nbsp;0&nbsp;◄<br />stop&nbsp;all<br />(detach&nbsp;clock)</button>
             <button id="stop-all-no-clock-button" class="stop2" type="button"
                 onclick='doStopAll(false);'>►&nbsp;-&nbsp;◄<br />stop&nbsp;all<br />(keep&nbsp;clock)</button>
-            <button id="manage-presets-button" class="darker-cyan" type="button"
-                onclick='navigate(CP_PRESETS_ENDPOINT);'>Manage
-                Presets</button>
         </div>
     </div>
 </body>

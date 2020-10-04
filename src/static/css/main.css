@@ -248,11 +248,11 @@ button.disabled {
     padding              : 0.3em;
     display              : grid;
     gap                  : 0 1em;
-    grid-template-columns: auto auto min-content min-content;
+    grid-template-columns: auto auto min-content min-content min-content;
     grid-template-rows   : auto auto;
     grid-template-areas  :
-        'bossbar command stageselect serverselect'
-        'caps    caps    caps        caps';
+        'bossbar command stageselect serverselect presetmanager'
+        'caps    caps    caps        caps         caps         ';
 
     background-color: var(--background-alpha);
 }
@@ -282,6 +282,12 @@ button.header-button {
     padding-left: 0.2em;
 
     color: var(--teal);
+}
+
+.header-icon-button {
+    cursor     : pointer;
+    font-size  : 2em;
+    line-height: 1em;
 }
 
 .popup {
@@ -354,12 +360,6 @@ button.header-button {
     grid-template-columns: max-content min-content;
 }
 
-.server-manager-button {
-    cursor     : pointer;
-    font-size  : 2em;
-    line-height: 1em;
-}
-
 .server-manager-popup {
     float: right;
 }
@@ -373,6 +373,14 @@ button.header-button {
     display              : grid;
     grid-template-columns: max-content max-content;
     gap                  : 1em;
+}
+
+/* Server Select Control */
+#header-presetmanager-control {
+    grid-area            : presetmanager;
+    display              : grid;
+    gap                  : 0 0.5em;
+    grid-template-columns: max-content min-content;
 }
 
 /* Capslock Warning Control */
