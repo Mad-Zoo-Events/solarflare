@@ -136,7 +136,7 @@ hr {
 button {
     margin-top: 0.5em;
     width     : 100%;
-    padding   : 0.8em;
+    padding   : 0.5em 1.5em;
     cursor    : pointer;
 
     color           : var(--font);
@@ -148,6 +148,13 @@ button.start {
     color     : var(--green);
     border    : none;
     box-shadow: 0 0 0.3em var(--green);
+}
+
+.keyboard-shortcut {
+    font-variant: normal;
+    font-size   : larger;
+    line-height : 0;
+    font-family : 'Consolas', 'Courier New', Courier, monospace;
 }
 
 button.stop {

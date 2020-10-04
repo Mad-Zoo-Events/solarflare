@@ -1,6 +1,7 @@
 const CLOCK_SYNC_INTERVAL = 10000;
 
 var counters = new Map();
+var startButtonContent = new Set();
 var activeKeys = new Set();
 var activeOnbeatClocks = new Set();
 var activeOffbeatClocks = new Set();
@@ -102,6 +103,7 @@ startCounter = (id) => {
 
     startButton.disabled = true;
     startButton.classList.add("disabled");
+    startButtonContent[id] = startButton.innerHTML;
     counters[id] = setInterval(() => {
         seconds++;
         startButton.innerHTML = seconds;
@@ -117,7 +119,9 @@ stopCounter = (id) => {
         counters.clear();
         const buttons = document.getElementsByClassName("start");
         for (let i = 0; i < buttons.length; i++) {
-            resetStartButton(buttons[i]);
+            const button = buttons[i];
+            const id = button.id.replace('start-', '');
+            resetStartButton(id);
         }
 
         return;
@@ -130,13 +134,19 @@ stopCounter = (id) => {
     clearInterval(counters[id]);
     counters.delete(id);
 
-    resetStartButton(document.getElementById(`start-${id}`));
+    resetStartButton(id);
 };
 
-resetStartButton = async (startButton) => {
+resetStartButton = async (id) => {
+    const startButton = document.getElementById(`start-${id}`);
+
+    if (!startButton.disabled) {
+        return;
+    }
+
     startButton.disabled = false;
     startButton.classList.remove("disabled");
-    startButton.innerHTML = "start";
+    startButton.innerHTML = startButtonContent[id];
 };
 
 // ================ PRESET MANAGEMENT ================
