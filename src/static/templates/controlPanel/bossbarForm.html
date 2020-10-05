@@ -5,7 +5,8 @@
     <div class="popup">
         <input type="text" id="bossbar-text" name="bossbar-text" placeholder="Now Playing: Bob Ross" autocomplete="off"
             onfocus='suppressHotkeys=true; toggleFormattingCodePopup();'
-            onblur='suppressHotkeys=false; toggleFormattingCodePopup();'>
+            onblur='suppressHotkeys=false; toggleFormattingCodePopup();'
+            onkeyup='document.getElementById("bossbar-form").submit();'>
         <div class="popup-content bossbar-formatting-group" id="bossbar-formatting-popup" tabindex="0"
             onmouseover='hoveringOverFormattingPopup=true;' onmouseout='hoveringOverFormattingPopup=false;'
             onblur='toggleFormattingCodePopup();'>
