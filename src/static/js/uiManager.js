@@ -261,6 +261,10 @@ handleKeydown = (event) => {
     } else {
         document.getElementById("caps-warning").style.display = "none";
     }
+
+    if (event.which === 27) {
+        document.getElementById(`detach-all-button`).click();
+    }
 };
 
 handleKeypress = (event) => {
@@ -273,7 +277,6 @@ handleKeypress = (event) => {
 
     if (charCode === 48) { // character '0'
         document.getElementById(`stop-everything-button`).click();
-        return;
     }
 
     if (charCode === 43) { // character '+'
@@ -283,7 +286,6 @@ handleKeypress = (event) => {
 
     if (charCode === 45) { // character '-'
         document.getElementById(`stop-all-effects-button`).click();
-        return;
     }
 
     var buttonsToTrigger;
