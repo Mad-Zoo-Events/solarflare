@@ -301,6 +301,11 @@ button.header-button {
     color: var(--teal);
 }
 
+.header-checkbox {
+    white-space: nowrap;
+    display    : inline-block;
+}
+
 .popup {
     position: relative;
     display : inline-block;
@@ -330,7 +335,7 @@ button.header-button {
 #bossbar-form {
     display              : grid;
     gap                  : 0 0.5em;
-    grid-template-columns: max-content auto min-content 5em 5em;
+    grid-template-columns: max-content auto min-content 5em 5em min-content;
 }
 
 .bossbar-formatting-group {

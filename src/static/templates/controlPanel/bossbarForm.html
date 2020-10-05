@@ -6,7 +6,7 @@
         <input type="text" id="bossbar-text" name="bossbar-text" placeholder="Now Playing: Bob Ross" autocomplete="off"
             onfocus='suppressHotkeys=true; toggleFormattingCodePopup();'
             onblur='suppressHotkeys=false; toggleFormattingCodePopup();'
-            onkeyup='document.getElementById("bossbar-form").submit();'>
+            onkeyup='bossbarAutoUpdate && document.getElementById("bossbar-form").submit();'>
         <div class="popup-content bossbar-formatting-group" id="bossbar-formatting-popup" tabindex="0"
             onmouseover='hoveringOverFormattingPopup=true;' onmouseout='hoveringOverFormattingPopup=false;'
             onblur='toggleFormattingCodePopup();'>
@@ -44,14 +44,19 @@
             </div>
         </div>
     </div>
-    <select id="bossbar-color" name="bossbar-color">
+    <select id="bossbar-color" name="bossbar-color"
+        onchange='bossbarAutoUpdate && document.getElementById("bossbar-form").submit();'>
         {{range $.MinecraftColors}}
         <option value="{{.}}">{{.}}</option>
         {{end}}
     </select>
-    <button class="header-button" type="button"
+    <button class="header-button disabled" type="button" id="bossbar-update-button" disabled
         onclick='document.getElementById("bossbar-form").submit();'>Update</button>
     <button class="header-button" type="button" onclick='doClearBossbar();'>Hide</button>
+    <div class="header-checkbox">
+        <i class="header-icon fas fa-toggle-on fa-2x" onclick='togglebossbarAutoUpdate(this)'></i>
+        <i class="header-icon fas fa-broadcast-tower fa-2x"></i>
+    </div>
 </form>
 
 {{end}}

@@ -14,6 +14,7 @@ var clockTapResetTimeout;
 var clockTapRestartTimeout;
 var isClockSpeedInitiator = false;
 
+var bossbarAutoUpdate = true;
 var suppressHotkeys = false;
 var hoveringOverFormattingPopup = false;
 
@@ -62,6 +63,25 @@ addFormatting = (code) => {
 
 toggleServerManagerPopup = () => {
     document.getElementById("server-manager-popup").classList.toggle("show");
+};
+
+togglebossbarAutoUpdate = (toggle) => {
+    const updateButton = document.getElementById("bossbar-update-button");
+    if (bossbarAutoUpdate) {
+        updateButton.disabled = false;
+        updateButton.classList.remove("disabled");
+
+        toggle.classList.remove("fa-toggle-on");
+        toggle.classList.add("fa-toggle-off");
+        bossbarAutoUpdate = false;
+    } else {
+        updateButton.disabled = true;
+        updateButton.classList.add("disabled");
+
+        toggle.classList.remove("fa-toggle-off");
+        toggle.classList.add("fa-toggle-on");
+        bossbarAutoUpdate = true;
+    }
 };
 
 // ================ STATUS UPDATE ================
