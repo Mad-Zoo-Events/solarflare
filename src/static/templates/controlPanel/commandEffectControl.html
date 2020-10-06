@@ -1,0 +1,19 @@
+{{define "commandControl"}}
+
+<div class="visual-control" title="{{.Description}}">
+    <span>{{.DisplayName}}</span>
+
+    <button type="button" class="trigger key-binding-{{.KeyBinding}}" id="trigger-{{.ID}}"
+        onclick='doEffect("command", "{{.ID}}", "trigger")'>
+        {{if .UIKeyBinding}}<span class="keyboard-shortcut">{{.UIKeyBinding}}</span>
+        {{else}}<i class="fas fa-step-forward fa-lg"></i>{{end}}
+    </button>
+    <div class="clock-buttons">
+        <i class="clock clock fas fa-circle fa-2x" id="onbeatclock-{{.ID}}"
+            onclick='attachClock("command", "{{.ID}}", false)'></i>
+        <i class="clock clock far fa-circle fa-2x" id="offbeatclock-{{.ID}}"
+            onclick='attachClock("command", "{{.ID}}", true)'></i>
+    </div>
+</div>
+
+{{end}}
