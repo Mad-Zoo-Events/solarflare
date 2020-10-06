@@ -48,6 +48,12 @@
             {{template "potionControl" .}}
             {{end}}
         </div>
+        <div class="controls-holder command-controls">
+            <span class="controls-header steel">CMD</span>
+            {{range .CommandEffectPresets}}
+            {{template "commandControl" .}}
+            {{end}}
+        </div>
     </div>
     <div class="footer">
         <div id="log-window"></div>

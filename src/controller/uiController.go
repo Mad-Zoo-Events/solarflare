@@ -29,6 +29,7 @@ func RenderControlPanel(writer http.ResponseWriter) error {
 		controlPanelPath+"timeshiftEffectControl.html",
 		controlPanelPath+"potionEffectControl.html",
 		controlPanelPath+"laserEffectControl.html",
+		controlPanelPath+"commandEffectControl.html",
 		templatesPath+"shared.html",
 	)
 	if err != nil {

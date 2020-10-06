@@ -48,9 +48,10 @@ body {
     grid-template-columns: 50% 50%;
 
     grid-template-areas:
-        "particle    particle"
-        "dragon      laser"
-        "timeshift   potion";
+        'particle    particle'
+        'dragon      laser'
+        'timeshift   potion'
+        'command     command';
 
     padding-top   : 2.9em;
     padding-bottom: 11.9em;
@@ -92,6 +93,11 @@ body {
 .potion-controls {
     grid-area       : potion;
     background-color: var(--green-alpha);
+}
+
+.command-controls {
+    grid-area       : command;
+    background-color: var(--steel-alpha);
 }
 
 .controls-divider {
