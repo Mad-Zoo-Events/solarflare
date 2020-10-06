@@ -3,6 +3,7 @@ package config
 import (
 	"os"
 	"sort"
+	"strings"
 
 	"github.com/eynorey/solarflare/src/model"
 )
@@ -46,7 +47,7 @@ func Get() *Config {
 // SetParticleEffectPresets sorts and sets the effect presets passed
 func (c *Config) SetParticleEffectPresets(presets []model.ParticleEffectPreset) {
 	sort.Slice(presets, func(i, j int) bool {
-		return presets[i].DisplayName < presets[j].DisplayName
+		return strings.ToLower(presets[i].DisplayName) < strings.ToLower(presets[j].DisplayName)
 	})
 	c.ParticleEffectPresets = presets
 }
@@ -54,7 +55,7 @@ func (c *Config) SetParticleEffectPresets(presets []model.ParticleEffectPreset) 
 // SetDragonEffectPresets sorts and sets the effect presets passed
 func (c *Config) SetDragonEffectPresets(presets []model.DragonEffectPreset) {
 	sort.Slice(presets, func(i, j int) bool {
-		return presets[i].DisplayName < presets[j].DisplayName
+		return strings.ToLower(presets[i].DisplayName) < strings.ToLower(presets[j].DisplayName)
 	})
 	c.DragonEffectPresets = presets
 }
@@ -62,7 +63,7 @@ func (c *Config) SetDragonEffectPresets(presets []model.DragonEffectPreset) {
 // SetTimeshiftEffectPresets sorts and sets the effect presets passed
 func (c *Config) SetTimeshiftEffectPresets(presets []model.TimeshiftEffectPreset) {
 	sort.Slice(presets, func(i, j int) bool {
-		return presets[i].DisplayName < presets[j].DisplayName
+		return strings.ToLower(presets[i].DisplayName) < strings.ToLower(presets[j].DisplayName)
 	})
 	c.TimeshiftEffectPresets = presets
 }
@@ -70,7 +71,7 @@ func (c *Config) SetTimeshiftEffectPresets(presets []model.TimeshiftEffectPreset
 // SetPotionEffectPresets sorts and sets the effect presets passed
 func (c *Config) SetPotionEffectPresets(presets []model.PotionEffectPreset) {
 	sort.Slice(presets, func(i, j int) bool {
-		return presets[i].DisplayName < presets[j].DisplayName
+		return strings.ToLower(presets[i].DisplayName) < strings.ToLower(presets[j].DisplayName)
 	})
 	c.PotionEffectPresets = presets
 }
@@ -78,7 +79,7 @@ func (c *Config) SetPotionEffectPresets(presets []model.PotionEffectPreset) {
 // SetLaserEffectPresets sorts and sets the effect presets passed
 func (c *Config) SetLaserEffectPresets(presets []model.LaserEffectPreset) {
 	sort.Slice(presets, func(i, j int) bool {
-		return presets[i].DisplayName < presets[j].DisplayName
+		return strings.ToLower(presets[i].DisplayName) < strings.ToLower(presets[j].DisplayName)
 	})
 	c.LaserEffectPresets = presets
 }
