@@ -1,7 +1,6 @@
 const CLOCK_SYNC_INTERVAL = 10000;
 
 var counters = new Map();
-var startButtonContent = new Set();
 var activeKeys = new Set();
 var activeOnbeatClocks = new Set();
 var activeOffbeatClocks = new Set();
@@ -119,14 +118,14 @@ counter = async (id, action) => {
 
 startCounter = (id) => {
     const startButton = document.getElementById(`start-${id}`);
+    const stopButton = document.getElementById(`stop-${id}`);
     var seconds = 0;
 
     startButton.disabled = true;
     startButton.classList.add("disabled");
-    startButtonContent[id] = startButton.innerHTML;
     counters[id] = setInterval(() => {
         seconds++;
-        startButton.innerHTML = seconds;
+        stopButton.innerHTML = seconds;
     }, 1000);
 };
 
@@ -159,6 +158,7 @@ stopCounter = (id) => {
 
 resetStartButton = async (id) => {
     const startButton = document.getElementById(`start-${id}`);
+    const stopButton = document.getElementById(`stop-${id}`);
 
     if (!startButton.disabled) {
         return;
@@ -166,7 +166,7 @@ resetStartButton = async (id) => {
 
     startButton.disabled = false;
     startButton.classList.remove("disabled");
-    startButton.innerHTML = startButtonContent[id];
+    stopButton.innerHTML = '<i class="fas fa-stop fa-lg"></i>';
 };
 
 // ================ PRESET MANAGEMENT ================
