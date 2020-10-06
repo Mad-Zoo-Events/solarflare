@@ -45,13 +45,13 @@ body {
 .main-controls-holder {
     display: grid;
 
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 55% 10% 35%;
 
     grid-template-areas:
-        'particle    particle'
-        'dragon      laser'
-        'timeshift   potion'
-        'command     command';
+        'particle potion  potion'
+        'particle dragon  dragon'
+        'particle laser   laser'
+        'command  command timeshift';
 
     padding-top   : 2.9em;
     padding-bottom: 11.9em;
