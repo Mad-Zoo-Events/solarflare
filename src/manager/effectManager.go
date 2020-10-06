@@ -17,7 +17,7 @@ const (
 	targetedlaserEffectEndpoint = "/effects/targetedlaser"
 	laserEffectEndpoint         = "/effects/laser"
 	endlaserEffectEndpoint      = "/effects/endlaser"
-	commandEffectEndpoint       = "/effects/command"
+	commandEffectEndpoint       = "/commands"
 	effectsEndpoint             = "/effects"
 )
 
