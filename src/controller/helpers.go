@@ -67,6 +67,15 @@ func unmarshalLaserPreset(preset *model.LaserEffectPreset, values url.Values) er
 	return nil
 }
 
+func unmarshalCommandPreset(preset *model.CommandEffectPreset, values url.Values) error {
+	err := decoder.Decode(preset, values)
+	if err != nil {
+		return sferror.New(sferror.Encoding, "Error parsing data from UI request", err)
+	}
+
+	return nil
+}
+
 func getActiveServerIDs() []string {
 	activeServerIDs := []string{}
 

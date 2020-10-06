@@ -98,6 +98,24 @@ func UpsertLaserEffectPreset(preset model.LaserEffectPreset) (*string, error) {
 	return &preset.ID, nil
 }
 
+// UpsertCommandEffectPreset creates or updates a command effect preset in the database
+func UpsertCommandEffectPreset(preset model.CommandEffectPreset) (*string, error) {
+	cfg := config.Get()
+
+	if preset.ID == "" {
+		preset.ID = uuid.New().String()
+	}
+
+	err := client.UpsertItem(client.CommandEffectPresetsTable, preset)
+	if err != nil {
+		return nil, err
+	}
+
+	cfg.SetCommandEffectPresets(client.GetCommandEffectPresets())
+
+	return &preset.ID, nil
+}
+
 // DeletePreset deletes a preset from the database
 func DeletePreset(tableName, id string) error {
 	return client.DeleteItem(tableName, id)
