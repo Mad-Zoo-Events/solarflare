@@ -82,7 +82,8 @@ func ClockSubscriptionHandler() http.HandlerFunc {
 		case model.SubscribeClockAction:
 			manager.SubscribeEffectToClock(id, model.EffectType(effectType), request.OffBeat, request.IsRunning)
 		case model.UnsubscribeClockAction:
-			manager.UnsubscribeEffectFromClock(id, model.EffectType(effectType), request.OffBeat, false)
+			manager.UnsubscribeEffectFromClock(id, model.EffectType(effectType), request.OffBeat)
+			manager.StopEffect(id, false)
 		default:
 			err := sferror.New(sferror.ClockInvalidAction, "invlid clock action: "+effectType, nil)
 			writeResponse(w, http.StatusBadRequest, sferror.GetErrorResponse(err))
