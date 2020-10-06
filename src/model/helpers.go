@@ -167,6 +167,16 @@ func (preset *LaserEffectPreset) TransformToUI() {
 	}
 }
 
+// TransformFromUI transforms UI specific values to the main model
+func (preset *CommandEffectPreset) TransformFromUI() {
+	for i := len(preset.Commands) - 1; i >= 0; i-- {
+		if preset.Commands[i] == "" {
+			preset.Commands = append(preset.Commands[:i], preset.Commands[i+1:]...)
+			continue
+		}
+	}
+}
+
 // TransformToUI transforms UI specific values to the main model
 func (preset *CommandEffectPreset) TransformToUI() {
 	if preset.KeyBinding != 0 {

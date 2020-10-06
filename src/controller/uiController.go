@@ -42,6 +42,7 @@ func RenderControlPanel(writer http.ResponseWriter) error {
 		TimeshiftEffectPresets: cfg.TimeshiftEffectPresets,
 		PotionEffectPresets:    cfg.PotionEffectPresets,
 		LaserEffectPresets:     cfg.LaserEffectPresets,
+		CommandEffectPresets:   cfg.CommandEffectPresets,
 
 		MinecraftColors:   model.MinecraftColors,
 		RegisteredServers: cfg.Servers,
@@ -78,6 +79,7 @@ func RenderPresetManager(writer http.ResponseWriter) error {
 		TimeshiftEffectPresets: cfg.TimeshiftEffectPresets,
 		PotionEffectPresets:    cfg.PotionEffectPresets,
 		LaserEffectPresets:     cfg.LaserEffectPresets,
+		CommandEffectPresets:   cfg.CommandEffectPresets,
 	}
 
 	err = template.Execute(writer, data)
@@ -107,6 +109,8 @@ func RenderPresetModifier(writer http.ResponseWriter, effectType model.EffectTyp
 		presetName = "potionPresetModification.html"
 	case model.LaserEffectType:
 		presetName = "laserPresetModification.html"
+	case model.CommandEffectType:
+		presetName = "commandPresetModification.html"
 	default:
 		return sferror.New(sferror.InvalidEffectType, string(effectType), err)
 	}
@@ -185,6 +189,17 @@ func RenderPresetModifier(writer http.ResponseWriter, effectType model.EffectTyp
 			p.IsEndLaser = true
 			p.IsNonPlayerTargeting = true
 			p.LaserEffects = []model.LaserEffect{{}}
+		}
+
+		p.TransformToUI()
+		err = template.Execute(writer, p)
+	case model.CommandEffectType:
+		p := model.CommandEffectPreset{}
+
+		if id != "" {
+			p = preset.(model.CommandEffectPreset)
+		} else {
+			p.Commands = []string{""}
 		}
 
 		p.TransformToUI()
