@@ -26,6 +26,8 @@ const (
 	PotionEffectPresetsTable = "presets_%s_potion-effects"
 	// LaserEffectPresetsTable table where laser effects are stored
 	LaserEffectPresetsTable = "presets_%s_laser-effects"
+	// CommandEffectPresetsTable table where command effects are stored
+	CommandEffectPresetsTable = "presets_%s_command-effects"
 
 	// ServerTable table where server addresses to be called are stored
 	ServerTable = "servers"
@@ -192,6 +194,35 @@ func GetLaserEffectPresets() (presets []model.LaserEffectPreset) {
 	return
 }
 
+// GetCommandEffectPresets retrieves all command effect presets from the database
+func GetCommandEffectPresets() (presets []model.CommandEffectPreset) {
+	cfg := config.Get()
+	tableName := fmt.Sprintf(CommandEffectPresetsTable, cfg.SelectedStage)
+
+	result, err := db.Scan(&dynamodb.ScanInput{
+		TableName: &tableName,
+	})
+	if err != nil {
+		sferror.New(sferror.DatabaseCRUD, "Failed to read command effect presets", err)
+		return
+	}
+
+	for _, item := range result.Items {
+		preset := model.CommandEffectPreset{}
+
+		err = dynamodbattribute.UnmarshalMap(item, &preset)
+		if err != nil {
+			sferror.New(sferror.DatabaseUnmarshal, "Failed to unmarshal command effect preset", err)
+			continue
+		}
+
+		preset.TransformToUI()
+		presets = append(presets, preset)
+	}
+
+	return
+}
+
 // GetServers retrieves all server addresses from the database
 func GetServers() (servers []model.Server) {
 	tableName := ServerTable
@@ -279,4 +310,5 @@ func ReloadAllPresets() {
 	cfg.SetTimeshiftEffectPresets(GetTimeshiftEffectPresets())
 	cfg.SetPotionEffectPresets(GetPotionEffectPresets())
 	cfg.SetLaserEffectPresets(GetLaserEffectPresets())
+	cfg.SetCommandEffectPresets(GetCommandEffectPresets())
 }
