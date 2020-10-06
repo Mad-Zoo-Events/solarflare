@@ -17,6 +17,7 @@ const (
 	targetedlaserEffectEndpoint = "/effects/targetedlaser"
 	laserEffectEndpoint         = "/effects/laser"
 	endlaserEffectEndpoint      = "/effects/endlaser"
+	commandEffectEndpoint       = "/effects/command"
 	effectsEndpoint             = "/effects"
 )
 
@@ -116,6 +117,22 @@ func RunLaserEffect(preset model.LaserEffectPreset, action model.EffectAction, s
 
 	if sendUpdate {
 		sendEffectUpdate(preset.ID, preset.DisplayName, action, err)
+	}
+
+	return err
+}
+
+// RunCommandEffect compiles a command effect request and executes it on all servers
+func RunCommandEffect(preset model.CommandEffectPreset, sendUpdate bool) error {
+	body, err := json.Marshal(preset.Commands)
+	if err != nil {
+		return sferror.New(sferror.Encoding, "Failed to marshal request", err)
+	}
+
+	err = client.ExecuteEffect(commandEffectEndpoint, body)
+
+	if sendUpdate {
+		sendEffectUpdate(preset.ID, preset.DisplayName, model.TriggerEffectAction, err)
 	}
 
 	return err
