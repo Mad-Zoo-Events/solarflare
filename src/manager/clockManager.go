@@ -164,10 +164,16 @@ func (c *clock) doEffects(offBeatCycle bool) {
 				go RunPotionEffect(e.preset.(model.PotionEffectPreset), model.StartEffectAction, false)
 			case model.LaserEffectPreset:
 				go RunLaserEffect(e.preset.(model.LaserEffectPreset), model.StartEffectAction, false)
+			case model.CommandEffectPreset:
+				go RunCommandEffect(e.preset.(model.CommandEffectPreset), false)
 			}
 		} else {
 			if e.firstRun {
 				e.firstRun = false
+				continue
+			}
+
+			if _, ok := e.preset.(model.CommandEffectPreset); ok {
 				continue
 			}
 
