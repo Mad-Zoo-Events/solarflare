@@ -73,6 +73,8 @@ func unmarshalCommandPreset(preset *model.CommandEffectPreset, values url.Values
 		return sferror.New(sferror.Encoding, "Error parsing data from UI request", err)
 	}
 
+	preset.TransformFromUI()
+
 	return nil
 }
 

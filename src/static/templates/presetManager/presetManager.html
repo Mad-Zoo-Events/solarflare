@@ -136,23 +136,44 @@
             </td>
         </tr>
         {{end}}
+        <tr>
+            <td colspan="6" class="type-header type-header-steel">Command Presets</td>
+        </tr>
+        {{range .CommandEffectPresets}}
+        <tr>
+            <td class="id-column">{{.ID}}</td>
+            <td class="key-column"><span class="steel">{{.UIKeyBinding}}</span></td>
+            <td>{{.DisplayName}}</td>
+            <td>{{.Description}}</td>
+            <td class="effects-column">
+                {{range .Commands}}
+                <span>→&nbsp;&nbsp;</span>
+                <span class="code span-effects-column">{{.}}</span>
+                {{end}}
+            </td>
+            <td class="actions-column">
+                <i class="far fa-edit fa-lg" onclick='navigate(CP_PRESETS_ENDPOINT+"/potion/modify/{{.ID}}");'></i>
+                <i class="far fa-clone fa-lg" onclick='doDuplicatePreset("{{.ID}}", "potion");'></i>
+                <i class="far fa-trash-alt fa-lg" onclick='confirmDelete("{{.ID}}", "potion", "{{.DisplayName}}")'></i>
+            </td>
+        </tr>
+        {{end}}
     </table>
 
     <div class="footer">
-        <div></div>
-        <div></div>
         <div class="footer-buttons">
-            <button class="cyan" type="button" onclick='navigate(CP_PRESETS_ENDPOINT+"/particle/new");'>+&nbsp;Particle
-                Effect</button>
-            <button class="magenta" type="button" onclick='navigate(CP_PRESETS_ENDPOINT+"/dragon/new");'>+&nbsp;Dragon
-                Effect</button>
-            <button class="indigo" type="button" onclick='navigate(CP_PRESETS_ENDPOINT+"/laser/new");'>+&nbsp;Laser
-                Effect</button>
+            <button class="cyan" type="button"
+                onclick='navigate(CP_PRESETS_ENDPOINT+"/particle/new");'>+&nbsp;Particle</button>
+            <button class="magenta" type="button"
+                onclick='navigate(CP_PRESETS_ENDPOINT+"/dragon/new");'>+&nbsp;Dragon</button>
+            <button class="indigo" type="button"
+                onclick='navigate(CP_PRESETS_ENDPOINT+"/laser/new");'>+&nbsp;Laser</button>
             <button class="orange" type="button"
-                onclick='navigate(CP_PRESETS_ENDPOINT+"/timeshift/new");'>+&nbsp;Timeshift
-                Effect</button>
-            <button class="green" type="button" onclick='navigate(CP_PRESETS_ENDPOINT+"/potion/new");'>+&nbsp;Potion
-                Effect</button>
+                onclick='navigate(CP_PRESETS_ENDPOINT+"/timeshift/new");'>+&nbsp;Timeshift</button>
+            <button class="green" type="button"
+                onclick='navigate(CP_PRESETS_ENDPOINT+"/potion/new");'>+&nbsp;Potion</button>
+            <button class="steel" type="button"
+                onclick='navigate(CP_PRESETS_ENDPOINT+"/command/new");'>+&nbsp;Command</button>
         </div>
         <div class="primary-button">
             <button class="darker-cyan" type="button" onclick='navigate(CP_ENDPOINT);'>Back&nbsp;to

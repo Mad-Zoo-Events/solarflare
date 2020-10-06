@@ -20,6 +20,8 @@
     --cyan-alpha   : rgba(27, 161, 226, 0.15);
     --magenta      : #b90383;
     --magenta-alpha: rgba(185, 3, 131, 0.15);
+    --steel        : #647687;
+    --steel-alpha  : rgba(100, 118, 135, 0.15);
 
     --darker-magenta: #52002c;
     --darker-cyan   : #0b3c55;
@@ -125,6 +127,10 @@ span.orange {
 
 span.green {
     color: var(--green);
+}
+
+span.steel {
+    color: var(--steel);
 }
 
 hr {
@@ -238,6 +244,11 @@ button.orange {
 button.green {
     background-color: var(--green);
     border          : 2px solid var(--green);
+}
+
+button.steel {
+    background-color: var(--steel);
+    border          : 2px solid var(--steel);
 }
 
 button.darker-cyan {
@@ -498,8 +509,10 @@ h3 {
 
 .footer-buttons {
     display              : grid;
-    grid-template-columns: max-content max-content max-content max-content max-content;
+    grid-template-columns: repeat(6, max-content);
     gap                  : 1em;
+
+    grid-column: 2 / span 2;
 }
 
 .main-controls {
@@ -600,6 +613,12 @@ td.type-header {
     border-bottom: 2px solid var(--green);
 }
 
+.type-header-steel {
+    color        : var(--steel);
+    border-bottom: 2px solid var(--steel);
+}
+
+
 .id-column {
     font-size: x-small;
 }
@@ -613,6 +632,10 @@ td.type-header {
     display              : grid;
     grid-template-columns: min-content 13em 6em min-content;
     white-space          : nowrap;
+}
+
+.span-effects-column {
+    grid-column: 2 / span 3;
 }
 
 .actions-column {
