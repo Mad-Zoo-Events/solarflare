@@ -52,8 +52,8 @@ func (action EffectAction) IsAllowedOn(effectType EffectType) bool {
 	return false
 }
 
-// TramsformFromUI transforms UI specific values to the main model
-func (preset *ParticleEffectPreset) TramsformFromUI() {
+// TransformFromUI transforms UI specific values to the main model
+func (preset *ParticleEffectPreset) TransformFromUI() {
 	for i := len(preset.ParticleEffects) - 1; i >= 0; i-- {
 		effect := &preset.ParticleEffects[i]
 		if reflect.DeepEqual(*effect, ParticleEffect{}) {
@@ -117,10 +117,32 @@ func convertDensity(density float64, fromUI bool) float64 {
 	return (density - n) / m
 }
 
+// TransformFromUI transforms UI specific values to the main model
+func (preset *DragonEffectPreset) TransformFromUI() {
+	for i := range preset.DragonEffects {
+		if reflect.DeepEqual(preset.DragonEffects[i], DragonEffect{}) {
+			preset.DragonEffects = append(preset.DragonEffects[:i], preset.DragonEffects[i+1:]...)
+		}
+	}
+}
+
 // TransformToUI transforms sets UI specific values from the main model
 func (preset *DragonEffectPreset) TransformToUI() {
 	if preset.KeyBinding != 0 {
 		preset.UIKeyBinding = string(preset.KeyBinding)
+	}
+}
+
+// TransformFromUI transforms UI specific values to the main model
+func (preset *TimeshiftEffectPreset) TransformFromUI() {
+	for i := range preset.TimeshiftEffects {
+		if reflect.DeepEqual(preset.TimeshiftEffects[i], TimeshiftEffect{}) {
+			preset.TimeshiftEffects = append(preset.TimeshiftEffects[:i], preset.TimeshiftEffects[i+1:]...)
+			continue
+		}
+
+		effect := &preset.TimeshiftEffects[i]
+		effect.Amount = effect.UIPercentOfDayToSkipPerSecond * 12
 	}
 }
 
@@ -136,11 +158,12 @@ func (preset *TimeshiftEffectPreset) TransformToUI() {
 	}
 }
 
-// TramsformFromUI transforms UI specific values to the main model
-func (preset *TimeshiftEffectPreset) TramsformFromUI() {
-	for i := range preset.TimeshiftEffects {
-		effect := &preset.TimeshiftEffects[i]
-		effect.Amount = effect.UIPercentOfDayToSkipPerSecond * 12
+// TransformFromUI transforms UI specific values to the main model
+func (preset *PotionEffectPreset) TransformFromUI() {
+	for i := range preset.PotionEffects {
+		if reflect.DeepEqual(preset.PotionEffects[i], PotionEffect{}) {
+			preset.PotionEffects = append(preset.PotionEffects[:i], preset.PotionEffects[i+1:]...)
+		}
 	}
 }
 
@@ -155,6 +178,12 @@ func (preset *PotionEffectPreset) TransformToUI() {
 
 // TransformFromUI transforms UI specific values to the main model
 func (preset *LaserEffectPreset) TransformFromUI() {
+	for i := len(preset.LaserEffects) - 1; i >= 0; i-- {
+		if reflect.DeepEqual(preset.LaserEffects[i], LaserEffect{}) {
+			preset.LaserEffects = append(preset.LaserEffects[:i], preset.LaserEffects[i+1:]...)
+		}
+	}
+
 	if preset.IsEndLaser {
 		preset.IsNonPlayerTargeting = true
 	}
@@ -172,7 +201,6 @@ func (preset *CommandEffectPreset) TransformFromUI() {
 	for i := len(preset.Commands) - 1; i >= 0; i-- {
 		if preset.Commands[i] == "" {
 			preset.Commands = append(preset.Commands[:i], preset.Commands[i+1:]...)
-			continue
 		}
 	}
 }
