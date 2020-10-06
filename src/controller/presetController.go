@@ -58,6 +58,14 @@ func UpsertPresetAPI(effectType string, body []byte) (*string, error) {
 		}
 
 		return manager.UpsertLaserEffectPreset(preset)
+	case model.CommandEffectType:
+		preset := model.CommandEffectPreset{}
+
+		if err := json.Unmarshal(body, &preset); err != nil {
+			return nil, sferror.New(sferror.Encoding, "Error unmarshalling command effect preset request", err)
+		}
+
+		return manager.UpsertCommandEffectPreset(preset)
 	}
 
 	return nil, sferror.New(sferror.InvalidEffectType, effectType, nil)
@@ -106,6 +114,14 @@ func UpsertPresetUI(effectType string, values url.Values) (*string, error) {
 		}
 
 		return manager.UpsertLaserEffectPreset(preset)
+	case model.CommandEffectType:
+		preset := model.CommandEffectPreset{}
+
+		if err := unmarshalCommandPreset(&preset, values); err != nil {
+			return nil, err
+		}
+
+		return manager.UpsertCommandEffectPreset(preset)
 	}
 
 	return nil, sferror.New(sferror.InvalidEffectType, effectType, nil)
@@ -142,6 +158,11 @@ func DeletePreset(effectType, id string) error {
 		if err == nil {
 			cfg.SetLaserEffectPresets(client.GetLaserEffectPresets())
 		}
+	case model.CommandEffectType:
+		err = client.DeleteItem(client.CommandEffectPresetsTable, id)
+		if err == nil {
+			cfg.SetCommandEffectPresets(client.GetCommandEffectPresets())
+		}
 	default:
 		err = sferror.New(sferror.InvalidEffectType, effectType, nil)
 	}
@@ -177,6 +198,10 @@ func DuplicatePreset(effectType, id string) error {
 		p := preset.(model.LaserEffectPreset)
 		p.ID = ""
 		_, err = manager.UpsertLaserEffectPreset(p)
+	case model.CommandEffectType:
+		p := preset.(model.CommandEffectPreset)
+		p.ID = ""
+		_, err = manager.UpsertCommandEffectPreset(p)
 	default:
 		err = sferror.New(sferror.InvalidEffectType, effectType, nil)
 	}
@@ -242,6 +267,13 @@ func TestPreset(effectType string, values url.Values) error {
 			time.Sleep(3 * time.Second)
 			return manager.StopEffect(preset.ID, false)
 		}
+	case model.CommandEffectType:
+		preset := model.CommandEffectPreset{}
+		if err := unmarshalCommandPreset(&preset, values); err != nil {
+			return err
+		}
+
+		return manager.RunCommandEffect(preset, false)
 	}
 
 	return sferror.New(sferror.InvalidEffectType, effectType, nil)

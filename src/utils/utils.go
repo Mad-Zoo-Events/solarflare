@@ -43,6 +43,12 @@ func FindPreset(id string, effectType model.EffectType) (interface{}, error) {
 				return p, nil
 			}
 		}
+	case model.CommandEffectType:
+		for _, p := range cfg.CommandEffectPresets {
+			if p.ID == id {
+				return p, nil
+			}
+		}
 	default:
 		return nil, sferror.New(sferror.InvalidEffectType, string(effectType), nil)
 	}
