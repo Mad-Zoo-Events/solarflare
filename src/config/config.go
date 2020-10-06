@@ -2,6 +2,7 @@ package config
 
 import (
 	"os"
+	"sort"
 
 	"github.com/eynorey/solarflare/src/model"
 )
@@ -40,4 +41,44 @@ var cfg Config
 // Get returns the server config
 func Get() *Config {
 	return &cfg
+}
+
+// SetParticleEffectPresets sorts and sets the effect presets passed
+func (c *Config) SetParticleEffectPresets(presets []model.ParticleEffectPreset) {
+	sort.Slice(presets, func(i, j int) bool {
+		return presets[i].DisplayName < presets[j].DisplayName
+	})
+	c.ParticleEffectPresets = presets
+}
+
+// SetDragonEffectPresets sorts and sets the effect presets passed
+func (c *Config) SetDragonEffectPresets(presets []model.DragonEffectPreset) {
+	sort.Slice(presets, func(i, j int) bool {
+		return presets[i].DisplayName < presets[j].DisplayName
+	})
+	c.DragonEffectPresets = presets
+}
+
+// SetTimeshiftEffectPresets sorts and sets the effect presets passed
+func (c *Config) SetTimeshiftEffectPresets(presets []model.TimeshiftEffectPreset) {
+	sort.Slice(presets, func(i, j int) bool {
+		return presets[i].DisplayName < presets[j].DisplayName
+	})
+	c.TimeshiftEffectPresets = presets
+}
+
+// SetPotionEffectPresets sorts and sets the effect presets passed
+func (c *Config) SetPotionEffectPresets(presets []model.PotionEffectPreset) {
+	sort.Slice(presets, func(i, j int) bool {
+		return presets[i].DisplayName < presets[j].DisplayName
+	})
+	c.PotionEffectPresets = presets
+}
+
+// SetLaserEffectPresets sorts and sets the effect presets passed
+func (c *Config) SetLaserEffectPresets(presets []model.LaserEffectPreset) {
+	sort.Slice(presets, func(i, j int) bool {
+		return presets[i].DisplayName < presets[j].DisplayName
+	})
+	c.LaserEffectPresets = presets
 }
