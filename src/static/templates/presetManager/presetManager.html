@@ -152,9 +152,9 @@
                 {{end}}
             </td>
             <td class="actions-column">
-                <i class="far fa-edit fa-lg" onclick='navigate(CP_PRESETS_ENDPOINT+"/potion/modify/{{.ID}}");'></i>
-                <i class="far fa-clone fa-lg" onclick='doDuplicatePreset("{{.ID}}", "potion");'></i>
-                <i class="far fa-trash-alt fa-lg" onclick='confirmDelete("{{.ID}}", "potion", "{{.DisplayName}}")'></i>
+                <i class="far fa-edit fa-lg" onclick='navigate(CP_PRESETS_ENDPOINT+"/command/modify/{{.ID}}");'></i>
+                <i class="far fa-clone fa-lg" onclick='doDuplicatePreset("{{.ID}}", "command");'></i>
+                <i class="far fa-trash-alt fa-lg" onclick='confirmDelete("{{.ID}}", "command", "{{.DisplayName}}")'></i>
             </td>
         </tr>
         {{end}}
