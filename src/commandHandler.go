@@ -17,7 +17,7 @@ func CommandHandler() http.HandlerFunc {
 			return
 		}
 
-		err = controller.RunCommand(r.PostForm)
+		err = controller.RunSingleCommand(r.PostForm)
 		if err != nil {
 			switch sferror.GetErrorType(err) {
 			case sferror.Encoding:
