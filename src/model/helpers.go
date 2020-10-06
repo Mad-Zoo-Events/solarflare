@@ -38,6 +38,10 @@ func (action EffectAction) IsAllowedOn(effectType EffectType) bool {
 			action == TriggerEffectAction {
 			return true
 		}
+	case CommandEffectType:
+		if action == TriggerEffectAction {
+			return true
+		}
 	case BossbarEffectType:
 		if action == SetBossbarAction ||
 			action == ClearBossbarAction {
@@ -158,6 +162,13 @@ func (preset *LaserEffectPreset) TransformFromUI() {
 
 // TransformToUI transforms UI specific values to the main model
 func (preset *LaserEffectPreset) TransformToUI() {
+	if preset.KeyBinding != 0 {
+		preset.UIKeyBinding = string(preset.KeyBinding)
+	}
+}
+
+// TransformToUI transforms UI specific values to the main model
+func (preset *CommandEffectPreset) TransformToUI() {
 	if preset.KeyBinding != 0 {
 		preset.UIKeyBinding = string(preset.KeyBinding)
 	}

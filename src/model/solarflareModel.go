@@ -9,6 +9,7 @@ type ControlPanel struct {
 	TimeshiftEffectPresets []TimeshiftEffectPreset
 	PotionEffectPresets    []PotionEffectPreset
 	LaserEffectPresets     []LaserEffectPreset
+	CommandEffectPresets   []CommandEffectPreset
 	MinecraftColors        []MinecraftColor
 
 	RegisteredServers []Server
@@ -43,6 +44,8 @@ const (
 	PotionEffectType = EffectType("potion")
 	// LaserEffectType represents both the guardian and end laser effect
 	LaserEffectType = EffectType("laser")
+	// CommandEffectType represents a command effect
+	CommandEffectType = EffectType("command")
 	// BossbarEffectType represents the bossbar effect
 	BossbarEffectType = EffectType("bossbar")
 )

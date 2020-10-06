@@ -36,6 +36,8 @@ func RunEffect(id string, effectType model.EffectType, action model.EffectAction
 		return manager.RunPotionEffect(preset.(model.PotionEffectPreset), action, true)
 	case model.LaserEffectType:
 		return manager.RunLaserEffect(preset.(model.LaserEffectPreset), action, true)
+	case model.CommandEffectType:
+		return manager.RunCommandEffect(preset.(model.CommandEffectPreset), true)
 	}
 
 	return sferror.New(sferror.InvalidEffectType, string(effectType), nil)
