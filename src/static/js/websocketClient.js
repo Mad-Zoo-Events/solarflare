@@ -68,7 +68,7 @@ handleMessage = (data) => {
             document.getElementById("bossbar-text").value = parts[0];
             document.getElementById("bossbar-color").value = parts[1];
         } else {
-            if (!errorMessage) {
+            if (!errorMessage && action !== "trigger") {
                 counter(id, action);
             }
 

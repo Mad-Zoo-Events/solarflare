@@ -308,17 +308,22 @@ handleKeypress = (event) => {
         document.getElementById(`stop-all-effects-button`).click();
     }
 
-    var buttonsToTrigger;
+    var startStopButtons;
     if (activeKeys.has(charCode)) {
-        buttonsToTrigger = document.getElementsByClassName(`stop key-binding-${charCode}`);
+        startStopButtons = document.getElementsByClassName(`stop key-binding-${charCode}`);
         activeKeys.delete(charCode);
     } else {
-        buttonsToTrigger = document.getElementsByClassName(`start key-binding-${charCode}`);
+        startStopButtons = document.getElementsByClassName(`start key-binding-${charCode}`);
         activeKeys.add(charCode,);
     }
 
-    for (let i = 0; i < buttonsToTrigger.length; i++) {
-        buttonsToTrigger[i].click();
+    for (let i = 0; i < startStopButtons.length; i++) {
+        startStopButtons[i].click();
+    }
+
+    const triggerButtons = document.getElementsByClassName(`trigger key-binding-${charCode}`);
+    for (let i = 0; i < triggerButtons.length; i++) {
+        triggerButtons[i].click();
     }
 };
 
