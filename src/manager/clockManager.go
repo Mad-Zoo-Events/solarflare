@@ -9,13 +9,7 @@ import (
 
 const millisPerSecond = 60000
 
-var (
-	tickTock *clock
-	clk      *time.Ticker
-
-	doSync   bool
-	syncChan chan bool
-)
+var tickTock *clock
 
 type clockEffect struct {
 	id        string
@@ -30,30 +24,32 @@ type clock struct {
 	interval   time.Duration
 	bpm        float64
 	multiplier float64
+	ticker     *time.Ticker
+
+	doSync   bool
+	syncChan chan bool
 
 	effects map[string]*clockEffect
 }
 
 func init() {
-	syncChan = make(chan bool)
-
 	tickTock = &clock{
-		effects: make(map[string]*clockEffect),
+		syncChan: make(chan bool),
+		effects:  make(map[string]*clockEffect),
 	}
-	setSpeed(128, 1)
-	clk = time.NewTicker(tickTock.interval)
+	tickTock.setSpeed(128, 1)
 
-	go tickTock.run()
+	tickTock.start()
 }
 
 // RestartClock resets the ticker to start running again after one full cycle
 func RestartClock() {
-	clk.Reset(tickTock.interval)
+	tickTock.ticker.Reset(tickTock.interval)
 }
 
 // SetClockSpeed sets a new speed for the clock
 func SetClockSpeed(bpm float64, multiplier float64) {
-	setSpeed(bpm, multiplier)
+	tickTock.setSpeed(bpm, multiplier)
 	RestartClock()
 
 	update := model.UIUpdate{
@@ -107,8 +103,8 @@ func UnsubscribeAllFromClock() {
 
 // ClockSync returns after waiting for the next on-beat run on the clock
 func ClockSync() {
-	doSync = true
-	<-syncChan
+	tickTock.doSync = true
+	<-tickTock.syncChan
 }
 
 func sendClockUpdate(id string, action model.ClockAction, isOffBeat bool) {
@@ -123,15 +119,17 @@ func sendClockUpdate(id string, action model.ClockAction, isOffBeat bool) {
 	SendUIUpdate(update)
 }
 
-func setSpeed(bpm float64, multiplier float64) {
-	tickTock.bpm = bpm
-	tickTock.multiplier = multiplier
+func (c *clock) setSpeed(bpm float64, multiplier float64) {
+	c.bpm = bpm
+	c.multiplier = multiplier
 
 	millis := millisPerSecond / float64(bpm) * multiplier
-	tickTock.interval = time.Duration(millis) * time.Millisecond
+	c.interval = time.Duration(millis) * time.Millisecond
 }
 
-func (c *clock) run() {
+func (c *clock) start() {
+	c.ticker = time.NewTicker(c.interval)
+
 	tick := make(chan bool)
 	tock := make(chan bool)
 	doTick := true
@@ -148,18 +146,21 @@ func (c *clock) run() {
 		}
 	}()
 
-	for range clk.C {
-		if doTick {
-			tick <- true
-			if doSync {
-				syncChan <- true
+	go func() {
+		for range c.ticker.C {
+			if doTick {
+				tick <- true
+
+				if c.doSync {
+					c.syncChan <- true
+					c.doSync = false
+				}
+			} else {
+				tock <- true
 			}
-			doSync = false
-		} else {
-			tock <- true
+			doTick = !doTick
 		}
-		doTick = !doTick
-	}
+	}()
 }
 
 func (c *clock) doEffects(offBeatCycle bool) {
