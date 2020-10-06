@@ -129,35 +129,17 @@ func (c *clock) setSpeed(bpm float64, multiplier float64) {
 
 func (c *clock) start() {
 	c.ticker = time.NewTicker(c.interval)
-
-	tick := make(chan bool)
-	tock := make(chan bool)
 	doTick := true
 
 	go func() {
-		for range tick {
-			c.doEffects(false)
-		}
-	}()
-
-	go func() {
-		for range tock {
-			c.doEffects(true)
-		}
-	}()
-
-	go func() {
 		for range c.ticker.C {
-			if doTick {
-				tick <- true
+			go c.doEffects(doTick)
 
-				if c.doSync {
-					c.syncChan <- true
-					c.doSync = false
-				}
-			} else {
-				tock <- true
+			if doTick && c.doSync {
+				c.syncChan <- true
+				c.doSync = false
 			}
+
 			doTick = !doTick
 		}
 	}()
