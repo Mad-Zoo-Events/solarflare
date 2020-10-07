@@ -49,6 +49,8 @@ logInfoMessage = (msg) => {
     logWindow.innerHTML = logLine + logWindow.innerHTML;
 };
 
+clearLogs = () => document.getElementById("log-window").innerHTML = "";
+
 toggleFormattingCodePopup = () => {
     if (hoveringOverFormattingPopup) {
         return;
