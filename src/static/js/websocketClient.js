@@ -54,6 +54,7 @@ handleMessage = (data) => {
             if (stopEffects) {
                 activeKeys.clear();
                 stopCounter("all");
+                clearLogs();
             }
 
             const buttons = document.getElementsByClassName("stop-all-button");
