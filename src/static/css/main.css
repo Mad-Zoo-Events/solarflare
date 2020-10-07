@@ -564,7 +564,7 @@ h3 {
 
 /* ================ PRESET MANAGER ================ */
 .preset-table {
-    max-width       : 100em;
+    max-width       : 120em;
     min-width       : 50%;
     margin-left     : auto;
     margin-right    : auto;
@@ -633,7 +633,6 @@ td.type-header {
     border-bottom: 2px solid var(--steel);
 }
 
-
 .id-column {
     font-size: x-small;
 }
@@ -643,10 +642,14 @@ td.type-header {
     text-align: center;
 }
 
+.description-column {
+    width: 12em;
+}
+
 .effects-column {
     display              : grid;
-    grid-template-columns: min-content 13em 6em min-content;
-    white-space          : nowrap;
+    grid-template-columns: min-content 15em 7em 15em;
+    gap                  : 0 1em;
 }
 
 .span-effects-column {

@@ -21,7 +21,7 @@
             <td class="id-column">{{.ID}}</td>
             <td class="key-column"><span class="cyan">{{.UIKeyBinding}}</span></td>
             <td>{{.DisplayName}}</td>
-            <td>{{.Description}}</td>
+            <td class="description-column">{{.Description}}</td>
             <td class="effects-column">
                 {{range .ParticleEffects}}
                 <span>→&nbsp;&nbsp;</span>
@@ -46,7 +46,7 @@
             <td class="id-column">{{.ID}}</td>
             <td class="key-column"><span class="magenta">{{.UIKeyBinding}}</span></td>
             <td>{{.DisplayName}}</td>
-            <td>{{.Description}}</td>
+            <td class="description-column">{{.Description}}</td>
             <td class="effects-column">
                 {{range .DragonEffects}}
                 <span>→&nbsp;&nbsp;</span>
@@ -70,7 +70,7 @@
             <td class="id-column">{{.ID}}</td>
             <td class="key-column"><span class="indigo">{{.UIKeyBinding}}</span></td>
             <td>{{.DisplayName}}</td>
-            <td>{{.Description}}</td>
+            <td class="description-column">{{.Description}}</td>
             {{$current := .}}
             <td class="effects-column">
                 {{range .LaserEffects}}
@@ -95,7 +95,7 @@
             <td class="id-column">{{.ID}}</td>
             <td class="key-column"><span class="orange">{{.UIKeyBinding}}</span></td>
             <td>{{.DisplayName}}</td>
-            <td>{{.Description}}</td>
+            <td class="description-column">{{.Description}}</td>
             <td class="effects-column">
                 {{range .TimeshiftEffects}}
                 <span>→&nbsp;&nbsp;</span>
@@ -120,7 +120,7 @@
             <td class="id-column">{{.ID}}</td>
             <td class="key-column"><span class="green">{{.UIKeyBinding}}</span></td>
             <td>{{.DisplayName}}</td>
-            <td>{{.Description}}</td>
+            <td class="description-column">{{.Description}}</td>
             <td class="effects-column">
                 {{range .PotionEffects}}
                 <span>→&nbsp;&nbsp;</span>
@@ -144,7 +144,7 @@
             <td class="id-column">{{.ID}}</td>
             <td class="key-column"><span class="steel">{{.UIKeyBinding}}</span></td>
             <td>{{.DisplayName}}</td>
-            <td>{{.Description}}</td>
+            <td class="description-column">{{.Description}}</td>
             <td class="effects-column">
                 {{range .Commands}}
                 <span>→&nbsp;&nbsp;</span>
