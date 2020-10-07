@@ -78,19 +78,23 @@ doDuplicatePreset = async (id, effectType) => {
     request.send();
 };
 
-doTestPreset = async () => {
+doTestPreset = async (isTrigger) => {
     const button = document.getElementById("test-button");
     const form = document.getElementById("preset-form");
     const action = form.getAttribute("action");
-
-    button.disabled = true;
-    button.classList.add("disabled");
 
     form.setAttribute("action", `${action}/test`);
     form.setAttribute("target", "dummyframe");
     form.submit();
     form.setAttribute("action", action);
     form.removeAttribute("target");
+
+    if (isTrigger) {
+        return;
+    }
+
+    button.disabled = true;
+    button.classList.add("disabled");
 
     setTimeout(() => {
         button.disabled = false;
