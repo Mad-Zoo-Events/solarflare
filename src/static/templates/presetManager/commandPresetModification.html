@@ -17,9 +17,8 @@
                     <i class="delete-effect far fa-trash-alt fa-lg" onclick='removeEffectInput(this);'></i>
                 </span>
                 <label>Command</label>
-                <input class="indexed-input" name="command[{{$index}}]" type="text" placeholder="smite Mat_Zo"
-                    value="{{.}}" />
-                <br />
+                <textarea class="indexed-input" name="command[{{$index}}]" cols="50" rows="5"
+                    placeholder="smite Mat_Zo">{{.}}</textarea>
             </div>
             <br />
             {{end}}

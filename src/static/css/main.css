@@ -697,6 +697,7 @@ i.fa-clone {
 
 input[type=text],
 input[type=number],
+textarea,
 select {
     color           : var(--font);
     padding         : 0.5em;
