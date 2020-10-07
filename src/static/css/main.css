@@ -2,26 +2,27 @@
     --background      : #121212;
     --background2     : #131313;
     --background3     : #111111;
-    --background-alpha: rgba(8, 8, 8, 0.8);
+    --background-alpha: #000000e0;
     --dark-gray       : #333;
     --darker-gray     : #222;
     --gray            : #888;
     --font            : #dfffff;
+    --font-alpha      : #dfffff20;
 
     --green        : #0eaf2c;
-    --green-alpha  : rgba(14, 175, 44, 0.15);
+    --green-alpha  : #0eaf2c20;
     --orange       : #f56200;
-    --orange-alpha : rgba(245, 98, 0, 0.15);
+    --orange-alpha : #f5620020;
     --red          : #ec2323;
     --teal         : #00aba9;
     --indigo       : #6a00ff;
-    --indigo-alpha : rgba(106, 0, 255, 0.15);
+    --indigo-alpha : #6a00ff20;
     --cyan         : #1ba1e2;
-    --cyan-alpha   : rgba(27, 161, 226, 0.15);
+    --cyan-alpha   : #1ba1e220;
     --magenta      : #b90383;
-    --magenta-alpha: rgba(185, 3, 131, 0.15);
+    --magenta-alpha: #b9038320;
     --steel        : #647687;
-    --steel-alpha  : rgba(100, 118, 135, 0.15);
+    --steel-alpha  : #64768720;
 
     --darker-magenta: #52002c;
     --darker-cyan   : #0b3c55;
