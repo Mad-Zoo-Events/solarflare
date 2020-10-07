@@ -681,7 +681,8 @@ i.fa-clone {
 .preset-edit-main {
     margin-left  : auto;
     margin-right : auto;
-    width        : 50em;
+    max-width    : 80em;
+    min-width    : 50%;
     margin-bottom: 10em;
 }
 
