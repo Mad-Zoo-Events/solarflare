@@ -21,8 +21,8 @@
     --cyan-alpha   : #1ba1e220;
     --magenta      : #b90383;
     --magenta-alpha: #b9038320;
-    --steel        : #647687;
-    --steel-alpha  : #64768720;
+    --steel        : #597997;
+    --steel-alpha  : #59799720;
 
     --darker-magenta: #52002c;
     --darker-cyan   : #0b3c55;
@@ -563,39 +563,16 @@ h3 {
 }
 
 /* ================ PRESET MANAGER ================ */
-.preset-table {
-    max-width       : 120em;
-    min-width       : 50%;
-    margin-left     : auto;
-    margin-right    : auto;
+.preset-overview {
+    width           : max-content;
+    min-width       : 60em;
+    max-width       : 95%;
+    margin          : 0 auto;
     background-color: var(--dark-gray);
-    border-collapse : collapse;
     margin-bottom   : 10em;
 }
 
-.preset-table thead {
-    background-color: var(--background);
-    color           : var(--font);
-    font-variant    : small-caps;
-    font-weight     : bold;
-    font-size       : large;
-}
-
-.preset-table thead td {
-    padding      : 1em 0.5em;
-    border-top   : 2px solid var(--font);
-    border-bottom: 2px solid var(--font);
-}
-
-.preset-table td {
-    padding: 0.3em 0.5em;
-}
-
-.preset-table tr:nth-child(2n+2) {
-    background-color: var(--darker-gray);
-}
-
-td.type-header {
+.preset-overview-type-header {
     font-variant    : small-caps;
     font-weight     : bold;
     text-align      : center;
@@ -633,36 +610,85 @@ td.type-header {
     border-bottom: 2px solid var(--steel);
 }
 
-.id-column {
-    font-size: x-small;
+.preset-overview-header {
+    background-color: var(--background);
+    color           : var(--teal);
+    font-variant    : small-caps;
+    font-size       : larger;
 }
 
-.key-column {
-    font-size : larger;
-    text-align: center;
-}
-
-.description-column {
-    width: 12em;
-}
-
-.effects-column {
+.preset-overview-sliver {
+    padding              : 0.3em;
+    border-bottom        : 1px solid var(--gray);
     display              : grid;
-    grid-template-columns: min-content 15em 7em 15em;
-    gap                  : 0 1em;
+    grid-template-columns: 15.5em 2em 12em 15em auto min-content;
 }
 
-.span-effects-column {
-    grid-column: 2 / span 3;
+.preset-overview-sliver:nth-child(2n+1) {
+    background-color: var(--darker-gray);
 }
 
-.actions-column {
+.preset-sliver-id {
+    grid-column: 1;
+    font-size  : x-small;
+    color      : var(--gray);
+}
+
+.preset-sliver-key {
+    grid-column: 2;
+    font-size  : larger;
+    text-align : center;
+    color      : var(--teal);
+}
+
+.preset-sliver-name {
+    grid-column: 3;
+}
+
+.preset-sliver-description {
+    grid-column: 4;
+}
+
+.preset-sliver-effects {
+    grid-column: 5;
+}
+
+.sliver-effects-particle {
+    display              : grid;
+    grid-template-columns: 15em 6em auto;
+}
+
+.sliver-effects-dragon {
+    display              : grid;
+    grid-template-columns: 8em auto;
+}
+
+.sliver-effects-laser {
+    display              : grid;
+    grid-template-columns: 18em auto;
+}
+
+.sliver-effects-command,
+.sliver-effects-command div {
+    text-overflow: ellipsis;
+    white-space  : nowrap;
+    overflow     : hidden;
+}
+
+/* .sliver-point-ids {
+    text-align: right;
+} */
+
+.preset-sliver-actions {
+    grid-column: 6;
     white-space: nowrap;
+    margin-left: 2em;
 }
 
-.actions-column i {
+.preset-sliver-actions i {
     cursor     : pointer;
     margin-left: 0.5em;
+    margin-top : 0.2em;
 }
 
 i.fa-trash-alt {
@@ -674,7 +700,7 @@ i.fa-clone {
 }
 
 .code {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: Consolas, 'Courier New', Courier, monospace;
 }
 
 /* ================ PRESET MUTATION ================ */

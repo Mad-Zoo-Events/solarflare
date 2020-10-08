@@ -67,6 +67,7 @@ func RenderControlPanel(writer http.ResponseWriter) error {
 func RenderPresetManager(writer http.ResponseWriter) error {
 	template, err := template.ParseFiles(
 		presetManagerPath+"presetManager.html",
+		presetManagerPath+"shared.html",
 		templatesPath+"shared.html",
 	)
 	if err != nil {

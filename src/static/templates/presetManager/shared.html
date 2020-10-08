@@ -19,3 +19,25 @@
 <br />
 
 {{end}}
+
+{{define "presetOverviewHeader"}}
+
+<div class="preset-overview-header preset-overview-sliver">
+    <div>ID</div>
+    <div class="code">Key</div>
+    <div>Name</div>
+    <div>Description</div>
+    <div>Effects</div>
+    <div>Actions</div>
+</div>
+
+{{end}}
+
+{{define "presetOverviewShared"}}
+
+<div class="preset-sliver-id code">{{.ID}}</div>
+<div class="preset-sliver-key code">{{.UIKeyBinding}}</div>
+<div class="preset-sliver-name">{{.DisplayName}}</div>
+<div class="preset-sliver-description">{{.Description}}</div>
+
+{{end}}
