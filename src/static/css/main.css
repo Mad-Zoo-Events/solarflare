@@ -44,18 +44,17 @@ body {
 
 /* ================ MAIN CONTROLS ================ */
 .main-controls-holder {
-    display: grid;
+    zoom                 : 85%;
+    display              : grid;
+    grid-template-columns: 45% 25% 30%;
+    grid-template-areas  :
+        'particle particle potion'
+        'particle particle timeshift'
+        'dragon   laser laser'
+        'command  command command';
 
-    grid-template-columns: 55% 10% 35%;
-
-    grid-template-areas:
-        'particle potion  potion'
-        'particle dragon  dragon'
-        'particle laser   laser'
-        'command  command timeshift';
-
-    padding-top   : 2.9em;
-    padding-bottom: 11.9em;
+    padding-top   : 3.4em;
+    padding-bottom: 14em;
 }
 
 .controls-holder {
