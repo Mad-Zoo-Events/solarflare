@@ -264,17 +264,26 @@ handleTargetingChecked = (checked) => {
 
 // ================ KEY BINDINGS ================
 
-setKeyBinding = (event, source) => {
-    event = event || window.event;
-    var charCode = event.which || event.keyCode;
-    document.getElementById("key-binding").value = charCode;
-    source.value = String.fromCharCode(charCode);
+onPasteKeyBinding = (event, source) => {
+    event.clipboardData.items[0].getAsString(function (s) {
+        if (s === "") {
+            document.getElementById("key-binding").value = 0;
+            return;
+        }
+        var charCode = s.charCodeAt(0);
+        document.getElementById("key-binding").value = charCode;
+        source.value = String.fromCharCode(charCode);
+    });
 };
 
-checkKeyBinding = (source) => {
-    if (source.value === "") {
+onKeypressKeyBinding = (event, source) => {
+    var charCode = event.which;
+    if (!charCode) {
         document.getElementById("key-binding").value = 0;
+        return;
     }
+    document.getElementById("key-binding").value = charCode;
+    source.value = String.fromCharCode(charCode);
 };
 
 handleKeydown = (event) => {
