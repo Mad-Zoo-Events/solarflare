@@ -59,12 +59,13 @@ body {
 
 .controls-holder {
     text-align: center;
-    padding   : 1em;
+    padding   : 0.8em;
 }
 
 .controls-holder-header {
     float       : left;
     writing-mode: vertical-lr;
+    margin-right: 0.8em;
 }
 
 .controls-holder-header span {

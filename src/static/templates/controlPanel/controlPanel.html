@@ -20,9 +20,13 @@
     <div class="main-controls-holder">
         <div class="controls-holder particle-controls">
             <div class="controls-holder-header cyan">
-                <i class="stop-type-button far fa-stop-circle fa-2x"
+                <i class="stop-type-button fas fa-stop-circle fa-2x" title="Stop Effects + Detach Clocks"
                     onclick='doStopAll(undefined, true, true, "particle")'></i>
-                <span>Particle</span>
+                <i class="stop-type-button far fa-stop-circle fa-2x" title="Stop Effects"
+                    onclick='doStopAll(undefined, true, false, "particle")'></i>
+                <i class="stop-type-button fas fa-stopwatch fa-2x" title="Detach Clocks"
+                    onclick='doStopAll(undefined, false, true, "particle")'></i>
+                <span>PTCL</span>
             </div>
             {{range .ParticleEffectPresets}}
             {{template "particleEffectControl" .}}
@@ -30,9 +34,13 @@
         </div>
         <div class="controls-holder dragon-controls">
             <div class="controls-holder-header magenta">
-                <i class="stop-type-button far fa-stop-circle fa-2x"
+                <i class="stop-type-button fas fa-stop-circle fa-2x" title="Stop Effects + Detach Clocks"
                     onclick='doStopAll(undefined, true, true, "dragon")'></i>
-                <span>Dragon</span>
+                <i class="stop-type-button far fa-stop-circle fa-2x" title="Stop Effects"
+                    onclick='doStopAll(undefined, true, false, "dragon")'></i>
+                <i class="stop-type-button fas fa-stopwatch fa-2x" title="Detach Clocks"
+                    onclick='doStopAll(undefined, false, true, "dragon")'></i>
+                <span>DRGN</span>
             </div>
             {{range .DragonEffectPresets}}
             {{template "dragonControl" .}}
@@ -40,9 +48,13 @@
         </div>
         <div class="controls-holder laser-controls">
             <div class="controls-holder-header indigo">
-                <i class="stop-type-button far fa-stop-circle fa-2x"
+                <i class="stop-type-button fas fa-stop-circle fa-2x" title="Stop Effects + Detach Clocks"
                     onclick='doStopAll(undefined, true, true, "laser")'></i>
-                <span>Laser</span>
+                <i class="stop-type-button far fa-stop-circle fa-2x" title="Stop Effects"
+                    onclick='doStopAll(undefined, true, false, "laser")'></i>
+                <i class="stop-type-button fas fa-stopwatch fa-2x" title="Detach Clocks"
+                    onclick='doStopAll(undefined, false, true, "laser")'></i>
+                <span>LSR</span>
             </div>
             {{range .LaserEffectPresets}}
             {{template "laserControl" .}}
@@ -50,9 +62,13 @@
         </div>
         <div class="controls-holder timeshift-controls">
             <div class="controls-holder-header orange">
-                <i class="stop-type-button far fa-stop-circle fa-2x"
+                <i class="stop-type-button fas fa-stop-circle fa-2x" title="Stop Effects + Detach Clocks"
                     onclick='doStopAll(undefined, true, true, "timeshift")'></i>
-                <span>Timeshift</span>
+                <i class="stop-type-button far fa-stop-circle fa-2x" title="Stop Effects"
+                    onclick='doStopAll(undefined, true, false, "timeshift")'></i>
+                <i class="stop-type-button fas fa-stopwatch fa-2x" title="Detach Clocks"
+                    onclick='doStopAll(undefined, false, true, "timeshift")'></i>
+                <span>TSHFT</span>
             </div>
             {{range .TimeshiftEffectPresets}}
             {{template "timeshiftControl" .}}
@@ -60,9 +76,13 @@
         </div>
         <div class="controls-holder potion-controls">
             <div class="controls-holder-header green">
-                <i class="stop-type-button far fa-stop-circle fa-2x"
+                <i class="stop-type-button fas fa-stop-circle fa-2x" title="Stop Effects + Detach Clocks"
                     onclick='doStopAll(undefined, true, true, "potion")'></i>
-                <span>Potion</span>
+                <i class="stop-type-button far fa-stop-circle fa-2x" title="Stop Effects"
+                    onclick='doStopAll(undefined, true, false, "potion")'></i>
+                <i class="stop-type-button fas fa-stopwatch fa-2x" title="Detach Clocks"
+                    onclick='doStopAll(undefined, false, true, "potion")'></i>
+                <span>PTN</span>
             </div>
             {{range .PotionEffectPresets}}
             {{template "potionControl" .}}
