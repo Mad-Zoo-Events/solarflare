@@ -507,17 +507,16 @@ detachClockUI = (id, isOffBeat) => {
 };
 
 detachClockAll = (specificTypeOnly) => {
-    if (!specificTypeOnly) {
-        for (var id of activeOnbeatClocks.keys()) {
+    for (const [id, effectType] of activeOnbeatClocks) {
+        if (!specificTypeOnly || specificTypeOnly == effectType) {
             detachClockUI(id, false);
         }
-        for (var id of activeOffbeatClocks.keys()) {
+    }
+    for (const [id, effectType] of activeOffbeatClocks) {
+        if (!specificTypeOnly || specificTypeOnly == effectType) {
             detachClockUI(id, true);
         }
-        return;
     }
-
-    //TODO: handle specificTypeOnly
 };
 
 stopEffectsAll = (specificTypeOnly) => {
