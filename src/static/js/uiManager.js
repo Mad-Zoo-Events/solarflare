@@ -2,8 +2,8 @@ const CLOCK_SYNC_INTERVAL = 10000;
 
 var counters = new Map();
 var activeKeys = new Set();
-var activeOnbeatClocks = new Set();
-var activeOffbeatClocks = new Set();
+var activeOnbeatClocks = new Map();
+var activeOffbeatClocks = new Map();
 
 var clock;
 var clockInterval;
@@ -378,24 +378,24 @@ doWhateverTheClockDoes = () => {
 
     if (!indicator.classList.contains(cName)) { // ON
         indicator.classList.add(cName);
-        activeOnbeatClocks.forEach((id) => {
+        for (var id of activeOnbeatClocks.keys()) {
             document.getElementById("onbeatclock-" + id).classList.add("fas");
             document.getElementById("onbeatclock-" + id).classList.remove("far");
-        });
-        activeOffbeatClocks.forEach((id) => {
+        };
+        for (var id of activeOffbeatClocks.keys()) {
             document.getElementById("offbeatclock-" + id).classList.add("far");
             document.getElementById("offbeatclock-" + id).classList.remove("fas");
-        });
+        };
     } else { // OFF
         indicator.classList.remove(cName);
-        activeOnbeatClocks.forEach((id) => {
+        for (var id of activeOnbeatClocks.keys()) {
             document.getElementById("onbeatclock-" + id).classList.add("far");
             document.getElementById("onbeatclock-" + id).classList.remove("fas");
-        });
-        activeOffbeatClocks.forEach((id) => {
+        };
+        for (var id of activeOffbeatClocks.keys()) {
             document.getElementById("offbeatclock-" + id).classList.add("fas");
             document.getElementById("offbeatclock-" + id).classList.remove("far");
-        });
+        };
     }
 };
 
@@ -474,18 +474,18 @@ attachClock = (effectType, id, isOffbeat) => {
     doClockSubscription(effectType, id, action, isRunning, isOffbeat);
 };
 
-attachClockUI = (id, isOffBeat) => {
+attachClockUI = (id, effectType, isOffBeat) => {
     if (isOffBeat) {
         if (activeOnbeatClocks.has(id)) {
             detachClockUI(id, false);
         }
-        activeOffbeatClocks.add(id);
+        activeOffbeatClocks.set(id, effectType);
         document.getElementById("offbeatclock-" + id).classList.add("clock-attached");
     } else {
         if (activeOffbeatClocks.has(id)) {
             detachClockUI(id, true);
         }
-        activeOnbeatClocks.add(id);
+        activeOnbeatClocks.set(id, effectType);
         document.getElementById("onbeatclock-" + id).classList.add("clock-attached");
     }
 };
@@ -504,7 +504,27 @@ detachClockUI = (id, isOffBeat) => {
     }
 };
 
-detachClockAll = () => {
-    activeOnbeatClocks.forEach((id) => detachClockUI(id, false));
-    activeOffbeatClocks.forEach((id) => detachClockUI(id, true));
+detachClockAll = (specificTypeOnly) => {
+    if (!specificTypeOnly) {
+        for (var id of activeOnbeatClocks.keys()) {
+            detachClockUI(id, false);
+        }
+        for (var id of activeOffbeatClocks.keys()) {
+            detachClockUI(id, true);
+        }
+        return;
+    }
+
+    //TODO: handle specificTypeOnly
+};
+
+stopEffectsAll = (specificTypeOnly) => {
+    if (!specificTypeOnly) {
+        activeKeys.clear();
+        stopCounter("all");
+        clearLogs();
+        return;
+    }
+
+    //TODO: handle specificTypeOnly
 };
