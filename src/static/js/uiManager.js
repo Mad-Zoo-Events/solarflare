@@ -1,6 +1,6 @@
 const CLOCK_SYNC_INTERVAL = 10000;
 
-var counters = new Map();
+var activeEffects = new Map();
 var activeKeys = new Map();
 var activeOnbeatClocks = new Map();
 var activeOffbeatClocks = new Map();
@@ -110,34 +110,29 @@ updateResponseTime = (millis) => {
 
 // ================ COUNTER ================
 
-counter = async (id, action) => {
-    if (action === "start") {
-        startCounter(id);
-    } else if (action === "stop") {
-        stopCounter(id);
-    }
-};
-
-startCounter = (id) => {
+startEffect = (id, effectType) => {
     const startButton = document.getElementById(`start-${id}`);
     const stopButton = document.getElementById(`stop-${id}`);
     var seconds = 0;
 
     startButton.disabled = true;
     startButton.classList.add("disabled");
-    counters[id] = setInterval(() => {
-        seconds++;
-        stopButton.innerHTML = seconds;
-    }, 1000);
+    activeEffects.set(id, {
+        type: effectType,
+        timer: setInterval(() => {
+            seconds++;
+            stopButton.innerHTML = seconds;
+        }, 1000)
+    });
 };
 
-stopCounter = (id) => {
+stopEffect = (id) => {
     if (id === "all") {
-        for (const key in counters) {
-            clearInterval(counters[key]);
+        for (const [id, effect] of activeEffects) {
+            clearInterval(effect.timer);
         }
 
-        counters.clear();
+        activeEffects.clear();
         const buttons = document.getElementsByClassName("start");
         for (let i = 0; i < buttons.length; i++) {
             const button = buttons[i];
@@ -148,12 +143,12 @@ stopCounter = (id) => {
         return;
     }
 
-    if (!counters[id]) {
+    if (!activeEffects.has(id)) {
         return;
     }
 
-    clearInterval(counters[id]);
-    counters.delete(id);
+    clearInterval(activeEffects.get(id).timer);
+    activeEffects.delete(id);
 
     resetStartButton(id);
 };
@@ -468,9 +463,9 @@ attachClock = (effectType, id, isOffbeat) => {
 
     let isRunning = false;
 
-    if (counters[id]) {
+    if (activeEffects.has(id)) {
         isRunning = true;
-        stopCounter(id);
+        stopEffect(id);
     }
 
     doClockSubscription(effectType, id, action, isRunning, isOffbeat);
@@ -522,7 +517,7 @@ detachClockAll = (specificTypeOnly) => {
 stopEffectsAll = (specificTypeOnly) => {
     if (!specificTypeOnly) {
         activeKeys.clear();
-        stopCounter("all");
+        stopEffect("all");
         clearLogs();
         return;
     }

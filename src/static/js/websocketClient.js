@@ -42,7 +42,7 @@ handleMessage = (data) => {
     } = data;
 
     if (effectUpdate) {
-        const { id, displayName, action, errorMessage, stopAll } = effectUpdate;
+        const { id, effectType, displayName, action, errorMessage, stopAll } = effectUpdate;
 
         if (stopAll) {
             const { stopEffects, detachClocks, specificTypeOnly } = stopAll;
@@ -68,7 +68,11 @@ handleMessage = (data) => {
             document.getElementById("bossbar-color").value = parts[1];
         } else {
             if (!errorMessage && action !== "trigger") {
-                counter(id, action);
+                if (action === "start") {
+                    startEffect(id, effectType);
+                } else if (action === "stop") {
+                    stopEffect(id);
+                }
             }
 
             logEffectMessage(action, displayName, errorMessage);
