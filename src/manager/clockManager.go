@@ -167,18 +167,18 @@ func (c *clock) doEffects(offBeatCycle bool) {
 		}
 
 		if (e.isOffBeat && offBeatCycle) || (!e.isOffBeat && !offBeatCycle) {
-			switch e.preset.(type) {
-			case model.ParticleEffectPreset:
+			switch e.effectType {
+			case model.ParticleEffectType:
 				go RunParticleEffect(e.preset.(model.ParticleEffectPreset), model.StartEffectAction, false)
-			case model.DragonEffectPreset:
+			case model.DragonEffectType:
 				go RunDragonEffect(e.preset.(model.DragonEffectPreset), model.StartEffectAction, false)
-			case model.TimeshiftEffectPreset:
+			case model.TimeshiftEffectType:
 				go RunTimeshiftEffect(e.preset.(model.TimeshiftEffectPreset), model.StartEffectAction, false)
-			case model.PotionEffectPreset:
+			case model.PotionEffectType:
 				go RunPotionEffect(e.preset.(model.PotionEffectPreset), model.StartEffectAction, false)
-			case model.LaserEffectPreset:
+			case model.LaserEffectType:
 				go RunLaserEffect(e.preset.(model.LaserEffectPreset), model.StartEffectAction, false)
-			case model.CommandEffectPreset:
+			case model.CommandEffectType:
 				go RunCommandEffect(e.preset.(model.CommandEffectPreset), false)
 			}
 		} else {
