@@ -1,7 +1,7 @@
 const CLOCK_SYNC_INTERVAL = 10000;
 
 var counters = new Map();
-var activeKeys = new Set();
+var activeKeys = new Map();
 var activeOnbeatClocks = new Map();
 var activeOffbeatClocks = new Map();
 
@@ -293,7 +293,7 @@ handleKeydown = (event) => {
         document.getElementById("caps-warning").style.display = "none";
     }
 
-    if (event.which === 27) {
+    if (event.which === 27) { // ESC
         document.getElementById(`detach-all-button`).click();
     }
 };
@@ -325,7 +325,9 @@ handleKeypress = (event) => {
         activeKeys.delete(charCode);
     } else {
         startStopButtons = document.getElementsByClassName(`start key-binding-${charCode}`);
-        activeKeys.add(charCode,);
+        if (startStopButtons.length > 0) {
+            activeKeys.set(charCode, startStopButtons[0].getAttribute("effect-type"));
+        }
     }
 
     for (let i = 0; i < startStopButtons.length; i++) {
