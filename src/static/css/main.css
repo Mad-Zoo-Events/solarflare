@@ -62,12 +62,19 @@ body {
     padding   : 1em;
 }
 
-.controls-header {
+.controls-holder-header {
     float       : left;
     writing-mode: vertical-lr;
+}
 
+.controls-holder-header span {
     font-size   : x-large;
     font-variant: small-caps;
+}
+
+.stop-type-button {
+    cursor       : pointer;
+    margin-bottom: 0.3em;
 }
 
 .particle-controls {
@@ -115,27 +122,33 @@ body {
     margin-top: 1em;
 }
 
-span.cyan {
+span.cyan,
+div.cyan {
     color: var(--cyan);
 }
 
-span.magenta {
+span.magenta,
+div.magenta {
     color: var(--magenta);
 }
 
-span.indigo {
+span.indigo,
+div.indigo {
     color: var(--indigo);
 }
 
-span.orange {
+span.orange,
+div.orange {
     color: var(--orange);
 }
 
-span.green {
+span.green,
+div.green {
     color: var(--green);
 }
 
-span.steel {
+span.steel,
+div.steel {
     color: var(--steel);
 }
 

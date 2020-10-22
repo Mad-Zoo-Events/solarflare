@@ -19,37 +19,59 @@
     </div>
     <div class="main-controls-holder">
         <div class="controls-holder particle-controls">
-            <span class="controls-header cyan">Particle</span>
+            <div class="controls-holder-header cyan">
+                <i class="stop-type-button far fa-stop-circle fa-2x"
+                    onclick='doStopAll(undefined, true, true, "particle")'></i>
+                <span>Particle</span>
+            </div>
             {{range .ParticleEffectPresets}}
             {{template "particleEffectControl" .}}
             {{end}}
         </div>
         <div class="controls-holder dragon-controls">
-            <span class="controls-header magenta">Dragon</span>
+            <div class="controls-holder-header magenta">
+                <i class="stop-type-button far fa-stop-circle fa-2x"
+                    onclick='doStopAll(undefined, true, true, "dragon")'></i>
+                <span>Dragon</span>
+            </div>
             {{range .DragonEffectPresets}}
             {{template "dragonControl" .}}
             {{end}}
         </div>
         <div class="controls-holder laser-controls">
-            <span class="controls-header indigo">Laser</span>
+            <div class="controls-holder-header indigo">
+                <i class="stop-type-button far fa-stop-circle fa-2x"
+                    onclick='doStopAll(undefined, true, true, "laser")'></i>
+                <span>Laser</span>
+            </div>
             {{range .LaserEffectPresets}}
             {{template "laserControl" .}}
             {{end}}
         </div>
         <div class="controls-holder timeshift-controls">
-            <span class="controls-header orange">Timeshift</span>
+            <div class="controls-holder-header orange">
+                <i class="stop-type-button far fa-stop-circle fa-2x"
+                    onclick='doStopAll(undefined, true, true, "timeshift")'></i>
+                <span>Timeshift</span>
+            </div>
             {{range .TimeshiftEffectPresets}}
             {{template "timeshiftControl" .}}
             {{end}}
         </div>
         <div class="controls-holder potion-controls">
-            <span class="controls-header green">Potion</span>
+            <div class="controls-holder-header green">
+                <i class="stop-type-button far fa-stop-circle fa-2x"
+                    onclick='doStopAll(undefined, true, true, "potion")'></i>
+                <span>Potion</span>
+            </div>
             {{range .PotionEffectPresets}}
             {{template "potionControl" .}}
             {{end}}
         </div>
         <div class="controls-holder command-controls">
-            <span class="controls-header steel">CMD</span>
+            <div class="controls-holder-header steel">
+                <span>CMD</span>
+            </div>
             {{range .CommandEffectPresets}}
             {{template "commandControl" .}}
             {{end}}

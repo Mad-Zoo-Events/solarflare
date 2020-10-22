@@ -26,13 +26,16 @@ doEffect = async (effectType, id, action) => {
     request.send();
 };
 
-doStopAll = (button, stopEffects, detachClocks) => {
-    button.disabled = true;
-    button.classList.add("disabled");
+doStopAll = (button, stopEffects, detachClocks, specificTypeOnly) => {
+    if (button) {
+        button.disabled = true;
+        button.classList.add("disabled");
+    }
 
     const body = {
         "stopEffects": stopEffects,
-        "detachClocks": detachClocks
+        "detachClocks": detachClocks,
+        "specificTypeOnly": specificTypeOnly
     };
 
     const request = new XMLHttpRequest();
