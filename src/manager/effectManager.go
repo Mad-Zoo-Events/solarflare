@@ -158,7 +158,7 @@ func StopAll(request *model.StopAllRequest) (err error) {
 	}
 
 	if request.StopEffects {
-		err = client.ExecuteEffect(effectsEndpoint+"/all/stop", nil)
+		err = runStopAll(request.SpecificTypeOnly)
 	}
 
 	update := model.UIUpdate{
@@ -174,6 +174,33 @@ func StopAll(request *model.StopAllRequest) (err error) {
 	SendUIUpdate(update)
 
 	return err
+}
+
+func runStopAll(effectType *model.EffectType) error {
+	if effectType == nil {
+		return client.ExecuteEffect(effectsEndpoint+"/all/stop", nil)
+	}
+
+	switch *effectType {
+	case model.ParticleEffectType:
+		return client.ExecuteEffect(effectsEndpoint+"/particle/stop", nil)
+	case model.DragonEffectType:
+		return client.ExecuteEffect(effectsEndpoint+"/dragon/stop", nil)
+	case model.TimeshiftEffectType:
+		return client.ExecuteEffect(effectsEndpoint+"/time/stop", nil)
+	case model.PotionEffectType:
+		return client.ExecuteEffect(effectsEndpoint+"/potion/stop", nil)
+	case model.LaserEffectType:
+		err := client.ExecuteEffect(effectsEndpoint+"/laser/stop", nil)
+		err = client.ExecuteEffect(effectsEndpoint+"/endlaser/stop", nil)
+		err = client.ExecuteEffect(effectsEndpoint+"/targetedlaser/stop", nil)
+
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
 func sendEffectUpdate(id, dispalyName string, action model.EffectAction, err error) {
