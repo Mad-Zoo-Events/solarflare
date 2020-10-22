@@ -45,16 +45,14 @@ handleMessage = (data) => {
         const { id, displayName, action, errorMessage, stopAll } = effectUpdate;
 
         if (stopAll) {
-            const { stopEffects, detachClocks } = stopAll;
+            const { stopEffects, detachClocks, specificTypeOnly } = stopAll;
 
             if (detachClocks) {
-                detachClockAll();
+                detachClockAll(specificTypeOnly);
             }
 
             if (stopEffects) {
-                activeKeys.clear();
-                stopCounter("all");
-                clearLogs();
+                stopEffectsAll(specificTypeOnly);
             }
 
             const buttons = document.getElementsByClassName("stop-all-button");
@@ -78,11 +76,11 @@ handleMessage = (data) => {
     };
 
     if (clockUpdate) {
-        const { id, isOffBeat, action } = clockUpdate;
+        const { id, effectType, isOffBeat, action } = clockUpdate;
 
         switch (action) {
             case "subscribe":
-                attachClockUI(id, isOffBeat);
+                attachClockUI(id, effectType, isOffBeat);
                 break;
             case "unsubscribe":
                 detachClockUI(id, isOffBeat);
