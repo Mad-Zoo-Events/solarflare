@@ -522,5 +522,15 @@ stopEffectsAll = (specificTypeOnly) => {
         return;
     }
 
-    //TODO: handle specificTypeOnly
+    for (const [id, effectType] of activeKeys) {
+        if (specificTypeOnly === effectType) {
+            activeKeys.delete(id);
+        }
+    }
+
+    for (const [id, effect] of activeEffects) {
+        if (specificTypeOnly === effect.type) {
+            stopEffect(id);
+        }
+    }
 };
