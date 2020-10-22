@@ -86,7 +86,7 @@ func SubscribeEffectToClock(id string, effectType model.EffectType, isOffBeat, i
 		firstRun: true,
 	}
 
-	sendClockUpdate(id, model.SubscribeClockAction, isOffBeat)
+	sendClockUpdate(id, effectType, model.SubscribeClockAction, isOffBeat)
 
 	return nil
 }
@@ -95,7 +95,7 @@ func SubscribeEffectToClock(id string, effectType model.EffectType, isOffBeat, i
 func UnsubscribeEffectFromClock(id string, effectType model.EffectType, isOffBeat bool) {
 	tickTock.effects[id].detach = true
 
-	sendClockUpdate(id, model.UnsubscribeClockAction, isOffBeat)
+	sendClockUpdate(id, effectType, model.UnsubscribeClockAction, isOffBeat)
 }
 
 // UnsubscribeAllFromClock unsubscribes all effects (or all of a specific type) from the clock
@@ -121,12 +121,13 @@ func ClockSync() {
 	<-tickTock.syncChan
 }
 
-func sendClockUpdate(id string, action model.ClockAction, isOffBeat bool) {
+func sendClockUpdate(id string, effectType model.EffectType, action model.ClockAction, isOffBeat bool) {
 	update := model.UIUpdate{
 		ClockUpdate: &model.ClockUpdate{
-			ID:        id,
-			Action:    action,
-			IsOffBeat: isOffBeat,
+			ID:         id,
+			EffectType: effectType,
+			Action:     action,
+			IsOffBeat:  isOffBeat,
 		},
 	}
 
