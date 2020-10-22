@@ -33,7 +33,7 @@ func RunParticleEffect(preset model.ParticleEffectPreset, action model.EffectAct
 	err = client.ExecuteEffect(endpoint, body)
 
 	if sendUpdate {
-		sendEffectUpdate(preset.ID, preset.DisplayName, action, err)
+		sendEffectUpdate(preset.ID, model.ParticleEffectType, preset.DisplayName, action, err)
 	}
 
 	return err
@@ -51,7 +51,7 @@ func RunDragonEffect(preset model.DragonEffectPreset, action model.EffectAction,
 	err = client.ExecuteEffect(endpoint, body)
 
 	if sendUpdate {
-		sendEffectUpdate(preset.ID, preset.DisplayName, action, err)
+		sendEffectUpdate(preset.ID, model.DragonEffectType, preset.DisplayName, action, err)
 	}
 
 	return err
@@ -69,7 +69,7 @@ func RunTimeshiftEffect(preset model.TimeshiftEffectPreset, action model.EffectA
 	err = client.ExecuteEffect(endpoint, body)
 
 	if sendUpdate {
-		sendEffectUpdate(preset.ID, preset.DisplayName, action, err)
+		sendEffectUpdate(preset.ID, model.TimeshiftEffectType, preset.DisplayName, action, err)
 	}
 
 	return err
@@ -87,7 +87,7 @@ func RunPotionEffect(preset model.PotionEffectPreset, action model.EffectAction,
 	err = client.ExecuteEffect(endpoint, body)
 
 	if sendUpdate {
-		sendEffectUpdate(preset.ID, preset.DisplayName, action, err)
+		sendEffectUpdate(preset.ID, model.PotionEffectType, preset.DisplayName, action, err)
 	}
 
 	return err
@@ -116,7 +116,7 @@ func RunLaserEffect(preset model.LaserEffectPreset, action model.EffectAction, s
 	err = client.ExecuteEffect(endpoint, body)
 
 	if sendUpdate {
-		sendEffectUpdate(preset.ID, preset.DisplayName, action, err)
+		sendEffectUpdate(preset.ID, model.LaserEffectType, preset.DisplayName, action, err)
 	}
 
 	return err
@@ -132,7 +132,7 @@ func RunCommandEffect(preset model.CommandEffectPreset, sendUpdate bool) error {
 	err = client.ExecuteEffect(commandEffectEndpoint, body)
 
 	if sendUpdate {
-		sendEffectUpdate(preset.ID, preset.DisplayName, model.TriggerEffectAction, err)
+		sendEffectUpdate(preset.ID, model.CommandEffectType, preset.DisplayName, model.TriggerEffectAction, err)
 	}
 
 	return err
@@ -145,7 +145,7 @@ func StopEffect(id string, sendUpdate bool) error {
 	err := client.ExecuteEffect(endpoint, nil)
 
 	if sendUpdate {
-		sendEffectUpdate(id, "", model.StopEffectAction, err)
+		sendEffectUpdate(id, "", "", model.StopEffectAction, err)
 	}
 
 	return err
@@ -203,10 +203,11 @@ func runStopAll(effectType *model.EffectType) error {
 	return nil
 }
 
-func sendEffectUpdate(id, dispalyName string, action model.EffectAction, err error) {
+func sendEffectUpdate(id string, effectType model.EffectType, dispalyName string, action model.EffectAction, err error) {
 	update := model.UIUpdate{
 		EffectUpdate: &model.EffectUpdate{
 			ID:          id,
+			EffectType:  effectType,
 			DisplayName: dispalyName,
 			Action:      action,
 		},
