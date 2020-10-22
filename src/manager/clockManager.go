@@ -12,9 +12,10 @@ const millisPerSecond = 60000
 var tickTock *clock
 
 type clockEffect struct {
-	id        string
-	preset    interface{}
-	isOffBeat bool
+	id         string
+	preset     interface{}
+	effectType model.EffectType
+	isOffBeat  bool
 
 	firstRun bool
 	detach   bool
@@ -77,9 +78,10 @@ func SubscribeEffectToClock(id string, effectType model.EffectType, isOffBeat, i
 	}
 
 	tickTock.effects[id] = &clockEffect{
-		id:        id,
-		preset:    p,
-		isOffBeat: isOffBeat,
+		id:         id,
+		preset:     p,
+		effectType: effectType,
+		isOffBeat:  isOffBeat,
 
 		firstRun: true,
 	}
@@ -96,10 +98,20 @@ func UnsubscribeEffectFromClock(id string, effectType model.EffectType, isOffBea
 	sendClockUpdate(id, model.UnsubscribeClockAction, isOffBeat)
 }
 
-// UnsubscribeAllFromClock unsubscribes all effects from the clock
-func UnsubscribeAllFromClock() {
+// UnsubscribeAllFromClock unsubscribes all effects (or all of a specific type) from the clock
+func UnsubscribeAllFromClock(effectType *model.EffectType) {
+	if effectType == nil {
+		for _, e := range tickTock.effects {
+			e.detach = true
+		}
+
+		return
+	}
+
 	for _, e := range tickTock.effects {
-		e.detach = true
+		if e.effectType == *effectType {
+			e.detach = true
+		}
 	}
 }
 
