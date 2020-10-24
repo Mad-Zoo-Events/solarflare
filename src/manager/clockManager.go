@@ -173,12 +173,12 @@ func (c *clock) stop() {
 
 func (c *clock) doEffects(offBeatCycle bool) {
 	for _, e := range c.effects {
-		if e.detach {
-			delete(tickTock.effects, e.id)
-			continue
-		}
-
 		if (e.isOffBeat && offBeatCycle) || (!e.isOffBeat && !offBeatCycle) {
+			if e.detach {
+				delete(tickTock.effects, e.id)
+				continue
+			}
+
 			switch e.effectType {
 			case model.ParticleEffectType:
 				go RunParticleEffect(e.preset.(model.ParticleEffectPreset), model.StartEffectAction, false)
