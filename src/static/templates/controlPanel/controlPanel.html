@@ -90,6 +90,8 @@
         </div>
         <div class="controls-holder command-controls">
             <div class="controls-holder-header steel">
+                <i class="stop-type-button fas fa-stopwatch fa-2x" title="Detach Clocks"
+                    onclick='doStopAll(undefined, false, true, "command")'></i>
                 <span>CMD</span>
             </div>
             {{range .CommandEffectPresets}}
