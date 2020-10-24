@@ -29,6 +29,7 @@ type clock struct {
 
 	doSync   bool
 	syncChan chan bool
+	stopChan chan bool
 
 	effects map[string]*clockEffect
 }
@@ -36,6 +37,7 @@ type clock struct {
 func init() {
 	tickTock = &clock{
 		syncChan: make(chan bool),
+		stopChan: make(chan bool),
 		effects:  make(map[string]*clockEffect),
 	}
 	tickTock.setSpeed(128, 1)
@@ -45,7 +47,7 @@ func init() {
 
 // RestartClock resets the ticker to start running again after one full cycle
 func RestartClock() {
-	tickTock.ticker.Stop()
+	tickTock.stop()
 	tickTock.start()
 }
 
@@ -146,17 +148,27 @@ func (c *clock) start() {
 	doTick := true
 
 	go func() {
-		for range c.ticker.C {
-			go c.doEffects(doTick)
+		for {
+			select {
+			case <-c.ticker.C:
+				go c.doEffects(doTick)
 
-			if doTick && c.doSync {
-				c.syncChan <- true
-				c.doSync = false
+				if doTick && c.doSync {
+					c.syncChan <- true
+					c.doSync = false
+				}
+
+				doTick = !doTick
+			case <-c.stopChan:
+				return
 			}
-
-			doTick = !doTick
 		}
 	}()
+}
+
+func (c *clock) stop() {
+	c.ticker.Stop()
+	c.stopChan <- true
 }
 
 func (c *clock) doEffects(offBeatCycle bool) {
