@@ -121,7 +121,7 @@ startEffect = (id, effectType) => {
         type: effectType,
         timer: setInterval(() => {
             seconds++;
-            stopButton.innerHTML = seconds;
+            requestAnimationFrame(() => stopButton.innerHTML = seconds);
         }, 1000)
     });
 };
@@ -447,8 +447,8 @@ clockTap = () => {
 
 restartUIClock = () => {
     clearInterval(clock);
-    clock = setInterval(doWhateverTheClockDoes, clockInterval);
-    doWhateverTheClockDoes(true);
+    clock = setInterval(() => requestAnimationFrame(doWhateverTheClockDoes), clockInterval);
+    requestAnimationFrame(() => doWhateverTheClockDoes(true));
 };
 
 restartClock = () => doRestartClock(restartUIClock);
