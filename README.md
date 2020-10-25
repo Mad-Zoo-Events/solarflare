@@ -125,6 +125,8 @@ There is no payload.
 - `dragon`
 - `timeshift`
 - `potion`
+- `laser`
+- `command`
 
 **Actions allowed on *particle effect* presets:**
 - `trigger`
@@ -148,6 +150,9 @@ There is no payload.
 - `color` *(only for Guardian Lasers)*
 - `start`
 - `stop`
+
+**Actions allowed on *command* presets:**
+- `trigger`
 
 ### Manage Presets
 
