@@ -27,7 +27,7 @@ doEffect = async (effectType, id, action) => {
 };
 
 doStopAll = (button, stopEffects, detachClocks, specificTypeOnly) => {
-    if (button) {
+    if (button && receiveUIUpdates) {
         button.disabled = true;
         button.classList.add("disabled");
     }
