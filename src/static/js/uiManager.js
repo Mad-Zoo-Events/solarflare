@@ -23,7 +23,7 @@ var averageLatency;
 init = () => {
     doClockSync(restartUIClock);
     setInterval(() => doClockSync(restartUIClock), CLOCK_SYNC_INTERVAL);
-    openWebsocket();
+    // openWebsocket();
 };
 
 navigate = (endpoint) => window.location.href = endpoint;
