@@ -13,6 +13,7 @@ var clockTapResetTimeout;
 var clockTapRestartTimeout;
 var isClockSpeedInitiator = false;
 
+var receiveUIUpdates = true;
 var bossbarAutoUpdate = true;
 var suppressHotkeys = false;
 var hoveringOverFormattingPopup = false;
@@ -23,12 +24,22 @@ var averageLatency;
 init = () => {
     doClockSync(restartUIClock);
     setInterval(() => doClockSync(restartUIClock), CLOCK_SYNC_INTERVAL);
-    // openWebsocket();
+    openWebsocket();
 };
 
 navigate = (endpoint) => window.location.href = endpoint;
 
 // ================ OTHER UI UPDATES ================
+
+toggleUIUpdates = (checkbox) => {
+    if (checkbox.checked) {
+        receiveUIUpdates = true;
+        openWebsocket();
+    } else {
+        receiveUIUpdates = false;
+        socket.close(1000, "UI updates turned off");
+    }
+};
 
 logEffectMessage = (action, displayName, errMsg) => {
     const logWindow = document.getElementById('log-window');

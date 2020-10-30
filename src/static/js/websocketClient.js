@@ -7,7 +7,7 @@ window.onbeforeunload = function () {
     }
 };
 
-openWebsocket = async () => {
+openWebsocket = () => {
     if (location.hostname === "localhost") {
         socket = new WebSocket(`ws://localhost:5000/socket`);
     } else {
@@ -19,11 +19,16 @@ openWebsocket = async () => {
         document.getElementById("status-connection-status").classList.replace("orange", "green");
     };
     socket.onclose = (event) => {
-        logInfoMessage(`connection closed ${event.wasClean ? "" : "unexpectedly "}(${event.code}: ${event.reason})`);
-        setTimeout(openWebsocket, 1000);
+        logInfoMessage(`Disconnected from UI updates`);
+        document.getElementById("status-connection-status").innerHTML = "Disconnected";
+        document.getElementById("status-connection-status").classList.replace("green", "orange");
+
+        if (receiveUIUpdates) {
+            setTimeout(openWebsocket, 1000);
+        }
     };
     socket.onerror = () => {
-        logInfoMessage(`connection closed due to an error`);
+        logInfoMessage(`Error with the UI update connection`);
         document.getElementById("status-connection-status").innerHTML = "Connection lost...";
         document.getElementById("status-connection-status").classList.replace("green", "orange");
     };
