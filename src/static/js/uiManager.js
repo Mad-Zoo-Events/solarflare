@@ -37,6 +37,7 @@ toggleUIUpdates = (checkbox) => {
         openWebsocket();
     } else {
         receiveUIUpdates = false;
+        updateConnectionStatus(false);
         socket.close(1000, "UI updates turned off");
     }
 };
@@ -97,6 +98,16 @@ togglebossbarAutoUpdate = (toggle) => {
 };
 
 // ================ STATUS UPDATE ================
+
+updateConnectionStatus = (connected) => {
+    if (connected) {
+        document.getElementById("status-connection-status").innerHTML = "Connected";
+        document.getElementById("status-connection-status").classList.replace("orange", "green");
+    } else {
+        document.getElementById("status-connection-status").innerHTML = "Disconnected";
+        document.getElementById("status-connection-status").classList.replace("green", "orange");
+    }
+};
 
 updateStatus = (response) => {
     const { activeServerCount, clockSpeedBpm, clockSpeedMultiplier } = response;

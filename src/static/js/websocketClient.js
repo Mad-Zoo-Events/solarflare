@@ -15,22 +15,18 @@ openWebsocket = () => {
     }
 
     socket.onopen = () => {
-        document.getElementById("status-connection-status").innerHTML = "Connected";
-        document.getElementById("status-connection-status").classList.replace("orange", "green");
+        updateConnectionStatus(true);
     };
     socket.onclose = (event) => {
-        logInfoMessage(`Disconnected from UI updates`);
-        document.getElementById("status-connection-status").innerHTML = "Disconnected";
-        document.getElementById("status-connection-status").classList.replace("green", "orange");
-
         if (receiveUIUpdates) {
+            logInfoMessage(`Disconnected from UI updates... Attempting reconnect`);
+            updateConnectionStatus(false);
             setTimeout(openWebsocket, 1000);
         }
     };
     socket.onerror = () => {
         logInfoMessage(`Error with the UI update connection`);
-        document.getElementById("status-connection-status").innerHTML = "Connection lost...";
-        document.getElementById("status-connection-status").classList.replace("green", "orange");
+        updateConnectionStatus(false);
     };
 
     socket.onmessage = (e) => handleMessage(JSON.parse(e.data));
