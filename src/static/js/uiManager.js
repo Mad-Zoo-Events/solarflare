@@ -22,9 +22,19 @@ var effectDelayMillis = new Array();
 var averageLatency;
 
 init = () => {
-    doClockSync(restartUIClock);
-    setInterval(() => doClockSync(restartUIClock), CLOCK_SYNC_INTERVAL);
-    openWebsocket();
+    receiveUIUpdates = getCookie("receiveUIUpdates") !== "false";
+
+    if (receiveUIUpdates) {
+        openWebsocket();
+        document.getElementById("ui-update-checkbox").checked = true;
+
+        doClockSync(restartUIClock);
+        setInterval(() => doClockSync(restartUIClock), CLOCK_SYNC_INTERVAL);
+    } else {
+        clockInterval = 60000 / 128;
+        updateClockControls(128, 1);
+        restartUIClock();
+    }
 };
 
 navigate = (endpoint) => window.location.href = endpoint;
@@ -40,6 +50,8 @@ toggleUIUpdates = (checkbox) => {
         updateConnectionStatus(false);
         socket.close(1000, "UI updates turned off");
     }
+
+    setCookie("receiveUIUpdates", receiveUIUpdates, 14);
 };
 
 logEffectMessage = (action, displayName, errMsg) => {
@@ -556,3 +568,25 @@ stopEffectsAll = (specificTypeOnly) => {
         }
     }
 };
+
+// ================ HELPERS ================
+function setCookie(key, value, expiryDays) {
+    const d = new Date();
+    d.setTime(d.getTime() + (expiryDays * 24 * 60 * 60 * 1000));
+    document.cookie = `${key}=${value};expires=${d.toUTCString()};path=/`;
+}
+
+function getCookie(key) {
+    const name = `${key}=`;
+    const cookies = decodeURIComponent(document.cookie).split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        var c = cookies[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
