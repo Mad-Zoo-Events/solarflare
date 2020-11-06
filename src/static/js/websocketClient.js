@@ -56,17 +56,16 @@ handleMessage = (data) => {
                 stopEffectsAll(specificTypeOnly);
             }
 
-            const buttons = document.getElementsByClassName("stop-all-button");
-            for (let i = 0; i < buttons.length; i++) {
-                buttons[i].disabled = false;
-                buttons[i].classList.remove("disabled");
-            }
+            [DetachAllButton, StopEverythingButton, StopAllEffectsButton].forEach(button => {
+                button.disabled = false;
+                button.classList.remove("disabled");
+            });
 
             logEffectMessage("=>", "STOP ALL");
         } else if (id === "bossbar") {
             const parts = displayName.split("௵");
-            document.getElementById("bossbar-text").value = parts[0];
-            document.getElementById("bossbar-color").value = parts[1];
+            BossbarText.value = parts[0];
+            BossbarColor.value = parts[1];
         } else {
             if (!errorMessage && action !== "trigger") {
                 if (action === "start") {
@@ -122,7 +121,7 @@ handleMessage = (data) => {
             }
         }
 
-        document.getElementById("status-server-count").innerHTML = activeServerCount;
+        StatusServerCount.innerHTML = activeServerCount;
         logInfoMessage(`Server list updated - ${activeServerCount} ${activeServerCount === 1 ? "instance is" : "instances are"} now connected`);
     }
 

@@ -3,15 +3,15 @@
 <div class="visual-control" title="{{.Description}}">
     <span>{{.DisplayName}}</span>
 
-    <button type="button" class="trigger key-binding-{{.KeyBinding}}" id="trigger-{{.ID}}"
+    <button type="button" class="trigger-button" key-binding="{{.KeyBinding}}" effect-id="{{.ID}}"
         onclick='doEffect("command", "{{.ID}}", "trigger")'>
         {{if .UIKeyBinding}}<span class="keyboard-shortcut">{{.UIKeyBinding}}</span>
         {{else}}<i class="fas fa-step-forward fa-lg"></i>{{end}}
     </button>
     <div class="clock-buttons">
-        <i class="clock clock fas fa-circle fa-2x" id="onbeatclock-{{.ID}}"
+        <i class="clock clock fas fa-circle fa-2x onbeat-clock-button" effect-id="{{.ID}}"
             onclick='attachClock("command", "{{.ID}}", false)'></i>
-        <i class="clock clock far fa-circle fa-2x" id="offbeatclock-{{.ID}}"
+        <i class="clock clock far fa-circle fa-2x offbeat-clock-button" effect-id="{{.ID}}"
             onclick='attachClock("command", "{{.ID}}", true)'></i>
     </div>
 </div>

@@ -42,6 +42,24 @@ body {
     background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
 }
 
+div.loading-overlay {
+    display : table;
+    position: fixed;
+    top     : 0;
+    left    : 0;
+    width   : 100%;
+    height  : 100%;
+}
+
+div.loading-overlay>div {
+    display       : table-cell;
+    width         : 100%;
+    height        : 100%;
+    background    : var(--background-alpha);
+    text-align    : center;
+    vertical-align: middle;
+}
+
 /* ================ MAIN CONTROLS ================ */
 .main-controls-holder {
     zoom                 : 85%;
@@ -170,7 +188,7 @@ button {
     font-variant    : small-caps;
 }
 
-button.start {
+button.start-button {
     color     : var(--green);
     border    : none;
     box-shadow: 0 0 0.3em var(--green);
@@ -183,7 +201,7 @@ button.start {
     font-family : 'Consolas', 'Courier New', Courier, monospace;
 }
 
-button.stop {
+button.stop-button {
     color     : var(--red);
     border    : none;
     box-shadow: 0 0 0.3em var(--red);
@@ -209,13 +227,13 @@ button.stop {
     box-shadow: 0 0 0.3em var(--orange);
 }
 
-button.restart {
+button.restart-button {
     color     : var(--orange);
     border    : none;
     box-shadow: 0 0 0.3em var(--orange);
 }
 
-button.trigger {
+button.trigger-button {
     color     : var(--cyan);
     border    : none;
     box-shadow: 0 0 0.3em var(--cyan);
@@ -516,7 +534,7 @@ h3 {
     grid-area: slider
 }
 
-#clock-th-input {
+#clock-note-length-input {
     grid-area: divider;
 }
 
