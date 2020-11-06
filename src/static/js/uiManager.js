@@ -6,6 +6,7 @@ var activeOnbeatClocks = new Map();
 var activeOffbeatClocks = new Map();
 
 var clock;
+var clockDoOnCycle = true;
 var clockInterval;
 var clockTapMillis = new Array();
 var clockTapLast;
@@ -21,6 +22,101 @@ var hoveringOverFormattingPopup = false;
 var effectDelayMillis = new Array();
 var averageLatency;
 
+// pre-loaded components
+var LogWindow, StatusSocketConnection, StatusServerCount, StatusLastRequestTime, StatusAverageRequestTime;
+var BossbarForm, BossbarText, BossbarColor, BossbarUpdateButton;
+var CapsWarning;
+var DetachAllButton, StopEverythingButton, StopAllEffectsButton;
+var ClockIndicator, ClockBPMRangeInput, ClockBPMInput, ClockNoteLengthInput;
+var OnBeatClockButtons = new Map();
+var OffBeatClockButtons = new Map();
+var StartButtons = new Map();
+var StopButtons = new Map();
+var StartKeyBindings = new Map();
+var StopKeyBindings = new Map();
+var TriggerKeyBindings = new Map();
+
+preloadComponents = () => {
+    LogWindow = document.getElementById("log-window");
+    StatusSocketConnection = document.getElementById("status-connection-status");
+    StatusServerCount = document.getElementById("status-server-count");
+    StatusLastRequestTime = document.getElementById("status-last-request-time");
+    StatusAverageRequestTime = document.getElementById("status-average-request-time");
+
+    BossbarForm = document.getElementById("bossbar-form");
+    BossbarText = document.getElementById("bossbar-text");
+    BossbarColor = document.getElementById("bossbar-color");
+    BossbarUpdateButton = document.getElementById("bossbar-update-button");
+
+    CapsWarning = document.getElementById("caps-warning");
+
+    DetachAllButton = document.getElementById("detach-all-button");
+    StopEverythingButton = document.getElementById("stop-everything-button");
+    StopAllEffectsButton = document.getElementById("stop-all-effects-button");
+
+    ClockIndicator = document.getElementById("clock-indicator");
+    ClockBPMInput = document.getElementById("clock-bpm-input");
+    ClockBPMRangeInput = document.getElementById("clock-bpm-range-input");
+    ClockNoteLengthInput = document.getElementById("clock-note-length-input");
+
+    var onbeatClockButtons = document.getElementsByClassName("onbeat-clock-button");
+    for (let i = 0; i < onbeatClockButtons.length; i++) {
+        const b = onbeatClockButtons[i];
+        OnBeatClockButtons.set(b.getAttribute("effect-id"), b);
+    }
+
+    var offbeatClockButtons = document.getElementsByClassName("offbeat-clock-button");
+    for (let i = 0; i < offbeatClockButtons.length; i++) {
+        const b = offbeatClockButtons[i];
+        OffBeatClockButtons.set(b.getAttribute("effect-id"), b);
+    }
+
+    var startButtons = document.getElementsByClassName("start-button");
+    for (let i = 0; i < startButtons.length; i++) {
+        const b = startButtons[i];
+        StartButtons.set(b.getAttribute("effect-id"), b);
+
+        const keyBinding = b.getAttribute("key-binding");
+        if (StartKeyBindings.has(keyBinding)) {
+            StartKeyBindings.get(keyBinding).push(b);
+        } else {
+            StartKeyBindings.set(keyBinding, [b]);
+        }
+    }
+
+    var stopButtons = document.getElementsByClassName("stop-button");
+    for (let i = 0; i < stopButtons.length; i++) {
+        const b = stopButtons[i];
+        StopButtons.set(b.getAttribute("effect-id"), b);
+
+        const keyBinding = b.getAttribute("key-binding");
+        if (StopKeyBindings.has(keyBinding)) {
+            StopKeyBindings.get(keyBinding).push(b);
+        } else {
+            StopKeyBindings.set(keyBinding, [b]);
+        }
+    }
+
+    var triggerButtons = document.getElementsByClassName("trigger-button");
+    for (let i = 0; i < triggerButtons.length; i++) {
+        const b = triggerButtons[i];
+
+        const keyBinding = b.getAttribute("key-binding");
+        if (!keyBinding) {
+            // only command buttons support key-bindings on trigger, and thus have that attribute
+            continue;
+        }
+
+        if (TriggerKeyBindings.has(keyBinding)) {
+            TriggerKeyBindings.get(keyBinding).push(b);
+        } else {
+            TriggerKeyBindings.set(keyBinding, [b]);
+        }
+    }
+
+    document.getElementById("loading-overlay").style.display = "none";
+};
+
 init = () => {
     receiveUIUpdates = getCookie("receiveUIUpdates") !== "false";
 
@@ -35,6 +131,8 @@ init = () => {
         updateClockControls(128, 1);
         restartUIClock();
     }
+
+    preloadComponents();
 };
 
 navigate = (endpoint) => window.location.href = endpoint;
@@ -55,25 +153,21 @@ toggleUIUpdates = (checkbox) => {
 };
 
 logEffectMessage = (action, displayName, errMsg) => {
-    const logWindow = document.getElementById('log-window');
-
     const timestamp = new Date().toLocaleTimeString();
     const msg = `${action} <b>${displayName}</b> ${errMsg ? "failed: " + errMsg : "succeeded"}`;
     const logLine = `<span class="log-message">${timestamp} | <span class="${errMsg ? "failure" : "success"}">${msg}</span></span>`;
 
-    logWindow.innerHTML = logLine + logWindow.innerHTML;
+    LogWindow.innerHTML = logLine + LogWindow.innerHTML;
 };
 
 logInfoMessage = (msg) => {
-    const logWindow = document.getElementById('log-window');
-
     const timestamp = new Date().toLocaleTimeString();
     const logLine = `<span class="log-message">${timestamp} | <span class="info-message"><b>[INFO]</b> ${msg}</span></span>`;
 
-    logWindow.innerHTML = logLine + logWindow.innerHTML;
+    LogWindow.innerHTML = logLine + LogWindow.innerHTML;
 };
 
-clearLogs = () => document.getElementById("log-window").innerHTML = "";
+clearLogs = () => LogWindow.innerHTML = "";
 
 toggleFormattingCodePopup = () => {
     if (hoveringOverFormattingPopup) {
@@ -83,7 +177,7 @@ toggleFormattingCodePopup = () => {
 };
 
 addFormatting = (code) => {
-    document.getElementById("bossbar-text").value += code;
+    BossbarText.value += code;
 };
 
 toggleServerManagerPopup = () => {
@@ -91,17 +185,16 @@ toggleServerManagerPopup = () => {
 };
 
 togglebossbarAutoUpdate = (toggle) => {
-    const updateButton = document.getElementById("bossbar-update-button");
     if (bossbarAutoUpdate) {
-        updateButton.disabled = false;
-        updateButton.classList.remove("disabled");
+        BossbarUpdateButton.disabled = false;
+        BossbarUpdateButton.classList.remove("disabled");
 
         toggle.classList.remove("fa-toggle-on");
         toggle.classList.add("fa-toggle-off");
         bossbarAutoUpdate = false;
     } else {
-        updateButton.disabled = true;
-        updateButton.classList.add("disabled");
+        BossbarUpdateButton.disabled = true;
+        BossbarUpdateButton.classList.add("disabled");
 
         toggle.classList.remove("fa-toggle-off");
         toggle.classList.add("fa-toggle-on");
@@ -113,17 +206,17 @@ togglebossbarAutoUpdate = (toggle) => {
 
 updateConnectionStatus = (connected) => {
     if (connected) {
-        document.getElementById("status-connection-status").innerHTML = "Connected";
-        document.getElementById("status-connection-status").classList.replace("orange", "green");
+        StatusSocketConnection.innerHTML = "Connected";
+        StatusSocketConnection.classList.replace("orange", "green");
     } else {
-        document.getElementById("status-connection-status").innerHTML = "Disconnected";
-        document.getElementById("status-connection-status").classList.replace("green", "orange");
+        StatusSocketConnection.innerHTML = "Disconnected";
+        StatusSocketConnection.classList.replace("green", "orange");
     }
 };
 
 updateStatus = (response) => {
     const { activeServerCount, clockSpeedBpm, clockSpeedMultiplier } = response;
-    document.getElementById('status-server-count').innerHTML = activeServerCount;
+    StatusServerCount.innerHTML = activeServerCount;
 
     clockInterval = 60000 / clockSpeedBpm * clockSpeedMultiplier;
     updateClockControls(clockSpeedBpm, clockSpeedMultiplier);
@@ -138,15 +231,15 @@ updateResponseTime = (millis) => {
 
     averageLatency = (effectDelayMillis.reduce((a, b) => a + b) / effectDelayMillis.length).toFixed(0);
 
-    document.getElementById('status-last-request-time').innerHTML = `${millis} ms`;
-    document.getElementById('status-average-request-time').innerHTML = `${averageLatency} ms`;
+    StatusLastRequestTime.innerHTML = `${millis} ms`;
+    StatusAverageRequestTime.innerHTML = `${averageLatency} ms`;
 };
 
 // ================ COUNTER ================
 
 startEffect = (id, effectType) => {
-    const startButton = document.getElementById(`start-${id}`);
-    const stopButton = document.getElementById(`stop-${id}`);
+    const startButton = StartButtons.get(id);
+    const stopButton = StopButtons.get(id);
     var seconds = 0;
 
     startButton.disabled = true;
@@ -155,7 +248,7 @@ startEffect = (id, effectType) => {
         type: effectType,
         timer: setInterval(() => {
             seconds++;
-            requestAnimationFrame(() => stopButton.innerHTML = seconds);
+            stopButton.innerHTML = seconds;
         }, 1000)
     });
 };
@@ -167,10 +260,7 @@ stopEffect = (id) => {
         }
 
         activeEffects.clear();
-        const buttons = document.getElementsByClassName("start");
-        for (let i = 0; i < buttons.length; i++) {
-            const button = buttons[i];
-            const id = button.id.replace('start-', '');
+        for (const [id] of StartButtons) {
             resetStartButton(id);
         }
 
@@ -188,8 +278,7 @@ stopEffect = (id) => {
 };
 
 resetStartButton = async (id) => {
-    const startButton = document.getElementById(`start-${id}`);
-    const stopButton = document.getElementById(`stop-${id}`);
+    const startButton = StartButtons.get(id);
 
     if (!startButton.disabled) {
         return;
@@ -197,14 +286,11 @@ resetStartButton = async (id) => {
 
     startButton.disabled = false;
     startButton.classList.remove("disabled");
-    stopButton.innerHTML = '<i class="fas fa-stop fa-lg"></i>';
+
+    StopButtons.get(id).innerHTML = '<i class="fas fa-stop fa-lg"></i>';
 };
 
 // ================ PRESET MANAGEMENT ================
-
-syncValue = (targetId, val) => {
-    document.getElementById(targetId).value = val;
-};
 
 confirmDelete = (id, effectType, displayName) => {
     const r = confirm(`WARNING!\nAre you sure you want to delete "${displayName}"?`);
@@ -291,8 +377,6 @@ handleTargetingChecked = (checked) => {
     }
 };
 
-// ================ KEY BINDINGS ================
-
 onPasteKeyBinding = (event, source) => {
     event.clipboardData.items[0].getAsString(function (s) {
         if (s === "") {
@@ -315,15 +399,17 @@ onKeypressKeyBinding = (event, source) => {
     source.value = String.fromCharCode(charCode);
 };
 
+// ================ KEY BINDINGS ================
+
 handleKeydown = (event) => {
     if (event.getModifierState('CapsLock')) {
-        document.getElementById("caps-warning").style.display = "inline-block";
+        CapsWarning.style.display = "inline-block";
     } else {
-        document.getElementById("caps-warning").style.display = "none";
+        CapsWarning.style.display = "none";
     }
 
     if (event.which === 27) { // ESC
-        document.getElementById(`detach-all-button`).click();
+        DetachAllButton.click();
     }
 };
 
@@ -336,7 +422,7 @@ handleKeypress = (event) => {
     var charCode = event.which || event.keyCode;
 
     if (charCode === 48) { // character '0'
-        document.getElementById(`stop-everything-button`).click();
+        StopEverythingButton.click();
     }
 
     if (charCode === 43) { // character '+'
@@ -345,15 +431,15 @@ handleKeypress = (event) => {
     }
 
     if (charCode === 45) { // character '-'
-        document.getElementById(`stop-all-effects-button`).click();
+        StopAllEffectsButton.click();
     }
 
     var startStopButtons;
     if (activeKeys.has(charCode)) {
-        startStopButtons = document.getElementsByClassName(`stop key-binding-${charCode}`);
+        startStopButtons = StopKeyBindings.get(`${charCode}`);
         activeKeys.delete(charCode);
     } else {
-        startStopButtons = document.getElementsByClassName(`start key-binding-${charCode}`);
+        startStopButtons = StartKeyBindings.get(`${charCode}`);
         if (startStopButtons.length > 0) {
             activeKeys.set(charCode, startStopButtons[0].getAttribute("effect-type"));
         }
@@ -363,7 +449,7 @@ handleKeypress = (event) => {
         startStopButtons[i].click();
     }
 
-    const triggerButtons = document.getElementsByClassName(`trigger key-binding-${charCode}`);
+    const triggerButtons = TriggerKeyBindings.get(`${charCode}`);
     for (let i = 0; i < triggerButtons.length; i++) {
         triggerButtons[i].click();
     }
@@ -371,29 +457,25 @@ handleKeypress = (event) => {
 
 // ================ CLOCK ================
 
-updateClockBPM = (id, value) => {
-    document.getElementById(id).value = Number(value);
-};
-
 changeClockSpeed = () => {
-    bpm = document.getElementById("clock-bpm-input").value;
-    mult = document.getElementById("clock-th-input").value;
+    bpm = ClockBPMInput.value;
+    noteLength = ClockNoteLengthInput.value;
 
-    clockInterval = 60000 / bpm * mult;
+    clockInterval = 60000 / bpm * noteLength;
 
-    updateClockControls(bpm, mult);
-    doSetClockSpeed(bpm, mult);
+    updateClockControls(bpm, noteLength);
+    doSetClockSpeed(bpm, noteLength);
 };
 
-updateClockControls = async (bpm, mult) => {
-    document.getElementById("clock-bpm-input").value = bpm;
-    document.getElementById("clock-bpm-range").value = bpm;
-    document.getElementById("clock-indicator").innerHTML = `${clockInterval.toFixed(3)} ms`;
+updateClockControls = async (bpm, noteLength) => {
+    ClockBPMInput.value = bpm;
+    ClockBPMRangeInput.value = bpm;
+    ClockIndicator.innerHTML = `${clockInterval.toFixed(3)} ms`;
 
-    const thOptions = document.getElementById("clock-th-input").children;
+    const thOptions = ClockNoteLengthInput.children;
     for (let i = 0; i < thOptions.length; i++) {
         const element = thOptions[i];
-        if (element.value == mult) {
+        if (element.value == noteLength) {
             element.selected = true;
         } else {
             element.selected = false;
@@ -403,29 +485,27 @@ updateClockControls = async (bpm, mult) => {
     restartUIClock();
 };
 
-doWhateverTheClockDoes = () => {
+doWhateverTheClockDoes = (doOnCycle) => {
     const cName = "clock-indicator-on";
-    const indicator = document.getElementById("clock-indicator");
-
-    if (!indicator.classList.contains(cName)) { // ON
-        indicator.classList.add(cName);
+    if (doOnCycle) {
+        ClockIndicator.classList.add(cName);
         for (var id of activeOnbeatClocks.keys()) {
-            document.getElementById("onbeatclock-" + id).classList.add("fas");
-            document.getElementById("onbeatclock-" + id).classList.remove("far");
+            OnBeatClockButtons.get(id).classList.add("fas");
+            OnBeatClockButtons.get(id).classList.remove("far");
         };
         for (var id of activeOffbeatClocks.keys()) {
-            document.getElementById("offbeatclock-" + id).classList.add("far");
-            document.getElementById("offbeatclock-" + id).classList.remove("fas");
+            OffBeatClockButtons.get(id).classList.add("far");
+            OffBeatClockButtons.get(id).classList.remove("fas");
         };
-    } else { // OFF
-        indicator.classList.remove(cName);
+    } else {
+        ClockIndicator.classList.remove(cName);
         for (var id of activeOnbeatClocks.keys()) {
-            document.getElementById("onbeatclock-" + id).classList.add("far");
-            document.getElementById("onbeatclock-" + id).classList.remove("fas");
+            OnBeatClockButtons.get(id).classList.add("far");
+            OnBeatClockButtons.get(id).classList.remove("fas");
         };
         for (var id of activeOffbeatClocks.keys()) {
-            document.getElementById("offbeatclock-" + id).classList.add("fas");
-            document.getElementById("offbeatclock-" + id).classList.remove("far");
+            OffBeatClockButtons.get(id).classList.add("fas");
+            OffBeatClockButtons.get(id).classList.remove("far");
         };
     }
 };
@@ -436,7 +516,7 @@ doWhateverTheClockDoes = () => {
 // - after the clock has cycled three times with the updated speed, the queue is reset
 //   and it'll wait for three new taps again
 clockTap = () => {
-    const th = document.getElementById("clock-th-input").value;
+    const noteLength = ClockNoteLengthInput.value;
     const now = Date.now();
 
     // if this is the first tap after a while, set last to now and return
@@ -465,11 +545,11 @@ clockTap = () => {
     clockTapLast = now;
 
     const millisNew = clockTapMillis.reduce((a, b) => a + b) / clockTapMillis.length;
-    const bpmNew = (60000 / millisNew * th).toFixed(1);
+    const bpmNew = (60000 / millisNew * noteLength).toFixed(1);
 
     clockInterval = millisNew;
-    updateClockControls(bpmNew, th);
-    doSetClockSpeed(bpmNew, th);
+    updateClockControls(bpmNew, noteLength);
+    doSetClockSpeed(bpmNew, noteLength);
 
     // reset
     clearTimeout(clockTapResetTimeout);
@@ -481,8 +561,13 @@ clockTap = () => {
 
 restartUIClock = () => {
     clearInterval(clock);
-    clock = setInterval(() => requestAnimationFrame(doWhateverTheClockDoes), clockInterval);
-    requestAnimationFrame(() => doWhateverTheClockDoes(true));
+
+    clock = setInterval(() => {
+        doWhateverTheClockDoes(clockDoOnCycle);
+        clockDoOnCycle = !clockDoOnCycle;
+    }, clockInterval);
+
+    doWhateverTheClockDoes(clockDoOnCycle);
 };
 
 restartClock = () => doRestartClock(restartUIClock);
@@ -511,27 +596,27 @@ attachClockUI = (id, effectType, isOffBeat) => {
             detachClockUI(id, false);
         }
         activeOffbeatClocks.set(id, effectType);
-        document.getElementById("offbeatclock-" + id).classList.add("clock-attached");
+        OffBeatClockButtons.get(id).classList.add("clock-attached");
     } else {
         if (activeOffbeatClocks.has(id)) {
             detachClockUI(id, true);
         }
         activeOnbeatClocks.set(id, effectType);
-        document.getElementById("onbeatclock-" + id).classList.add("clock-attached");
+        OnBeatClockButtons.get(id).classList.add("clock-attached");
     }
 };
 
 detachClockUI = (id, isOffBeat) => {
     if (isOffBeat) {
         activeOffbeatClocks.delete(id);
-        document.getElementById("offbeatclock-" + id).classList.remove("fas");
-        document.getElementById("offbeatclock-" + id).classList.add("far");
-        document.getElementById("offbeatclock-" + id).classList.remove("clock-attached");
+        OffBeatClockButtons.get(id).classList.remove("fas");
+        OffBeatClockButtons.get(id).classList.add("far");
+        OffBeatClockButtons.get(id).classList.remove("clock-attached");
     } else {
         activeOnbeatClocks.delete(id);
-        document.getElementById("onbeatclock-" + id).classList.remove("far");
-        document.getElementById("onbeatclock-" + id).classList.add("fas");
-        document.getElementById("onbeatclock-" + id).classList.remove("clock-attached");
+        OnBeatClockButtons.get(id).classList.remove("far");
+        OnBeatClockButtons.get(id).classList.add("fas");
+        OnBeatClockButtons.get(id).classList.remove("clock-attached");
     }
 };
 

@@ -4,6 +4,9 @@
 {{template "header"}}
 
 <body onload="init()" onkeypress='handleKeypress(event);' onkeydown='handleKeydown(event);'>
+    <div id="loading-overlay" class="loading-overlay">
+        <div>LOADING</div>
+    </div>
     <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
 
     <div class="header">
@@ -109,10 +112,10 @@
             <div id="clock-indicator"></div>
             <input id="clock-bpm-input" type="number" min="40" max="200" step="0.1" value="128"
                 onfocus='suppressHotkeys=true' onblur='suppressHotkeys=false'
-                oninput='updateClockBPM("clock-bpm-range", this.value);' onchange='changeClockSpeed();' />
-            <input id="clock-bpm-range" type="range" min="40" max="200" step="0.1" value="128"
-                oninput='updateClockBPM("clock-bpm-input", this.value);' onchange='changeClockSpeed();' />
-            <select id="clock-th-input" onchange='changeClockSpeed();'>
+                oninput='ClockBPMRangeInput.value = this.value;' onchange='changeClockSpeed();' />
+            <input id="clock-bpm-range-input" type="range" min="40" max="200" step="0.1" value="128"
+                oninput='ClockBPMInput.value = this.value;' onchange='changeClockSpeed();' />
+            <select id="clock-note-length-input" onchange='changeClockSpeed();'>
                 <option value="32">8/1</option>
                 <option value="16">4/1</option>
                 <option value="8">2/1</option>

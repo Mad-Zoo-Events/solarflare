@@ -3,19 +3,20 @@
 <div class="visual-control" title="{{.Description}}">
     <span>{{.DisplayName}}</span>
 
-    <button type="button" class="trigger" onclick='doEffect("particle", "{{.ID}}", "trigger")'><i
-            class="fas fa-step-forward fa-lg"></i></button>
-    <button type="button" class="start key-binding-{{.KeyBinding}}" id="start-{{.ID}}" effect-type="particle"
+    <button type="button" class="trigger-button" effect-id="{{.ID}}"
+        onclick='doEffect("particle", "{{.ID}}", "trigger")'><i class="fas fa-step-forward fa-lg"></i></button>
+    <button type="button" class="start-button" key-binding="{{.KeyBinding}}" effect-id="{{.ID}}" effect-type="particle"
         onclick='doEffect("particle", "{{.ID}}", "start")'>
         {{if .UIKeyBinding}}<span class="keyboard-shortcut">{{.UIKeyBinding}}</span>
         {{else}}<i class="fas fa-play fa-lg"></i>{{end}}
     </button>
-    <button type="button" class="stop key-binding-{{.KeyBinding}}" id="stop-{{.ID}}" effect-type="particle"
-        onclick='doEffect("particle", "{{.ID}}", "stop")'><i class="fas fa-stop fa-lg"></i></button>
+    <button type="button" class="stop-button" key-binding="{{.KeyBinding}}" effect-id="{{.ID}}" effect-type="particle"
+        onclick='doEffect("particle", "{{.ID}}", "stop")'><i class="fas fa-stop fa-lg"></i>
+    </button>
     <div class="clock-buttons">
-        <i class="clock fas fa-circle fa-2x" id="onbeatclock-{{.ID}}"
+        <i class="clock fas fa-circle fa-2x onbeat-clock-button" effect-id="{{.ID}}"
             onclick='attachClock("particle", "{{.ID}}", false)'></i>
-        <i class="clock far fa-circle fa-2x" id="offbeatclock-{{.ID}}"
+        <i class="clock far fa-circle fa-2x offbeat-clock-button" effect-id="{{.ID}}"
             onclick='attachClock("particle", "{{.ID}}", true)'></i>
     </div>
 </div>

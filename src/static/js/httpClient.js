@@ -133,13 +133,13 @@ doClockSync = async (callback) => {
     request.send();
 };
 
-doSetClockSpeed = async (bpm, multiplier) => {
+doSetClockSpeed = async (bpm, noteLength) => {
     // this flag is checked when retrieving a clock speed update through the websocket
     // and if set to true, we ignore the update as we already set the speed on the UI
     var isClockSpeedInitiator = true;
 
     const request = new XMLHttpRequest();
-    request.open("PUT", `${CLOCK_ENDPOINT}/${bpm}/${multiplier}`);
+    request.open("PUT", `${CLOCK_ENDPOINT}/${bpm}/${noteLength}`);
 
     request.send();
 };
