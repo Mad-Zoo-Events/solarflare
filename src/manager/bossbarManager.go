@@ -23,8 +23,13 @@ func SetBossbar(bossbarRequest model.BossbarRequest, sendUpdate bool) error {
 	err = client.ExecuteEffect(setBossbarEndpoint, body)
 
 	if sendUpdate {
-		// I can do better than this
-		sendEffectUpdate("bossbar", model.BossbarEffectType, bossbarRequest.Title+"௵"+string(bossbarRequest.Color), "SET", err)
+		SendUIUpdate(model.UIUpdate{
+			BossbarUpdate: &model.BossbarUpdate{
+				Text:   bossbarRequest.Title,
+				Color:  string(bossbarRequest.Color),
+				Action: model.SetBossbarAction,
+			},
+		})
 	}
 
 	return err
@@ -35,7 +40,11 @@ func ClearBossbar(sendUpdate bool) error {
 	err := client.ExecuteEffect(clearBossbarEndpoint, []byte("erase yourself."))
 
 	if sendUpdate {
-		sendEffectUpdate("bossbar", model.BossbarEffectType, "", "CLEAR", err)
+		SendUIUpdate(model.UIUpdate{
+			BossbarUpdate: &model.BossbarUpdate{
+				Action: model.ClearBossbarAction,
+			},
+		})
 	}
 
 	return err

@@ -35,6 +35,7 @@ openWebsocket = () => {
 handleMessage = async (data) => {
     const {
         effectUpdate,
+        bossbarUpdate,
         clockUpdate,
         clockSpeedUpdate,
         statusUpdate,
@@ -62,10 +63,6 @@ handleMessage = async (data) => {
             });
 
             logEffectMessage("=>", "STOP ALL");
-        } else if (id === "bossbar") {
-            const parts = displayName.split("௵");
-            BossbarText.value = parts[0];
-            BossbarColor.value = parts[1];
         } else {
             if (!errorMessage && action !== "trigger") {
                 if (action === "start") {
@@ -78,6 +75,16 @@ handleMessage = async (data) => {
             logEffectMessage(action, displayName, errorMessage);
         }
     };
+
+    if (bossbarUpdate) {
+        const { text, color, action } = bossbarUpdate;
+        if (action === "set") {
+            BossbarText.value = text;
+            BossbarColor.value = color;
+        } else {
+            BossbarText.value = "";
+        }
+    }
 
     if (clockUpdate) {
         const { id, effectType, isOffBeat, action } = clockUpdate;

@@ -3,6 +3,7 @@ package model
 // UIUpdate is the model used to send updates to the UI
 type UIUpdate struct {
 	EffectUpdate     *EffectUpdate     `json:"effectUpdate"`
+	BossbarUpdate    *BossbarUpdate    `json:"bossbarUpdate"`
 	ClockUpdate      *ClockUpdate      `json:"clockUpdate"`
 	ClockSpeedUpdate *ClockSpeedUpdate `json:"clockSpeedUpdate"`
 	StatusUpdate     *StatusUpdate     `json:"statusUpdate"`
@@ -22,6 +23,13 @@ type EffectUpdate struct {
 	StopAll *StopAllRequest `json:"stopAll"`
 }
 
+// BossbarUpdate is the model used to send updates on the bossbar to the UI
+type BossbarUpdate struct {
+	Text   string       `json:"text"`
+	Color  string       `json:"color"`
+	Action EffectAction `json:"action"`
+}
+
 // ClockUpdate is the model used to send updates on clock subscriptions to the UI
 type ClockUpdate struct {
 	ID         string      `json:"id"`
@@ -34,9 +42,6 @@ type ClockUpdate struct {
 type ClockSpeedUpdate struct {
 	ClockSpeedBPM        float64 `json:"clockSpeedBpm"`
 	ClockSpeedMultiplier float64 `json:"clockSpeedMultiplier"`
-	//TODO:
-	// - only update UI if you're not the initiator (flag on UI)
-	// - wait until there's no subsequent request for 3 seconds before updating
 }
 
 // StatusUpdate is the model used to send updates on network status to the UI
