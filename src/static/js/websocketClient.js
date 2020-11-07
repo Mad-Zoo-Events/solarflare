@@ -84,6 +84,8 @@ handleMessage = async (data) => {
         } else {
             BossbarText.value = "";
         }
+
+        updateBossbarPreview();
     }
 
     if (clockUpdate) {

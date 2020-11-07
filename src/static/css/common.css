@@ -76,7 +76,7 @@ select {
     background-color: var(--dark-gray);
 }
 
-/* ================ COLORED TEXT ================ */
+/* ================ TEXT FORMATTING ================ */
 span.cyan,
 div.cyan {
     color: var(--cyan);
@@ -106,6 +106,12 @@ span.steel,
 div.steel {
     color: var(--steel);
 }
+
+span.code,
+div.code {
+    font-family: Consolas, 'Courier New', Courier, monospace;
+}
+
 
 /* ================ FOOTER ================ */
 .footer {

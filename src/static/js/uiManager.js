@@ -16,6 +16,7 @@ var isClockSpeedInitiator = false;
 
 var receiveUIUpdates = true;
 var bossbarAutoUpdate = true;
+var bossbarObfuscators = [];
 var suppressHotkeys = false;
 var hoveringOverFormattingPopup = false;
 
@@ -26,7 +27,7 @@ var averageLatency;
 var BossbarFormattingMap = new Map();
 
 var LogWindow, StatusSocketConnection, StatusServerCount, StatusLastRequestTime, StatusAverageRequestTime;
-var BossbarForm, BossbarText, BossbarColor, BossbarUpdateButton, BossbarColorFormatting, BossbarDecorationFormatting;
+var BossbarForm, BossbarText, BossbarPreview, BossbarColor, BossbarUpdateButton, BossbarColorFormatting, BossbarDecorationFormatting;
 var CapsWarning;
 var DetachAllButton, StopEverythingButton, StopAllEffectsButton;
 var ClockIndicator, ClockBPMRangeInput, ClockBPMInput, ClockNoteLengthInput;
@@ -48,6 +49,7 @@ preloadComponents = () => {
 
     BossbarForm = document.getElementById("bossbar-form");
     BossbarText = document.getElementById("bossbar-text");
+    BossbarPreview = document.getElementById("bossbar-preview");
     BossbarColor = document.getElementById("bossbar-color");
     BossbarUpdateButton = document.getElementById("bossbar-update-button");
     BossbarColorFormatting = document.getElementById("bossbar-color-formatting");
@@ -179,17 +181,6 @@ toggleFormattingCodePopup = () => {
         return;
     }
     document.getElementById("bossbar-formatting-popup").classList.toggle("show");
-};
-
-addFormatting = (code) => {
-    var startPosition = BossbarText.selectionStart;
-    var text = BossbarText.value;
-
-    text = text.substring(0, startPosition) + code + text.substring(startPosition);
-
-    BossbarText.value = text;
-    BossbarText.focus();
-    BossbarText.setSelectionRange(startPosition + code.length, endPosition + code.length);
 };
 
 toggleServerManagerPopup = () => {
@@ -690,9 +681,10 @@ function getCookie(key) {
     return "";
 }
 
+// ================ BOSSBAR FORMATTING ================
 function loadFormattingMap() {
     return new Map([
-        ["§0", { "kind": "color", "style": "color:#000000; text-shadow: 1px 1px gray;", "name": "Black" }],
+        ["§0", { "kind": "color", "style": "color: #000000", "name": "Black" }],
         ["§1", { "kind": "color", "style": "color: #0000AA", "name": "Dark Blue" }],
         ["§2", { "kind": "color", "style": "color: #00AA00", "name": "Dark Green" }],
         ["§3", { "kind": "color", "style": "color: #00AAAA", "name": "Dark Aqua" }],
@@ -732,3 +724,114 @@ function populateBossbarFormatting() {
         }
     }
 }
+
+var stopBossbarObfuscators = false;
+const printableChars = ["!", "\"", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ":", ";", "=", "?", "@", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "[", "\\", "]", "^", "_", "`", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "{", "|", "}", "~"];
+
+function bossbarObfuscate(string, elem) {
+    var i = 0;
+    var obsStr = string || elem.innerHTML;
+    stopBossbarObfuscators = false;
+
+    requestAnimationFrame(cycle);
+
+    async function cycle() {
+        Array.from(string).forEach((_, i) => {
+            obsStr = obsStr.substr(0, i) + randomChar() + obsStr.substr(i + 1, obsStr.length);
+        });
+
+        elem.innerHTML = obsStr;
+
+        stopBossbarObfuscators || setTimeout(() => {
+            requestAnimationFrame(cycle);
+        }, 50);
+    }
+
+    function randomChar() {
+        return printableChars[Math.floor(Math.random() * printableChars.length)];
+    }
+}
+
+function bossbarApplyCode(string, codes) {
+    const elem = document.createElement('span');
+    var obfuscated = false;
+
+    string = string.replace(/\x00*/g, '');
+    codes.forEach(code => {
+        const { style } = BossbarFormattingMap.get(code);
+
+        elem.style.cssText += style + ';';
+        if (code === '§k') {
+            bossbarObfuscate(string, elem);
+            obfuscated = true;
+        }
+    });
+
+
+    if (!obfuscated) {
+        elem.innerHTML = string;
+    }
+
+    return elem;
+}
+
+function bossbarParseStyle(string) {
+    var codes = string.match(/§.{1}/g) || [],
+        indexes = [],
+        apply = [],
+        tmpStr,
+        indexDelta,
+        final = document.createDocumentFragment();
+
+    for (let i = 0; i < codes.length; i++) {
+        indexes.push(string.indexOf(codes[i]));
+        string = string.replace(codes[i], '\x00\x00');
+    }
+
+    if (indexes[0] !== 0) {
+        final.appendChild(bossbarApplyCode(string.substring(0, indexes[0]), []));
+    }
+
+    for (let i = 0; i < codes.length; i++) {
+        indexDelta = indexes[i + 1] - indexes[i];
+        if (indexDelta === 2) {
+            while (indexDelta === 2) {
+                apply.push(codes[i]);
+                i++;
+                indexDelta = indexes[i + 1] - indexes[i];
+            }
+            apply.push(codes[i]);
+        } else {
+            apply.push(codes[i]);
+        }
+        if (apply.lastIndexOf('§r') > -1) {
+            apply = apply.slice(apply.lastIndexOf('§r') + 1);
+        }
+        tmpStr = string.substring(indexes[i], indexes[i + 1]);
+        final.appendChild(bossbarApplyCode(tmpStr, apply));
+    }
+
+    return final;
+}
+
+function updateBossbarPreview() {
+    stopBossbarObfuscators = true;
+
+    var parsed = bossbarParseStyle(BossbarText.value);
+    BossbarPreview.innerHTML = '';
+    BossbarPreview.appendChild(parsed);
+}
+
+addFormatting = (code) => {
+    const startPosition = BossbarText.selectionStart;
+    const endPosition = BossbarText.selectionEnd;
+
+    var text = BossbarText.value;
+    text = text.substring(0, startPosition) + code + text.substring(startPosition);
+
+    BossbarText.value = text;
+    BossbarText.focus();
+    BossbarText.setSelectionRange(startPosition + code.length, endPosition + code.length);
+
+    updateBossbarPreview();
+};
