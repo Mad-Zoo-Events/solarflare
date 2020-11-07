@@ -32,7 +32,7 @@ openWebsocket = () => {
     socket.onmessage = (e) => handleMessage(JSON.parse(e.data));
 };
 
-handleMessage = (data) => {
+handleMessage = async (data) => {
     const {
         effectUpdate,
         clockUpdate,

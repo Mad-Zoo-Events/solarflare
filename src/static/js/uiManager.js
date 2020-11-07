@@ -22,7 +22,8 @@ var hoveringOverFormattingPopup = false;
 var effectDelayMillis = new Array();
 var averageLatency;
 
-// pre-loaded components
+// ================ PRELOADING COMPONENTS ================
+
 var LogWindow, StatusSocketConnection, StatusServerCount, StatusLastRequestTime, StatusAverageRequestTime;
 var BossbarForm, BossbarText, BossbarColor, BossbarUpdateButton;
 var CapsWarning;
@@ -117,7 +118,7 @@ preloadComponents = () => {
     document.getElementById("loading-overlay").style.display = "none";
 };
 
-init = () => {
+window.addEventListener("load", () => {
     receiveUIUpdates = getCookie("receiveUIUpdates") !== "false";
 
     if (receiveUIUpdates) {
@@ -133,9 +134,7 @@ init = () => {
     }
 
     preloadComponents();
-};
-
-navigate = (endpoint) => window.location.href = endpoint;
+});
 
 // ================ OTHER UI UPDATES ================
 
@@ -152,19 +151,19 @@ toggleUIUpdates = (checkbox) => {
     setCookie("receiveUIUpdates", receiveUIUpdates, 14);
 };
 
-logEffectMessage = (action, displayName, errMsg) => {
+logEffectMessage = async (action, displayName, errMsg) => {
     const timestamp = new Date().toLocaleTimeString();
     const msg = `${action} <b>${displayName}</b> ${errMsg ? "failed: " + errMsg : "succeeded"}`;
     const logLine = `<span class="log-message">${timestamp} | <span class="${errMsg ? "failure" : "success"}">${msg}</span></span>`;
 
-    LogWindow.innerHTML = logLine + LogWindow.innerHTML;
+    LogWindow.innerHTML = logLine + LogWindow.innerHTML.slice(0, 2048);
 };
 
-logInfoMessage = (msg) => {
+logInfoMessage = async (msg) => {
     const timestamp = new Date().toLocaleTimeString();
     const logLine = `<span class="log-message">${timestamp} | <span class="info-message"><b>[INFO]</b> ${msg}</span></span>`;
 
-    LogWindow.innerHTML = logLine + LogWindow.innerHTML;
+    LogWindow.innerHTML = logLine + LogWindow.innerHTML.slice(0, 2048);
 };
 
 clearLogs = () => LogWindow.innerHTML = "";
@@ -291,6 +290,8 @@ resetStartButton = async (id) => {
 };
 
 // ================ PRESET MANAGEMENT ================
+
+navigate = (endpoint) => window.location.href = endpoint;
 
 confirmDelete = (id, effectType, displayName) => {
     const r = confirm(`WARNING!\nAre you sure you want to delete "${displayName}"?`);
@@ -562,12 +563,12 @@ clockTap = () => {
 restartUIClock = () => {
     clearInterval(clock);
 
+    doWhateverTheClockDoes(clockDoOnCycle);
+
     clock = setInterval(() => {
         doWhateverTheClockDoes(clockDoOnCycle);
         clockDoOnCycle = !clockDoOnCycle;
     }, clockInterval);
-
-    doWhateverTheClockDoes(clockDoOnCycle);
 };
 
 restartClock = () => doRestartClock(restartUIClock);
