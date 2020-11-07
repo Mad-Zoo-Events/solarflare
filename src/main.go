@@ -61,7 +61,7 @@ func main() {
 	// clock
 	router.Handle("/clock/sync", ClockSyncHandler()).Methods(http.MethodGet)
 	router.Handle("/clock/restart", ClockRestartHandler()).Methods(http.MethodPost)
-	router.Handle("/clock/{bpm}/{multiplier}", ClockSpeedHandler()).Methods(http.MethodPut)
+	router.Handle("/clock/speed", ClockSpeedHandler()).Methods(http.MethodPost)
 	router.Handle("/clock/{action}/{effectType}/{id}", ClockSubscriptionHandler()).Methods(http.MethodPost)
 
 	// web UI
