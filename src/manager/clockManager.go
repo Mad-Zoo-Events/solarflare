@@ -54,7 +54,6 @@ func RestartClock() {
 // SetClockSpeed sets a new speed for the clock
 func SetClockSpeed(bpm float64, multiplier float64) {
 	tickTock.setSpeed(bpm, multiplier)
-	RestartClock()
 
 	update := model.UIUpdate{
 		ClockSpeedUpdate: &model.ClockSpeedUpdate{
@@ -141,10 +140,10 @@ func (c *clock) setSpeed(bpm float64, multiplier float64) {
 
 	millis := millisPerSecond / float64(bpm) * multiplier
 	c.interval = time.Duration(millis) * time.Millisecond
+	c.ticker = time.NewTicker(c.interval)
 }
 
 func (c *clock) start() {
-	c.ticker = time.NewTicker(c.interval)
 	doTick := true
 
 	go func() {
