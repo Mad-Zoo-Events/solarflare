@@ -211,7 +211,7 @@ div.popup {
     display : inline-block;
 }
 
-div.popup div.popup-content {
+div.popup .popup-content {
     visibility: hidden;
 
     position: absolute;
