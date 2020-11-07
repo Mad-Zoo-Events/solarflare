@@ -505,12 +505,13 @@ h3 {
 
 #clock-holder {
     display              : grid;
+    gap                  : 0 0.3em;
     grid-template-columns: min-content auto min-content;
     grid-template-areas  :
-        'title  title  title'
-        'ticker ticker ticker'
-        'bpm    slider divider'
-        'tap    tap    tap';
+        'title   title  title'
+        'ticker  ticker ticker'
+        'bpm     slider length'
+        'restart tap    tap';
 }
 
 #clock-title {
@@ -535,11 +536,15 @@ h3 {
 }
 
 #clock-note-length-input {
-    grid-area: divider;
+    grid-area: length;
 }
 
 #clock-tap-button {
     grid-area: tap
+}
+
+#clock-restart-button {
+    grid-area: restart;
 }
 
 .clock-indicator-on {
