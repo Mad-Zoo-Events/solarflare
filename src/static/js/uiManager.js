@@ -176,7 +176,15 @@ toggleFormattingCodePopup = () => {
 };
 
 addFormatting = (code) => {
-    BossbarText.value += code;
+    var startPosition = BossbarText.selectionStart;
+    var endPosition = BossbarText.selectionEnd;
+    var text = BossbarText.value;
+
+    text = text.substring(0, startPosition) + code + text.substring(startPosition);
+
+    BossbarText.value = text;
+    BossbarText.focus();
+    BossbarText.setSelectionRange(startPosition + code.length, endPosition + code.length);
 };
 
 toggleServerManagerPopup = () => {
