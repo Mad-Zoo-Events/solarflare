@@ -235,7 +235,14 @@ div.popup .show {
 #bossbar-form {
     display              : grid;
     gap                  : 0 0.5em;
-    grid-template-columns: max-content auto min-content 5em 5em min-content;
+    grid-template-columns: max-content auto max-content min-content 5em 5em min-content;
+}
+
+#bossbar-preview {
+    background-color: var(--darker-gray);
+    border-radius   : 0.2em;
+    margin          : auto auto;
+    padding         : 0.2em;
 }
 
 div.bossbar-formatting-group {

@@ -6,7 +6,7 @@
         <input type="text" id="bossbar-text" name="bossbar-text" placeholder="Now Playing: Bob Ross" autocomplete="off"
             onfocus='suppressHotkeys=true; toggleFormattingCodePopup();'
             onblur='suppressHotkeys=false; toggleFormattingCodePopup();'
-            onkeyup='bossbarAutoUpdate && BossbarForm.submit();'>
+            onkeyup='updateBossbarPreview(); bossbarAutoUpdate && BossbarForm.submit();'>
         <div class="popup-content bossbar-formatting-group" id="bossbar-formatting-popup" tabindex="0"
             onmouseover='hoveringOverFormattingPopup=true;' onmouseout='hoveringOverFormattingPopup=false;'
             onblur='toggleFormattingCodePopup();'>
@@ -20,6 +20,7 @@
             </div>
         </div>
     </div>
+    <div id="bossbar-preview" class="code"></div>
     <select id="bossbar-color" name="bossbar-color" onchange='bossbarAutoUpdate && BossbarForm.submit();'>
         {{range $.MinecraftColors}}
         <option value="{{.}}">{{.}}</option>
