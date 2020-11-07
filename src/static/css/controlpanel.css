@@ -1,0 +1,427 @@
+div.loading-overlay {
+    display : table;
+    position: fixed;
+    top     : 0;
+    left    : 0;
+    width   : 100%;
+    height  : 100%;
+}
+
+div.loading-overlay>div {
+    display       : table-cell;
+    width         : 100%;
+    height        : 100%;
+    background    : var(--background-alpha);
+    text-align    : center;
+    vertical-align: middle;
+}
+
+/* ================ MAIN CONTROLS ================ */
+div.main-controls-holder {
+    zoom                 : 85%;
+    display              : grid;
+    grid-template-columns: 45% 25% 30%;
+    grid-template-areas  :
+        'particle particle potion'
+        'particle particle timeshift'
+        'dragon   laser laser'
+        'command  command command';
+
+    padding-top   : 3.4em;
+    padding-bottom: 14em;
+}
+
+div.controls-holder {
+    text-align: center;
+    padding   : 0.8em;
+}
+
+div.controls-holder-header {
+    float       : left;
+    writing-mode: vertical-lr;
+    margin-right: 0.8em;
+}
+
+div.controls-holder-header>span {
+    font-size   : x-large;
+    font-variant: small-caps;
+}
+
+i.stop-type-button {
+    cursor       : pointer;
+    margin-bottom: 0.3em;
+}
+
+div.particle-controls {
+    grid-area       : particle;
+    background-color: var(--cyan-alpha);
+}
+
+div.dragon-controls {
+    grid-area       : dragon;
+    background-color: var(--magenta-alpha);
+}
+
+div.laser-controls {
+    grid-area       : laser;
+    background-color: var(--indigo-alpha);
+}
+
+div.timeshift-controls {
+    grid-area       : timeshift;
+    background-color: var(--orange-alpha);
+}
+
+div.potion-controls {
+    grid-area       : potion;
+    background-color: var(--green-alpha);
+}
+
+div.command-controls {
+    grid-area       : command;
+    background-color: var(--steel-alpha);
+}
+
+div.visual-control {
+    display      : inline-block;
+    width        : min-content;
+    padding      : 0.1em;
+    margin-bottom: 0.5em;
+}
+
+/* ================ BUTTONS ================ */
+button.start-button {
+    color     : var(--green);
+    border    : none;
+    box-shadow: 0 0 0.3em var(--green);
+}
+
+span.keyboard-shortcut {
+    font-variant: normal;
+    font-size   : larger;
+    line-height : 0;
+    font-family : 'Consolas', 'Courier New', Courier, monospace;
+}
+
+button.stop-button {
+    color     : var(--red);
+    border    : none;
+    box-shadow: 0 0 0.3em var(--red);
+}
+
+#stop-everything-button {
+    grid-column: 1 / span 2;
+
+    color     : var(--red);
+    border    : none;
+    box-shadow: 0 0 0.3em var(--red);
+}
+
+#stop-all-effects-button {
+    color     : var(--orange);
+    border    : none;
+    box-shadow: 0 0 0.3em var(--orange);
+}
+
+#detach-all-button {
+    color     : var(--orange);
+    border    : none;
+    box-shadow: 0 0 0.3em var(--orange);
+}
+
+button.restart-button {
+    color     : var(--orange);
+    border    : none;
+    box-shadow: 0 0 0.3em var(--orange);
+}
+
+button.trigger-button {
+    color     : var(--cyan);
+    border    : none;
+    box-shadow: 0 0 0.3em var(--cyan);
+}
+
+div.clock-buttons {
+    margin-top           : 0.5em;
+    display              : grid;
+    grid-template-columns: 50% 50%;
+}
+
+i.clock {
+    color: var(--gray);
+}
+
+i.clock-attached {
+    color      : var(--font);
+    text-shadow: 0 0 0.3em var(--gray);
+}
+
+/* ================ HEADER ================ */
+div.header {
+    position: fixed;
+    top     : 0em;
+    right   : 0em;
+    left    : 0em;
+
+    padding              : 0.3em;
+    display              : grid;
+    gap                  : 0 1em;
+    grid-template-columns: auto auto min-content min-content min-content;
+    grid-template-rows   : auto auto;
+    grid-template-areas  :
+        'bossbar command stageselect serverselect presetmanager'
+        'caps    caps    caps        caps         caps         ';
+
+    background-color: var(--background-alpha);
+}
+
+div.header input[type=text] {
+    width     : 100%;
+    box-sizing: border-box;
+}
+
+button.header-button {
+    margin : unset;
+    height : 100%;
+    padding: unset;
+    width  : 100%;
+
+    background-color: var(--darker-teal);
+    border          : 2px solid var(--darker-teal);
+}
+
+span.header-title {
+    font-size   : large;
+    font-variant: small-caps;
+    display     : inline-block;
+    margin      : auto 0;
+
+    border-left : 0.2em solid var(--teal);
+    padding-left: 0.2em;
+
+    color: var(--teal);
+}
+
+i.header-icon {
+    color: var(--teal);
+}
+
+div.popup {
+    position: relative;
+    display : inline-block;
+}
+
+div.popup div.popup-content {
+    visibility: hidden;
+
+    position: absolute;
+    top     : 150%;
+    z-index : 1;
+
+    padding         : 1em;
+    background-color: var(--background);
+    border-radius   : 1em;
+}
+
+div.popup .show {
+    visibility: visible;
+}
+
+/* Bossbar Control */
+#header-bossbar-control {
+    grid-area: bossbar;
+}
+
+#bossbar-form {
+    display              : grid;
+    gap                  : 0 0.5em;
+    grid-template-columns: max-content auto min-content 5em 5em min-content;
+}
+
+div.bossbar-formatting-group {
+    height               : min-content;
+    display              : grid;
+    grid-template-columns: max-content max-content;
+    gap                  : 1em;
+}
+
+div.bossbar-formatting-group span:nth-of-type(even) {
+    cursor: pointer;
+}
+
+/* Command Control */
+#header-command-control {
+    grid-area: command;
+}
+
+#command-form {
+    display              : grid;
+    gap                  : 0 0.5em;
+    grid-template-columns: max-content auto 5em;
+}
+
+/* Stage Select Control */
+#header-stageselect-control {
+    grid-area            : stageselect;
+    display              : grid;
+    gap                  : 0 0.5em;
+    grid-template-columns: max-content min-content;
+}
+
+/* Server Select Control */
+#header-serverselect-control {
+    grid-area            : serverselect;
+    display              : grid;
+    gap                  : 0 0.5em;
+    grid-template-columns: max-content min-content;
+
+    cursor: pointer;
+}
+
+div.server-manager-popup {
+    float: right;
+}
+
+div.server-manager-popup div.popup-content {
+    right: 1em;
+}
+
+div.server-manager-group {
+    height               : min-content;
+    display              : grid;
+    grid-template-columns: max-content max-content;
+    gap                  : 1em;
+}
+
+/* Preset Manager Control */
+#header-presetmanager-control {
+    grid-area            : presetmanager;
+    display              : grid;
+    gap                  : 0 0.5em;
+    grid-template-columns: max-content min-content;
+
+    cursor: pointer;
+}
+
+/* Capslock Warning Control */
+#header-caps-control {
+    grid-area: caps;
+}
+
+#caps-warning {
+    display: none;
+
+    padding    : 0.5em;
+    width      : 100%;
+    text-align : center;
+    font-size  : x-large;
+    font-weight: bold;
+    color      : var(--red);
+}
+
+/* ================ FOOTER ================ */
+div.log-pane {
+    position: relative;
+}
+
+i.clear-logs-button {
+    position: absolute;
+    top     : 0.2em;
+    right   : 1em;
+
+    color : var(--font-alpha);
+    cursor: pointer;
+}
+
+#log-window {
+    height    : 10em;
+    padding   : 0.3em;
+    overflow-y: scroll;
+    border    : 2px solid var(--gray);
+}
+
+h3 {
+    margin-top   : 0;
+    margin-bottom: 0.2em;
+}
+
+#clock-holder {
+    display              : grid;
+    gap                  : 0 0.3em;
+    grid-template-columns: min-content auto min-content;
+    grid-template-areas  :
+        'title   title  title'
+        'ticker  ticker ticker'
+        'bpm     slider length'
+        'restart tap    tap';
+}
+
+#clock-title {
+    grid-area: title;
+}
+
+#clock-indicator {
+    grid-area: ticker;
+
+    text-align   : center;
+    width        : 100%;
+    height       : 1em;
+    margin-bottom: 0.5em;
+}
+
+#clock-bpm-input {
+    grid-area: bpm;
+}
+
+#clock-bpm-range {
+    grid-area: slider
+}
+
+#clock-note-length-input {
+    grid-area: length;
+}
+
+#clock-tap-button {
+    grid-area: tap
+}
+
+#clock-restart-button {
+    grid-area: restart;
+}
+
+div.clock-indicator-on {
+    background-color: var(--font);
+    color           : var(--background);
+}
+
+#status-window {
+    white-space: nowrap;
+    padding    : 0 1em;
+    border-left: 2px dashed var(--gray);
+}
+
+div.main-controls {
+    text-align : center;
+    padding    : 0 1em;
+    border-left: 2px dashed var(--gray);
+
+    display              : grid;
+    grid-template-columns: 50% 50%;
+    gap                  : 0em 0.5em;
+}
+
+span.log-message {
+    display: block;
+}
+
+span.success-message {
+    color: var(--green);
+}
+
+span.failure-message {
+    color: var(--red);
+}
+
+span.info-message {
+    color: var(--cyan);
+}

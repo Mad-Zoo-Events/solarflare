@@ -29,8 +29,12 @@ phases:
       - mv uiManager_min.js uiManager.js
       - mv websocketClient_min.js websocketClient.js
       - cd ../css
-      - cleancss -o main_min.css main.css
-      - mv main_min.css main.css
+      - cleancss -o common_min.css common.css
+      - cleancss -o controlpanel_min.css controlpanel.css
+      - cleancss -o presetmanager_min.css presetmanager.css
+      - mv common_min.css common.css
+      - mv controlpanel_min.css controlpanel.css
+      - mv presetmanager_min.css presetmanager.css
 artifacts:
   files:
     - .ebextensions/*

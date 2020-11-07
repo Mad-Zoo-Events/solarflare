@@ -1,0 +1,123 @@
+:root {
+    --background      : #121212;
+    --background2     : #131313;
+    --background3     : #111111;
+    --background-alpha: #000000e0;
+    --dark-gray       : #333;
+    --darker-gray     : #222;
+    --gray            : #888;
+    --font            : #dfffff;
+    --font-alpha      : #dfffff20;
+
+    --green        : #0eaf2c;
+    --green-alpha  : #0eaf2c20;
+    --orange       : #f56200;
+    --orange-alpha : #f5620020;
+    --red          : #ec2323;
+    --teal         : #00aba9;
+    --indigo       : #6a00ff;
+    --indigo-alpha : #6a00ff20;
+    --cyan         : #1ba1e2;
+    --cyan-alpha   : #1ba1e220;
+    --magenta      : #b90383;
+    --magenta-alpha: #b9038320;
+    --steel        : #597997;
+    --steel-alpha  : #59799720;
+
+    --darker-magenta: #52002c;
+    --darker-cyan   : #0b3c55;
+    --darker-teal   : #004948;
+}
+
+body {
+    background-color: var(--background);
+    color           : var(--font);
+    font-family     : sans-serif;
+    font-size       : 0.8em;
+    padding         : 0;
+    margin          : 0;
+
+    background-image   : linear-gradient(30deg, var(--background2) 12%, transparent 12.5%, transparent 87%, var(--background2) 87.5%, var(--background2)), linear-gradient(150deg, var(--background2) 12%, transparent 12.5%, transparent 87%, var(--background2) 87.5%, var(--background2)), linear-gradient(30deg, var(--background2) 12%, transparent 12.5%, transparent 87%, var(--background2) 87.5%, var(--background2)), linear-gradient(150deg, var(--background2) 12%, transparent 12.5%, transparent 87%, var(--background2) 87.5%, var(--background2)), linear-gradient(60deg, var(--background3) 25%, transparent 25.5%, transparent 75%, var(--background3) 75%, var(--background3)), linear-gradient(60deg, var(--background3) 25%, transparent 25.5%, transparent 75%, var(--background3) 75%, var(--background3));
+    background-size    : 80px 140px;
+    background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+}
+
+/* ================ BUTTONS ================ */
+button {
+    margin-top: 0.5em;
+    width     : 100%;
+    padding   : 0.5em 1.5em;
+    cursor    : pointer;
+
+    color           : var(--font);
+    background-color: var(--darker-gray);
+    font-variant    : small-caps;
+}
+
+button.cyan {
+    background-color: var(--cyan);
+    border          : 2px solid var(--cyan);
+}
+
+button.disabled {
+    background-color: var(--background);
+    color           : var(--gray);
+    cursor          : not-allowed;
+}
+
+/* ================ INPUTS ================ */
+input[type=text],
+input[type=number],
+textarea,
+select {
+    color           : var(--font);
+    padding         : 0.5em;
+    border          : none;
+    background-color: var(--dark-gray);
+}
+
+/* ================ COLORED TEXT ================ */
+span.cyan,
+div.cyan {
+    color: var(--cyan);
+}
+
+span.magenta,
+div.magenta {
+    color: var(--magenta);
+}
+
+span.indigo,
+div.indigo {
+    color: var(--indigo);
+}
+
+span.orange,
+div.orange {
+    color: var(--orange);
+}
+
+span.green,
+div.green {
+    color: var(--green);
+}
+
+span.steel,
+div.steel {
+    color: var(--steel);
+}
+
+/* ================ FOOTER ================ */
+.footer {
+    position: fixed;
+    bottom  : 0em;
+    right   : 0em;
+    left    : 0em;
+    padding : 0.5em;
+
+    display              : grid;
+    grid-template-columns: auto 25em max-content min-content;
+    gap                  : 1em;
+
+    background-color: var(--background-alpha);
+}
