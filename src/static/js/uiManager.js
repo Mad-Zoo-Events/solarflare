@@ -459,8 +459,8 @@ handleKeypress = (event) => {
 // ================ CLOCK ================
 
 changeClockSpeed = () => {
-    bpm = ClockBPMInput.value;
-    noteLength = ClockNoteLengthInput.value;
+    bpm = parseFloat(ClockBPMInput.value);
+    noteLength = parseFloat(ClockNoteLengthInput.value);
 
     clockInterval = 60000 / bpm * noteLength;
 
@@ -517,7 +517,7 @@ doWhateverTheClockDoes = (doOnCycle) => {
 // - after the clock has cycled three times with the updated speed, the queue is reset
 //   and it'll wait for three new taps again
 clockTap = () => {
-    const noteLength = ClockNoteLengthInput.value;
+    const noteLength = parseFloat(ClockNoteLengthInput.value);
     const now = Date.now();
 
     // if this is the first tap after a while, set last to now and return
@@ -546,7 +546,7 @@ clockTap = () => {
     clockTapLast = now;
 
     const millisNew = clockTapMillis.reduce((a, b) => a + b) / clockTapMillis.length;
-    const bpmNew = (60000 / millisNew * noteLength).toFixed(1);
+    const bpmNew = parseFloat((60000 / millisNew * noteLength).toFixed(1));
 
     clockInterval = millisNew;
     updateClockControls(bpmNew, noteLength);

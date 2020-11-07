@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"net/http"
-	"strconv"
 
 	"github.com/gorilla/mux"
 
@@ -32,28 +31,15 @@ func ClockRestartHandler() http.HandlerFunc {
 // ClockSpeedHandler sets the speed of the clock to a specific bpm count
 func ClockSpeedHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		vars := mux.Vars(r)
-
-		var (
-			bpmStr  = vars["bpm"]
-			multStr = vars["multiplier"]
-		)
-
-		bpm, err := strconv.ParseFloat(bpmStr, 64)
+		request := &model.ClockSpeedRequest{}
+		err := json.NewDecoder(r.Body).Decode(&request)
 		if err != nil {
-			err = sferror.New(sferror.ClockInvalidBPM, "invlid BPM value: "+bpmStr, nil)
+			err = sferror.New(sferror.ClockInvalidRequestBody, "failed to parse clock speed request body", err)
 			writeResponse(w, http.StatusBadRequest, sferror.GetErrorResponse(err))
 			return
 		}
 
-		mult, err := strconv.ParseFloat(multStr, 64)
-		if err != nil {
-			err = sferror.New(sferror.ClockInvalidBPM, "invlid multiplier value: "+multStr, nil)
-			writeResponse(w, http.StatusBadRequest, sferror.GetErrorResponse(err))
-			return
-		}
-
-		manager.SetClockSpeed(bpm, mult)
+		manager.SetClockSpeed(request.BPM, request.NoteLength)
 
 		writeResponse(w, http.StatusNoContent, nil)
 	}
