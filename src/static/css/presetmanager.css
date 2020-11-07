@@ -1,0 +1,247 @@
+/* ================ BUTTONS ================ */
+button.magenta {
+    background-color: var(--magenta);
+    border          : 2px solid var(--magenta);
+}
+
+button.indigo {
+    background-color: var(--indigo);
+    border          : 2px solid var(--indigo);
+}
+
+button.darker-teal {
+    background-color: var(--darker-teal);
+    border          : 2px solid var(--darker-teal);
+}
+
+button.orange {
+    background-color: var(--orange);
+    border          : 2px solid var(--orange);
+}
+
+button.green {
+    background-color: var(--green);
+    border          : 2px solid var(--green);
+}
+
+button.steel {
+    background-color: var(--steel);
+    border          : 2px solid var(--steel);
+}
+
+button.darker-cyan {
+    background-color: var(--darker-cyan);
+    border          : 2px solid var(--darker-cyan);
+}
+
+/* ================ FOOTER ================ */
+div.footer-buttons {
+    display              : grid;
+    grid-template-columns: repeat(6, max-content);
+    gap                  : 1em;
+
+    grid-column: 2 / span 2;
+}
+
+div.primary-button {
+    text-align : center;
+    padding    : 0 1em;
+    border-left: 2px dashed var(--gray);
+}
+
+/* ================ PRESET MANAGER ================ */
+div.preset-overview {
+    width           : max-content;
+    min-width       : 60em;
+    max-width       : 95%;
+    margin          : 0 auto;
+    background-color: var(--dark-gray);
+    margin-bottom   : 10em;
+}
+
+div.preset-overview-type-header {
+    font-variant    : small-caps;
+    font-weight     : bold;
+    text-align      : center;
+    padding         : 0.5em;
+    background-color: var(--background);
+}
+
+div.type-header-cyan {
+    color        : var(--cyan);
+    border-bottom: 2px solid var(--cyan);
+}
+
+div.type-header-magenta {
+    color        : var(--magenta);
+    border-bottom: 2px solid var(--magenta);
+}
+
+div.type-header-indigo {
+    color        : var(--indigo);
+    border-bottom: 2px solid var(--indigo);
+}
+
+div.type-header-orange {
+    color        : var(--orange);
+    border-bottom: 2px solid var(--orange);
+}
+
+div.type-header-green {
+    color        : var(--green);
+    border-bottom: 2px solid var(--green);
+}
+
+div.type-header-steel {
+    color        : var(--steel);
+    border-bottom: 2px solid var(--steel);
+}
+
+div.preset-overview-header {
+    background-color: var(--background);
+    color           : var(--teal);
+    font-variant    : small-caps;
+    font-size       : larger;
+}
+
+div.preset-overview-sliver {
+    padding              : 0.3em;
+    border-bottom        : 1px solid var(--gray);
+    display              : grid;
+    grid-template-columns: 15.5em 2em 12em 15em auto min-content;
+}
+
+div.preset-overview-sliver:nth-child(2n+1) {
+    background-color: var(--darker-gray);
+}
+
+div.preset-sliver-id {
+    grid-column: 1;
+    font-size  : x-small;
+    color      : var(--gray);
+}
+
+div.preset-sliver-key {
+    grid-column: 2;
+    font-size  : larger;
+    text-align : center;
+    color      : var(--teal);
+}
+
+div.preset-sliver-name {
+    grid-column: 3;
+}
+
+div.preset-sliver-description {
+    grid-column: 4;
+}
+
+div.preset-sliver-effects {
+    grid-column: 5;
+}
+
+div.sliver-effects-particle {
+    display              : grid;
+    grid-template-columns: 15em 6em auto;
+}
+
+div.sliver-effects-dragon {
+    display              : grid;
+    grid-template-columns: 8em auto;
+}
+
+div.sliver-effects-laser {
+    display              : grid;
+    grid-template-columns: 18em auto;
+}
+
+div.sliver-effects-command,
+div.sliver-effects-command div {
+    text-overflow: ellipsis;
+    white-space  : nowrap;
+    overflow     : hidden;
+}
+
+div.preset-sliver-actions {
+    grid-column: 6;
+    white-space: nowrap;
+    margin-left: 2em;
+}
+
+div.preset-sliver-actions i {
+    cursor     : pointer;
+    margin-left: 0.5em;
+    margin-top : 0.2em;
+}
+
+i.fa-trash-alt {
+    color: var(--red);
+}
+
+i.fa-clone {
+    color: var(--teal);
+}
+
+div.code {
+    font-family: Consolas, 'Courier New', Courier, monospace;
+}
+
+/* ================ PRESET MUTATION ================ */
+div.preset-edit-main {
+    margin-left  : auto;
+    margin-right : auto;
+    max-width    : 80em;
+    min-width    : 50%;
+    margin-bottom: 10em;
+}
+
+#preset-form {
+    display              : grid;
+    grid-template-columns: min-content auto;
+}
+
+div.input-range-combo {
+    display              : grid;
+    grid-template-columns: min-content auto;
+}
+
+option.option-description {
+    font-style: italic;
+}
+
+label {
+    grid-column  : 1;
+    white-space  : nowrap;
+    padding-right: 1em;
+}
+
+div.effect-box {
+    padding              : 1em;
+    grid-column          : 2;
+    display              : grid;
+    grid-template-columns: min-content auto;
+}
+
+div.effect-box:nth-of-type(even) {
+    background-color: var(--darker-gray);
+}
+
+span.armor-stand {
+    position: relative;
+    width   : 0;
+    height  : 0;
+}
+
+i.delete-effect {
+    position: absolute;
+    left    : -2.5em;
+    cursor  : pointer;
+}
+
+div.add-effect {
+    margin : 1em auto 0 auto;
+    padding: 1em;
+    width  : min-content;
+    color  : var(--green);
+    cursor : pointer;
+}

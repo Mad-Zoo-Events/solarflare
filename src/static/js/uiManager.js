@@ -154,7 +154,7 @@ toggleUIUpdates = (checkbox) => {
 logEffectMessage = async (action, displayName, errMsg) => {
     const timestamp = new Date().toLocaleTimeString();
     const msg = `${action} <b>${displayName}</b> ${errMsg ? "failed: " + errMsg : "succeeded"}`;
-    const logLine = `<span class="log-message">${timestamp} | <span class="${errMsg ? "failure" : "success"}">${msg}</span></span>`;
+    const logLine = `<span class="log-message">${timestamp} | <span class="${errMsg ? "failure-message" : "success-message"}">${msg}</span></span>`;
 
     LogWindow.innerHTML = logLine + LogWindow.innerHTML.slice(0, 2048);
 };
