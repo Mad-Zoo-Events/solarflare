@@ -74,7 +74,7 @@ func main() {
 	clock.GET("/sync", ClockSyncHandler)
 	clock.POST("/restart", ClockRestartHandler)
 	clock.POST("/speed", ClockSpeedHandler)
-	clock.PUT("/:action/:effectType/:id", ClockSubscriptionHandler)
+	clock.PUT("/:action", ClockSubscriptionHandler)
 
 	// web UI
 	// router.Use(static.Serve("/controlpanel", static.LocalFile("./static/", true)))

@@ -150,12 +150,14 @@ doSetClockSpeed = async (bpm, noteLength) => {
 
 doClockSubscription = async (effectType, id, action, isRunning, offBeat) => {
     const body = {
+        "presetId": id,
+        "effectType": effectType,
         "isRunning": isRunning,
         "offBeat": offBeat
     };
 
     const request = new XMLHttpRequest();
-    request.open("PUT", `${CLOCK_ENDPOINT}/${action}/${effectType}/${id}`);
+    request.open("PUT", `${CLOCK_ENDPOINT}/${action}`);
     request.send(JSON.stringify(body));
 };
 

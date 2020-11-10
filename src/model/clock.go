@@ -2,8 +2,10 @@ package model
 
 // ClockSubscriptionRequest is the model for inbound clock subscription requests
 type ClockSubscriptionRequest struct {
-	IsRunning bool `json:"isRunning"`
-	OffBeat   bool `json:"offBeat"`
+	PresetID   string     `json:"presetId"`
+	EffectType EffectType `json:"effectType"`
+	IsRunning  bool       `json:"isRunning"`
+	OffBeat    bool       `json:"offBeat"`
 }
 
 // ClockSpeedRequest is the model for inbound clock speed requests
