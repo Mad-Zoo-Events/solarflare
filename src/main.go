@@ -4,7 +4,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/gorilla/mux"
+	"github.com/gin-gonic/contrib/static"
+	"github.com/gin-gonic/gin"
 
 	"github.com/eynorey/solarflare/src/client"
 	"github.com/eynorey/solarflare/src/config"
@@ -13,6 +14,10 @@ import (
 // loads data from the database into the config
 func load() {
 	cfg := config.Get()
+
+	if !cfg.RunningOnDev {
+		gin.SetMode(gin.ReleaseMode)
+	}
 
 	cfg.Servers = client.GetServers()
 
@@ -38,44 +43,53 @@ func redirectTo(w http.ResponseWriter, r *http.Request, endpoint string) {
 func main() {
 	load()
 
-	router := mux.NewRouter()
+	// router := mux.NewRouter()
+	router := gin.Default()
 
 	// network / service
-	router.Handle("/health", HealthHandler()).Methods(http.MethodGet)
-	router.Handle("/servers/{id}/{action}", ToggleServerHandler()).Methods(http.MethodPatch)
-	router.Handle("/selectstage/{stage}", SelectStageHandler()).Methods(http.MethodPost)
+	router.GET("/health", HealthHandler)
+	router.PATCH("/servers/:id/:action", ToggleServerHandler)
+	router.POST("/selectstage/:stage", SelectStageHandler)
 
 	// effect execution
-	router.Handle("/effects/{effectType}/{id}/{action}", EffectHandler()).Methods(http.MethodPost)
-	router.Handle("/effects/stopall", StopAllHandler()).Methods(http.MethodPost)
-	router.Handle("/bossbar/{action}", BossbarHandler()).Methods(http.MethodPost)
-	router.Handle("/commands", CommandHandler()).Methods(http.MethodPost)
+	effects := router.Group("/effects")
+	effects.POST("/run/:effectType/:id/:action", EffectHandler)
+	effects.POST("/stopall", StopAllHandler)
+
+	router.POST("/bossbar/:action", BossbarHandler)
+	router.POST("/command", CommandHandler)
 
 	// preset management
-	router.Handle("/presets/{effectType}-ui", PresetMutationUIHandler()).Methods(http.MethodPost)
-	router.Handle("/presets/{effectType}-ui/test", PresetTestUIHandler()).Methods(http.MethodPost)
-	router.Handle("/presets/{effectType}", PresetMutationHandler()).Methods(http.MethodPost)
-	router.Handle("/presets/{effectType}/{id}", PresetDeletionHandler()).Methods(http.MethodDelete)
-	router.Handle("/presets/{effectType}/{id}/duplicate", PresetDuplicationHandler()).Methods(http.MethodPost)
+	presetForm := router.Group("/presetform")
+	presetForm.POST("/:effectType", PresetFormHandler)
+	presetForm.POST("/:effectType/test", PresetFormTestTestHandler)
+
+	presets := router.Group("/presets")
+	presets.POST("/:effectType", PresetMutationHandler)
+	presets.DELETE("/:effectType/:id", PresetDeletionHandler)
+	presets.POST("/:effectType/:id/duplicate", PresetDuplicationHandler)
 
 	// clock
-	router.Handle("/clock/sync", ClockSyncHandler()).Methods(http.MethodGet)
-	router.Handle("/clock/restart", ClockRestartHandler()).Methods(http.MethodPost)
-	router.Handle("/clock/speed", ClockSpeedHandler()).Methods(http.MethodPost)
-	router.Handle("/clock/{action}/{effectType}/{id}", ClockSubscriptionHandler()).Methods(http.MethodPost)
+	clock := router.Group("/clock")
+	clock.GET("/sync", ClockSyncHandler)
+	clock.POST("/restart", ClockRestartHandler)
+	clock.POST("/speed", ClockSpeedHandler)
+	clock.PUT("/:action/:effectType/:id", ClockSubscriptionHandler)
 
 	// web UI
+	// router.Use(static.Serve("/controlpanel", static.LocalFile("./static/", true)))
 	staticDir := "/static/"
-	router.PathPrefix(staticDir).Handler(http.StripPrefix(staticDir, http.FileServer(http.Dir("."+staticDir))))
+	// router.PathPrefix(staticDir).Handler(http.StripPrefix(staticDir, http.FileServer(http.Dir("."+staticDir))))
+	router.Use(static.Serve(staticDir, static.LocalFile("."+staticDir, true)))
 
-	router.Handle("/controlpanel", ControlPanelHandler()).Methods(http.MethodGet)
-	router.Handle("/controlpanel/presets", CPPresetManagerHandler()).Methods(http.MethodGet)
+	router.GET("/controlpanel", ControlPanelHandler)
+	router.GET("/controlpanel/presets", CPPresetManagerHandler)
 
-	router.Handle("/controlpanel/presets/{effectType}/new", CPPresetHandler()).Methods(http.MethodGet)
-	router.Handle("/controlpanel/presets/{effectType}/modify/{id}", CPPresetHandler()).Methods(http.MethodGet)
+	router.GET("/controlpanel/presets/:effectType/new", CPPresetHandler)
+	router.GET("/controlpanel/presets/:effectType/modify/:id", CPPresetHandler)
 
 	// websocket
-	router.Handle("/socket", SocketHandler())
+	router.GET("/socket", SocketHandler)
 
 	log.Print("Starting server listening on port 5000")
 	err := http.ListenAndServe(":5000", router)

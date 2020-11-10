@@ -7,7 +7,7 @@
     <div class="preset-edit-main">
         <h1>{{if .ID}} Edit {{else}} Create New {{end}} <span class="magenta">{{.DisplayName}} </span> Dragon Preset
         </h1>
-        <form id="preset-form" method="POST" action="/presets/dragon-ui">
+        <form id="preset-form" method="POST" action="/presetform/dragon">
             {{template "sharedPresetModificationInputs" .}}
 
             <label>Effects</label>
