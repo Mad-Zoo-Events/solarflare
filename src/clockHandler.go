@@ -10,13 +10,6 @@ import (
 	"github.com/eynorey/solarflare/src/utils/sferror"
 )
 
-// ClockSyncHandler waits for the next clock start and then returns
-func ClockSyncHandler(c *gin.Context) {
-	manager.ClockSync()
-
-	c.Status(http.StatusNoContent)
-}
-
 // ClockRestartHandler restarts the clock
 func ClockRestartHandler(c *gin.Context) {
 	manager.RestartClock()

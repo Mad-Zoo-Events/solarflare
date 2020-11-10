@@ -1,5 +1,3 @@
-const CLOCK_SYNC_INTERVAL = 10000;
-
 var activeEffects = new Map();
 var activeKeys = new Map();
 var activeOnbeatClocks = new Map();
@@ -129,19 +127,16 @@ preloadComponents = () => {
 window.addEventListener("load", () => {
     receiveUIUpdates = getCookie("receiveUIUpdates") !== "false";
 
+    preloadComponents();
+
     if (receiveUIUpdates) {
         openWebsocket();
         document.getElementById("ui-update-checkbox").checked = true;
 
-        doClockSync(restartUIClock);
-        setInterval(() => doClockSync(restartUIClock), CLOCK_SYNC_INTERVAL);
-    } else {
         clockInterval = 60000 / 128;
         updateClockControls(128, 1);
         restartUIClock();
     }
-
-    preloadComponents();
 });
 
 // ================ OTHER UI UPDATES ================
