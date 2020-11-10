@@ -76,7 +76,7 @@ func (e SolarflareError) Error() string {
 	return e.message
 }
 
-// GetErrorResponse converts the cs error to an error response body
+// GetErrorResponse converts the sf error to an error response body
 func GetErrorResponse(err error) []byte {
 	var errResp model.Error
 	// try to cast to cs error
@@ -89,6 +89,20 @@ func GetErrorResponse(err error) []byte {
 
 	respBody, _ := json.Marshal(errResp)
 	return respBody
+}
+
+// Get converts the sf error to an error response object
+func Get(err error) model.Error {
+	var errResp model.Error
+	// try to cast to cs error
+	if csErr, ok := err.(SolarflareError); ok {
+		errResp = model.Error{Message: csErr.message, Code: csErr.errType.code}
+	} else {
+		// this should never happen
+		errResp = model.Error{Message: "INVALID ERROR TYPE -> Error: " + err.Error()}
+	}
+
+	return errResp
 }
 
 // GetErrorType returns the type of an cs error

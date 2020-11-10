@@ -7,7 +7,7 @@
     <div class="preset-edit-main">
         <h1>{{if .ID}} Edit {{else}} Create New {{end}} <span class="green">{{.DisplayName}} </span> Potion Preset
         </h1>
-        <form id="preset-form" method="POST" action="/presets/potion-ui">
+        <form id="preset-form" method="POST" action="/presetform/potion">
             {{template "sharedPresetModificationInputs" .}}
 
             <label>Effects</label>

@@ -3,43 +3,27 @@ package main
 import (
 	"net/http"
 
-	"github.com/gorilla/mux"
+	"github.com/gin-gonic/gin"
 
 	"github.com/eynorey/solarflare/src/controller"
 	"github.com/eynorey/solarflare/src/model"
 )
 
 // HealthHandler returns the health status of the service
-func HealthHandler() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		resp := "¯\\_(ツ)_/¯"
-
-		writeResponse(w, http.StatusOK, []byte(resp))
-	}
+func HealthHandler(c *gin.Context) {
+	c.String(http.StatusOK, "¯\\_(ツ)_/¯")
 }
 
 // ToggleServerHandler handles requests to enable or disable a server
-func ToggleServerHandler() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		vars := mux.Vars(r)
-		var (
-			id     = vars["id"]
-			action = vars["action"]
-		)
+func ToggleServerHandler(c *gin.Context) {
+	controller.ToggleServer(c.Param("id"), model.ServerAction(c.Param("action")))
 
-		controller.ToggleServer(id, model.ServerAction(action))
-
-		writeResponse(w, http.StatusNoContent, nil)
-	}
+	c.Status(http.StatusNoContent)
 }
 
 // SelectStageHandler handles requests to select a different data source for presets
-func SelectStageHandler() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		vars := mux.Vars(r)
+func SelectStageHandler(c *gin.Context) {
+	controller.SelectStage(c.Param("stage"))
 
-		controller.SelectStage(vars["stage"])
-
-		writeResponse(w, http.StatusNoContent, nil)
-	}
+	c.Status(http.StatusNoContent)
 }

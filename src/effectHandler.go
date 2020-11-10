@@ -1,66 +1,57 @@
 package main
 
 import (
-	"io/ioutil"
 	"net/http"
 
-	"github.com/gorilla/mux"
+	"github.com/gin-gonic/gin"
 
 	"github.com/eynorey/solarflare/src/controller"
+	"github.com/eynorey/solarflare/src/manager"
 	"github.com/eynorey/solarflare/src/model"
 	"github.com/eynorey/solarflare/src/utils/sferror"
 )
 
 // EffectHandler handles requests to execute effect presets
-func EffectHandler() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		vars := mux.Vars(r)
-		var (
-			action     = vars["action"]
-			id         = vars["id"]
-			effectType = vars["effectType"]
-		)
+func EffectHandler(c *gin.Context) {
+	err := controller.RunEffect(
+		c.Param("id"),
+		model.EffectType(c.Param("effectType")),
+		model.EffectAction(c.Param("action")),
+	)
 
-		err := controller.RunEffect(id, model.EffectType(effectType), model.EffectAction(action))
-		if err != nil {
-			switch sferror.GetErrorType(err) {
-			case sferror.PresetNotFound:
-				writeResponse(w, http.StatusNotFound, sferror.GetErrorResponse(err))
-			case sferror.ActionNotAllowed, sferror.InvalidEffectType:
-				writeResponse(w, http.StatusBadRequest, sferror.GetErrorResponse(err))
-			default:
-				writeResponse(w, http.StatusInternalServerError, sferror.GetErrorResponse(err))
-			}
-
-			return
+	if err != nil {
+		switch sferror.GetErrorType(err) {
+		case sferror.PresetNotFound:
+			c.JSON(http.StatusNotFound, sferror.Get(err))
+		case sferror.ActionNotAllowed, sferror.InvalidEffectType:
+			c.JSON(http.StatusBadRequest, sferror.Get(err))
+		default:
+			c.JSON(http.StatusInternalServerError, sferror.Get(err))
 		}
 
-		writeResponse(w, http.StatusNoContent, nil)
+		return
 	}
+
+	c.Status(http.StatusNoContent)
 }
 
 // StopAllHandler handles requests to stop and/or detach all effects
-func StopAllHandler() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		body, err := ioutil.ReadAll(r.Body)
-		if err != nil {
-			err = sferror.New(sferror.Encoding, "Error reading stopall request body", err)
-			writeResponse(w, http.StatusBadRequest, sferror.GetErrorResponse(err))
-			return
-		}
-
-		err = controller.StopAll(body)
-		if err != nil {
-			switch sferror.GetErrorType(err) {
-			case sferror.Encoding:
-				writeResponse(w, http.StatusBadRequest, sferror.GetErrorResponse(err))
-			default:
-				writeResponse(w, http.StatusInternalServerError, sferror.GetErrorResponse(err))
-			}
-
-			return
-		}
-
-		writeResponse(w, http.StatusNoContent, nil)
+func StopAllHandler(c *gin.Context) {
+	request := &model.StopAllRequest{}
+	if err := c.BindJSON(request); err != nil {
+		err = sferror.New(sferror.Encoding, "Error unmarshalling stopall request", err)
 	}
+
+	if err := manager.StopAll(request); err != nil {
+		switch sferror.GetErrorType(err) {
+		case sferror.Encoding:
+			c.JSON(http.StatusBadRequest, sferror.Get(err))
+		default:
+			c.JSON(http.StatusInternalServerError, sferror.Get(err))
+		}
+
+		return
+	}
+
+	c.Status(http.StatusNoContent)
 }

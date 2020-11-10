@@ -4,131 +4,112 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/gorilla/mux"
+	"github.com/gin-gonic/gin"
 
 	"github.com/eynorey/solarflare/src/controller"
 	"github.com/eynorey/solarflare/src/utils/sferror"
 )
 
 // PresetMutationHandler handles requests to create a new preset
-func PresetMutationHandler() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		body, err := ioutil.ReadAll(r.Body)
-		if err != nil {
-			err = sferror.New(sferror.Encoding, "Error reading preset request body", err)
-			writeResponse(w, http.StatusBadRequest, sferror.GetErrorResponse(err))
-			return
-		}
-
-		vars := mux.Vars(r)
-
-		id, err := controller.UpsertPresetAPI(vars["effectType"], body)
-		if err != nil {
-			switch sferror.GetErrorType(err) {
-			case sferror.InvalidEffectType:
-				writeResponse(w, http.StatusBadRequest, sferror.GetErrorResponse(err))
-			default:
-				writeResponse(w, http.StatusInternalServerError, sferror.GetErrorResponse(err))
-			}
-			return
-		}
-
-		writeResponse(w, http.StatusCreated, []byte(*id))
+func PresetMutationHandler(c *gin.Context) {
+	body, err := ioutil.ReadAll(c.Request.Body)
+	if err != nil {
+		err = sferror.New(sferror.Encoding, "Error reading preset request body", err)
+		c.JSON(http.StatusBadRequest, sferror.Get(err))
+		return
 	}
+
+	id, err := controller.UpsertPresetAPI(c.Param("effectType"), body)
+	if err != nil {
+		switch sferror.GetErrorType(err) {
+		case sferror.InvalidEffectType:
+			c.JSON(http.StatusBadRequest, sferror.Get(err))
+		default:
+			c.JSON(http.StatusInternalServerError, sferror.Get(err))
+		}
+		return
+	}
+
+	c.String(http.StatusCreated, *id)
 }
 
-// PresetMutationUIHandler handles requests from the UI to create a new preset
-func PresetMutationUIHandler() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		err := r.ParseForm()
-		if err != nil {
-			err = sferror.New(sferror.Encoding, "Error parsing form from UI", err)
-			writeResponse(w, http.StatusBadRequest, sferror.GetErrorResponse(err))
-			return
-		}
-
-		vars := mux.Vars(r)
-
-		_, err = controller.UpsertPresetUI(vars["effectType"], r.PostForm)
-		if err != nil {
-			switch sferror.GetErrorType(err) {
-			case sferror.InvalidEffectType:
-				writeResponse(w, http.StatusBadRequest, sferror.GetErrorResponse(err))
-			default:
-				writeResponse(w, http.StatusInternalServerError, sferror.GetErrorResponse(err))
-			}
-			return
-		}
-
-		redirectTo(w, r, "/controlpanel/presets")
+// PresetFormHandler handles requests from the UI to create a new preset
+func PresetFormHandler(c *gin.Context) {
+	err := c.Request.ParseForm()
+	if err != nil {
+		err = sferror.New(sferror.Encoding, "Error parsing form from UI", err)
+		c.JSON(http.StatusBadRequest, sferror.Get(err))
+		return
 	}
+
+	_, err = controller.UpsertPresetUI(c.Param("effectType"), c.Request.PostForm)
+	if err != nil {
+		switch sferror.GetErrorType(err) {
+		case sferror.InvalidEffectType:
+			c.JSON(http.StatusBadRequest, sferror.Get(err))
+		default:
+			c.JSON(http.StatusInternalServerError, sferror.Get(err))
+		}
+		return
+	}
+
+	c.Redirect(http.StatusFound, "/controlpanel/presets")
 }
 
 // PresetDeletionHandler deletes a preset
-func PresetDeletionHandler() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		vars := mux.Vars(r)
-
-		err := controller.DeletePreset(vars["effectType"], vars["id"])
-		if err != nil {
-			switch sferror.GetErrorType(err) {
-			case sferror.DatabaseNotFound:
-				writeResponse(w, http.StatusNotFound, sferror.GetErrorResponse(err))
-			case sferror.InvalidEffectType:
-				writeResponse(w, http.StatusBadRequest, sferror.GetErrorResponse(err))
-			default:
-				writeResponse(w, http.StatusInternalServerError, sferror.GetErrorResponse(err))
-			}
-			return
+func PresetDeletionHandler(c *gin.Context) {
+	err := controller.DeletePreset(c.Param("effectType"), c.Param("id"))
+	if err != nil {
+		switch sferror.GetErrorType(err) {
+		case sferror.DatabaseNotFound:
+			c.JSON(http.StatusNotFound, sferror.Get(err))
+		case sferror.InvalidEffectType:
+			c.JSON(http.StatusBadRequest, sferror.Get(err))
+		default:
+			c.JSON(http.StatusInternalServerError, sferror.Get(err))
 		}
-
-		writeResponse(w, http.StatusOK, nil)
+		return
 	}
+
+	c.Status(http.StatusNoContent)
 }
 
 // PresetDuplicationHandler duplicates a preset
-func PresetDuplicationHandler() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		vars := mux.Vars(r)
+func PresetDuplicationHandler(c *gin.Context) {
 
-		err := controller.DuplicatePreset(vars["effectType"], vars["id"])
-		if err != nil {
-			switch sferror.GetErrorType(err) {
-			case sferror.DatabaseNotFound:
-				writeResponse(w, http.StatusNotFound, sferror.GetErrorResponse(err))
-			case sferror.InvalidEffectType:
-				writeResponse(w, http.StatusBadRequest, sferror.GetErrorResponse(err))
-			default:
-				writeResponse(w, http.StatusInternalServerError, sferror.GetErrorResponse(err))
-			}
-			return
+	err := controller.DuplicatePreset(c.Param("effectType"), c.Param("id"))
+	if err != nil {
+		switch sferror.GetErrorType(err) {
+		case sferror.DatabaseNotFound:
+			c.JSON(http.StatusNotFound, sferror.Get(err))
+		case sferror.InvalidEffectType:
+			c.JSON(http.StatusBadRequest, sferror.Get(err))
+		default:
+			c.JSON(http.StatusInternalServerError, sferror.Get(err))
 		}
-
-		writeResponse(w, http.StatusCreated, nil)
+		return
 	}
+
+	c.Status(http.StatusCreated)
 }
 
-// PresetTestUIHandler handles requests from the UI to test a preset
-func PresetTestUIHandler() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		err := r.ParseForm()
-		if err != nil {
-			err = sferror.New(sferror.Encoding, "Error parsing form from UI", err)
-			writeResponse(w, http.StatusBadRequest, sferror.GetErrorResponse(err))
-			return
-		}
+// PresetFormTestTestHandler handles requests from the UI to test a preset
+func PresetFormTestTestHandler(c *gin.Context) {
+	err := c.Request.ParseForm()
+	if err != nil {
+		err = sferror.New(sferror.Encoding, "Error parsing form from UI", err)
+		c.JSON(http.StatusBadRequest, sferror.Get(err))
+		return
+	}
 
-		vars := mux.Vars(r)
-
-		err = controller.TestPreset(vars["effectType"], r.PostForm)
-		if err != nil {
-			switch sferror.GetErrorType(err) {
-			case sferror.InvalidEffectType:
-				writeResponse(w, http.StatusBadRequest, sferror.GetErrorResponse(err))
-			default:
-				writeResponse(w, http.StatusInternalServerError, sferror.GetErrorResponse(err))
-			}
-			return
+	err = controller.TestPreset(c.Param("effectType"), c.Request.PostForm)
+	if err != nil {
+		switch sferror.GetErrorType(err) {
+		case sferror.InvalidEffectType:
+			c.JSON(http.StatusBadRequest, sferror.Get(err))
+		default:
+			c.JSON(http.StatusInternalServerError, sferror.Get(err))
 		}
+		return
 	}
 }

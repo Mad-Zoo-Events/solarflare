@@ -7,7 +7,7 @@
     <div class="preset-edit-main">
         <h1>{{if .ID}} Edit {{else}} Create New {{end}} <span class="orange">{{.DisplayName}} </span> Timeshift Preset
         </h1>
-        <form id="preset-form" method="POST" action="/presets/timeshift-ui">
+        <form id="preset-form" method="POST" action="/presetform/timeshift">
             {{template "sharedPresetModificationInputs" .}}
 
             <label>Effects</label>

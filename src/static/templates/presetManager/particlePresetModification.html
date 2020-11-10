@@ -7,7 +7,7 @@
     <div class="preset-edit-main">
         <h1>{{if .ID}} Edit {{else}} Create New {{end}} <span class="cyan">{{.DisplayName}} </span> Particle Effect
             Preset</h1>
-        <form id="preset-form" method="POST" action="/presets/particle-ui">
+        <form id="preset-form" method="POST" action="/presetform/particle">
             {{template "sharedPresetModificationInputs" .}}
 
             <label>Effects</label>

@@ -6,7 +6,7 @@
 <body>
     <div class="preset-edit-main">
         <h1>{{if .ID}} Edit {{else}} Create New {{end}} <span class="indigo">{{.DisplayName}} </span> Laser Preset</h1>
-        <form id="preset-form" method="POST" action="/presets/laser-ui">
+        <form id="preset-form" method="POST" action="/presetform/laser">
             {{template "sharedPresetModificationInputs" .}}
 
             <label id="laser-type-flag">End Laser</label>

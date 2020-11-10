@@ -17,7 +17,7 @@ var startTime;
 
 doEffect = async (effectType, id, action) => {
     const request = new XMLHttpRequest();
-    request.open("POST", `${EFFECTS_ENDPOINT}/${effectType}/${id}/${action}`);
+    request.open("POST", `${EFFECTS_ENDPOINT}/run/${effectType}/${id}/${action}`);
     request.addEventListener('load', () => {
         updateResponseTime(Date.now() - startTime);
     });
@@ -61,7 +61,7 @@ doDeletePreset = async (id, effectType) => {
     const request = new XMLHttpRequest();
     request.open("DELETE", `${PRESETS_ENDPOINT}/${effectType}/${id}`);
     request.addEventListener('load', () => {
-        if (request.status === 200) {
+        if (request.status === 204) {
             location.reload();
         }
     });
@@ -155,7 +155,7 @@ doClockSubscription = async (effectType, id, action, isRunning, offBeat) => {
     };
 
     const request = new XMLHttpRequest();
-    request.open("POST", `${CLOCK_ENDPOINT}/${action}/${effectType}/${id}`);
+    request.open("PUT", `${CLOCK_ENDPOINT}/${action}/${effectType}/${id}`);
     request.send(JSON.stringify(body));
 };
 
