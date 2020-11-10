@@ -41,11 +41,7 @@ func ClockSpeedHandler(c *gin.Context) {
 
 // ClockSubscriptionHandler handles subscribing and unsubscribing effects on the clock
 func ClockSubscriptionHandler(c *gin.Context) {
-	var (
-		action     = c.Param("action")
-		effectType = c.Param("effectType")
-		id         = c.Param("id")
-	)
+	action := c.Param("action")
 
 	request := &model.ClockSubscriptionRequest{}
 	err := c.BindJSON(request)
@@ -57,12 +53,12 @@ func ClockSubscriptionHandler(c *gin.Context) {
 
 	switch model.ClockAction(action) {
 	case model.SubscribeClockAction:
-		manager.SubscribeEffectToClock(id, model.EffectType(effectType), request.OffBeat, request.IsRunning)
+		manager.SubscribeEffectToClock(request.PresetID, request.EffectType, request.OffBeat, request.IsRunning)
 	case model.UnsubscribeClockAction:
-		manager.UnsubscribeEffectFromClock(id, model.EffectType(effectType), request.OffBeat)
-		manager.StopEffect(id, false)
+		manager.UnsubscribeEffectFromClock(request.PresetID, request.EffectType, request.OffBeat)
+		manager.StopEffect(request.PresetID, false)
 	default:
-		err := sferror.New(sferror.ClockInvalidAction, "invlid clock action: "+effectType, nil)
+		err := sferror.New(sferror.ClockInvalidAction, "invlid clock action: "+action, nil)
 		c.JSON(http.StatusBadRequest, sferror.Get(err))
 		return
 	}
