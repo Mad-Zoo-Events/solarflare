@@ -108,7 +108,7 @@ Server information is maintained on a dedicated DynamoDB table, and you can enab
 ## API Endpoints
 
 ### Trigger an action on a preset
-`POST https://visuals.madzoo.events/effects/{effectType}/{id}/{action}`
+`POST https://visuals.madzoo.events/effects/run/{effectType}/{id}/{action}`
 
 There is no payload.
 
@@ -153,6 +153,21 @@ There is no payload.
 
 **Actions allowed on *command* presets:**
 - `trigger`
+
+### Stop all effects and/or detach all from the clock
+`POST https://visuals.madzoo.events/effects/stopall`
+
+**Payload:**
+
+```
+{
+	"stopEffects": bool,
+	"detachClocks": bool,
+	"specificTypeOnly": EffectType
+}
+```
+
+where `EffectType` has to be one of the types listed above.
 
 ### Manage Presets
 
