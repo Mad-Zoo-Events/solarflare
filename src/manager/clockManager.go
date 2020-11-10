@@ -27,8 +27,6 @@ type clock struct {
 	multiplier float64
 	ticker     *time.Ticker
 
-	doSync   bool
-	syncChan chan bool
 	stopChan chan bool
 
 	effects map[string]*clockEffect
@@ -36,7 +34,6 @@ type clock struct {
 
 func init() {
 	tickTock = &clock{
-		syncChan: make(chan bool),
 		stopChan: make(chan bool),
 		effects:  make(map[string]*clockEffect),
 	}
@@ -115,12 +112,6 @@ func UnsubscribeAllFromClock(effectType *model.EffectType) {
 	}
 }
 
-// ClockSync returns after waiting for the next on-beat run on the clock
-func ClockSync() {
-	tickTock.doSync = true
-	<-tickTock.syncChan
-}
-
 func sendClockUpdate(id string, effectType model.EffectType, action model.ClockAction, isOffBeat bool) {
 	update := model.UIUpdate{
 		ClockUpdate: &model.ClockUpdate{
@@ -151,11 +142,6 @@ func (c *clock) start() {
 			select {
 			case <-c.ticker.C:
 				go c.doEffects(doTick)
-
-				if doTick && c.doSync {
-					c.syncChan <- true
-					c.doSync = false
-				}
 
 				doTick = !doTick
 			case <-c.stopChan:

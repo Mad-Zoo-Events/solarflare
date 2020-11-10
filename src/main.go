@@ -71,7 +71,6 @@ func main() {
 
 	// clock
 	clock := router.Group("/clock")
-	clock.GET("/sync", ClockSyncHandler)
 	clock.POST("/restart", ClockRestartHandler)
 	clock.POST("/speed", ClockSpeedHandler)
 	clock.PUT("/:action", ClockSubscriptionHandler)
