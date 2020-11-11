@@ -33,6 +33,22 @@ func PresetMutationHandler(c *gin.Context) {
 	c.String(http.StatusCreated, *id)
 }
 
+// PreserRetrievalHandler handles requests to retrieve presets
+func PreserRetrievalHandler(c *gin.Context) {
+	presets, err := controller.RetrievePresets(c.Param("effectType"))
+	if err != nil {
+		switch sferror.GetErrorType(err) {
+		case sferror.InvalidEffectType:
+			c.JSON(http.StatusBadRequest, sferror.Get(err))
+		default:
+			c.JSON(http.StatusInternalServerError, sferror.Get(err))
+		}
+		return
+	}
+
+	c.JSON(http.StatusOK, presets)
+}
+
 // PresetFormHandler handles requests from the UI to create a new preset
 func PresetFormHandler(c *gin.Context) {
 	err := c.Request.ParseForm()

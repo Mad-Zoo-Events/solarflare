@@ -174,3 +174,9 @@ where `EffectType` has to be one of the types listed above.
 It is *highly* recommended to manage presets through the UI only, as there is some conversion happening before they are saved in the database.
 
 If you still wish to do it manually via POST requests, you should know what you are doing and can find the request schemes in the code by yourself.
+
+### Retrieve presets
+
+You can retrieve all presets of a specific type; retrieving all presets of all types will be implemented at a later stage.
+
+`GET https://visuals.madzoo.events/presets/{effectType}`

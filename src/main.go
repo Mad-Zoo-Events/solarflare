@@ -68,6 +68,7 @@ func main() {
 	presets.POST("/:effectType", PresetMutationHandler)
 	presets.DELETE("/:effectType/:id", PresetDeletionHandler)
 	presets.POST("/:effectType/:id/duplicate", PresetDuplicationHandler)
+	presets.GET("/:effectType", PreserRetrievalHandler)
 
 	// clock
 	clock := router.Group("/clock")
