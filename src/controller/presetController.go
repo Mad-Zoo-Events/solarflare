@@ -278,3 +278,23 @@ func TestPreset(effectType string, values url.Values) error {
 
 	return sferror.New(sferror.InvalidEffectType, effectType, nil)
 }
+
+// RetrievePresets retrieves all preset of a specific type
+func RetrievePresets(effectType string) (interface{}, error) {
+	switch model.EffectType(effectType) {
+	case model.ParticleEffectType:
+		return client.GetParticleEffectPresets(), nil
+	case model.DragonEffectType:
+		return client.GetDragonEffectPresets(), nil
+	case model.TimeshiftEffectType:
+		return client.GetTimeshiftEffectPresets(), nil
+	case model.PotionEffectType:
+		return client.GetPotionEffectPresets(), nil
+	case model.LaserEffectType:
+		return client.GetLaserEffectPresets(), nil
+	case model.CommandEffectType:
+		return client.GetLaserEffectPresets(), nil
+	default:
+		return nil, sferror.New(sferror.InvalidEffectType, effectType, nil)
+	}
+}
