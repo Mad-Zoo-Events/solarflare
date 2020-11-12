@@ -77,10 +77,9 @@ func main() {
 	clock.PUT("/:action", ClockSubscriptionHandler)
 
 	// web UI
-	// router.Use(static.Serve("/controlpanel", static.LocalFile("./static/", true)))
 	staticDir := "/static/"
-	// router.PathPrefix(staticDir).Handler(http.StripPrefix(staticDir, http.FileServer(http.Dir("."+staticDir))))
 	router.Use(static.Serve(staticDir, static.LocalFile("."+staticDir, true)))
+	router.Use(static.Serve("/cp", static.LocalFile("./client/build", true)))
 
 	router.GET("/controlpanel", ControlPanelHandler)
 	router.GET("/controlpanel/presets", CPPresetManagerHandler)
