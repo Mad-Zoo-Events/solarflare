@@ -1,7 +1,7 @@
 import { PresetCollection } from "../domain/PresetCollection";
 
-export default function fetchAllPresets (): PresetCollection {
-    return {
+export async function fetchAllPresetsASync (): Promise<PresetCollection> {
+    return Promise.resolve({
         commandPresets: [{
             id: "abc",
             displayName: "ABC",
@@ -12,5 +12,5 @@ export default function fetchAllPresets (): PresetCollection {
         particlePresets: [],
         potionPreset: [],
         timeshiftPreset: []
-    };
+    });
 }

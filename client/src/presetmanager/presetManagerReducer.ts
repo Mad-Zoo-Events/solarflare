@@ -1,5 +1,5 @@
-import * as actionTypes from "./presetManagerActionTypes";
 import { PresetManagerAction } from "./presetManagerActions";
+import * as actionTypes from "./presetManagerActionTypes";
 import { PresetManagerState } from "./PresetManagerState";
 
 const initialState: PresetManagerState = {
@@ -18,9 +18,8 @@ function presetManagerReducer (
     state: PresetManagerState = initialState,
     action: PresetManagerAction
 ): PresetManagerState {
-    console.log(state, action);
     switch (action.type) {
-    case actionTypes.GET_ALL_PRESETS:
+    case actionTypes.DID_GET_ALL_PRESETS:
         return {
             presets: action.payload
         };

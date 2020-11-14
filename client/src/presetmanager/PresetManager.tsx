@@ -2,10 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import PresetManagerList from "../components/PresetManagerList";
-import Routes from "../routes";
-import { getAllPresets } from "./presetManagerActions";
-import { PresetManagerProps } from "./presetManagerProps";
 import { RootState } from "../RootState";
+import Routes from "../routes";
+import { fetchAllPresets } from "./presetManagerActions";
+import { PresetManagerProps } from "./presetManagerProps";
 
 const PresetManager = ({
     presets,
@@ -21,7 +21,6 @@ const PresetManager = ({
 };
 
 function mapStateToProps (state: RootState) {
-    console.log(state);
     const presets = state.presetmanager.presets;
 
     return {
@@ -30,7 +29,7 @@ function mapStateToProps (state: RootState) {
 }
 
 const mapDispatchToProps = {
-    getPresets: getAllPresets
+    getPresets: fetchAllPresets
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PresetManager);

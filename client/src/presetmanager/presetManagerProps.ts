@@ -1,9 +1,9 @@
-import { PresetCollection } from "../domain/PresetCollection";
 import { HandleThunkActionCreator } from "react-redux";
-import { getAllPresets } from "./presetManagerActions";
+import { PresetCollection } from "../domain/PresetCollection";
+import { fetchAllPresets } from "./presetManagerActions";
 
 export interface PresetManagerProps {
     presets: PresetCollection
 
-    getPresets: HandleThunkActionCreator<typeof getAllPresets>
+    getPresets: HandleThunkActionCreator<typeof fetchAllPresets>
 }
