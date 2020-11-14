@@ -18,7 +18,12 @@ function presetManagerReducer (
     state: PresetManagerState = initialState,
     action: PresetManagerAction
 ): PresetManagerState {
+    console.log(state, action);
     switch (action.type) {
+    case actionTypes.GET_ALL_PRESETS:
+        return {
+            presets: action.payload
+        };
     case actionTypes.DELETE_PRESET:
         return {
             presets: state.presets
