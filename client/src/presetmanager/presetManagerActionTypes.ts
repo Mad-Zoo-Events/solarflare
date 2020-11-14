@@ -1,0 +1,2 @@
+export const DELETE_PRESET = "DELETE_PRESET";
+export const DUPLICATE_PRESET = "DUPLICATE_PRESET";
