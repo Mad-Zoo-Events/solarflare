@@ -23,14 +23,6 @@ function presetManagerReducer (
         return {
             presets: action.payload
         };
-    case actionTypes.DELETE_PRESET:
-        return {
-            presets: state.presets
-        };
-    case actionTypes.DUPLICATE_PRESET:
-        return {
-            presets: state.presets
-        };
     default:
         return state;
     }
