@@ -1,3 +1,3 @@
 export const DELETE_PRESET = "DELETE_PRESET";
 export const DUPLICATE_PRESET = "DUPLICATE_PRESET";
-export const GET_ALL_PRESETS = "GET_ALL_PRESETS";
+export const DID_GET_ALL_PRESETS = "presetmanager/DID_GET_ALL_PRESETS";

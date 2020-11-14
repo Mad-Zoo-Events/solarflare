@@ -1,9 +1,12 @@
+import { ThunkAction } from "redux-thunk";
+import { fetchAllPresetsASync } from "../client/Client";
 import { PresetCollection } from "../domain/PresetCollection";
-import fetchAllPresets from "../client/Client";
+import { RootState } from "../RootState";
 import * as actionTypes from "./presetManagerActionTypes";
 
+// ACTION TYPES
 export interface GetAllPresetsAction {
-    type: typeof actionTypes.GET_ALL_PRESETS
+    type: typeof actionTypes.DID_GET_ALL_PRESETS
     payload: PresetCollection
 }
 
@@ -25,10 +28,11 @@ export interface DuplicatePresetAction {
 
 export type PresetManagerAction = GetAllPresetsAction | DeletePresetAction | DuplicatePresetAction
 
-export function getAllPresets (): GetAllPresetsAction {
+// ACTION CREATORS
+export function didGetPresets (payload: PresetCollection): GetAllPresetsAction {
     return {
-        type: actionTypes.GET_ALL_PRESETS,
-        payload: fetchAllPresets()
+        type: actionTypes.DID_GET_ALL_PRESETS,
+        payload
     };
 };
 
@@ -44,4 +48,10 @@ export function duplicatePreset (id: string, effectType: string): DuplicatePrese
         type: actionTypes.DUPLICATE_PRESET,
         payload: { id, effectType }
     };
+};
+
+// ACTIONS
+export const fetchAllPresets = (): ThunkAction<void, RootState, null, GetAllPresetsAction> => async dispatch => {
+    const resp = await fetchAllPresetsASync();
+    dispatch(didGetPresets(resp));
 };
