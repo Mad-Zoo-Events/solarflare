@@ -1,4 +1,11 @@
+import { PresetCollection } from "../domain/PresetCollection";
+import fetchAllPresets from "../client/Client";
 import * as actionTypes from "./presetManagerActionTypes";
+
+export interface GetAllPresetsAction {
+    type: typeof actionTypes.GET_ALL_PRESETS
+    payload: PresetCollection
+}
 
 export interface DeletePresetAction {
     type: typeof actionTypes.DELETE_PRESET
@@ -16,7 +23,14 @@ export interface DuplicatePresetAction {
     }
 }
 
-export type PresetManagerAction = DeletePresetAction | DuplicatePresetAction
+export type PresetManagerAction = GetAllPresetsAction | DeletePresetAction | DuplicatePresetAction
+
+export function getAllPresets (): GetAllPresetsAction {
+    return {
+        type: actionTypes.GET_ALL_PRESETS,
+        payload: fetchAllPresets()
+    };
+};
 
 export function detelePreset (id: string, effectType: string): DeletePresetAction {
     return {
