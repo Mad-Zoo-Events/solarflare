@@ -93,7 +93,7 @@ func PresetDeletionHandler(c *gin.Context) {
 // PresetDuplicationHandler duplicates a preset
 func PresetDuplicationHandler(c *gin.Context) {
 
-	err := controller.DuplicatePreset(c.Param("effectType"), c.Param("id"))
+	newID, err := controller.DuplicatePreset(c.Param("effectType"), c.Param("id"))
 	if err != nil {
 		switch sferror.GetErrorType(err) {
 		case sferror.DatabaseNotFound:
@@ -106,7 +106,7 @@ func PresetDuplicationHandler(c *gin.Context) {
 		return
 	}
 
-	c.Status(http.StatusCreated)
+	c.String(http.StatusCreated, *newID)
 }
 
 // PresetFormTestTestHandler handles requests from the UI to test a preset
