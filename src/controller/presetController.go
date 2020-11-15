@@ -171,42 +171,40 @@ func DeletePreset(effectType, id string) error {
 }
 
 // DuplicatePreset duplicates a preset and reloads
-func DuplicatePreset(effectType, id string) error {
+func DuplicatePreset(effectType, id string) (newID *string, err error) {
 	preset, err := utils.FindPreset(id, model.EffectType(effectType))
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	switch model.EffectType(effectType) {
 	case model.ParticleEffectType:
 		p := preset.(model.ParticleEffectPreset)
 		p.ID = ""
-		_, err = manager.UpsertParticleEffectPreset(p)
+		return manager.UpsertParticleEffectPreset(p)
 	case model.DragonEffectType:
 		p := preset.(model.DragonEffectPreset)
 		p.ID = ""
-		_, err = manager.UpsertDragonEffectPreset(p)
+		return manager.UpsertDragonEffectPreset(p)
 	case model.TimeshiftEffectType:
 		p := preset.(model.TimeshiftEffectPreset)
 		p.ID = ""
-		_, err = manager.UpsertTimeshiftEffectPreset(p)
+		return manager.UpsertTimeshiftEffectPreset(p)
 	case model.PotionEffectType:
 		p := preset.(model.PotionEffectPreset)
 		p.ID = ""
-		_, err = manager.UpsertPotionEffectPreset(p)
+		return manager.UpsertPotionEffectPreset(p)
 	case model.LaserEffectType:
 		p := preset.(model.LaserEffectPreset)
 		p.ID = ""
-		_, err = manager.UpsertLaserEffectPreset(p)
+		return manager.UpsertLaserEffectPreset(p)
 	case model.CommandEffectType:
 		p := preset.(model.CommandEffectPreset)
 		p.ID = ""
-		_, err = manager.UpsertCommandEffectPreset(p)
-	default:
-		err = sferror.New(sferror.InvalidEffectType, effectType, nil)
+		return manager.UpsertCommandEffectPreset(p)
 	}
 
-	return err
+	return nil, sferror.New(sferror.InvalidEffectType, effectType, nil)
 }
 
 // TestPreset runs a preset from a UI request for three seconds
