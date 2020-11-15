@@ -19,6 +19,9 @@ const PresetManagerListGroup = ({
             easing="ease-in-out"
         >
             <div className="preset-manager-list-group__container" style={{ ...coloredBorder }}>
+                <PresetManagerListItem
+                    key="new"
+                    accentColor={accentColor} />
                 { presets.map(preset =>
                     <PresetManagerListItem
                         key={preset.id}
