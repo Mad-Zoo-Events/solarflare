@@ -4,7 +4,7 @@
 
     display              : grid;
     gap                  : 0.2em;
-    grid-template-columns: auto min-content min-content;
+    grid-template-columns: auto min-content max-content;
     grid-template-areas  :
         'name        shortcut actions'
         'description shortcut actions'
@@ -31,6 +31,28 @@
     grid-area: id;
     font-size: x-small;
     color    : var(--gray);
+}
+
+.preset-manager-list-item__actions {
+    grid-area  : actions;
+    display    : flex;
+    align-items: center;
+    margin     : auto 0.5em auto 2em;
+
+    & .fa-edit {
+        cursor: pointer;
+    }
+
+    & .fa-clone {
+        cursor: pointer;
+        color : var(--teal);
+        margin: 0 0.5em;
+    }
+
+    & .fa-trash-alt {
+        cursor: pointer;
+        color : var(--red);
+    }
 }
 
 .preset-manager-list-item__add-new {
