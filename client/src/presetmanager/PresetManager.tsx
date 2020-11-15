@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { RootState } from "../RootState";
@@ -11,11 +11,12 @@ const PresetManager = ({
     presets,
     getPresets
 }: PresetManagerProps) => {
+    useEffect(getPresets, []);
+
     return (
         <>
             <PresetManagerList presets={presets} />
             <Link to={Routes.controlPanel}>Back</Link>
-            <button onClick={getPresets}>Get Presets</button>
         </>
     );
 };
