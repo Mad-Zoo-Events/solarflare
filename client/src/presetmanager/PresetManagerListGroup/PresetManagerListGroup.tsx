@@ -14,7 +14,10 @@ const PresetManagerListGroup = ({
     const header = <div className="preset-manager-list-group__header" style={coloredBackground}>{headerText} ({presets.length})</div>;
 
     return (
-        <Collapsible trigger={header}>
+        <Collapsible
+            trigger={header}
+            easing="ease-in-out"
+        >
             <div className="preset-manager-list-group__container" style={{ ...coloredBorder }}>
                 { presets.map(preset =>
                     <PresetManagerListItem

@@ -8,16 +8,41 @@ const PresetManagerList = ({
     presets
 }: PresetManagerListProps) => {
     const {
+        particlePresets,
+        dragonPresets,
+        laserPresets,
+        potionPresets,
+        timeshiftPresets,
         commandPresets
-        // dragonPresets,
-        // laserPresets,
-        // particlePresets,
-        // potionPreset,
-        // timeshiftPreset
     } = presets;
 
     return (
         <>
+            <PresetManagerListGroup
+                presets={particlePresets}
+                accentColor={"cyan"}
+                headerText={"Particle Effect Presets"}
+            />
+            <PresetManagerListGroup
+                presets={dragonPresets}
+                accentColor={"magenta"}
+                headerText={"Dragon Effect Presets"}
+            />
+            <PresetManagerListGroup
+                presets={laserPresets}
+                accentColor={"indigo"}
+                headerText={"Laser Effect Presets"}
+            />
+            <PresetManagerListGroup
+                presets={potionPresets}
+                accentColor={"green"}
+                headerText={"Potion Effect Presets"}
+            />
+            <PresetManagerListGroup
+                presets={timeshiftPresets}
+                accentColor={"orange"}
+                headerText={"Timeshift Effect Presets"}
+            />
             <PresetManagerListGroup
                 presets={commandPresets}
                 accentColor={"steel"}

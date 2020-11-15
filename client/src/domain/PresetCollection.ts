@@ -5,6 +5,6 @@ export interface PresetCollection {
     dragonPresets: DragonPreset[]
     laserPresets: LaserPreset[]
     particlePresets: ParticlePreset[]
-    potionPreset: PotionPreset[]
-    timeshiftPreset: TimeshiftPreset[]
+    potionPresets: PotionPreset[]
+    timeshiftPresets: TimeshiftPreset[]
 }
