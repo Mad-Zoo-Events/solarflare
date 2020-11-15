@@ -21,9 +21,7 @@
     padding : 0;
     position: relative;
 
-    &:after {
-        font-size : x-large;
-        content   : '▼';
+    & .preset-manager-list-group__header-chevron {
         position  : absolute;
         right     : 1em;
         top       : 0.5em;
@@ -32,7 +30,7 @@
     }
 
     &.is-open {
-        &:after {
+        & .preset-manager-list-group__header-chevron {
             transform: rotateZ(180deg);
         }
     }

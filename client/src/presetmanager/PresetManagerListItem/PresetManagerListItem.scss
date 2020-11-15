@@ -1,6 +1,5 @@
 .preset-manager-list-item__container {
     padding         : 0.5em;
-    /* border       : 1px solid; */
     background-color: var(--background-alpha2);
 
     display              : grid;
@@ -35,12 +34,10 @@
 }
 
 .preset-manager-list-item__add-new {
-    background-color: var(--background-alpha2);
-    font-size       : xx-large;
+    background-color: var(--background-alpha);
     cursor          : pointer;
-
-    div {
-        width : min-content;
-        margin: auto auto;
-    }
+    display         : flex;
+    justify-content : center;
+    align-items     : center;
+    padding         : 1em;
 }
