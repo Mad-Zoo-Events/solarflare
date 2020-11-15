@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { RootState } from "../../RootState";
-import PresetManagerListItem from "../PresetManagerListItem/PresetManagerListItem";
+import PresetManagerListGroup from "../PresetManagerListGroup/PresetManagerListGroup";
 import { PresetManagerListProps } from "./PresetManagerListProps";
 
 const PresetManagerList = ({
@@ -18,7 +18,11 @@ const PresetManagerList = ({
 
     return (
         <>
-            {commandPresets.map(preset => <PresetManagerListItem key={preset.id} preset={preset} />)}
+            <PresetManagerListGroup
+                presets={commandPresets}
+                accentColor={"steel"}
+                headerText={"Command Presets"}
+            />
         </>
     );
 };
