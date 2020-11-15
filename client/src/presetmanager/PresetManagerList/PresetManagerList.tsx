@@ -20,32 +20,32 @@ const PresetManagerList = ({
         <>
             <PresetManagerListGroup
                 presets={particlePresets}
-                accentColor={"cyan"}
+                effectType={"particle"}
                 headerText={"Particle Effect Presets"}
             />
             <PresetManagerListGroup
                 presets={dragonPresets}
-                accentColor={"magenta"}
+                effectType={"dragon"}
                 headerText={"Dragon Effect Presets"}
             />
             <PresetManagerListGroup
                 presets={laserPresets}
-                accentColor={"indigo"}
+                effectType={"laser"}
                 headerText={"Laser Effect Presets"}
             />
             <PresetManagerListGroup
                 presets={potionPresets}
-                accentColor={"green"}
+                effectType={"potion"}
                 headerText={"Potion Effect Presets"}
             />
             <PresetManagerListGroup
                 presets={timeshiftPresets}
-                accentColor={"orange"}
+                effectType={"timeshift"}
                 headerText={"Timeshift Effect Presets"}
             />
             <PresetManagerListGroup
                 presets={commandPresets}
-                accentColor={"steel"}
+                effectType={"command"}
                 headerText={"Command Presets"}
             />
         </>

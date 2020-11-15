@@ -1,13 +1,17 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { getShortcut } from "../../utils/utils";
+import { connect } from "react-redux";
+import { getAccentColor, getShortcut } from "../../utils/utils";
+import { duplicatePreset } from "../PresetManagerActions";
 import "./PresetManagerListItem.scss";
-import { PresetManagerListItemProps } from "./PresetManagerListProps";
+import { PresetManagerListItemProps } from "./PresetManagerListItemProps";
 
 const PresetManagerListItem = ({
-    accentColor,
-    preset
+    effectType,
+    preset,
+    onDuplicate
 }: PresetManagerListItemProps) => {
+    const accentColor = getAccentColor(effectType);
     const coloredText = { color: `var(--${accentColor})` };
 
     if (preset) {
@@ -25,7 +29,7 @@ const PresetManagerListItem = ({
                 <div className="preset-manager-list-item__id">{id}</div>
                 <div className="preset-manager-list-item__actions">
                     <FontAwesomeIcon icon={["far", "edit"]} size="lg" style={coloredText}/>
-                    <FontAwesomeIcon icon={["far", "clone"]} size="lg" />
+                    <FontAwesomeIcon icon={["far", "clone"]} size="lg" onClick={() => onDuplicate(id, effectType)} />
                     <FontAwesomeIcon icon={["far", "trash-alt"]} size="lg" />
                 </div>
             </div>
@@ -40,4 +44,8 @@ const PresetManagerListItem = ({
     );
 };
 
-export default PresetManagerListItem;
+const mapDispatchToProps = {
+    onDuplicate: duplicatePreset
+};
+
+export default connect(null, mapDispatchToProps)(PresetManagerListItem);
