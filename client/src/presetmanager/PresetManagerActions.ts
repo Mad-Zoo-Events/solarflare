@@ -1,7 +1,7 @@
 import { AnyAction } from "redux";
 import { createAction } from "redux-actions";
 import { ThunkAction } from "redux-thunk";
-import { fetchAllPresetsASync } from "../client/Client";
+import { fetchAllPresets } from "../client/Client";
 import { PresetCollection } from "../domain/PresetCollection";
 import { RootState } from "../RootState";
 import * as actionTypes from "./PresetManagerActionTypes";
@@ -18,7 +18,7 @@ export type PresetManagerAction = GetAllPresetsAction
 export const didGetAllPresets = createAction<PresetCollection>(actionTypes.DID_GET_ALL_PRESETS);
 
 // ACTIONS
-export const fetchAllPresets = (): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {
-    const resp = await fetchAllPresetsASync();
+export const fetchPresets = (): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {
+    const resp = await fetchAllPresets();
     dispatch(didGetAllPresets(resp));
 };

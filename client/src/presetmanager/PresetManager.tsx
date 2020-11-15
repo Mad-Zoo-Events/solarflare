@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { RootState } from "../RootState";
 import Routes from "../routes";
-import { fetchAllPresets } from "./PresetManagerActions";
+import { fetchPresets } from "./PresetManagerActions";
 import PresetManagerList from "./PresetManagerList/PresetManagerList";
 import { PresetManagerProps } from "./PresetManagerProps";
 
@@ -30,7 +30,7 @@ function mapStateToProps (state: RootState) {
 }
 
 const mapDispatchToProps = {
-    getPresets: fetchAllPresets
+    getPresets: fetchPresets
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PresetManager);
