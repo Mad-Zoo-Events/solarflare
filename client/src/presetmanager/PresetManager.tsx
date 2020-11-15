@@ -8,14 +8,13 @@ import PresetManagerList from "./PresetManagerList/PresetManagerList";
 import { PresetManagerProps } from "./PresetManagerProps";
 
 const PresetManager = ({
-    presets,
     getPresets
 }: PresetManagerProps) => {
     useEffect(getPresets, []);
 
     return (
         <>
-            <PresetManagerList presets={presets} />
+            <PresetManagerList />
             <Link to={Routes.controlPanel}>Back</Link>
         </>
     );
