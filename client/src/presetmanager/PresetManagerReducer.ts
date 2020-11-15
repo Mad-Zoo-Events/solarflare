@@ -8,8 +8,8 @@ const initialState: PresetManagerState = {
         dragonPresets: [],
         laserPresets: [],
         particlePresets: [],
-        potionPreset: [],
-        timeshiftPreset: []
+        potionPresets: [],
+        timeshiftPresets: []
     }
 };
 
