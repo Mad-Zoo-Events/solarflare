@@ -112,10 +112,10 @@ type Error struct {
 
 // PresetCollection is the response model used to return all presets at once
 type PresetCollection struct {
-	ParticleEffectPresets  []ParticleEffectPreset  `json:"particleEffectPresets"`
-	DragonEffectPresets    []DragonEffectPreset    `json:"dragonEffectPresets"`
-	TimeshiftEffectPresets []TimeshiftEffectPreset `json:"timeshiftEffectPresets"`
-	PotionEffectPresets    []PotionEffectPreset    `json:"potionEffectPresets"`
-	LaserEffectPresets     []LaserEffectPreset     `json:"laserEffectPresets"`
-	CommandEffectPresets   []CommandEffectPreset   `json:"commandEffectPresets"`
+	ParticleEffectPresets  []ParticleEffectPreset  `json:"particlePresets"`
+	DragonEffectPresets    []DragonEffectPreset    `json:"dragonPresets"`
+	TimeshiftEffectPresets []TimeshiftEffectPreset `json:"timeshiftPresets"`
+	PotionEffectPresets    []PotionEffectPreset    `json:"potionPresets"`
+	LaserEffectPresets     []LaserEffectPreset     `json:"laserPresets"`
+	CommandEffectPresets   []CommandEffectPreset   `json:"commandPresets"`
 }

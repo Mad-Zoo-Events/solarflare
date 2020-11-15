@@ -189,11 +189,11 @@ Returns an object containing an array for each preset type
 
 ```
 {
-	"particleEffectPresets": []
-	"dragonEffectPresets": []
-	"timeshiftEffectPresets": []
-	"potionEffectPresets": []
-	"laserEffectPresets": []
-	"commandEffectPresets": []
+	"particlePresets": []
+	"dragonPresets": []
+	"timeshiftPresets": []
+	"potionPresets": []
+	"laserPresets": []
+	"commandPresets": []
 }
 ```
