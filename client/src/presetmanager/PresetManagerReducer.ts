@@ -1,5 +1,5 @@
-import { PresetManagerAction } from "./presetManagerActions";
-import * as actionTypes from "./presetManagerActionTypes";
+import { PresetManagerAction } from "./PresetManagerActions";
+import * as actionTypes from "./PresetManagerActionTypes";
 import { PresetManagerState } from "./PresetManagerState";
 
 const initialState: PresetManagerState = {

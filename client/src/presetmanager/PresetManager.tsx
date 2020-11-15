@@ -1,11 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import PresetManagerList from "../components/PresetManagerList";
 import { RootState } from "../RootState";
 import Routes from "../routes";
-import { fetchAllPresets } from "./presetManagerActions";
-import { PresetManagerProps } from "./presetManagerProps";
+import { fetchAllPresets } from "./PresetManagerActions";
+import PresetManagerList from "./PresetManagerList/PresetManagerList";
+import { PresetManagerProps } from "./PresetManagerProps";
 
 const PresetManager = ({
     presets,
@@ -13,7 +13,7 @@ const PresetManager = ({
 }: PresetManagerProps) => {
     return (
         <>
-            <PresetManagerList />
+            <PresetManagerList presets={presets} />
             <Link to={Routes.controlPanel}>Back</Link>
             <button onClick={getPresets}>Get Presets</button>
         </>
