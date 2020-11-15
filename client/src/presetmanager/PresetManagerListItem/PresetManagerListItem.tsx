@@ -1,5 +1,6 @@
 import React from "react";
 import { PresetManagerListItemProps } from "./PresetManagerListProps";
+import "./PresetManagerListItem.scss";
 
 const PresetManagerListItem = ({
     preset
