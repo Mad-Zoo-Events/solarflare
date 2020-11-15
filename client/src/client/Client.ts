@@ -16,3 +16,7 @@ export async function duplicatePreset (id: string, effectType: string): Promise<
     const res = await axios.post<string>(`/presets/${effectType}/${id}/duplicate`);
     return Promise.resolve(res.data);
 }
+
+export async function deletePreset (id: string, effectType: string) {
+    await axios.delete<string>(`/presets/${effectType}/${id}`);
+}
