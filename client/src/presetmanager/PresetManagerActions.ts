@@ -1,7 +1,7 @@
 import { AnyAction } from "redux";
 import { createAction } from "redux-actions";
 import { ThunkAction } from "redux-thunk";
-import { duplicatePreset as doDuplicatePreset, fetchAllPresets, fetchPresetsOfType } from "../client/Client";
+import { duplicatePreset as doDuplicatePreset, deletePreset as doDeletePreset, fetchAllPresets, fetchPresetsOfType } from "../client/Client";
 import { PresetCollection } from "../domain/PresetCollection";
 import { Preset } from "../domain/presets/Preset";
 import { RootState } from "../RootState";
@@ -32,6 +32,12 @@ export const fetchPresets = (): ThunkAction<void, RootState, null, AnyAction> =>
 };
 export const duplicatePreset = (id: string, effectType: string): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {
     await doDuplicatePreset(id, effectType);
+
+    const presets = await fetchPresetsOfType(effectType);
+    dispatch(didGetPresetsOfType({ effectType, presets }));
+};
+export const deletePreset = (id: string, effectType: string): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {
+    await doDeletePreset(id, effectType);
 
     const presets = await fetchPresetsOfType(effectType);
     dispatch(didGetPresetsOfType({ effectType, presets }));

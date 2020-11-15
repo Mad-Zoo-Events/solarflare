@@ -2,14 +2,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { connect } from "react-redux";
 import { getAccentColor, getShortcut } from "../../utils/utils";
-import { duplicatePreset } from "../PresetManagerActions";
+import { deletePreset, duplicatePreset } from "../PresetManagerActions";
 import "./PresetManagerListItem.scss";
 import { PresetManagerListItemProps } from "./PresetManagerListItemProps";
 
 const PresetManagerListItem = ({
     effectType,
     preset,
-    onDuplicate
+    onDuplicate,
+    onDelete
 }: PresetManagerListItemProps) => {
     const accentColor = getAccentColor(effectType);
     const coloredText = { color: `var(--${accentColor})` };
@@ -17,6 +18,9 @@ const PresetManagerListItem = ({
     if (preset) {
         const { id, displayName, description, keyBinding } = preset;
         const coloredBorder = { borderColor: `var(--${accentColor})` };
+        const confirmDelete = (id: string, effectType: string) => {
+            window.confirm("Are you sure you wish to delete this preset?") && onDelete(id, effectType);
+        };
 
         return (
             <div className="preset-manager-list-item__container" style={coloredBorder}>
@@ -30,14 +34,13 @@ const PresetManagerListItem = ({
                 <div className="preset-manager-list-item__actions">
                     <FontAwesomeIcon icon={["far", "edit"]} size="lg" style={coloredText}/>
                     <FontAwesomeIcon icon={["far", "clone"]} size="lg" onClick={() => onDuplicate(id, effectType)} />
-                    <FontAwesomeIcon icon={["far", "trash-alt"]} size="lg" />
+                    <FontAwesomeIcon icon={["far", "trash-alt"]} size="lg" onClick={() => confirmDelete(id, effectType)} />
                 </div>
             </div>
         );
     }
 
     return (
-
         <div className="preset-manager-list-item__add-new" style={coloredText}>
             <FontAwesomeIcon icon={["fas", "plus-circle"]} size="2x" />
         </div>
@@ -45,7 +48,8 @@ const PresetManagerListItem = ({
 };
 
 const mapDispatchToProps = {
-    onDuplicate: duplicatePreset
+    onDuplicate: duplicatePreset,
+    onDelete: deletePreset
 };
 
 export default connect(null, mapDispatchToProps)(PresetManagerListItem);
