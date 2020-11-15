@@ -23,6 +23,11 @@ const PresetManagerListItem = ({
                     keyBinding && <div className="preset-manager-list-item__shortcut code">{getShortcut(keyBinding)}</div>
                 }
                 <div className="preset-manager-list-item__id">{id}</div>
+                <div className="preset-manager-list-item__actions">
+                    <FontAwesomeIcon icon={["far", "edit"]} size="lg" style={coloredText}/>
+                    <FontAwesomeIcon icon={["far", "clone"]} size="lg" />
+                    <FontAwesomeIcon icon={["far", "trash-alt"]} size="lg" />
+                </div>
             </div>
         );
     }
