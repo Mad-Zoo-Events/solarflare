@@ -109,3 +109,13 @@ type Error struct {
 	Code    int64  `json:"code"`
 	Message string `json:"message"`
 }
+
+// PresetCollection is the response model used to return all presets at once
+type PresetCollection struct {
+	ParticleEffectPresets  []ParticleEffectPreset  `json:"particleEffectPresets"`
+	DragonEffectPresets    []DragonEffectPreset    `json:"dragonEffectPresets"`
+	TimeshiftEffectPresets []TimeshiftEffectPreset `json:"timeshiftEffectPresets"`
+	PotionEffectPresets    []PotionEffectPreset    `json:"potionEffectPresets"`
+	LaserEffectPresets     []LaserEffectPreset     `json:"laserEffectPresets"`
+	CommandEffectPresets   []CommandEffectPreset   `json:"commandEffectPresets"`
+}

@@ -281,19 +281,32 @@ func TestPreset(effectType string, values url.Values) error {
 
 // RetrievePresets retrieves all preset of a specific type
 func RetrievePresets(effectType string) (interface{}, error) {
+	cfg := config.Get()
+
+	if effectType == "all" {
+		return model.PresetCollection{
+			ParticleEffectPresets:  cfg.ParticleEffectPresets,
+			DragonEffectPresets:    cfg.DragonEffectPresets,
+			CommandEffectPresets:   cfg.CommandEffectPresets,
+			LaserEffectPresets:     cfg.LaserEffectPresets,
+			PotionEffectPresets:    cfg.PotionEffectPresets,
+			TimeshiftEffectPresets: cfg.TimeshiftEffectPresets,
+		}, nil
+	}
+
 	switch model.EffectType(effectType) {
 	case model.ParticleEffectType:
-		return client.GetParticleEffectPresets(), nil
+		return cfg.ParticleEffectPresets, nil
 	case model.DragonEffectType:
-		return client.GetDragonEffectPresets(), nil
+		return cfg.DragonEffectPresets, nil
 	case model.TimeshiftEffectType:
-		return client.GetTimeshiftEffectPresets(), nil
+		return cfg.TimeshiftEffectPresets, nil
 	case model.PotionEffectType:
-		return client.GetPotionEffectPresets(), nil
+		return cfg.PotionEffectPresets, nil
 	case model.LaserEffectType:
-		return client.GetLaserEffectPresets(), nil
+		return cfg.LaserEffectPresets, nil
 	case model.CommandEffectType:
-		return client.GetLaserEffectPresets(), nil
+		return cfg.LaserEffectPresets, nil
 	default:
 		return nil, sferror.New(sferror.InvalidEffectType, effectType, nil)
 	}
