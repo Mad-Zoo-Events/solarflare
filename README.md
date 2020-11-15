@@ -177,6 +177,23 @@ If you still wish to do it manually via POST requests, you should know what you 
 
 ### Retrieve presets
 
-You can retrieve all presets of a specific type; retrieving all presets of all types will be implemented at a later stage.
+You can retrieve all presets of a specific type or all presets of all types:
 
 `GET https://visuals.madzoo.events/presets/{effectType}`
+
+Returns an array of all presets of the specified type
+
+`GET https://visuals.madzoo.events/presets/all`
+
+Returns an object containing an array for each preset type
+
+```
+{
+	"particleEffectPresets": []
+	"dragonEffectPresets": []
+	"timeshiftEffectPresets": []
+	"potionEffectPresets": []
+	"laserEffectPresets": []
+	"commandEffectPresets": []
+}
+```
