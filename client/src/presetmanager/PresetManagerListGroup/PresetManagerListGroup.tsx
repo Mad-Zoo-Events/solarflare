@@ -1,15 +1,17 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import Collapsible from "react-collapsible";
+import { getAccentColor } from "../../utils/utils";
 import PresetManagerListItem from "../PresetManagerListItem/PresetManagerListItem";
 import "./PresetManagerListGroup.scss";
 import { PresetManagerListGroupProps } from "./PresetManagerListGroupProps";
 
 const PresetManagerListGroup = ({
-    accentColor,
+    effectType,
     headerText,
     presets
 }: PresetManagerListGroupProps) => {
+    const accentColor = getAccentColor(effectType);
     const coloredBackground = { backgroundColor: `var(--${accentColor})` };
     const coloredBorder = { borderColor: `var(--${accentColor})` };
     const coloredBackgroundAlpha = { backgroundColor: `var(--${accentColor}-alpha)` };
@@ -26,12 +28,12 @@ const PresetManagerListGroup = ({
             <div className="preset-manager-list-group__container" style={{ ...coloredBorder, ...coloredBackgroundAlpha }}>
                 <PresetManagerListItem
                     key="new"
-                    accentColor={accentColor} />
+                    effectType={effectType} />
                 { presets.map(preset =>
                     <PresetManagerListItem
                         key={preset.id}
                         preset={preset}
-                        accentColor={accentColor} />
+                        effectType={effectType} />
                 )}
             </div>
         </Collapsible>
