@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { getShortcut } from "../../utils/utils";
 import "./PresetManagerListItem.scss";
@@ -8,10 +9,10 @@ const PresetManagerListItem = ({
     preset
 }: PresetManagerListItemProps) => {
     const coloredText = { color: `var(--${accentColor})` };
-    const coloredBorder = { borderColor: `var(--${accentColor})` };
 
     if (preset) {
         const { id, displayName, description, keyBinding } = preset;
+        const coloredBorder = { borderColor: `var(--${accentColor})` };
 
         return (
             <div className="preset-manager-list-item__container" style={coloredBorder}>
@@ -27,8 +28,9 @@ const PresetManagerListItem = ({
     }
 
     return (
-        <div className="preset-manager-list-item__add-new" style={{ ...coloredBorder, ...coloredText }}>
-            <div>+</div>
+
+        <div className="preset-manager-list-item__add-new" style={coloredText}>
+            <FontAwesomeIcon icon={["fas", "plus-circle"]} size="2x" />
         </div>
     );
 };
