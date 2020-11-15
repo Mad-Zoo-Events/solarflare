@@ -4,7 +4,7 @@ import { ThunkAction } from "redux-thunk";
 import { fetchAllPresetsASync } from "../client/Client";
 import { PresetCollection } from "../domain/PresetCollection";
 import { RootState } from "../RootState";
-import * as actionTypes from "./presetManagerActionTypes";
+import * as actionTypes from "./PresetManagerActionTypes";
 
 // ACTION TYPES
 export interface GetAllPresetsAction {
