@@ -33,3 +33,14 @@
     font-size: x-small;
     color    : var(--gray);
 }
+
+.preset-manager-list-item__add-new {
+    background-color: var(--background-alpha2);
+    font-size       : xx-large;
+    cursor          : pointer;
+
+    div {
+        width : min-content;
+        margin: auto auto;
+    }
+}
