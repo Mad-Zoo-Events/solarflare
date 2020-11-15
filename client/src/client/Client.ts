@@ -1,16 +1,7 @@
 import { PresetCollection } from "../domain/PresetCollection";
+import axios from "axios";
 
 export async function fetchAllPresets (): Promise<PresetCollection> {
-    return Promise.resolve({
-        commandPresets: [{
-            id: "abc",
-            displayName: "ABC",
-            commands: ["do this"]
-        }],
-        dragonPresets: [],
-        laserPresets: [],
-        particlePresets: [],
-        potionPreset: [],
-        timeshiftPreset: []
-    });
+    const res = await axios.get<PresetCollection>("/presets/all");
+    return Promise.resolve(res.data);
 }
