@@ -1,0 +1,38 @@
+.preset-manager-list-group__container {
+    display              : grid;
+    gap                  : 0.5em;
+    grid-template-columns: repeat(auto-fit, minmax(30em, 1fr));
+    box-sizing           : border-box;
+    border               : 1em solid;
+    border-top           : none;
+}
+
+.preset-manager-list-group__header {
+    font-size   : x-large;
+    font-weight : bold;
+    font-variant: small-caps;
+    padding     : 0.4em 1em 0.6em 1em;
+    cursor      : pointer;
+    display     : block;
+}
+
+.Collapsible__trigger {
+    @extend .preset-manager-list-group__header;
+    padding: 0;
+
+    &:after {
+        font-size : x-large;
+        content   : '>';
+        position  : absolute;
+        right     : 1em;
+        top       : 1em;
+        display   : block;
+        transition: transform 300ms;
+    }
+
+    &.is-open {
+        &:after {
+            transform: rotateZ(180deg);
+        }
+    }
+}

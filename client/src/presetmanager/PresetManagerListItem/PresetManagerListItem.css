@@ -1,0 +1,35 @@
+.preset-manager-list-item__container {
+    padding         : 0.5em;
+    /* border       : 1px solid; */
+    background-color: var(--background-alpha2);
+
+    display              : grid;
+    gap                  : 0.2em;
+    grid-template-columns: auto min-content min-content;
+    grid-template-areas  :
+        'name        shortcut actions'
+        'description shortcut actions'
+        'id          shortcut actions';
+}
+
+.preset-manager-list-item__display-name {
+    grid-area  : name;
+    font-weight: bold;
+}
+
+.preset-manager-list-item__description {
+    grid-area : description;
+    font-style: italic;
+}
+
+.preset-manager-list-item__shortcut {
+    grid-area: shortcut;
+    font-size: larger;
+    margin   : auto auto;
+}
+
+.preset-manager-list-item__id {
+    grid-area: id;
+    font-size: x-small;
+    color    : var(--gray);
+}

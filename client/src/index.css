@@ -1,0 +1,16 @@
+@import "./styles/root.css";
+
+body {
+    padding                : 0;
+    margin                 : 0;
+    background-color       : var(--background);
+    color                  : var(--font);
+    font-size              : 0.8em;
+    font-family            : -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing : antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    background-image   : linear-gradient(30deg, var(--background2) 12%, transparent 12.5%, transparent 87%, var(--background2) 87.5%, var(--background2)), linear-gradient(150deg, var(--background2) 12%, transparent 12.5%, transparent 87%, var(--background2) 87.5%, var(--background2)), linear-gradient(30deg, var(--background2) 12%, transparent 12.5%, transparent 87%, var(--background2) 87.5%, var(--background2)), linear-gradient(150deg, var(--background2) 12%, transparent 12.5%, transparent 87%, var(--background2) 87.5%, var(--background2)), linear-gradient(60deg, var(--background3) 25%, transparent 25.5%, transparent 75%, var(--background3) 75%, var(--background3)), linear-gradient(60deg, var(--background3) 25%, transparent 25.5%, transparent 75%, var(--background3) 75%, var(--background3));
+    background-size    : 80px 140px;
+    background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+}
