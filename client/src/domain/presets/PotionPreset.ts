@@ -9,62 +9,18 @@ interface PotionEffect {
     amplifier: number
 }
 
-interface PotionEffectType {
-    name: string
-    description: string
-}
-
-export const PotionEffectTypes: PotionEffectType[] = [
-    {
-        name: "BLINDNESS",
-        description: "Blinds an entity"
-    },
-    {
-        name: "DOLPHINS_GRACE",
-        description: "Squee'ek uh'k kk'kkkk squeek eee'eek"
-    },
-    {
-        name: "GLOWING",
-        description: "Outlines the entity so that it can be seen from afar"
-    },
-    {
-        name: "INVISIBILITY",
-        description: "Grants invisibility"
-    },
-    {
-        name: "JUMP",
-        description: "(= jump_boost) Increases jump height"
-    },
-    {
-        name: "LEVITATION",
-        description: "Causes the entity to float into the air"
-    },
-    {
-        name: "CONFUSION",
-        description: "(= nausea) Warps vision on the client"
-    },
-    {
-        name: "NIGHT_VISION",
-        description: "Allows an entity to see in the dark"
-    },
-    {
-        name: "DAMAGE_RESISTANCE",
-        description: "(= resistance) Decreases damage dealt to an entity"
-    },
-    {
-        name: "SLOW_FALLING",
-        description: "Slows entity fall rate"
-    },
-    {
-        name: "SLOW",
-        description: "(= slowness) Decreases movement speed"
-    },
-    {
-        name: "SPEED",
-        description: "Increases movement speed"
-    },
-    {
-        name: "WATER_BREATHING",
-        description: "Allows breathing underwater"
-    }
-];
+export const PotionEffectTypes: Record<string, string> = {
+    BLINDNESS: "Blinds an entity",
+    DOLPHINS_GRACE: "Squee'ek uh'k kk'kkkk squeek eee'eek",
+    GLOWING: "Outlines the entity so that it can be seen from afar",
+    INVISIBILITY: "Grants invisibility",
+    JUMP: "(= jump_boost) Increases jump height",
+    LEVITATION: "Causes the entity to float into the air",
+    CONFUSION: "(= nausea) Warps vision on the client",
+    NIGHT_VISION: "Allows an entity to see in the dark",
+    DAMAGE_RESISTANCE: "(= resistance) Decreases damage dealt to an entity",
+    SLOW_FALLING: "Slows entity fall rate",
+    SLOW: "(= slowness) Decreases movement speed",
+    SPEED: "Increases movement speed",
+    WATER_BREATHING: "Allows breathing underwater"
+};
