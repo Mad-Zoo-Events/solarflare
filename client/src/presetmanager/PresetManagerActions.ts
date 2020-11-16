@@ -22,7 +22,7 @@ export interface GetPresetsOfType {
 }
 export interface OpenPresetModifier {
     type: typeof SHOULD_OPEN_PRESET_MODIFIER
-    payload: { effectType: string, preset:Preset }
+    payload: { effectType: string, preset: Preset }
 }
 export interface ClosePresetModifier {
     type: typeof SHOULD_CLOSE_PRESET_MODIFIER
@@ -33,7 +33,7 @@ export type PresetManagerAction = GetAllPresetsAction | GetPresetsOfType | OpenP
 // ACTION CREATORS
 export const didGetAllPresets = createAction<PresetCollection>(DID_GET_ALL_PRESETS);
 export const didGetPresetsOfType = createAction<{effectType: string, presets: Preset[]}>(DID_GET_PRESETS_OF_TYPE);
-export const shouldOpenPresetModifier = createAction<{effectType: string, preset?: Preset}>(SHOULD_OPEN_PRESET_MODIFIER);
+export const shouldOpenPresetModifier = createAction<{effectType: string, preset: Preset}>(SHOULD_OPEN_PRESET_MODIFIER);
 export const shouldClosePresetModifier = createAction(SHOULD_CLOSE_PRESET_MODIFIER);
 
 // ACTIONS
@@ -54,9 +54,9 @@ export const deletePreset = (id: string, effectType: string): ThunkAction<void, 
     dispatch(didGetPresetsOfType({ effectType, presets }));
 };
 export const editPreset = (effectType: string, preset?: Preset): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
+    preset = preset || { id: "", displayName: "" } as Preset;
     dispatch(shouldOpenPresetModifier({ effectType, preset }));
 };
-
 export const closePresetModifier = (): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(shouldClosePresetModifier());
 };
