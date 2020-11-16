@@ -1,7 +1,12 @@
 import * as et from "../domain/EffectType";
+import { FormEvent } from "react";
 
 export function getShortcut (keyBinding?: number): string {
     return (keyBinding && String.fromCharCode(keyBinding)) || "";
+}
+
+export function getOnChangeNumber (e: FormEvent<HTMLInputElement>): number {
+    return Number(e.currentTarget.value);
 }
 
 export function getAccentColor (effectType: string): string {
