@@ -18,7 +18,7 @@ const PresetManager = ({
         <>
             <Link to={Routes.controlPanel}>Back</Link>
             <PresetManagerList />
-            {presetToEdit && <PresetModifier preset={presetToEdit.preset} effectType={presetToEdit.effectType} />}
+            {presetToEdit && <PresetModifier />}
         </>
     );
 };

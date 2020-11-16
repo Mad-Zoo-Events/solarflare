@@ -1,5 +1,9 @@
 import { IPreset } from "./IPreset";
 
 export interface CommandPreset extends IPreset {
-    commands: string[]
+    commands: Command[]
+}
+
+interface Command {
+    command: string
 }

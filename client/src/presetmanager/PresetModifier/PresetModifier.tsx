@@ -1,10 +1,11 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
 import * as et from "../../domain/EffectType";
 import { CommandPreset, PotionPreset, TimeshiftPreset } from "../../domain/presets";
 import { Preset } from "../../domain/presets/Preset";
-import { shouldClosePresetModifier } from "../PresetManagerActions";
+import { RootState } from "../../RootState";
+import { closePresetModifier } from "../PresetManagerActions";
 import CommandFragment from "./CommandFragment";
 import PotionFragment from "./PotionFragment";
 import "./PresetModifier.scss";
@@ -18,17 +19,18 @@ const PresetModifier = ({
 }: PresetModifierProps) => {
     preset = preset || { id: "", displayName: "" };
 
-    const { register, handleSubmit } = useForm<Preset>({
+    const { register, handleSubmit, control, setValue } = useForm<Preset>({
         defaultValues: preset
     });
-    const onSubmit = useCallback((formValues: Preset) => {
+
+    const onSubmit = (formValues: Preset) => {
         console.log(formValues);
-    }, []);
+    };
 
     const specificInputs = () => {
         switch (effectType) {
         case et.Command:
-            return <CommandFragment preset={preset as CommandPreset} register={register} />;
+            return <CommandFragment preset={preset as CommandPreset} register={register} control={control} />;
         case et.Dragon:
             break;
         case et.Laser:
@@ -36,9 +38,9 @@ const PresetModifier = ({
         case et.Particle:
             break;
         case et.Potion:
-            return <PotionFragment preset={preset as PotionPreset} register={register} />;
+            return <PotionFragment preset={preset as PotionPreset} register={register} control={control} />;
         case et.Timeshift:
-            return <TimeshiftFragment preset={preset as TimeshiftPreset} register={register} />;
+            return <TimeshiftFragment preset={preset as TimeshiftPreset} register={register} control={control} setValue={setValue} />;
         }
     };
 
@@ -51,17 +53,17 @@ const PresetModifier = ({
 
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <label>Display Name
-                        <input name="displayName" type="text" placeholder="Preset display name" ref={register} />
+                        <input name="displayName" type="text" placeholder="Preset display name" ref={register()} />
                     </label>
                     <br />
 
                     <label>Description
-                        <input name="description" type="text" placeholder="Short description" ref={register} />
+                        <input name="description" type="text" placeholder="Short description" ref={register()} />
                     </label>
                     <br />
 
                     <label>Keyboard Shortcut
-                        <input name="keyBinding" type="text" ref={register} />
+                        <input name="keyBinding" type="text" ref={register()} />
                     </label>
                     <br />
 
@@ -77,8 +79,17 @@ const PresetModifier = ({
     );
 };
 
+function mapStateToProps (state: RootState) {
+    const { effectType, preset } = state.presetmanager.presetToEdit!;
+
+    return {
+        preset,
+        effectType
+    };
+}
+
 const mapDispatchToProps = {
-    onClose: shouldClosePresetModifier
+    onClose: closePresetModifier
 };
 
-export default connect(null, mapDispatchToProps)(PresetModifier);
+export default connect(mapStateToProps, mapDispatchToProps)(PresetModifier);
