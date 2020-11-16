@@ -1,27 +1,50 @@
-import React, { Fragment, useCallback } from "react";
+import React, { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
+import * as et from "../../domain/EffectType";
 import { CommandPreset } from "../../domain/presets";
+import { Preset } from "../../domain/presets/Preset";
 import { shouldClosePresetModifier } from "../PresetManagerActions";
-import { CommandPresetModifierProps } from "./CommandPresetModifierProps";
+import CommandFragment from "./CommandFragment";
 import "./PresetModifier.scss";
+import { PresetModifierProps } from "./PresetModifierProps";
 
-const CommandPresetModifier = ({
+const PresetModifier = ({
     preset,
+    effectType,
     onClose
-}: CommandPresetModifierProps) => {
-    const { register, handleSubmit } = useForm<CommandPreset>({
+}: PresetModifierProps) => {
+    preset = preset || { id: "", displayName: "" };
+
+    const { register, handleSubmit } = useForm<Preset>({
         defaultValues: preset
     });
-    const onSubmit = useCallback((formValues: CommandPreset) => {
+    const onSubmit = useCallback((formValues: Preset) => {
         console.log(formValues);
     }, []);
+
+    const specificInputs = () => {
+        switch (effectType) {
+        case et.Command:
+            return <CommandFragment preset={preset as CommandPreset} register={register} />;
+        case et.Dragon:
+            break;
+        case et.Laser:
+            break;
+        case et.Particle:
+            break;
+        case et.Potion:
+            break;
+        case et.Timeshift:
+            break;
+        }
+    };
 
     return (
         <div className="preset-modifier__popup">
             <div className="preset-modifier__popup-inner">
                 <div className="preset-modifier__header">
-                    {preset.id ? `Edit ${preset.displayName}` : "Create New"} Command Preset
+                    {preset.id ? `Edit "${preset.displayName}"` : "Create New Preset"}
                 </div>
 
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -39,15 +62,8 @@ const CommandPresetModifier = ({
                         <input name="keyBinding" type="text" ref={register} />
                     </label>
                     <br />
-                    {preset.commands.map((command, index) => (
-                        <Fragment key={index}>
-                            <label>Command
-                                <textarea name={`commands[${index}]`} cols={50} rows={5} placeholder="smite Mat_Zo" ref={register}></textarea>
-                            </label>
-                        </Fragment>
-                    ))}
 
-                    <br />
+                    {specificInputs()}
 
                     <input type="submit" value="Save" />
                 </form>
@@ -63,4 +79,4 @@ const mapDispatchToProps = {
     onClose: shouldClosePresetModifier
 };
 
-export default connect(null, mapDispatchToProps)(CommandPresetModifier);
+export default connect(null, mapDispatchToProps)(PresetModifier);

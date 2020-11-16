@@ -1,8 +1,10 @@
 import { HandleThunkActionCreator } from "react-redux";
-import { CommandPreset } from "../../domain/presets";
+import { Preset } from "../../domain/presets/Preset";
 import { shouldClosePresetModifier } from "../PresetManagerActions";
 
-export interface CommandPresetModifierProps {
-    preset: CommandPreset
+export interface PresetModifierProps {
+    preset: Preset
+    effectType: string
+
     onClose: HandleThunkActionCreator<typeof shouldClosePresetModifier>
 }
