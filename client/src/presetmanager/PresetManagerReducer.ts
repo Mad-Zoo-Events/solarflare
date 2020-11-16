@@ -1,6 +1,6 @@
 import * as et from "../domain/EffectType";
 import { CommandPreset, DragonPreset, LaserPreset, ParticlePreset, PotionPreset, TimeshiftPreset } from "../domain/presets";
-import { DID_GET_ALL_PRESETS, DID_GET_PRESETS_OF_TYPE, PresetManagerAction } from "./PresetManagerActions";
+import { DID_GET_ALL_PRESETS, DID_GET_PRESETS_OF_TYPE, PresetManagerAction, SHOULD_CLOSE_PRESET_MODIFIER, SHOULD_OPEN_PRESET_MODIFIER } from "./PresetManagerActions";
 import { PresetManagerState } from "./PresetManagerState";
 
 const initialState: PresetManagerState = {
@@ -22,12 +22,14 @@ function presetManagerReducer (
     switch (action.type) {
     case DID_GET_ALL_PRESETS:
         return {
+            ...state,
             presets: action.payload
         };
     case DID_GET_PRESETS_OF_TYPE:
         switch (action.payload.effectType) {
         case et.Command:
             return {
+                ...state,
                 presets: {
                     ...state.presets,
                     commandPresets: action.payload.presets as CommandPreset[]
@@ -35,6 +37,7 @@ function presetManagerReducer (
             };
         case et.Dragon:
             return {
+                ...state,
                 presets: {
                     ...state.presets,
                     dragonPresets: action.payload.presets as DragonPreset[]
@@ -42,6 +45,7 @@ function presetManagerReducer (
             };
         case et.Laser:
             return {
+                ...state,
                 presets: {
                     ...state.presets,
                     laserPresets: action.payload.presets as LaserPreset[]
@@ -49,6 +53,7 @@ function presetManagerReducer (
             };
         case et.Particle:
             return {
+                ...state,
                 presets: {
                     ...state.presets,
                     particlePresets: action.payload.presets as ParticlePreset[]
@@ -56,6 +61,7 @@ function presetManagerReducer (
             };
         case et.Potion:
             return {
+                ...state,
                 presets: {
                     ...state.presets,
                     potionPresets: action.payload.presets as PotionPreset[]
@@ -63,14 +69,25 @@ function presetManagerReducer (
             };
         case et.Timeshift:
             return {
+                ...state,
                 presets: {
                     ...state.presets,
                     timeshiftPresets: action.payload.presets as TimeshiftPreset[]
                 }
             };
+        default:
+            return state;
         }
+    case SHOULD_OPEN_PRESET_MODIFIER:
         return {
-            presets: state.presets
+            ...state,
+            presetToEdit: action.payload
+        };
+    case SHOULD_CLOSE_PRESET_MODIFIER:
+        console.log("close");
+        return {
+            ...state,
+            presetToEdit: undefined
         };
     default:
         return state;

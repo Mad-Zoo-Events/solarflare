@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { connect } from "react-redux";
 import { getAccentColor, getShortcut } from "../../utils/utils";
-import { deletePreset, duplicatePreset } from "../PresetManagerActions";
+import { deletePreset, duplicatePreset, editPreset } from "../PresetManagerActions";
 import "./PresetManagerListItem.scss";
 import { PresetManagerListItemProps } from "./PresetManagerListItemProps";
 
@@ -10,7 +10,8 @@ const PresetManagerListItem = ({
     effectType,
     preset,
     onDuplicate,
-    onDelete
+    onDelete,
+    onEdit
 }: PresetManagerListItemProps) => {
     const accentColor = getAccentColor(effectType);
     const coloredText = { color: `var(--${accentColor})` };
@@ -32,7 +33,7 @@ const PresetManagerListItem = ({
                 }
                 <div className="preset-manager-list-item__id">{id}</div>
                 <div className="preset-manager-list-item__actions">
-                    <FontAwesomeIcon icon={["far", "edit"]} size="lg" style={coloredText}/>
+                    <FontAwesomeIcon icon={["far", "edit"]} size="lg" style={coloredText} onClick={() => onEdit(effectType, preset)}/>
                     <FontAwesomeIcon icon={["far", "clone"]} size="lg" onClick={() => onDuplicate(id, effectType)} />
                     <FontAwesomeIcon icon={["far", "trash-alt"]} size="lg" onClick={() => confirmDelete(id, effectType)} />
                 </div>
@@ -41,7 +42,7 @@ const PresetManagerListItem = ({
     }
 
     return (
-        <div className="preset-manager-list-item__add-new" style={coloredText}>
+        <div className="preset-manager-list-item__add-new" style={coloredText} onClick={() => onEdit(effectType, preset)}>
             <FontAwesomeIcon icon={["fas", "plus-circle"]} size="2x" />
         </div>
     );
@@ -49,7 +50,8 @@ const PresetManagerListItem = ({
 
 const mapDispatchToProps = {
     onDuplicate: duplicatePreset,
-    onDelete: deletePreset
+    onDelete: deletePreset,
+    onEdit: editPreset
 };
 
 export default connect(null, mapDispatchToProps)(PresetManagerListItem);
