@@ -84,7 +84,6 @@ function presetManagerReducer (
             presetToEdit: action.payload
         };
     case SHOULD_CLOSE_PRESET_MODIFIER:
-        console.log("close");
         return {
             ...state,
             presetToEdit: undefined
