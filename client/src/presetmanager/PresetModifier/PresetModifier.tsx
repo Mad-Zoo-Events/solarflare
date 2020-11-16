@@ -2,10 +2,11 @@ import React, { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
 import * as et from "../../domain/EffectType";
-import { CommandPreset, TimeshiftPreset } from "../../domain/presets";
+import { CommandPreset, PotionPreset, TimeshiftPreset } from "../../domain/presets";
 import { Preset } from "../../domain/presets/Preset";
 import { shouldClosePresetModifier } from "../PresetManagerActions";
 import CommandFragment from "./CommandFragment";
+import PotionFragment from "./PotionFragment";
 import "./PresetModifier.scss";
 import { PresetModifierProps } from "./PresetModifierProps";
 import TimeshiftFragment from "./TimeshiftFragment";
@@ -35,7 +36,7 @@ const PresetModifier = ({
         case et.Particle:
             break;
         case et.Potion:
-            break;
+            return <PotionFragment preset={preset as PotionPreset} register={register} />;
         case et.Timeshift:
             return <TimeshiftFragment preset={preset as TimeshiftPreset} register={register} />;
         }
