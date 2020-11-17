@@ -282,13 +282,14 @@ func RetrievePresets(effectType string) (interface{}, error) {
 	cfg := config.Get()
 
 	if effectType == "all" {
+
 		return model.PresetCollection{
 			ParticleEffectPresets:  cfg.ParticleEffectPresets,
 			DragonEffectPresets:    cfg.DragonEffectPresets,
-			CommandEffectPresets:   cfg.CommandEffectPresets,
-			LaserEffectPresets:     cfg.LaserEffectPresets,
-			PotionEffectPresets:    cfg.PotionEffectPresets,
 			TimeshiftEffectPresets: cfg.TimeshiftEffectPresets,
+			PotionEffectPresets:    cfg.PotionEffectPresets,
+			LaserEffectPresets:     cfg.LaserEffectPresets,
+			CommandEffectPresets:   migrateCommandPresets(cfg.CommandEffectPresets),
 		}, nil
 	}
 
@@ -304,8 +305,27 @@ func RetrievePresets(effectType string) (interface{}, error) {
 	case model.LaserEffectType:
 		return cfg.LaserEffectPresets, nil
 	case model.CommandEffectType:
-		return cfg.LaserEffectPresets, nil
+		return migrateCommandPresets(cfg.CommandEffectPresets), nil
 	default:
 		return nil, sferror.New(sferror.InvalidEffectType, effectType, nil)
 	}
+}
+
+func migrateCommandPresets(presets []model.CommandEffectPreset) []model.CommandEffectPresetResponse {
+	resp := []model.CommandEffectPresetResponse{}
+	for _, p := range presets {
+		cmds := []model.Command{}
+		for _, c := range p.Commands {
+			cmds = append(cmds, model.Command{CommandString: c})
+		}
+		resp = append(resp, model.CommandEffectPresetResponse{
+			ID:          p.ID,
+			DisplayName: p.DisplayName,
+			Description: p.Description,
+			KeyBinding:  p.KeyBinding,
+			Commands:    cmds,
+		})
+	}
+
+	return resp
 }

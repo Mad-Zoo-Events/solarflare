@@ -52,28 +52,26 @@ const PresetModifier = ({
                 </div>
 
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <label>Display Name
-                        <input name="displayName" type="text" placeholder="Preset display name" ref={register()} />
-                    </label>
+                    <label>Display Name</label>
+                    <input name="displayName" type="text" placeholder="Preset display name" ref={register()} />
                     <br />
 
-                    <label>Description
-                        <input name="description" type="text" placeholder="Short description" ref={register()} />
-                    </label>
+                    <label>Description</label>
+                    <input name="description" type="text" placeholder="Short description" ref={register()} />
                     <br />
 
-                    <label>Keyboard Shortcut
-                        <input name="keyBinding" type="text" ref={register()} />
-                    </label>
+                    <label>Keyboard Shortcut</label>
+                    <input name="keyBinding" type="text" ref={register()} />
                     <br />
 
                     {specificInputs()}
-
-                    <input type="submit" value="Save" />
                 </form>
                 <br />
 
-                <button onClick={onClose}>close</button>
+                <div className="preset-modifier__footer">
+                    <button onClick={onClose}>Close</button>
+                    <button onClick={handleSubmit(onSubmit)}>Save</button>
+                </div>
             </div>
         </div>
     );

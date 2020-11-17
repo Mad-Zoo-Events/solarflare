@@ -27,9 +27,8 @@ const CommandFragment = ({
             {fields.map((effect, index) => (
                 <div key={effect.id}>
                     <FontAwesomeIcon icon={["far", "trash-alt"]} size="2x" onClick={() => remove(index)} />
-                    <label>Command
-                        <textarea name={`commands[${index}].command`} cols={50} rows={5} placeholder="smite Mat_Zo" ref={register()}></textarea>
-                    </label>
+                    <label>Command</label>
+                    <textarea name={`commands[${index}].command`} cols={50} rows={5} placeholder="smite Mat_Zo" ref={register()}></textarea>
                 </div>
             ))}
         </>

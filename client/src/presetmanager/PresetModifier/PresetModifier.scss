@@ -22,9 +22,31 @@
     overflow  : scroll;
 
     padding: 2em;
+
+    & form {
+        display              : grid;
+        gap                  : 0.5em;
+        grid-template-columns: min-content auto;
+
+        & label {
+            grid-column: 1;
+        }
+
+        & input {
+            grid-column: 2;
+        }
+    }
 }
 
 .preset-modifier__header {
-    font-size   : x-large;
-    font-variant: small-caps;
+    font-size    : x-large;
+    font-variant : small-caps;
+    border-bottom: 0.1em solid var(--gray);
+    margin-bottom: 1em;
+}
+
+.preset-modifier__footer {
+    position: absolute;
+    bottom  : 0;
+    right   : 0;
 }
