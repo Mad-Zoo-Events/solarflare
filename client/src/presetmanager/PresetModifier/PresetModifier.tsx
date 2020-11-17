@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
@@ -48,29 +49,32 @@ const PresetModifier = ({
         <div className="preset-modifier__popup">
             <div className="preset-modifier__popup-inner">
                 <div className="preset-modifier__header">
-                    {preset.id ? `Edit "${preset.displayName}"` : "Create New Preset"}
+                    {preset.id ? <> Edit <span className="preset-name">{preset.displayName}</span> </> : "Create New Preset"}
+
+                    <div className="form-buttons">
+                        <FontAwesomeIcon className="save-button" icon={["fas", "save"]} size="2x" onClick={handleSubmit(onSubmit)} />
+                        <FontAwesomeIcon className="close-button" icon={["fas", "window-close"]} size="2x" onClick={onClose} />
+                    </div>
                 </div>
 
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <label>Display Name</label>
-                    <input name="displayName" type="text" placeholder="Preset display name" ref={register()} />
-                    <br />
+                <div className="preset-modifier__content">
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <div className="preset-modifier__common-inputs">
+                            <label>Display Name</label>
+                            <input name="displayName" type="text" autoComplete="false" placeholder="Preset display name" ref={register()} />
+                            <br />
 
-                    <label>Description</label>
-                    <input name="description" type="text" placeholder="Short description" ref={register()} />
-                    <br />
+                            <label>Description</label>
+                            <input name="description" type="text" autoComplete="false" placeholder="Short description" ref={register()} />
+                            <br />
 
-                    <label>Keyboard Shortcut</label>
-                    <input name="keyBinding" type="text" ref={register()} />
-                    <br />
+                            <label>Keyboard Shortcut</label>
+                            <input name="keyBinding" type="text" autoComplete="false" ref={register()} />
+                            <br />
+                        </div>
 
-                    {specificInputs()}
-                </form>
-                <br />
-
-                <div className="preset-modifier__footer">
-                    <button onClick={onClose}>Close</button>
-                    <button onClick={handleSubmit(onSubmit)}>Save</button>
+                        {specificInputs()}
+                    </form>
                 </div>
             </div>
         </div>

@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Fragment } from "react";
 import { useFieldArray } from "react-hook-form";
 import { PotionEffectTypes, PotionPreset } from "../../domain/presets/PotionPreset";
+import "./PotionFragment.scss";
 
 interface PotionFragmentProps {
     preset: PotionPreset
@@ -23,24 +24,24 @@ const PotionFragment = ({
 
     return (
         <>
-            <FontAwesomeIcon icon={["fas", "plus-circle"]} size="lg" onClick={() => prepend({ ...preset.potionEffects[0] })} />
+            <div className="add-button" onClick={() => prepend({ ...preset.potionEffects[0] })}>
+                <FontAwesomeIcon icon={["fas", "plus-circle"]} size="2x" />
+            </div>
             {
                 fields.map((effect, index) => (
-                    <div key={effect.id}>
-                        <FontAwesomeIcon icon={["far", "trash-alt"]} size="2x" onClick={() => remove(index)} />
-                        <label>Potion Effect
-                            <select name={`potionEffects[${index}].type`} defaultValue={effect.type} ref={register()}>
-                                {Object.keys(PotionEffectTypes).map(key => (
-                                    <Fragment key={key}>
-                                        <option value={key}>{key}</option>
-                                        <option disabled>&nbsp;&nbsp;└─ {PotionEffectTypes[key]}</option>
-                                    </Fragment>
-                                ))}
-                            </select>
-                        </label>
-                        <label>Amplifier
-                            <input name={`potionEffects[${index}].amplifier`} type="number" defaultValue={effect.amplifier} ref={register()}/>
-                        </label>
+                    <div key={effect.id} className="preset-modifier__potion-item">
+                        <FontAwesomeIcon className="delete-button" icon={["far", "trash-alt"]} size="2x" onClick={() => remove(index)} />
+                        <label className="type-label">Potion Effect #{index + 1}</label>
+                        <select name={`potionEffects[${index}].type`} defaultValue={effect.type} ref={register()}>
+                            {Object.keys(PotionEffectTypes).map(key => (
+                                <Fragment key={key}>
+                                    <option value={key}>{key}</option>
+                                    <option disabled>&nbsp;&nbsp;└─ {PotionEffectTypes[key]}</option>
+                                </Fragment>
+                            ))}
+                        </select>
+                        <label className="amplifier-label">Amplifier</label>
+                        <input name={`potionEffects[${index}].amplifier`} type="number" defaultValue={effect.amplifier} ref={register()}/>
                         < br/>
                     </div>
                 ))

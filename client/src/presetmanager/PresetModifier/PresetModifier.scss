@@ -8,45 +8,86 @@
     right           : 0;
     bottom          : 0;
     margin          : auto;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .preset-modifier__popup-inner {
     position  : absolute;
-    left      : 10%;
-    right     : 10%;
+    left      : 20%;
+    right     : 20%;
     top       : 10%;
     bottom    : 10%;
     margin    : auto;
     background: var(--background);
-    overflow  : scroll;
+    overflow-x: hidden;
+    padding   : 2em;
 
-    padding: 2em;
+    box-shadow: 0 0 5em 2em black;
+}
 
-    & form {
-        display              : grid;
-        gap                  : 0.5em;
-        grid-template-columns: min-content auto;
+.preset-modifier__header {
+    font-size     : x-large;
+    border-bottom : 0.2em solid var(--gray);
+    padding-bottom: 0.5em;
+    margin-bottom : 1em;
 
-        & label {
-            grid-column: 1;
-        }
+    & .preset-name {
+        font-weight: 900;
+    }
 
-        & input {
-            grid-column: 2;
+    & .form-buttons {
+        position: absolute;
+        top     : 0;
+        right   : 0;
+    }
+}
+
+.preset-modifier__common-inputs {
+    display              : grid;
+    gap                  : 0 1em;
+    grid-template-columns: max-content auto;
+
+    & label {
+        grid-column: 1;
+    }
+
+    & input {
+        grid-column: 2;
+    }
+}
+
+div.add-button {
+    cursor         : pointer;
+    padding        : 0.5em;
+    display        : flex;
+    justify-content: center;
+    align-items    : center;
+    margin         : 1em calc(50% - 10em);
+    border         : 0.1em solid var(--green);
+    border-radius  : 3em;
+    color          : var(--green);
+}
+
+.delete-button {
+    cursor : pointer;
+    color  : var(--red);
+    padding: 0.3em 0.5em 0 0;
+    margin : 0 auto;
+
+    &:hover {
+        +label {
+            color: red;
         }
     }
 }
 
-.preset-modifier__header {
-    font-size    : x-large;
-    font-variant : small-caps;
-    border-bottom: 0.1em solid var(--gray);
-    margin-bottom: 1em;
+.close-button {
+    cursor: pointer;
+    color : var(--red);
 }
 
-.preset-modifier__footer {
-    position: absolute;
-    bottom  : 0;
-    right   : 0;
+.save-button {
+    cursor      : pointer;
+    color       : var(--teal);
+    margin-right: 0.5em;
 }

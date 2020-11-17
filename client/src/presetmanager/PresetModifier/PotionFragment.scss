@@ -1,0 +1,28 @@
+.preset-modifier__potion-item {
+    display              : grid;
+    gap                  : 0.5em;
+    grid-template-columns: min-content auto max-content;
+    grid-template-areas  :
+        'delete type-label amplifier-label'
+        'delete type       amplifier';
+
+    & .delete-button {
+        grid-area: delete;
+    }
+
+    & .type-label {
+        grid-area: type-label;
+    }
+
+    & select {
+        grid-area: type;
+    }
+
+    & .amplifier-label {
+        grid-area: amplifier-label;
+    }
+
+    & input[type=number] {
+        grid-area: amplifier;
+    }
+}
