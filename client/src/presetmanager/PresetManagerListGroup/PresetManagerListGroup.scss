@@ -9,12 +9,12 @@
 }
 
 .preset-manager-list-group__header {
-    font-size   : x-large;
-    font-weight : bold;
-    font-variant: small-caps;
-    padding     : 0.4em 1em 0.6em 1em;
-    cursor      : pointer;
-    display     : block;
+    font-size        : x-large;
+    font-weight      : bold;
+    font-variant-caps: all-small-caps;
+    padding          : 0.4em 1em 0.6em 1em;
+    cursor           : pointer;
+    display          : block;
 }
 
 .Collapsible__trigger {

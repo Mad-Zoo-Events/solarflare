@@ -1,0 +1,24 @@
+.preset-modifier__timeshift-item {
+    display              : grid;
+    gap                  : 0.5em;
+    grid-template-columns: min-content min-content auto;
+    grid-template-areas  :
+        'delete label   label'
+        'delete number  range';
+
+    & label {
+        grid-area: label;
+    }
+
+    & .delete-button {
+        grid-area: delete;
+    }
+
+    & input[type=number] {
+        grid-area: number;
+    }
+
+    & input[type=range] {
+        grid-area: range;
+    }
+}

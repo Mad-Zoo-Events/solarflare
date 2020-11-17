@@ -3,3 +3,32 @@
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+input[type=text],
+input[type=number],
+textarea,
+select {
+    color           : var(--font);
+    padding         : 0.5em;
+    border          : none;
+    background-color: var(--dark-gray);
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--teal) var(--background);
+}
+
+*::-webkit-scrollbar {
+    width: 11px;
+}
+
+*::-webkit-scrollbar-track {
+    background: var(--background);
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--teal);
+    border-radius   : 6px;
+    border          : 3px solid var(--background);
+}

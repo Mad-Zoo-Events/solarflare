@@ -3,6 +3,7 @@ import React from "react";
 import { useFieldArray } from "react-hook-form";
 import { TimeshiftPreset } from "../../domain/presets";
 import { getOnChangeNumber } from "../../utils/utils";
+import "./TimeshiftFragment.scss";
 
 interface TimeshiftFragmentProps {
     preset: TimeshiftPreset
@@ -26,12 +27,15 @@ const TimeshiftFragment = ({
 
     return (
         <>
-            <FontAwesomeIcon icon={["fas", "plus-circle"]} size="lg" onClick={() => prepend({ ...preset.timeshiftEffects[0] })} />
-            {fields.map((effect, index) => {
-                return (
-                    <div key={effect.id}>
-                        <FontAwesomeIcon icon={["far", "trash-alt"]} size="2x" onClick={() => remove(index)} />
-                        <label>Amount
+            <div className="add-button" onClick={() => prepend({ ...preset.timeshiftEffects[0] })} >
+                <FontAwesomeIcon className="add-button" icon={["fas", "plus-circle"]} size="2x" />
+            </div>
+            {
+                fields.map((effect, index) => {
+                    return (
+                        <div key={effect.id} className="preset-modifier__timeshift-item">
+                            <FontAwesomeIcon className="delete-button" icon={["far", "trash-alt"]} size="2x" onClick={() => remove(index)} />
+                            <label>Amount #{index + 1}</label>
                             <input
                                 name={`timeshiftEffects[${index}].amount`}
                                 type="number"
@@ -52,10 +56,10 @@ const TimeshiftFragment = ({
                                 ref={register()}
                                 onChange={(e) => setValue(`timeshiftEffects[${index}].amount`, getOnChangeNumber(e))}
                             />
-                        </label>
-                    </div>
-                );
-            })}
+                        </div>
+                    );
+                })
+            }
         </>
     );
 };

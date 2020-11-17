@@ -1,7 +1,9 @@
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
     faPlusCircle,
-    faChevronDown
+    faChevronDown,
+    faWindowClose,
+    faSave
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -13,6 +15,8 @@ import {
 library.add(
     faPlusCircle,
     faChevronDown,
+    faWindowClose,
+    faSave,
 
     faEdit,
     faClone,
