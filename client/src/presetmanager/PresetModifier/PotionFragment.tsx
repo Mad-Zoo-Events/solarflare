@@ -22,15 +22,19 @@ const PotionFragment = ({
         name: "potionEffects"
     });
 
+    const removeEffect = (index: number) => {
+        fields.length > 1 ? remove(index) : alert("Gotta keep at least one effect");
+    };
+
     return (
         <>
             <div className="add-button" onClick={() => prepend({ ...preset.potionEffects[0] })}>
-                <FontAwesomeIcon icon={["fas", "plus-circle"]} size="2x" />
+                <FontAwesomeIcon icon={["fas", "plus-circle"]} size="lg" />
             </div>
             {
                 fields.map((effect, index) => (
                     <div key={effect.id} className="preset-modifier__potion-item">
-                        <FontAwesomeIcon className="delete-button" icon={["far", "trash-alt"]} size="2x" onClick={() => remove(index)} />
+                        <FontAwesomeIcon className="delete-button" icon={["far", "trash-alt"]} size="2x" onClick={() => removeEffect(index)} />
                         <label className="type-label">Potion Effect #{index + 1}</label>
                         <select name={`potionEffects[${index}].type`} defaultValue={effect.type} ref={register()}>
                             {Object.keys(PotionEffectTypes).map(key => (

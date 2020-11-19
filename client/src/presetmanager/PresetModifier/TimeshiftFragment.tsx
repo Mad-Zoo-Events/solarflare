@@ -25,16 +25,20 @@ const TimeshiftFragment = ({
         name: "timeshiftEffects"
     });
 
+    const removeEffect = (index: number) => {
+        fields.length > 1 ? remove(index) : alert("Gotta keep at least one effect");
+    };
+
     return (
         <>
             <div className="add-button" onClick={() => prepend({ ...preset.timeshiftEffects[0] })} >
-                <FontAwesomeIcon className="add-button" icon={["fas", "plus-circle"]} size="2x" />
+                <FontAwesomeIcon className="add-button" icon={["fas", "plus-circle"]} size="lg" />
             </div>
             {
                 fields.map((effect, index) => {
                     return (
                         <div key={effect.id} className="preset-modifier__timeshift-item">
-                            <FontAwesomeIcon className="delete-button" icon={["far", "trash-alt"]} size="2x" onClick={() => remove(index)} />
+                            <FontAwesomeIcon className="delete-button" icon={["far", "trash-alt"]} size="2x" onClick={() => removeEffect(index)} />
                             <label>Amount #{index + 1}</label>
                             <input
                                 name={`timeshiftEffects[${index}].amount`}
