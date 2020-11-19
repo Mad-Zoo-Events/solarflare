@@ -42,9 +42,16 @@
     }
 }
 
+.preset-modifier__subtitle {
+    font-size     : larger;
+    border-bottom : 0.1em solid var(--gray);
+    padding-bottom: 0.5em;
+    margin        : 2em 0 1em 0;
+}
+
 .preset-modifier__common-inputs {
     display              : grid;
-    gap                  : 0 1em;
+    gap                  : 1em;
     grid-template-columns: max-content auto;
 
     & label {
@@ -53,6 +60,20 @@
 
     & input {
         grid-column: 2;
+    }
+}
+
+.preset-modifier__midi-mapping {
+    display              : grid;
+    gap                  : 1em;
+    grid-template-columns: min-content max-content auto;
+
+    & label {
+        grid-column: 2;
+    }
+
+    & input {
+        grid-column: 3;
     }
 }
 
@@ -75,7 +96,7 @@ div.add-button {
     margin : 0 auto;
 
     &:hover {
-        +label {
+        ~label {
             color: red;
         }
     }

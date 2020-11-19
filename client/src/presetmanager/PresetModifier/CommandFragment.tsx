@@ -22,15 +22,19 @@ const CommandFragment = ({
         name: "commands"
     });
 
+    const removeEffect = (index: number) => {
+        fields.length > 1 ? remove(index) : alert("Gotta keep at least one effect");
+    };
+
     return (
         <>
             <div className="add-button" onClick={() => prepend({ ...preset.commands[0] })}>
-                <FontAwesomeIcon className="add-button" icon={["fas", "plus-circle"]} size="2x" />
+                <FontAwesomeIcon className="add-button" icon={["fas", "plus-circle"]} size="lg" />
             </div>
             {
                 fields.map((effect, index) => (
                     <div key={effect.id} className="preset-modifier__command-item">
-                        <FontAwesomeIcon className="delete-button" icon={["far", "trash-alt"]} size="2x" onClick={() => remove(index)} />
+                        <FontAwesomeIcon className="delete-button" icon={["far", "trash-alt"]} size="2x" onClick={() => removeEffect(index)} />
                         <label>Command #{index + 1}</label>
                         <textarea
                             name={`commands[${index}].command`}

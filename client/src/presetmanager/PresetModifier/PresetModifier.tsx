@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
-import { useForm } from "react-hook-form";
+import React, { Fragment } from "react";
+import { useFieldArray, useForm } from "react-hook-form";
 import { connect } from "react-redux";
 import * as et from "../../domain/EffectType";
 import { CommandPreset, PotionPreset, TimeshiftPreset } from "../../domain/presets";
@@ -12,6 +12,7 @@ import PotionFragment from "./PotionFragment";
 import "./PresetModifier.scss";
 import { PresetModifierProps } from "./PresetModifierProps";
 import TimeshiftFragment from "./TimeshiftFragment";
+import { MidiBehaviorTypes } from "../../domain/presets/IPreset";
 
 const PresetModifier = ({
     preset,
@@ -19,6 +20,7 @@ const PresetModifier = ({
     onClose
 }: PresetModifierProps) => {
     preset = preset || { id: "", displayName: "" };
+    const newMidiMapping = () => ({ channel: 1, key: 1, behavior: "trigger" });
 
     const { register, handleSubmit, control, setValue } = useForm<Preset>({
         defaultValues: preset
@@ -45,6 +47,11 @@ const PresetModifier = ({
         }
     };
 
+    const { fields, prepend, remove } = useFieldArray({
+        control,
+        name: "midiMappings"
+    });
+
     return (
         <div className="preset-modifier__popup">
             <div className="preset-modifier__popup-inner">
@@ -62,17 +69,46 @@ const PresetModifier = ({
                         <div className="preset-modifier__common-inputs">
                             <label>Display Name</label>
                             <input name="displayName" type="text" autoComplete="false" placeholder="Preset display name" ref={register()} />
-                            <br />
 
                             <label>Description</label>
                             <input name="description" type="text" autoComplete="false" placeholder="Short description" ref={register()} />
-                            <br />
 
                             <label>Keyboard Shortcut</label>
                             <input name="keyBinding" type="text" autoComplete="false" ref={register()} />
-                            <br />
+                        </div>
+                        <div>
+                            <div className="preset-modifier__subtitle">List of MIDI mappings</div>
+                            <div>
+                                <div className="add-button" onClick={() => prepend(newMidiMapping())}>
+                                    <FontAwesomeIcon icon={["fas", "plus-circle"]} size="lg" />
+                                </div>
+                                {
+                                    fields.map((mapping, index) => (
+                                        <div key={mapping.id} className="preset-modifier__midi-mapping">
+                                            <FontAwesomeIcon className="delete-button" icon={["far", "trash-alt"]} size="2x" onClick={() => remove(index)} />
+                                            <label>Key</label>
+                                            <input name={`midiMappings[${index}].key`} type="number" autoComplete="false" ref={register()} />
+
+                                            <label>Channel</label>
+                                            <input name={`midiMappings[${index}].channel`} type="number" autoComplete="false" ref={register()} />
+
+                                            <label>Behavior</label>
+                                            <select name={`midiMappings[${index}].behavior`} defaultValue={mapping.behavior} ref={register()}>
+                                                {Object.keys(MidiBehaviorTypes).map(key => (
+                                                    <Fragment key={key}>
+                                                        <option value={key}>{key}</option>
+                                                        <option disabled>&nbsp;&nbsp;└─ {MidiBehaviorTypes[key]}</option>
+                                                    </Fragment>
+                                                ))}
+                                            </select>
+                                            < br/>
+                                        </div>
+                                    ))
+                                }
+                            </div>
                         </div>
 
+                        <div className="preset-modifier__subtitle">List of {effectType} effects</div>
                         {specificInputs()}
                     </form>
                 </div>
