@@ -1,0 +1,74 @@
+@import "./variables.scss";
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+input[type=text],
+input[type=number],
+textarea,
+select {
+    color           : var(--font);
+    padding         : 0.5em;
+    border          : none;
+    background-color: var(--dark-gray);
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--teal) var(--background);
+}
+
+*::-webkit-scrollbar {
+    width: 11px;
+}
+
+*::-webkit-scrollbar-track {
+    background: var(--background);
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--teal);
+    border-radius   : 6px;
+    border          : 3px solid var(--background);
+}
+
+.checkbox-container {
+    display            : block;
+    position           : relative;
+    padding-left       : 2em;
+    cursor             : pointer;
+    -webkit-user-select: none;
+    -moz-user-select   : none;
+    -ms-user-select    : none;
+    user-select        : none;
+
+    & input {
+        position: absolute;
+        opacity : 0;
+        cursor  : pointer;
+        height  : 0;
+        width   : 0;
+    }
+
+    & span {
+        position        : absolute;
+        top             : 0;
+        left            : 0;
+        height          : 1.5em;
+        width           : 1.5em;
+        background-color: var(--gray);
+    }
+
+    &:hover input~span {
+        background-color: var(--lighter-gray);
+    }
+
+    input:checked~span {
+        background-color: var(--teal);
+    }
+
+    input:checked~span:after {
+        display: block;
+    }
+}
