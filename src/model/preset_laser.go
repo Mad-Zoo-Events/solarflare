@@ -9,6 +9,7 @@ type LaserEffectPreset struct {
 
 	IsEndLaser           bool          `json:"isEndLaser" form:"isEndLaser"`
 	IsNonPlayerTargeting bool          `json:"isNonPlayerTargeting" form:"isNonPlayerTargeting"`
+	LaserType            LaserType     `json:"laserType"`
 	LaserEffects         []LaserEffect `json:"laserEffects" form:"effect"`
 
 	// UI specific models
@@ -25,3 +26,15 @@ type LaserEffect struct {
 	// Predefined point where the laser goes to, if specified
 	EndPointID *int `json:"end" form:"endPointId"`
 }
+
+// LaserType represents the type of laser associated with an effect
+type LaserType string
+
+const (
+	// EndLaserType represents the end crystal laser connecting the start and end point
+	EndLaserType = LaserType("end")
+	// NonTargetingGuardianLaserType represents the guardian laser connecting the start and end point
+	NonTargetingGuardianLaserType = LaserType("nonTargetingGuardian")
+	// TargetingGuardianLaserType represents the guardian laser which is targeting a player from the start point
+	TargetingGuardianLaserType = LaserType("targetingGuardian")
+)

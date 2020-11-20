@@ -282,13 +282,12 @@ func RetrievePresets(effectType string) (interface{}, error) {
 	cfg := config.Get()
 
 	if effectType == "all" {
-
 		return model.PresetCollection{
 			ParticleEffectPresets:  cfg.ParticleEffectPresets,
 			DragonEffectPresets:    cfg.DragonEffectPresets,
 			TimeshiftEffectPresets: cfg.TimeshiftEffectPresets,
 			PotionEffectPresets:    cfg.PotionEffectPresets,
-			LaserEffectPresets:     cfg.LaserEffectPresets,
+			LaserEffectPresets:     migrateLaserPresets(cfg.LaserEffectPresets),
 			CommandEffectPresets:   migrateCommandPresets(cfg.CommandEffectPresets),
 		}, nil
 	}
@@ -303,7 +302,7 @@ func RetrievePresets(effectType string) (interface{}, error) {
 	case model.PotionEffectType:
 		return cfg.PotionEffectPresets, nil
 	case model.LaserEffectType:
-		return cfg.LaserEffectPresets, nil
+		return migrateLaserPresets(cfg.LaserEffectPresets), nil
 	case model.CommandEffectType:
 		return migrateCommandPresets(cfg.CommandEffectPresets), nil
 	default:
@@ -311,6 +310,7 @@ func RetrievePresets(effectType string) (interface{}, error) {
 	}
 }
 
+// temporary measures until the preset manager has been fully migrated to React
 func migrateCommandPresets(presets []model.CommandEffectPreset) []model.CommandEffectPresetResponse {
 	resp := []model.CommandEffectPresetResponse{}
 	for _, p := range presets {
@@ -327,5 +327,22 @@ func migrateCommandPresets(presets []model.CommandEffectPreset) []model.CommandE
 		})
 	}
 
+	return resp
+}
+
+func migrateLaserPresets(presets []model.LaserEffectPreset) []model.LaserEffectPreset {
+	resp := []model.LaserEffectPreset{}
+	for _, preset := range presets {
+		if preset.IsEndLaser {
+			preset.LaserType = model.EndLaserType
+		} else {
+			if preset.IsNonPlayerTargeting {
+				preset.LaserType = model.NonTargetingGuardianLaserType
+			} else {
+				preset.LaserType = model.TargetingGuardianLaserType
+			}
+		}
+		resp = append(resp, preset)
+	}
 	return resp
 }

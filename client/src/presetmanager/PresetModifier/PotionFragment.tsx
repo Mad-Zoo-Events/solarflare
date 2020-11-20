@@ -28,6 +28,7 @@ const PotionFragment = ({
 
     return (
         <>
+            <div className="preset-modifier__subtitle">List of potion effects</div>
             <div className="add-button" onClick={() => prepend({ ...preset.potionEffects[0] })}>
                 <FontAwesomeIcon icon={["fas", "plus-circle"]} size="lg" />
             </div>
