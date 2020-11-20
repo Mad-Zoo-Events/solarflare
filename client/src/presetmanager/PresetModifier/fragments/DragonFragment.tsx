@@ -1,7 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useFieldArray } from "react-hook-form";
-import { DragonPreset } from "../../domain/presets";
+import { DragonPreset } from "../../../domain/presets";
+import RemoveEffectButton from "../RemoveEffectButton";
 import "./DragonFragment.scss";
 
 interface DragonFragmentProps {
@@ -22,10 +23,6 @@ const DragonFragment = ({
         name: "dragonEffects"
     });
 
-    const removeEffect = (index: number) => {
-        fields.length > 1 ? remove(index) : alert("Gotta keep at least one effect");
-    };
-
     return (
         <>
             <div className="preset-modifier__subtitle">List of dragons</div>
@@ -37,7 +34,8 @@ const DragonFragment = ({
                 fields.map((effect, index) => {
                     return (
                         <div key={effect.id} className="preset-modifier__dragon-item">
-                            <FontAwesomeIcon className="delete-button" icon={["far", "trash-alt"]} size="2x" onClick={() => removeEffect(index)} />
+                            <RemoveEffectButton fields={fields} remove={remove} index={index}/>
+
                             <label className="point-label">Point ID</label>
                             <input
                                 className="point-input"
@@ -46,6 +44,7 @@ const DragonFragment = ({
                                 defaultValue={effect.pointId}
                                 ref={register()}
                             />
+
                             <label className="checkbox-container static-checkbox">Static
                                 <input
                                     name={`dragonEffects[${index}].static`}

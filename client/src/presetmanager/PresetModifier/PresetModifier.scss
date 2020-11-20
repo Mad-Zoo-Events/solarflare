@@ -89,19 +89,6 @@ div.add-button {
     color          : var(--green);
 }
 
-.delete-button {
-    cursor : pointer;
-    color  : var(--red);
-    padding: 0.3em 0.5em 0 0;
-    margin : 0 auto;
-
-    &:hover {
-        ~label {
-            color: red;
-        }
-    }
-}
-
 .close-button {
     cursor: pointer;
     color : var(--red);
