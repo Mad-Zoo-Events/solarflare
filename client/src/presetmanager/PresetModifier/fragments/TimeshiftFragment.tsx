@@ -1,8 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useFieldArray } from "react-hook-form";
-import { TimeshiftPreset } from "../../domain/presets";
-import { getOnChangeNumber } from "../../utils/utils";
+import { TimeshiftPreset } from "../../../domain/presets";
+import { getOnChangeNumber } from "../../../utils/utils";
+import RemoveEffectButton from "../RemoveEffectButton";
 import "./TimeshiftFragment.scss";
 
 interface TimeshiftFragmentProps {
@@ -25,13 +26,10 @@ const TimeshiftFragment = ({
         name: "timeshiftEffects"
     });
 
-    const removeEffect = (index: number) => {
-        fields.length > 1 ? remove(index) : alert("Gotta keep at least one effect");
-    };
-
     return (
         <>
             <div className="preset-modifier__subtitle">List of timeshift effects</div>
+
             <div className="add-button" onClick={() => prepend({ ...preset.timeshiftEffects[0] })} >
                 <FontAwesomeIcon className="add-button" icon={["fas", "plus-circle"]} size="lg" />
             </div>
@@ -39,7 +37,8 @@ const TimeshiftFragment = ({
                 fields.map((effect, index) => {
                     return (
                         <div key={effect.id} className="preset-modifier__timeshift-item">
-                            <FontAwesomeIcon className="delete-button" icon={["far", "trash-alt"]} size="2x" onClick={() => removeEffect(index)} />
+                            <RemoveEffectButton fields={fields} remove={remove} index={index}/>
+
                             <label>Amount #{index + 1}</label>
                             <input
                                 name={`timeshiftEffects[${index}].amount`}
@@ -51,6 +50,7 @@ const TimeshiftFragment = ({
                                 ref={register()}
                                 onChange={(e) => setValue(`timeshiftEffects[${index}].rangeamount`, getOnChangeNumber(e))}
                             />
+
                             <input
                                 name={`timeshiftEffects[${index}].rangeamount`}
                                 type="range"

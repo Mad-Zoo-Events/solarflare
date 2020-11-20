@@ -8,13 +8,9 @@ import { MidiBehaviorTypes } from "../../domain/presets/IPreset";
 import { Preset } from "../../domain/presets/Preset";
 import { RootState } from "../../RootState";
 import { closePresetModifier } from "../PresetManagerActions";
-import CommandFragment from "./CommandFragment";
-import DragonFragment from "./DragonFragment";
-import LaserFragment from "./LaserFragment";
-import PotionFragment from "./PotionFragment";
+import { CommandFragment, DragonFragment, LaserFragment, PotionFragment, TimeshiftFragment } from "./fragments";
 import "./PresetModifier.scss";
 import { PresetModifierProps } from "./PresetModifierProps";
-import TimeshiftFragment from "./TimeshiftFragment";
 
 const PresetModifier = ({
     preset,

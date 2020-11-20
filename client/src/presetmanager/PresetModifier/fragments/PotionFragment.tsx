@@ -1,7 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Fragment } from "react";
 import { useFieldArray } from "react-hook-form";
-import { PotionEffectTypes, PotionPreset } from "../../domain/presets/PotionPreset";
+import { PotionEffectTypes, PotionPreset } from "../../../domain/presets/PotionPreset";
+import RemoveEffectButton from "../RemoveEffectButton";
 import "./PotionFragment.scss";
 
 interface PotionFragmentProps {
@@ -22,20 +23,18 @@ const PotionFragment = ({
         name: "potionEffects"
     });
 
-    const removeEffect = (index: number) => {
-        fields.length > 1 ? remove(index) : alert("Gotta keep at least one effect");
-    };
-
     return (
         <>
             <div className="preset-modifier__subtitle">List of potion effects</div>
+
             <div className="add-button" onClick={() => prepend({ ...preset.potionEffects[0] })}>
                 <FontAwesomeIcon icon={["fas", "plus-circle"]} size="lg" />
             </div>
             {
                 fields.map((effect, index) => (
                     <div key={effect.id} className="preset-modifier__potion-item">
-                        <FontAwesomeIcon className="delete-button" icon={["far", "trash-alt"]} size="2x" onClick={() => removeEffect(index)} />
+                        <RemoveEffectButton fields={fields} remove={remove} index={index}/>
+
                         <label className="type-label">Potion Effect #{index + 1}</label>
                         <select name={`potionEffects[${index}].type`} defaultValue={effect.type} ref={register()}>
                             {Object.keys(PotionEffectTypes).map(key => (
@@ -45,9 +44,9 @@ const PotionFragment = ({
                                 </Fragment>
                             ))}
                         </select>
+
                         <label className="amplifier-label">Amplifier</label>
                         <input name={`potionEffects[${index}].amplifier`} type="number" defaultValue={effect.amplifier} ref={register()}/>
-                        < br/>
                     </div>
                 ))
             }

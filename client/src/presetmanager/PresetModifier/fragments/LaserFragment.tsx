@@ -1,8 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Fragment } from "react";
 import { useFieldArray } from "react-hook-form";
-import { LaserPreset } from "../../domain/presets";
-import { LaserTypes } from "../../domain/presets/LaserPreset";
+import { LaserPreset } from "../../../domain/presets";
+import { LaserTypes } from "../../../domain/presets/LaserPreset";
+import RemoveEffectButton from "../RemoveEffectButton";
 import "./LaserFragment.scss";
 
 interface LaserFragmentProps {
@@ -26,10 +27,6 @@ const LaserFragment = ({
         control,
         name: "laserEffects"
     });
-
-    const removeEffect = (index: number) => {
-        fields.length > 1 ? remove(index) : alert("Gotta keep at least one effect");
-    };
 
     return (
         <>
@@ -56,7 +53,8 @@ const LaserFragment = ({
                 fields.map((effect, index) => {
                     return (
                         <div key={effect.id} className="preset-modifier__laser-item">
-                            <FontAwesomeIcon className="delete-button" icon={["far", "trash-alt"]} size="2x" onClick={() => removeEffect(index)} />
+                            <RemoveEffectButton fields={fields} remove={remove} index={index}/>
+
                             <label className="start-label">Start point ID</label>
                             <input
                                 className="start-point"
@@ -65,6 +63,7 @@ const LaserFragment = ({
                                 defaultValue={effect.start}
                                 ref={register()}
                             />
+
                             {isTargetingLaser || <>
                                 <label className="destination-label">Destination point ID</label>
                                 <input
