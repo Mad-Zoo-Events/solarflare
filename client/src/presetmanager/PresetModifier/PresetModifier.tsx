@@ -3,16 +3,17 @@ import React, { Fragment } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { connect } from "react-redux";
 import * as et from "../../domain/EffectType";
-import { CommandPreset, PotionPreset, TimeshiftPreset } from "../../domain/presets";
+import { CommandPreset, LaserPreset, PotionPreset, TimeshiftPreset } from "../../domain/presets";
+import { MidiBehaviorTypes } from "../../domain/presets/IPreset";
 import { Preset } from "../../domain/presets/Preset";
 import { RootState } from "../../RootState";
 import { closePresetModifier } from "../PresetManagerActions";
 import CommandFragment from "./CommandFragment";
+import LaserFragment from "./LaserFragment";
 import PotionFragment from "./PotionFragment";
 import "./PresetModifier.scss";
 import { PresetModifierProps } from "./PresetModifierProps";
 import TimeshiftFragment from "./TimeshiftFragment";
-import { MidiBehaviorTypes } from "../../domain/presets/IPreset";
 
 const PresetModifier = ({
     preset,
@@ -22,7 +23,7 @@ const PresetModifier = ({
     preset = preset || { id: "", displayName: "" };
     const newMidiMapping = () => ({ channel: 1, key: 1, behavior: "trigger" });
 
-    const { register, handleSubmit, control, setValue } = useForm<Preset>({
+    const { register, handleSubmit, control, setValue, watch } = useForm<Preset>({
         defaultValues: preset
     });
 
@@ -37,7 +38,7 @@ const PresetModifier = ({
         case et.Dragon:
             break;
         case et.Laser:
-            break;
+            return <LaserFragment preset={preset as LaserPreset} register={register} control={control} setValue={setValue} watch={watch} />;
         case et.Particle:
             break;
         case et.Potion:
@@ -68,13 +69,13 @@ const PresetModifier = ({
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="preset-modifier__common-inputs">
                             <label>Display Name</label>
-                            <input name="displayName" type="text" autoComplete="false" placeholder="Preset display name" ref={register()} />
+                            <input name="displayName" type="text" autoComplete="false" placeholder="Preset display name" ref={register} />
 
                             <label>Description</label>
-                            <input name="description" type="text" autoComplete="false" placeholder="Short description" ref={register()} />
+                            <input name="description" type="text" autoComplete="false" placeholder="Short description" ref={register} />
 
                             <label>Keyboard Shortcut</label>
-                            <input name="keyBinding" type="text" autoComplete="false" ref={register()} />
+                            <input name="keyBinding" type="text" autoComplete="false" ref={register} />
                         </div>
                         <div>
                             <div className="preset-modifier__subtitle">List of MIDI mappings</div>
@@ -108,7 +109,6 @@ const PresetModifier = ({
                             </div>
                         </div>
 
-                        <div className="preset-modifier__subtitle">List of {effectType} effects</div>
                         {specificInputs()}
                     </form>
                 </div>

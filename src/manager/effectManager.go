@@ -100,14 +100,26 @@ func RunLaserEffect(preset model.LaserEffectPreset, action model.EffectAction, s
 		return sferror.New(sferror.Encoding, "Failed to marshal request", err)
 	}
 
-	laserEndpoint := targetedlaserEffectEndpoint
-	if preset.IsEndLaser {
+	laserEndpoint := ""
+	switch preset.LaserType {
+	case model.EndLaserType:
 		laserEndpoint = endlaserEffectEndpoint
-	} else {
-		if preset.IsNonPlayerTargeting {
-			laserEndpoint = laserEffectEndpoint
+	case model.NonTargetingGuardianLaserType:
+		laserEndpoint = laserEffectEndpoint
+	case model.TargetingGuardianLaserType:
+		laserEndpoint = targetedlaserEffectEndpoint
+	}
+
+	// TODO: remove fallback after presetmanager migration
+	if laserEndpoint == "" {
+		if preset.IsEndLaser {
+			laserEndpoint = endlaserEffectEndpoint
 		} else {
-			laserEndpoint = targetedlaserEffectEndpoint
+			if preset.IsNonPlayerTargeting {
+				laserEndpoint = laserEffectEndpoint
+			} else {
+				laserEndpoint = targetedlaserEffectEndpoint
+			}
 		}
 	}
 

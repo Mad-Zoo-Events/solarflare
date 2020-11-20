@@ -7,6 +7,7 @@ type CommandEffectPreset struct {
 	Description string   `json:"description" form:"description"`
 	KeyBinding  rune     `json:"keyBinding" form:"keyBinding"`
 	Commands    []string `json:"commands" form:"command"`
+	//TODO: add migration path to save commands from the new control panel
 
 	// UI specific models
 	UIKeyBinding string `json:"-" form:"-"`

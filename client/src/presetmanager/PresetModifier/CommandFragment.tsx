@@ -28,6 +28,7 @@ const CommandFragment = ({
 
     return (
         <>
+            <div className="preset-modifier__subtitle">List of commands</div>
             <div className="add-button" onClick={() => prepend({ ...preset.commands[0] })}>
                 <FontAwesomeIcon className="add-button" icon={["fas", "plus-circle"]} size="lg" />
             </div>
