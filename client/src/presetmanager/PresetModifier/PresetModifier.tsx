@@ -38,7 +38,7 @@ const PresetModifier = ({
         case et.Dragon:
             break;
         case et.Laser:
-            return <LaserFragment preset={preset as LaserPreset} register={register} control={control} setValue={setValue} watch={watch} />;
+            return <LaserFragment preset={preset as LaserPreset} register={register} control={control} watch={watch} />;
         case et.Particle:
             break;
         case et.Potion:
