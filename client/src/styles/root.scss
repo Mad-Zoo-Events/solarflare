@@ -71,4 +71,22 @@ select {
     input:checked~span:after {
         display: block;
     }
+
+    span:after {
+        content : "";
+        position: absolute;
+        display : none;
+    }
+
+    & span:after {
+        left             : 0.5em;
+        top              : 0.1em;
+        width            : 0.3em;
+        height           : 0.9em;
+        border           : solid white;
+        border-width     : 0 0.2em 0.2em 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform    : rotate(45deg);
+        transform        : rotate(45deg);
+    }
 }

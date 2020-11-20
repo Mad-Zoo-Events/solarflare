@@ -1,0 +1,26 @@
+.preset-modifier__dragon-item {
+    margin-bottom        : 0.8em;
+    display              : grid;
+    gap                  : 0.2em 1em;
+    grid-template-columns: min-content auto max-content;
+    grid-template-areas  :
+        'delete point-label .'
+        'delete point-input static-checkbox';
+
+    & .delete-button {
+        grid-area: delete;
+    }
+
+    & .point-label {
+        grid-area: point-label;
+    }
+
+    & .point-input {
+        grid-area: point-input;
+    }
+
+    & .static-checkbox {
+        grid-area: static-checkbox;
+        margin   : auto;
+    }
+}
