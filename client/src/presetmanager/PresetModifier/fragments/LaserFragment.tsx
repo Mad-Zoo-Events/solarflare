@@ -37,8 +37,7 @@ const LaserFragment = ({
                 <select name="laserType" defaultValue={preset.laserType} ref={register}>
                     {Object.keys(LaserTypes).map(key => (
                         <Fragment key={key}>
-                            <option value={key}>{key}</option>
-                            <option disabled>&nbsp;&nbsp;└─ {LaserTypes[key]}</option>
+                            <option value={key}>{LaserTypes[key]}</option>
                         </Fragment>
                     ))}
                 </select>
