@@ -1,8 +1,12 @@
-import * as et from "../domain/EffectType";
 import { FormEvent } from "react";
+import * as et from "../domain/EffectType";
 
-export function getShortcut (keyBinding?: number): string {
-    return (keyBinding && String.fromCharCode(keyBinding)) || "";
+export function getShortcutString (keyBinding?: number): string | undefined {
+    return keyBinding ? String.fromCharCode(keyBinding) : undefined;
+}
+
+export function getShortcutCode (keyBindingStr?: string): number | undefined {
+    return keyBindingStr?.charCodeAt(0);
 }
 
 export function getOnChangeNumber (e: FormEvent<HTMLInputElement>): number {
