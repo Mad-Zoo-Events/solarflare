@@ -7,6 +7,7 @@ import { CommandPreset, DragonPreset, LaserPreset, ParticlePreset, PotionPreset,
 import { MidiBehaviorTypes } from "../../domain/presets/IPreset";
 import { Preset } from "../../domain/presets/Preset";
 import { RootState } from "../../RootState";
+import { getShortcutCode, getShortcutString } from "../../utils/utils";
 import { closePresetModifier } from "../PresetManagerActions";
 import { CommandFragment, DragonFragment, LaserFragment, ParticleFragment, PotionFragment, TimeshiftFragment } from "./fragments";
 import "./PresetModifier.scss";
@@ -18,6 +19,8 @@ const PresetModifier = ({
     onClose
 }: PresetModifierProps) => {
     preset = preset || { id: "", displayName: "" };
+    preset.keyBindingStr = getShortcutString(preset.keyBinding);
+
     const newMidiMapping = () => ({ channel: 1, key: 1, behavior: "trigger" });
 
     const { register, handleSubmit, control, setValue, watch } = useForm<Preset>({
@@ -50,6 +53,20 @@ const PresetModifier = ({
         name: "midiMappings"
     });
 
+    const handleShortcutKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        event.preventDefault();
+        const input = event.key;
+        event.currentTarget.value = input;
+        setValue("keyBinding", getShortcutCode(input));
+    };
+
+    const handleShortcutPaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
+        event.preventDefault();
+        const input = event.clipboardData.getData("text")[0];
+        event.currentTarget.value = input;
+        setValue("keyBinding", getShortcutCode(input));
+    };
+
     return (
         <div className="preset-modifier__popup">
             <div className="preset-modifier__popup-inner">
@@ -72,7 +89,8 @@ const PresetModifier = ({
                             <input name="description" type="text" autoComplete="false" placeholder="Short description" ref={register} />
 
                             <label>Keyboard Shortcut</label>
-                            <input name="keyBinding" type="text" autoComplete="false" ref={register} />
+                            <input type="text" autoComplete="false" defaultValue={preset.keyBindingStr} onKeyPress={handleShortcutKeyPress} onPaste={handleShortcutPaste} />
+                            <input name="keyBinding" type="hidden" ref={register} />
                         </div>
                         <div>
                             <div className="preset-modifier__subtitle">List of MIDI mappings</div>
@@ -85,10 +103,10 @@ const PresetModifier = ({
                                         <div key={mapping.id} className="preset-modifier__midi-mapping">
                                             <FontAwesomeIcon className="delete-button" icon={["far", "trash-alt"]} size="2x" onClick={() => remove(index)} />
                                             <label>Key</label>
-                                            <input name={`midiMappings[${index}].key`} type="number" autoComplete="false" ref={register()} />
+                                            <input name={`midiMappings[${index}].key`} type="number" defaultValue={mapping.key} ref={register()} />
 
                                             <label>Channel</label>
-                                            <input name={`midiMappings[${index}].channel`} type="number" autoComplete="false" ref={register()} />
+                                            <input name={`midiMappings[${index}].channel`} type="number" defaultValue={mapping.channel} ref={register()} />
 
                                             <label>Behavior</label>
                                             <select name={`midiMappings[${index}].behavior`} defaultValue={mapping.behavior} ref={register()}>

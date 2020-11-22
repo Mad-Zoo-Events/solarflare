@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { connect } from "react-redux";
-import { getAccentColor, getShortcut } from "../../utils/utils";
+import { getAccentColor, getShortcutString } from "../../utils/utils";
 import { deletePreset, duplicatePreset, editPreset } from "../PresetManagerActions";
 import "./PresetManagerListItem.scss";
 import { PresetManagerListItemProps } from "./PresetManagerListItemProps";
@@ -29,7 +29,7 @@ const PresetManagerListItem = ({
                 {
                     description && <div className="preset-manager-list-item__description">{description}</div>
                 }{
-                    keyBinding && <div className="preset-manager-list-item__shortcut code">{getShortcut(keyBinding)}</div>
+                    keyBinding && <div className="preset-manager-list-item__shortcut code">{getShortcutString(keyBinding)}</div>
                 }
                 <div className="preset-manager-list-item__id">{id}</div>
                 <div className="preset-manager-list-item__actions">

@@ -3,6 +3,7 @@ export interface IPreset {
     displayName: string
     description?: string
     keyBinding?: number
+    keyBindingStr?: string
     midiMappings?: midiMappings[]
 }
 
