@@ -3,12 +3,12 @@ import React, { Fragment } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { connect } from "react-redux";
 import * as et from "../../domain/EffectType";
-import { CommandPreset, DragonPreset, LaserPreset, PotionPreset, TimeshiftPreset } from "../../domain/presets";
+import { CommandPreset, DragonPreset, LaserPreset, ParticlePreset, PotionPreset, TimeshiftPreset } from "../../domain/presets";
 import { MidiBehaviorTypes } from "../../domain/presets/IPreset";
 import { Preset } from "../../domain/presets/Preset";
 import { RootState } from "../../RootState";
 import { closePresetModifier } from "../PresetManagerActions";
-import { CommandFragment, DragonFragment, LaserFragment, PotionFragment, TimeshiftFragment } from "./fragments";
+import { CommandFragment, DragonFragment, LaserFragment, ParticleFragment, PotionFragment, TimeshiftFragment } from "./fragments";
 import "./PresetModifier.scss";
 import { PresetModifierProps } from "./PresetModifierProps";
 
@@ -37,7 +37,7 @@ const PresetModifier = ({
         case et.Laser:
             return <LaserFragment preset={preset as LaserPreset} register={register} control={control} watch={watch} />;
         case et.Particle:
-            break;
+            return <ParticleFragment preset={preset as ParticlePreset} register={register} control={control} watch={watch} setValue={setValue} />;
         case et.Potion:
             return <PotionFragment preset={preset as PotionPreset} register={register} control={control} />;
         case et.Timeshift:
