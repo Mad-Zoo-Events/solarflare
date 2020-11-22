@@ -1,5 +1,15 @@
 package model
 
+import (
+	"math"
+	"strconv"
+	"strings"
+)
+
+// ************** //
+// INTERNAL MODEL //
+// ************** //
+
 // ParticleEffectPreset describes a particle effect preset
 type ParticleEffectPreset struct {
 	ID              string           `json:"id" form:"id"`
@@ -35,13 +45,40 @@ type Region struct {
 	PointIDs []int `json:"pointIDs"`
 	// Type of the region the effect is to be displayed in
 	RegionType string `json:"type"`
-	// Whether or not to randomize placement of particles within the region [for CuboidRegionType]
+	// Whether or not to randomize placement of particles within the region [for Cuboid and Equation region type]
 	Randomize bool `json:"randomize,omitempty"`
-	// Density of the particles [for CuboidRegionType]
+	// Density of the particles [for Cuboid and Equation region type]
 	Density float64 `json:"density,omitempty"` // MIN 0.00001 | MAX 0.01
 	// Equation for the shape of the effect region [for EquationRegionType]
 	Equation string `json:"equation,omitempty"`
 }
+
+// ********* //
+// API MODEL //
+// ********* //
+
+// ParticleEffectPresetAPI is the inbound request and response model for particle effect presets
+type ParticleEffectPresetAPI struct {
+	ID              string              `json:"id"`
+	DisplayName     string              `json:"displayName"`
+	Description     string              `json:"description"`
+	KeyBinding      rune                `json:"keyBinding"`
+	ParticleEffects []ParticleEffectAPI `json:"particleEffects"`
+}
+
+// ParticleEffectAPI is the inbound request and response model for particle effects
+type ParticleEffectAPI struct {
+	Name        string   `json:"name"`
+	PointIDList string   `json:"pointIDList"` // Comma-separated list of point IDs
+	RegionType  string   `json:"regionType"`
+	Randomize   *bool    `json:"randomize,omitempty"`
+	Density     *float64 `json:"density,omitempty"` // min 1 | max 100
+	Equation    *string  `json:"equation,omitempty"`
+}
+
+// ****** //
+// LEGACY //
+// ****** //
 
 // UIRegionType is used for displaying region type options on the UI
 type UIRegionType struct {
@@ -142,4 +179,100 @@ var MinecraftParticleEffects = []string{
 	"WATER_SPLASH",
 	"WATER_WAKE",
 	"WHITE_AS",
+}
+
+// ******************** //
+// TO/FROM API REDUCERS //
+// ******************** //
+
+// ToAPI transforms the internal model to the API model
+func (preset ParticleEffectPreset) ToAPI() ParticleEffectPresetAPI {
+	effects := []ParticleEffectAPI{}
+	for i := range preset.ParticleEffects {
+		effect := preset.ParticleEffects[i]
+
+		density := math.Round(convertDensity(effect.Region.Density, false)*10) / 10
+
+		b := strings.Builder{}
+		for _, p := range effect.Region.PointIDs {
+			b.WriteString(strconv.Itoa(p))
+			b.WriteString(",")
+		}
+		pointIDList := strings.TrimSuffix(b.String(), ",")
+
+		effects = append(effects, ParticleEffectAPI{
+			Name:        effect.Name,
+			Equation:    &effect.Region.Equation,
+			Density:     &density,
+			PointIDList: pointIDList,
+			Randomize:   &effect.Region.Randomize,
+			RegionType:  effect.Region.RegionType,
+		})
+	}
+	return ParticleEffectPresetAPI{
+		ID:              preset.ID,
+		DisplayName:     preset.DisplayName,
+		Description:     preset.Description,
+		KeyBinding:      preset.KeyBinding,
+		ParticleEffects: effects,
+	}
+}
+
+// FromAPI transforms the API model to the internal model
+func (preset ParticleEffectPresetAPI) FromAPI() ParticleEffectPreset {
+	effects := []ParticleEffect{}
+	for i := range preset.ParticleEffects {
+		effect := preset.ParticleEffects[i]
+
+		density := 0.005
+		if effect.Density != nil {
+			density = convertDensity(*effect.Density, true)
+		}
+
+		pointIDs := []int{}
+		for _, p := range strings.Split(effect.PointIDList, ",") {
+			if point, err := strconv.Atoi(p); err == nil {
+				pointIDs = append(pointIDs, point)
+			}
+		}
+
+		equation := ""
+		if effect.Equation != nil {
+			equation = *effect.Equation
+		}
+
+		randomize := false
+		if effect.Randomize != nil {
+			randomize = *effect.Randomize
+		}
+
+		effects = append(effects, ParticleEffect{
+			Name: effect.Name,
+			Region: Region{
+				Density:    density,
+				PointIDs:   pointIDs,
+				Equation:   equation,
+				Randomize:  randomize,
+				RegionType: effect.RegionType,
+			},
+		})
+	}
+	return ParticleEffectPreset{
+		ID:              preset.ID,
+		DisplayName:     preset.DisplayName,
+		Description:     preset.Description,
+		KeyBinding:      preset.KeyBinding,
+		ParticleEffects: effects,
+	}
+}
+
+func convertDensity(density float64, fromUI bool) float64 {
+	m := 5.0404e-05
+	n := -4.0404e-05
+
+	if fromUI {
+		return m*density + n
+	}
+
+	return (density - n) / m
 }

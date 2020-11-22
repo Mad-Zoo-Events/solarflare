@@ -110,19 +110,6 @@ func RunLaserEffect(preset model.LaserEffectPreset, action model.EffectAction, s
 		laserEndpoint = targetedlaserEffectEndpoint
 	}
 
-	// TODO: remove fallback after presetmanager migration
-	if laserEndpoint == "" {
-		if preset.IsEndLaser {
-			laserEndpoint = endlaserEffectEndpoint
-		} else {
-			if preset.IsNonPlayerTargeting {
-				laserEndpoint = laserEffectEndpoint
-			} else {
-				laserEndpoint = targetedlaserEffectEndpoint
-			}
-		}
-	}
-
 	endpoint := fmt.Sprintf("%s/%s/%s", laserEndpoint, preset.ID, string(action))
 
 	err = client.ExecuteEffect(endpoint, body)
