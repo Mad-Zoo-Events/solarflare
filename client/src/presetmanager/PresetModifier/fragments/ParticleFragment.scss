@@ -1,0 +1,71 @@
+.preset-modifier__particle-item {
+    margin-bottom        : 0.8em;
+    display              : grid;
+    gap                  : 0.2em 1em;
+    grid-template-columns: min-content max-xontent 1fr 1fr max-content;
+    grid-template-areas  :
+        'delete effect-label         effect-label        regiontype-label    regiontype-label'
+        'delete effect-input         effect-input        regiontype-input    regiontype-input'
+        '.      pointids-label       pointids-label      pointids-label      pointids-label'
+        '.      pointids-input       pointids-input      pointids-input      pointids-input'
+        '.      density-label        density-label       .                   .'
+        '.      density-number-input density-range-input density-range-input randomize-checkbox'
+        '.      equation-label       equation-label      equation-label      equation-label'
+        '.      equation-input       equation-input      equation-input      equation-input';
+
+    & label {
+        grid-area: label;
+    }
+
+    & .delete-button {
+        grid-area: delete;
+    }
+
+    & .effect-label {
+        grid-area: effect-label;
+    }
+
+    & .effect-input {
+        grid-area: effect-input;
+    }
+
+    & .regiontype-label {
+        grid-area: regiontype-label;
+    }
+
+    & .regiontype-input {
+        grid-area: regiontype-input;
+    }
+
+    & .pointids-label {
+        grid-area: pointids-label;
+    }
+
+    & .pointids-input {
+        grid-area: pointids-input;
+    }
+
+    & .randomize-checkbox {
+        grid-area: randomize-checkbox;
+    }
+
+    & .density-label {
+        grid-area: density-label;
+    }
+
+    & .density-number-input {
+        grid-area: density-number-input;
+    }
+
+    & .density-range-input {
+        grid-area: density-range-input;
+    }
+
+    & .equation-label {
+        grid-area: equation-label;
+    }
+
+    & .equation-input {
+        grid-area: equation-input;
+    }
+}

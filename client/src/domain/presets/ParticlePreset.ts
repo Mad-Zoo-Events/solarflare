@@ -6,36 +6,18 @@ export interface ParticlePreset extends IPreset {
 
 interface ParticleEffect {
     name: string
-    region: Region
-}
-
-interface Region {
-    pointIDs: number[]
-    type: string
+    pointIDList: string
+    regionType: string
     randomize?: boolean
     density?: number
     equation?: string
 }
 
-interface RegionType {
-    name: string
-    description: string
-}
-
-export const ParticleEffectRegionTypes: RegionType[] = [
-    {
-        name: "POINTS",
-        description: "One particle at each specified point"
-    },
-    {
-        name: "CUBOID",
-        description: "Inside a cuboid specified by two points"
-    },
-    {
-        name: "EQUATION",
-        description: "In a shape described by an equation around one point"
-    }
-];
+export const ParticleEffectRegionTypes: Record<string, string> = {
+    POINTS: "Points (One particle at each specified point)",
+    CUBOID: "Cuboid (Particles filling a cuboid specified by two points)",
+    EQUATION: "Equation (Particles filling a shape described by an equation around a single point)"
+};
 
 export const ParticleEffectTypes = [
     "ASH",
