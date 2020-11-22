@@ -19,13 +19,13 @@ import (
 func UpsertPresetAPI(effectType string, body []byte) (*string, error) {
 	switch model.EffectType(effectType) {
 	case model.ParticleEffectType:
-		preset := model.ParticleEffectPreset{}
+		preset := model.ParticleEffectPresetAPI{}
 
 		if err := json.Unmarshal(body, &preset); err != nil {
 			return nil, sferror.New(sferror.Encoding, "Error unmarshalling particle effect preset request", err)
 		}
 
-		return manager.UpsertParticleEffectPreset(preset)
+		return manager.UpsertParticleEffectPreset(preset.FromAPI())
 	case model.DragonEffectType:
 		preset := model.DragonEffectPreset{}
 
@@ -59,13 +59,13 @@ func UpsertPresetAPI(effectType string, body []byte) (*string, error) {
 
 		return manager.UpsertLaserEffectPreset(preset)
 	case model.CommandEffectType:
-		preset := model.CommandEffectPreset{}
+		preset := model.CommandEffectPresetAPI{}
 
 		if err := json.Unmarshal(body, &preset); err != nil {
 			return nil, sferror.New(sferror.Encoding, "Error unmarshalling command effect preset request", err)
 		}
 
-		return manager.UpsertCommandEffectPreset(preset)
+		return manager.UpsertCommandEffectPreset(preset.FromAPI())
 	}
 
 	return nil, sferror.New(sferror.InvalidEffectType, effectType, nil)
@@ -112,6 +112,8 @@ func UpsertPresetUI(effectType string, values url.Values) (*string, error) {
 		if err := unmarshalLaserPreset(&preset, values); err != nil {
 			return nil, err
 		}
+
+		migrateLaserPreset(&preset)
 
 		return manager.UpsertLaserEffectPreset(preset)
 	case model.CommandEffectType:
@@ -283,18 +285,18 @@ func RetrievePresets(effectType string) (interface{}, error) {
 
 	if effectType == "all" {
 		return model.PresetCollection{
-			ParticleEffectPresets:  cfg.ParticleEffectPresets,
+			ParticleEffectPresets:  particlePresetsToAPI(cfg.ParticleEffectPresets),
 			DragonEffectPresets:    cfg.DragonEffectPresets,
 			TimeshiftEffectPresets: cfg.TimeshiftEffectPresets,
 			PotionEffectPresets:    cfg.PotionEffectPresets,
-			LaserEffectPresets:     migrateLaserPresets(cfg.LaserEffectPresets),
-			CommandEffectPresets:   migrateCommandPresets(cfg.CommandEffectPresets),
+			LaserEffectPresets:     cfg.LaserEffectPresets,
+			CommandEffectPresets:   commandPresetsToAPI(cfg.CommandEffectPresets),
 		}, nil
 	}
 
 	switch model.EffectType(effectType) {
 	case model.ParticleEffectType:
-		return cfg.ParticleEffectPresets, nil
+		return particlePresetsToAPI(cfg.ParticleEffectPresets), nil
 	case model.DragonEffectType:
 		return cfg.DragonEffectPresets, nil
 	case model.TimeshiftEffectType:
@@ -302,47 +304,37 @@ func RetrievePresets(effectType string) (interface{}, error) {
 	case model.PotionEffectType:
 		return cfg.PotionEffectPresets, nil
 	case model.LaserEffectType:
-		return migrateLaserPresets(cfg.LaserEffectPresets), nil
+		return cfg.LaserEffectPresets, nil
 	case model.CommandEffectType:
-		return migrateCommandPresets(cfg.CommandEffectPresets), nil
+		return commandPresetsToAPI(cfg.CommandEffectPresets), nil
 	default:
 		return nil, sferror.New(sferror.InvalidEffectType, effectType, nil)
 	}
 }
 
-// temporary measures until the preset manager has been fully migrated to React
-func migrateCommandPresets(presets []model.CommandEffectPreset) []model.CommandEffectPresetResponse {
-	resp := []model.CommandEffectPresetResponse{}
+func particlePresetsToAPI(presets []model.ParticleEffectPreset) (migrated []model.ParticleEffectPresetAPI) {
 	for _, p := range presets {
-		cmds := []model.Command{}
-		for _, c := range p.Commands {
-			cmds = append(cmds, model.Command{CommandString: c})
-		}
-		resp = append(resp, model.CommandEffectPresetResponse{
-			ID:          p.ID,
-			DisplayName: p.DisplayName,
-			Description: p.Description,
-			KeyBinding:  p.KeyBinding,
-			Commands:    cmds,
-		})
+		migrated = append(migrated, p.ToAPI())
 	}
-
-	return resp
+	return
 }
 
-func migrateLaserPresets(presets []model.LaserEffectPreset) []model.LaserEffectPreset {
-	resp := []model.LaserEffectPreset{}
-	for _, preset := range presets {
-		if preset.IsEndLaser {
-			preset.LaserType = model.EndLaserType
-		} else {
-			if preset.IsNonPlayerTargeting {
-				preset.LaserType = model.NonTargetingGuardianLaserType
-			} else {
-				preset.LaserType = model.TargetingGuardianLaserType
-			}
-		}
-		resp = append(resp, preset)
+// temporary measures until the preset manager has been fully migrated to React
+func commandPresetsToAPI(presets []model.CommandEffectPreset) (migrated []model.CommandEffectPresetAPI) {
+	for _, p := range presets {
+		migrated = append(migrated, p.ToAPI())
 	}
-	return resp
+	return
+}
+
+func migrateLaserPreset(preset *model.LaserEffectPreset) {
+	if preset.IsEndLaser {
+		preset.LaserType = model.EndLaserType
+	} else {
+		if preset.IsNonPlayerTargeting {
+			preset.LaserType = model.NonTargetingGuardianLaserType
+		} else {
+			preset.LaserType = model.TargetingGuardianLaserType
+		}
+	}
 }

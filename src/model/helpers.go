@@ -52,6 +52,10 @@ func (action EffectAction) IsAllowedOn(effectType EffectType) bool {
 	return false
 }
 
+// ****** //
+// LEGACY //
+// ****** //
+
 // TransformFromUI transforms UI specific values to the main model
 func (preset *ParticleEffectPreset) TransformFromUI() {
 	for i := len(preset.ParticleEffects) - 1; i >= 0; i-- {
@@ -104,17 +108,6 @@ func (preset *ParticleEffectPreset) TransformToUI() {
 
 	preset.UIAllowedParticleEffects = MinecraftParticleEffects
 	preset.UIAllowedRegionTypes = RegionTypes
-}
-
-func convertDensity(density float64, fromUI bool) float64 {
-	m := 5.0404e-05
-	n := -4.0404e-05
-
-	if fromUI {
-		return m*density + n
-	}
-
-	return (density - n) / m
 }
 
 // TransformFromUI transforms UI specific values to the main model
