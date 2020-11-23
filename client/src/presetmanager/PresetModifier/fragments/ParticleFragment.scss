@@ -3,12 +3,12 @@
     grid-template-areas  :
         'delete effect-label         effect-label        regiontype-label    regiontype-label'
         'delete effect-input         effect-input        regiontype-input    regiontype-input'
-        '.      pointids-label       pointids-label      pointids-label      pointids-label'
-        '.      pointids-input       pointids-input      pointids-input      pointids-input'
-        '.      density-label        density-label       .                   .'
-        '.      density-number-input density-range-input density-range-input randomize-checkbox'
-        '.      equation-label       equation-label      equation-label      equation-label'
-        '.      equation-input       equation-input      equation-input      equation-input';
+        'delete pointids-label       pointids-label      pointids-label      pointids-label'
+        'delete pointids-input       pointids-input      pointids-input      pointids-input'
+        'delete density-label        density-label       .                   .'
+        'delete density-number-input density-range-input density-range-input randomize-checkbox'
+        'delete equation-label       equation-label      equation-label      equation-label'
+        'delete equation-input       equation-input      equation-input      equation-input';
 
     & label {
         grid-area: label;
