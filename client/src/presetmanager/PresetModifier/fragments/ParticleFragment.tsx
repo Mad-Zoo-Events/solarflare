@@ -24,7 +24,7 @@ const ParticleFragment = ({
 }:ParticleFragmentProps) => {
     preset.particleEffects = preset.particleEffects || [{
         name: ParticleEffectTypes[0],
-        regionType: ParticleEffectRegionTypes[0],
+        regionType: "POINTS",
         pointIDList: "",
         density: 20
     }];
