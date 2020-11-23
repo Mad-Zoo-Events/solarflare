@@ -46,7 +46,7 @@ const ParticleFragment = ({
                     const regionType = watch(`particleEffects[${index}].regionType`, preset.particleEffects[0].regionType);
 
                     return (
-                        <div key={effect.id} className="preset-modifier__particle-item">
+                        <div key={effect.id} className="preset-modifier__particle-item preset-modifier__item">
                             <RemoveEffectButton fields={fields} remove={remove} index={index}/>
 
                             <label className="effect-label">Effect #{index + 1}</label>

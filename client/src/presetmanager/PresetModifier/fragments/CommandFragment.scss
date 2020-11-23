@@ -1,7 +1,4 @@
 .preset-modifier__command-item {
-    margin-bottom        : 0.8em;
-    display              : grid;
-    gap                  : 0.2em 1em;
     grid-template-columns: min-content auto;
     grid-template-areas  :
         'delete label'
@@ -15,8 +12,12 @@
         grid-area: delete;
     }
 
-    & textarea {
+    & .command-input {
         grid-area: command;
-        width    : 100%;
+
+        & textarea {
+            width     : 100%;
+            box-sizing: border-box;
+        }
     }
 }

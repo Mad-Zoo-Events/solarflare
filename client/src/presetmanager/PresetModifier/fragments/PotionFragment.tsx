@@ -32,7 +32,7 @@ const PotionFragment = ({
             </div>
             {
                 fields.map((effect, index) => (
-                    <div key={effect.id} className="preset-modifier__potion-item">
+                    <div key={effect.id} className="preset-modifier__potion-item preset-modifier__item">
                         <RemoveEffectButton fields={fields} remove={remove} index={index}/>
 
                         <label className="type-label">Potion Effect #{index + 1}</label>

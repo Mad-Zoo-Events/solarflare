@@ -51,7 +51,7 @@ const LaserFragment = ({
             {
                 fields.map((effect, index) => {
                     return (
-                        <div key={effect.id} className="preset-modifier__laser-item">
+                        <div key={effect.id} className="preset-modifier__laser-item preset-modifier__item">
                             <RemoveEffectButton fields={fields} remove={remove} index={index}/>
 
                             <label className="start-label">Start point ID</label>

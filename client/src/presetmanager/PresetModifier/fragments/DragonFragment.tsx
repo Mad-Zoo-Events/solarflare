@@ -33,7 +33,7 @@ const DragonFragment = ({
             {
                 fields.map((effect, index) => {
                     return (
-                        <div key={effect.id} className="preset-modifier__dragon-item">
+                        <div key={effect.id} className="preset-modifier__dragon-item preset-modifier__item">
                             <RemoveEffectButton fields={fields} remove={remove} index={index}/>
 
                             <label className="point-label">Point ID</label>

@@ -1,7 +1,4 @@
 .preset-modifier__particle-item {
-    margin-bottom        : 0.8em;
-    display              : grid;
-    gap                  : 0.2em 1em;
     grid-template-columns: min-content max-xontent 1fr 1fr max-content;
     grid-template-areas  :
         'delete effect-label         effect-label        regiontype-label    regiontype-label'
