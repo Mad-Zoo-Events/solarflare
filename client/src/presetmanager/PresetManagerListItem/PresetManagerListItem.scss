@@ -5,54 +5,64 @@
     display              : grid;
     gap                  : 0.2em;
     grid-template-columns: auto min-content max-content;
+    grid-template-rows   : max-content auto min-content;
     grid-template-areas  :
         'name        shortcut actions'
         'description shortcut actions'
         'id          shortcut actions';
-}
 
-.preset-manager-list-item__display-name {
-    grid-area  : name;
-    font-weight: bold;
-}
-
-.preset-manager-list-item__description {
-    grid-area : description;
-    font-style: italic;
-}
-
-.preset-manager-list-item__shortcut {
-    grid-area: shortcut;
-    font-size: larger;
-    margin   : auto auto;
-}
-
-.preset-manager-list-item__id {
-    grid-area: id;
-    font-size: x-small;
-    color    : var(--gray);
-}
-
-.preset-manager-list-item__actions {
-    grid-area  : actions;
-    display    : flex;
-    align-items: center;
-    margin     : auto 0.5em auto 2em;
-
-    & .fa-edit {
-        cursor: pointer;
+    & .display-name {
+        grid-area  : name;
+        font-weight: bold;
     }
 
-    & .fa-clone {
-        cursor: pointer;
-        color : var(--teal);
-        margin: 0 0.5em;
+    & .description {
+        grid-area : description;
+        font-style: italic;
     }
 
-    & .fa-trash-alt {
-        cursor: pointer;
-        color : var(--red);
+    & .shortcut {
+        grid-area       : shortcut;
+        font-size       : larger;
+        border          : 1px solid var(--dark-gray);
+        background-color: var(--background-alpha3);
+        border-radius   : 0.5em;
+        margin          : auto;
+        height          : 2em;
+        width           : 2em;
+        display         : flex;
+        justify-content : center;
+        align-items     : center;
     }
+
+    & .id {
+        grid-area: id;
+        font-size: x-small;
+        color    : var(--gray);
+    }
+
+    & .actions {
+        grid-area  : actions;
+        display    : flex;
+        align-items: center;
+        margin     : auto 0.5em auto 1.5em;
+
+        & .fa-edit {
+            cursor: pointer;
+        }
+
+        & .fa-clone {
+            cursor: pointer;
+            color : var(--teal);
+            margin: 0 0.5em;
+        }
+
+        & .fa-trash-alt {
+            cursor: pointer;
+            color : var(--red);
+        }
+    }
+
 }
 
 .preset-manager-list-item__add-new {
