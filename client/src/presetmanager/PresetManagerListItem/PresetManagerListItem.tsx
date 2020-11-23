@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { connect } from "react-redux";
-import { getAccentColor, getShortcutString } from "../../utils/utils";
+import { getAccentColor, getShortcutString, getSummary } from "../../utils/utils";
 import { deletePreset, duplicatePreset, editPreset } from "../PresetManagerActions";
 import "./PresetManagerListItem.scss";
 import { PresetManagerListItemProps } from "./PresetManagerListItemProps";
@@ -31,6 +31,10 @@ const PresetManagerListItem = ({
                 }{
                     keyBinding ? <div className="shortcut"><code>{getShortcutString(keyBinding)}</code></div> : null
                 }
+                <div className="summary" style={coloredText}>
+                    <FontAwesomeIcon icon={["fas", "bars"]} size="sm" />
+                    <span>{getSummary(preset, effectType)}</span>
+                </div>
                 <div className="id">{id}</div>
                 <div className="actions">
                     <FontAwesomeIcon icon={["far", "edit"]} size="lg" style={coloredText} onClick={() => onEdit(effectType, preset)}/>

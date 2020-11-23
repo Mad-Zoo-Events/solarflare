@@ -1,3 +1,4 @@
+import { getEffectName } from "../../utils/utils";
 import { IPreset } from "./IPreset";
 
 export interface ParticlePreset extends IPreset {
@@ -96,3 +97,23 @@ export const ParticleEffectTypes = [
     "WATER_WAKE",
     "WHITE_AS"
 ];
+
+export const getParticleSummary = (preset: ParticlePreset): string => {
+    const { particleEffects } = preset;
+
+    const regionString = (effect: ParticleEffect): string => {
+        const { regionType, equation, pointIDList } = effect;
+        const points = pointIDList.split(",");
+        switch (regionType) {
+        case "CUBOID":
+            return `within ${points[0]} and ${points[1]}`;
+        case "EQUATION":
+            return `at ${points[0]}, described by '${equation}'`;
+        case "POINTS":
+            return `at ${pointIDList}`;
+        }
+        return "";
+    };
+
+    return `${particleEffects.map((x) => ` ${getEffectName(x.name)} ${regionString(x)}`)}`;
+};

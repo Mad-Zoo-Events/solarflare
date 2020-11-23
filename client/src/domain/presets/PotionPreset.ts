@@ -1,3 +1,4 @@
+import { getEffectName } from "../../utils/utils";
 import { IPreset } from "./IPreset";
 
 export interface PotionPreset extends IPreset {
@@ -23,4 +24,15 @@ export const PotionEffectTypes: Record<string, string> = {
     SLOW: "(= slowness) Decreases movement speed",
     SPEED: "Increases movement speed",
     WATER_BREATHING: "Allows breathing underwater"
+};
+
+export const getPotionSummary = (preset: PotionPreset): string => {
+    const { potionEffects } = preset;
+    const numOfPotions = potionEffects.length;
+    const firstEffect = getEffectName(potionEffects[0].type);
+
+    return `${firstEffect} level ${potionEffects[0].amplifier}${numOfPotions > 1
+        ? ` and ${numOfPotions - 1} more`
+        : ""
+    }`;
 };
