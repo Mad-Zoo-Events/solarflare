@@ -1,22 +1,23 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
-import { useFieldArray } from "react-hook-form";
+import React, { ReactElement } from "react";
+import { Control, useFieldArray } from "react-hook-form";
+import TextareaAutosize from "react-textarea-autosize";
 import { CommandPreset } from "../../../domain/presets";
 import RemoveEffectButton from "../RemoveEffectButton";
 import "./CommandFragment.scss";
-import TextareaAutosize from "react-textarea-autosize";
 
 interface CommandFragmentProps {
     preset: CommandPreset
+    control: Control
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     register: any
-    control: any
 }
 
 const CommandFragment = ({
     preset,
     register,
     control
-}:CommandFragmentProps) => {
+}:CommandFragmentProps): ReactElement => {
     preset.commands = preset.commands || [{ command: "" }];
 
     const { fields, prepend, remove } = useFieldArray({
@@ -34,7 +35,7 @@ const CommandFragment = ({
             {
                 fields.map((effect, index) => (
                     <div key={effect.id} className="preset-modifier__command-item preset-modifier__item">
-                        <RemoveEffectButton fields={fields} remove={remove} index={index}/>
+                        <RemoveEffectButton numOfFields={fields.length} remove={remove} index={index}/>
 
                         <label>Command #{index + 1}</label>
                         <div className="command-input">

@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { Fragment } from "react";
-import { useFieldArray } from "react-hook-form";
+import React, { Fragment, ReactElement } from "react";
+import { Control, useFieldArray } from "react-hook-form";
 import { ParticlePreset } from "../../../domain/presets";
 import { ParticleEffectRegionTypes, ParticleEffectTypes } from "../../../domain/presets/ParticlePreset";
 import { getOnChangeNumber } from "../../../utils/utils";
@@ -9,10 +9,13 @@ import "./ParticleFragment.scss";
 
 interface ParticleFragmentProps {
     preset: ParticlePreset
+    control: Control
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     register: any
-    control: any
-    watch: any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setValue: any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    watch: any
 }
 
 const ParticleFragment = ({
@@ -21,7 +24,7 @@ const ParticleFragment = ({
     control,
     watch,
     setValue
-}:ParticleFragmentProps) => {
+}:ParticleFragmentProps): ReactElement => {
     preset.particleEffects = preset.particleEffects || [{
         name: ParticleEffectTypes[0],
         regionType: "POINTS",
@@ -47,7 +50,7 @@ const ParticleFragment = ({
 
                     return (
                         <div key={effect.id} className="preset-modifier__particle-item preset-modifier__item">
-                            <RemoveEffectButton fields={fields} remove={remove} index={index}/>
+                            <RemoveEffectButton numOfFields={fields.length} remove={remove} index={index}/>
 
                             <label className="effect-label">Effect #{index + 1}</label>
                             <select className="effect-input" name={`particleEffects[${index}].name`} defaultValue={effect.name} ref={register()}>

@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { Fragment } from "react";
-import { useFieldArray } from "react-hook-form";
+import React, { Fragment, ReactElement } from "react";
+import { Control, useFieldArray } from "react-hook-form";
 import { LaserPreset } from "../../../domain/presets";
 import { LaserTypes } from "../../../domain/presets/LaserPreset";
 import RemoveEffectButton from "../RemoveEffectButton";
@@ -8,8 +8,10 @@ import "./LaserFragment.scss";
 
 interface LaserFragmentProps {
     preset: LaserPreset
+    control: Control
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     register: any
-    control: any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     watch: any
 }
 
@@ -18,7 +20,7 @@ const LaserFragment = ({
     register,
     control,
     watch
-}: LaserFragmentProps) => {
+}: LaserFragmentProps): ReactElement => {
     preset.laserEffects = preset.laserEffects || [{ start: 0, end: 0 }];
 
     const isTargetingLaser = watch("laserType", preset.laserType) === "targetingGuardian";
@@ -52,7 +54,7 @@ const LaserFragment = ({
                 fields.map((effect, index) => {
                     return (
                         <div key={effect.id} className="preset-modifier__laser-item preset-modifier__item">
-                            <RemoveEffectButton fields={fields} remove={remove} index={index}/>
+                            <RemoveEffectButton numOfFields={fields.length} remove={remove} index={index}/>
 
                             <label className="start-label">Start point ID</label>
                             <input

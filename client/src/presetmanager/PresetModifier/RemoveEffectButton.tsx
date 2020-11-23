@@ -1,20 +1,20 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { ReactElement } from "react";
 import "./RemoveEffectButton.scss";
 
 interface RemoveEffectButtonProps {
-    fields: any[]
+    numOfFields: number
     remove: (index: number) => void
     index: number
 }
 
 const RemoveEffectButton = ({
-    fields,
+    numOfFields,
     remove,
     index
-}: RemoveEffectButtonProps) => {
+}: RemoveEffectButtonProps): ReactElement => {
     const removeEffect = (index: number) => {
-        fields.length > 1 ? remove(index) : alert("Gotta keep at least one effect");
+        numOfFields > 1 ? remove(index) : alert("Gotta keep at least one effect");
     };
 
     return <FontAwesomeIcon

@@ -1,10 +1,10 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 import ControlPanel from "./controlpanel/ControlPanel";
 import PresetManager from "./presetmanager/PresetManager";
 import Routes from "./routes";
 
-function App () {
+function App (): ReactElement {
     return (
         <Router>
             <Switch>
