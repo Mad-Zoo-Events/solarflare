@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { ReactElement } from "react";
 import Collapsible from "react-collapsible";
 import { getAccentColor } from "../../utils/utils";
 import PresetManagerListItem from "../PresetManagerListItem/PresetManagerListItem";
@@ -10,7 +10,7 @@ const PresetManagerListGroup = ({
     effectType,
     headerText,
     presets
-}: PresetManagerListGroupProps) => {
+}: PresetManagerListGroupProps): ReactElement => {
     const accentColor = getAccentColor(effectType);
     const coloredBackground = { backgroundColor: `var(--${accentColor})` };
     const coloredBorder = { borderColor: `var(--${accentColor})` };

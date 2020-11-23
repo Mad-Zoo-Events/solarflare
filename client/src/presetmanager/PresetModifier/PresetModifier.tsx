@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { Fragment } from "react";
+import React, { Fragment, ReactElement } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { connect } from "react-redux";
 import * as et from "../../domain/EffectType";
@@ -17,7 +17,7 @@ const PresetModifier = ({
     preset,
     effectType,
     onClose
-}: PresetModifierProps) => {
+}: PresetModifierProps): ReactElement => {
     preset = preset || { id: "", displayName: "" };
     preset.keyBindingStr = getShortcutString(preset.keyBinding);
 
@@ -133,7 +133,11 @@ const PresetModifier = ({
 };
 
 function mapStateToProps (state: RootState) {
-    const { effectType, preset } = state.presetmanager.presetToEdit!;
+    if (!state.presetmanager.presetToEdit) {
+        return;
+    }
+
+    const { effectType, preset } = state.presetmanager.presetToEdit;
 
     return {
         preset,

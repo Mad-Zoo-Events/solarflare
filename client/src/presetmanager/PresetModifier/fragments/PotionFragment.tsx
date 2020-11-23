@@ -1,21 +1,22 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { Fragment } from "react";
-import { useFieldArray } from "react-hook-form";
+import React, { Fragment, ReactElement } from "react";
+import { Control, useFieldArray } from "react-hook-form";
 import { PotionEffectTypes, PotionPreset } from "../../../domain/presets/PotionPreset";
 import RemoveEffectButton from "../RemoveEffectButton";
 import "./PotionFragment.scss";
 
 interface PotionFragmentProps {
     preset: PotionPreset
+    control: Control
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     register: any
-    control: any
 }
 
 const PotionFragment = ({
     preset,
     register,
     control
-}: PotionFragmentProps) => {
+}: PotionFragmentProps): ReactElement => {
     preset.potionEffects = preset.potionEffects || [{ type: "BLINDNESS", amplifier: 2 }];
 
     const { fields, prepend, remove } = useFieldArray({
@@ -33,7 +34,7 @@ const PotionFragment = ({
             {
                 fields.map((effect, index) => (
                     <div key={effect.id} className="preset-modifier__potion-item preset-modifier__item">
-                        <RemoveEffectButton fields={fields} remove={remove} index={index}/>
+                        <RemoveEffectButton numOfFields={fields.length} remove={remove} index={index}/>
 
                         <label className="type-label">Potion Effect #{index + 1}</label>
                         <select name={`potionEffects[${index}].type`} defaultValue={effect.type} ref={register()}>

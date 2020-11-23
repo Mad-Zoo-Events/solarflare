@@ -1,21 +1,22 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
-import { useFieldArray } from "react-hook-form";
+import React, { ReactElement } from "react";
+import { Control, useFieldArray } from "react-hook-form";
 import { DragonPreset } from "../../../domain/presets";
 import RemoveEffectButton from "../RemoveEffectButton";
 import "./DragonFragment.scss";
 
 interface DragonFragmentProps {
     preset: DragonPreset
+    control: Control
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     register: any
-    control: any
 }
 
 const DragonFragment = ({
     preset,
     register,
     control
-}: DragonFragmentProps) => {
+}: DragonFragmentProps): ReactElement => {
     preset.dragonEffects = preset.dragonEffects || [{ pointId: 0, static: false }];
 
     const { fields, prepend, remove } = useFieldArray({
@@ -34,7 +35,7 @@ const DragonFragment = ({
                 fields.map((effect, index) => {
                     return (
                         <div key={effect.id} className="preset-modifier__dragon-item preset-modifier__item">
-                            <RemoveEffectButton fields={fields} remove={remove} index={index}/>
+                            <RemoveEffectButton numOfFields={fields.length} remove={remove} index={index}/>
 
                             <label className="point-label">Point ID</label>
                             <input
