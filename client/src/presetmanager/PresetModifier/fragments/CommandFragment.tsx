@@ -4,6 +4,7 @@ import { useFieldArray } from "react-hook-form";
 import { CommandPreset } from "../../../domain/presets";
 import RemoveEffectButton from "../RemoveEffectButton";
 import "./CommandFragment.scss";
+import TextareaAutosize from "react-textarea-autosize";
 
 interface CommandFragmentProps {
     preset: CommandPreset
@@ -36,12 +37,12 @@ const CommandFragment = ({
                         <RemoveEffectButton fields={fields} remove={remove} index={index}/>
 
                         <label>Command #{index + 1}</label>
-                        <textarea
+                        <TextareaAutosize
                             name={`commands[${index}].command`}
                             placeholder="smite Mat_Zo"
                             defaultValue={effect.command}
                             ref={register()}>
-                        </textarea>
+                        </TextareaAutosize>
                     </div>
                 ))
             }
