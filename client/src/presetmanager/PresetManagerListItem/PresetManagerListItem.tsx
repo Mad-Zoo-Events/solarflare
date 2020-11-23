@@ -25,7 +25,10 @@ const PresetManagerListItem = ({
 
         return (
             <div className="preset-manager-list-item__container" style={coloredBorder}>
-                <div className="display-name" style={coloredText}>{displayName}</div>
+                <div className="display-name" style={coloredText}>
+                    <FontAwesomeIcon icon={["far", "edit"]} size="lg" onClick={() => onEdit(effectType, preset)}/>
+                    <span>{displayName}</span>
+                </div>
                 {
                     description ? <div className="description">{description}</div> : null
                 }{
@@ -37,7 +40,6 @@ const PresetManagerListItem = ({
                 </div>
                 <div className="id">{id}</div>
                 <div className="actions">
-                    <FontAwesomeIcon icon={["far", "edit"]} size="lg" style={coloredText} onClick={() => onEdit(effectType, preset)}/>
                     <FontAwesomeIcon icon={["far", "clone"]} size="lg" onClick={() => onDuplicate(id, effectType)} />
                     <FontAwesomeIcon icon={["far", "trash-alt"]} size="lg" onClick={() => confirmDelete(id, effectType)} />
                 </div>
