@@ -12,16 +12,19 @@
 }
 
 .preset-modifier__popup-inner {
-    position  : absolute;
-    left      : 20%;
-    right     : 20%;
-    top       : 10%;
-    bottom    : 10%;
-    margin    : auto;
-    background: var(--background);
-    overflow-x: hidden;
-    padding   : 2em;
+    position : absolute;
+    left     : 50%;
+    top      : 5em;
+    transform: translate(-50%);
 
+    box-sizing: border-box;
+    max-height: calc(100% - 15em);
+    min-width : 50em;
+    max-width : calc(100% - 10em);
+    padding   : 2em;
+    overflow-x: hidden;
+
+    background: var(--background);
     box-shadow: 0 0 5em 2em black;
 }
 
@@ -74,6 +77,17 @@
 
     & input {
         grid-column: 3;
+    }
+}
+
+.preset-modifier__item {
+    display      : grid;
+    padding      : 1em;
+    margin-bottom: 0.8em;
+    gap          : 0.2em 1em;
+
+    &:nth-of-type(2n) {
+        background-color: var(--background-alpha3);
     }
 }
 

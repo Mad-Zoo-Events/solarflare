@@ -33,16 +33,19 @@ const CommandFragment = ({
             </div>
             {
                 fields.map((effect, index) => (
-                    <div key={effect.id} className="preset-modifier__command-item">
+                    <div key={effect.id} className="preset-modifier__command-item preset-modifier__item">
                         <RemoveEffectButton fields={fields} remove={remove} index={index}/>
 
                         <label>Command #{index + 1}</label>
-                        <TextareaAutosize
-                            name={`commands[${index}].command`}
-                            placeholder="smite Mat_Zo"
-                            defaultValue={effect.command}
-                            ref={register()}>
-                        </TextareaAutosize>
+                        <div className="command-input">
+                            <TextareaAutosize
+                                name={`commands[${index}].command`}
+                                placeholder="smite Mat_Zo"
+                                defaultValue={effect.command}
+                                spellCheck={false}
+                                ref={register()}>
+                            </TextareaAutosize>
+                        </div>
                     </div>
                 ))
             }

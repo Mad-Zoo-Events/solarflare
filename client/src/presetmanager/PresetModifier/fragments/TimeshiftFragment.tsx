@@ -36,7 +36,7 @@ const TimeshiftFragment = ({
             {
                 fields.map((effect, index) => {
                     return (
-                        <div key={effect.id} className="preset-modifier__timeshift-item">
+                        <div key={effect.id} className="preset-modifier__timeshift-item preset-modifier__item">
                             <RemoveEffectButton fields={fields} remove={remove} index={index}/>
 
                             <label>Amount #{index + 1}</label>
