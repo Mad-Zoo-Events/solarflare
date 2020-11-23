@@ -25,14 +25,14 @@ const PresetManagerListItem = ({
 
         return (
             <div className="preset-manager-list-item__container" style={coloredBorder}>
-                <div className="preset-manager-list-item__display-name" style={coloredText}>{displayName}</div>
+                <div className="display-name" style={coloredText}>{displayName}</div>
                 {
-                    description && <div className="preset-manager-list-item__description">{description}</div>
+                    description ? <div className="description">{description}</div> : null
                 }{
-                    keyBinding && <div className="preset-manager-list-item__shortcut code">{getShortcutString(keyBinding)}</div>
+                    keyBinding ? <div className="shortcut"><code>{getShortcutString(keyBinding)}</code></div> : null
                 }
-                <div className="preset-manager-list-item__id">{id}</div>
-                <div className="preset-manager-list-item__actions">
+                <div className="id">{id}</div>
+                <div className="actions">
                     <FontAwesomeIcon icon={["far", "edit"]} size="lg" style={coloredText} onClick={() => onEdit(effectType, preset)}/>
                     <FontAwesomeIcon icon={["far", "clone"]} size="lg" onClick={() => onDuplicate(id, effectType)} />
                     <FontAwesomeIcon icon={["far", "trash-alt"]} size="lg" onClick={() => confirmDelete(id, effectType)} />
