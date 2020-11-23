@@ -4,11 +4,12 @@
 
     display              : grid;
     gap                  : 0.2em;
-    grid-template-columns: auto min-content max-content;
-    grid-template-rows   : max-content auto min-content;
+    grid-template-columns: auto min-content min-content;
+    grid-template-rows   : max-content auto auto min-content;
     grid-template-areas  :
         'name        shortcut actions'
         'description shortcut actions'
+        'summary     shortcut actions'
         'id          shortcut actions';
 
     & .display-name {
@@ -35,6 +36,15 @@
         align-items     : center;
     }
 
+    & .summary {
+        grid-area   : summary;
+        // color    : var(--teal);
+
+        & span {
+            margin-left: 0.5em;
+        }
+    }
+
     & .id {
         grid-area: id;
         font-size: x-small;
@@ -42,10 +52,10 @@
     }
 
     & .actions {
-        grid-area  : actions;
-        display    : flex;
-        align-items: center;
-        margin     : auto 0.5em auto 1.5em;
+        grid-area     : actions;
+        // display    : flex;
+        align-items   : center;
+        margin        : auto 0 auto 2em;
 
         & .fa-edit {
             cursor: pointer;
@@ -54,7 +64,7 @@
         & .fa-clone {
             cursor: pointer;
             color : var(--teal);
-            margin: 0 0.5em;
+            margin: 0.5em 0;
         }
 
         & .fa-trash-alt {

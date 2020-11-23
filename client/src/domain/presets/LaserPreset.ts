@@ -15,3 +15,13 @@ export const LaserTypes: Record<string, string> = {
     nonTargetingGuardian: "Guardian Laser",
     targetingGuardian: "Player-Tracking Guardian Laser"
 };
+
+export const getLaserSummary = (preset: LaserPreset): string => {
+    const { laserEffects, laserType } = preset;
+    const numOfLasers = laserEffects.length;
+
+    return `${numOfLasers === 1
+        ? `One ${LaserTypes[laserType]}`
+        : `${numOfLasers} ${LaserTypes[laserType]}s`
+    }`;
+};
