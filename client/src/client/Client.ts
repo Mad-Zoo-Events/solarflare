@@ -3,20 +3,21 @@ import axios from "axios";
 import { Preset } from "../domain/presets/Preset";
 
 export async function fetchAllPresets (): Promise<PresetCollection> {
-    const res = await axios.get<PresetCollection>("/presets/all");
-    return Promise.resolve(res.data);
+    return (await axios.get<PresetCollection>("/presets/all")).data;
 }
 
 export async function fetchPresetsOfType (effectType: string): Promise<Preset[]> {
-    const res = await axios.get<Preset[]>(`/presets/${effectType}`);
-    return Promise.resolve(res.data);
+    return (await axios.get<Preset[]>(`/presets/${effectType}`)).data;
+}
+
+export async function upsertPreset (effectType: string, preset: Preset): Promise<void> {
+    return await axios.post(`/presets/${effectType}`, preset);
 }
 
 export async function duplicatePreset (id: string, effectType: string): Promise<string> {
-    const res = await axios.post<string>(`/presets/${effectType}/${id}/duplicate`);
-    return Promise.resolve(res.data);
+    return (await axios.post<string>(`/presets/${effectType}/${id}/duplicate`)).data;
 }
 
 export async function deletePreset (id: string, effectType: string): Promise<void> {
-    await axios.delete<string>(`/presets/${effectType}/${id}`);
+    return await axios.delete(`/presets/${effectType}/${id}`);
 }
