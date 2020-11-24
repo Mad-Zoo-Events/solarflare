@@ -1,8 +1,7 @@
 .preset-manager-list-group__container {
     display              : grid;
-    gap                  : 0.5em;
+    gap                  : 0.3em;
     grid-template-columns: repeat(auto-fit, minmax(30em, 1fr));
-    transition           : resize 1000ms ease;
     box-sizing           : border-box;
     border               : 1em solid;
     border-top           : none;

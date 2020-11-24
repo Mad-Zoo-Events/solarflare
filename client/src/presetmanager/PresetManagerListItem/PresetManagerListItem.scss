@@ -60,14 +60,13 @@
     }
 
     & .actions {
-        grid-area  : actions;
-        align-items: center;
-        margin     : auto 0 auto 2em;
+        grid-area: actions;
+        margin   : auto 0 auto 1.5em;
 
         & .duplicate-preset {
-            cursor: pointer;
-            color : var(--teal);
-            margin: 0.5em 0;
+            cursor       : pointer;
+            color        : var(--teal);
+            margin-bottom: 0.5em;
 
             &:hover {
                 color: var(--font);
