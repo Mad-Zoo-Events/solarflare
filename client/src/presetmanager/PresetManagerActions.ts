@@ -1,7 +1,13 @@
 import { AnyAction } from "redux";
 import { createAction } from "redux-actions";
 import { ThunkAction } from "redux-thunk";
-import { deletePreset as doDeletePreset, duplicatePreset as doDuplicatePreset, fetchAllPresets, fetchPresetsOfType } from "../client/Client";
+import {
+    deletePreset as doDeletePreset,
+    duplicatePreset as doDuplicatePreset,
+    fetchAllPresets,
+    fetchPresetsOfType,
+    upsertPreset as doUpsertPreset
+} from "../client/Client";
 import { PresetCollection } from "../domain/PresetCollection";
 import { Preset } from "../domain/presets/Preset";
 import { RootState } from "../RootState";
@@ -56,6 +62,13 @@ export const deletePreset = (id: string, effectType: string): ThunkAction<void, 
 export const editPreset = (effectType: string, preset?: Preset): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     preset = preset || { id: "", displayName: "" } as Preset;
     dispatch(shouldOpenPresetModifier({ effectType, preset }));
+};
+export const upsertPreset = (effectType: string, preset: Preset): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {
+    await doUpsertPreset(effectType, preset);
+
+    const presets = await fetchPresetsOfType(effectType);
+    dispatch(didGetPresetsOfType({ effectType, presets }));
+    dispatch(shouldClosePresetModifier());
 };
 export const closePresetModifier = (): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(shouldClosePresetModifier());
