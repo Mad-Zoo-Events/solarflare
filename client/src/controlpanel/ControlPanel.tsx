@@ -1,10 +1,9 @@
 import React, { ReactElement } from "react";
-import { Link } from "react-router-dom";
-import Routes from "../routes";
+import PageHeader from "../presetmanager/PageHeader/PageHeader";
 
 const ControlPanel = (): ReactElement => {
     return (
-        <Link to={Routes.presetManager}>Manage Presets</Link>
+        <PageHeader isControlPanel={true} />
     );
 };
 

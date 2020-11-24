@@ -29,7 +29,7 @@ const DragonFragment = ({
             <div className="preset-modifier__subtitle">List of dragons</div>
 
             <div className="add-button" onClick={() => prepend({ ...preset.dragonEffects[0] })} >
-                <FontAwesomeIcon className="add-button" icon={["fas", "plus-circle"]} size="lg" />
+                <FontAwesomeIcon className="add-button" icon={["fas", "plus-circle"]} size="lg" title="Add Another Effect" />
             </div>
             {
                 fields.map((effect, index) => {

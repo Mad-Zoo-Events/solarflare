@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import { RootState } from "../RootState";
-import Routes from "../routes";
+import PageHeader from "./PageHeader/PageHeader";
 import { fetchPresets } from "./PresetManagerActions";
 import PresetManagerList from "./PresetManagerList/PresetManagerList";
 import { PresetManagerProps } from "./PresetManagerProps";
@@ -14,9 +13,15 @@ const PresetManager = ({
 }: PresetManagerProps) => {
     useEffect(getPresets, []);
 
+    if (presetToEdit) {
+        document.body.style.overflow = "hidden";
+    } else {
+        document.body.style.overflow = "auto";
+    }
+
     return (
         <>
-            <Link to={Routes.controlPanel}>Back</Link>
+            <PageHeader isControlPanel={false} />
             <PresetManagerList />
             {presetToEdit && <PresetModifier />}
         </>

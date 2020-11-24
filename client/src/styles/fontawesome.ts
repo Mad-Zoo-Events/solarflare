@@ -4,7 +4,9 @@ import {
     faChevronDown,
     faWindowClose,
     faSave,
-    faBars
+    faBars,
+    faArrowLeft,
+    faCogs
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -19,6 +21,8 @@ library.add(
     faWindowClose,
     faSave,
     faBars,
+    faArrowLeft,
+    faCogs,
 
     faEdit,
     faClone,

@@ -26,22 +26,22 @@ const PresetManagerListItem = ({
         return (
             <div className="preset-manager-list-item__container" style={coloredBorder}>
                 <div className="display-name" style={coloredText}>
-                    <FontAwesomeIcon icon={["far", "edit"]} size="lg" onClick={() => onEdit(effectType, preset)}/>
+                    <FontAwesomeIcon className="edit-preset" icon={["far", "edit"]} size="lg" onClick={() => onEdit(effectType, preset)} title="Edit This Preset" />
                     <span>{displayName}</span>
                 </div>
                 {
-                    description ? <div className="description">{description}</div> : null
+                    description ? <div className="description" title="Description">{description}</div> : null
                 }{
-                    keyBinding ? <div className="shortcut"><code>{getShortcutString(keyBinding)}</code></div> : null
+                    keyBinding ? <div className="shortcut" title="Keyboard Shortcut"><code>{getShortcutString(keyBinding)}</code></div> : null
                 }
-                <div className="summary" style={coloredText}>
+                <div className="summary" style={coloredText} title="Summary">
                     <FontAwesomeIcon icon={["fas", "bars"]} size="sm" />
                     <span>{getSummary(preset, effectType)}</span>
                 </div>
-                <div className="id">{id}</div>
+                <div className="id" title="Unique Identifier (UUID) of This Preset">{id}</div>
                 <div className="actions">
-                    <FontAwesomeIcon icon={["far", "clone"]} size="lg" onClick={() => onDuplicate(id, effectType)} />
-                    <FontAwesomeIcon icon={["far", "trash-alt"]} size="lg" onClick={() => confirmDelete(id, effectType)} />
+                    <FontAwesomeIcon className="duplicate-preset" icon={["far", "clone"]} size="lg" onClick={() => onDuplicate(id, effectType)} title="Duplicate This Preset" />
+                    <FontAwesomeIcon className="delete-preset" icon={["far", "trash-alt"]} size="lg" onClick={() => confirmDelete(id, effectType)} title="Delete This Preset" />
                 </div>
             </div>
         );
@@ -49,7 +49,7 @@ const PresetManagerListItem = ({
 
     return (
         <div className="preset-manager-list-item__add-new" style={coloredText} onClick={() => onEdit(effectType, preset)}>
-            <FontAwesomeIcon icon={["fas", "plus-circle"]} size="2x" />
+            <FontAwesomeIcon icon={["fas", "plus-circle"]} size="2x" title="Add A New Preset" />
         </div>
     );
 };
