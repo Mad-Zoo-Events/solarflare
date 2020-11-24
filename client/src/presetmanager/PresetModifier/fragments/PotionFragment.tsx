@@ -12,7 +12,7 @@ const PotionFragment = ({
     formMethods
 }: PresetModifierFragmentProps): ReactElement => {
     const potionPreset = preset as PotionPreset;
-    potionPreset.potionEffects = potionPreset.potionEffects || [{ type: "BLINDNESS", amplifier: 2 }];
+    potionPreset.potionEffects = potionPreset.potionEffects || [{ type: "BLINDNESS", amplifier: 1 }];
 
     const { register, control, setValue } = formMethods;
 
