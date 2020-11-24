@@ -1,14 +1,14 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Fragment, ReactElement } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { connect } from "react-redux";
 import * as et from "../../domain/EffectType";
 import { CommandPreset, DragonPreset, LaserPreset, ParticlePreset, PotionPreset, TimeshiftPreset } from "../../domain/presets";
 import { MidiBehaviorTypes } from "../../domain/presets/IPreset";
 import { Preset } from "../../domain/presets/Preset";
 import { RootState } from "../../RootState";
-import { getShortcutCode, getShortcutString } from "../../utils/utils";
-import { closePresetModifier } from "../PresetManagerActions";
+import { getOnChangeInt, getShortcutCode, getShortcutString } from "../../utils/utils";
+import { closePresetModifier, upsertPreset } from "../PresetManagerActions";
 import { CommandFragment, DragonFragment, LaserFragment, ParticleFragment, PotionFragment, TimeshiftFragment } from "./fragments";
 import "./PresetModifier.scss";
 import { PresetModifierProps } from "./PresetModifierProps";
@@ -16,35 +16,38 @@ import { PresetModifierProps } from "./PresetModifierProps";
 const PresetModifier = ({
     preset,
     effectType,
-    onClose
+    onClose,
+    onSubmitForm
 }: PresetModifierProps): ReactElement => {
-    preset = preset || { id: "", displayName: "" };
+    preset = preset || { id: "", displayName: "", keyBinding: 0 };
     preset.keyBindingStr = getShortcutString(preset.keyBinding);
 
     const newMidiMapping = () => ({ channel: 1, key: 1, behavior: "trigger" });
 
-    const { register, handleSubmit, control, setValue, watch } = useForm<Preset>({
+    const formMethods = useForm<Preset>({
         defaultValues: preset
     });
 
-    const onSubmit = (formValues: Preset) => {
-        console.log(formValues);
+    const { register, handleSubmit, control, setValue } = formMethods;
+
+    const onSubmit = (preset: Preset) => {
+        onSubmitForm(effectType, preset);
     };
 
     const specificInputs = () => {
         switch (effectType) {
         case et.Command:
-            return <CommandFragment preset={preset as CommandPreset} register={register} control={control} />;
+            return <CommandFragment preset={preset as CommandPreset} formMethods={formMethods} />;
         case et.Dragon:
-            return <DragonFragment preset={preset as DragonPreset} register={register} control={control} />;
+            return <DragonFragment preset={preset as DragonPreset} formMethods={formMethods} />;
         case et.Laser:
-            return <LaserFragment preset={preset as LaserPreset} register={register} control={control} watch={watch} />;
+            return <LaserFragment preset={preset as LaserPreset} formMethods={formMethods} />;
         case et.Particle:
-            return <ParticleFragment preset={preset as ParticlePreset} register={register} control={control} watch={watch} setValue={setValue} />;
+            return <ParticleFragment preset={preset as ParticlePreset} formMethods={formMethods} />;
         case et.Potion:
-            return <PotionFragment preset={preset as PotionPreset} register={register} control={control} />;
+            return <PotionFragment preset={preset as PotionPreset} formMethods={formMethods} />;
         case et.Timeshift:
-            return <TimeshiftFragment preset={preset as TimeshiftPreset} register={register} control={control} setValue={setValue} />;
+            return <TimeshiftFragment preset={preset as TimeshiftPreset} formMethods={formMethods} />;
         }
     };
 
@@ -82,6 +85,8 @@ const PresetModifier = ({
                 <div className="preset-modifier__content">
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="preset-modifier__common-inputs">
+                            <input name="id" type="hidden" ref={register} />
+
                             <label>Display Name</label>
                             <input name="displayName" type="text" autoComplete="false" placeholder="Preset display name" ref={register} />
 
@@ -90,7 +95,13 @@ const PresetModifier = ({
 
                             <label>Keyboard Shortcut</label>
                             <input type="text" autoComplete="false" defaultValue={preset.keyBindingStr} onKeyPress={handleShortcutKeyPress} onPaste={handleShortcutPaste} />
-                            <input name="keyBinding" type="hidden" ref={register} />
+                            <Controller
+                                name="keyBinding"
+                                control={control}
+                                onChange={getOnChangeInt}
+                                as={<input type="hidden"/>}
+                                defaultValue={preset.keyBinding || 0}
+                            />
                         </div>
                         <div>
                             <div className="preset-modifier__subtitle">List of MIDI mappings</div>
@@ -145,7 +156,8 @@ function mapStateToProps (state: RootState) {
 }
 
 const mapDispatchToProps = {
-    onClose: closePresetModifier
+    onClose: closePresetModifier,
+    onSubmitForm: upsertPreset
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PresetModifier);

@@ -1,29 +1,23 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Fragment, ReactElement } from "react";
-import { Control, useFieldArray } from "react-hook-form";
+import { Controller, useFieldArray } from "react-hook-form";
 import { LaserPreset } from "../../../domain/presets";
 import { LaserTypes } from "../../../domain/presets/LaserPreset";
+import { getOnChangeInt } from "../../../utils/utils";
 import RemoveEffectButton from "../RemoveEffectButton";
 import "./LaserFragment.scss";
-
-interface LaserFragmentProps {
-    preset: LaserPreset
-    control: Control
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    register: any
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    watch: any
-}
+import { PresetModifierFragmentProps } from "./PresetModifierFragmentProps";
 
 const LaserFragment = ({
     preset,
-    register,
-    control,
-    watch
-}: LaserFragmentProps): ReactElement => {
-    preset.laserEffects = preset.laserEffects || [{ start: 0, end: 0 }];
+    formMethods
+}: PresetModifierFragmentProps): ReactElement => {
+    const laserPreset = preset as LaserPreset;
+    laserPreset.laserEffects = laserPreset.laserEffects || [{ start: 0, end: 0 }];
 
-    const isTargetingLaser = watch("laserType", preset.laserType) === "targetingGuardian";
+    const { register, control, setValue, watch } = formMethods;
+
+    const isTargetingLaser = watch("laserType", laserPreset.laserType) === "targetingGuardian";
 
     const { fields, prepend, remove } = useFieldArray({
         control,
@@ -36,7 +30,7 @@ const LaserFragment = ({
 
             <div className="preset-modifier__common-inputs">
                 <label>Laser Type</label>
-                <select name="laserType" defaultValue={preset.laserType} ref={register}>
+                <select name="laserType" defaultValue={laserPreset.laserType} ref={register}>
                     {Object.keys(LaserTypes).map(key => (
                         <Fragment key={key}>
                             <option value={key}>{LaserTypes[key]}</option>
@@ -47,7 +41,7 @@ const LaserFragment = ({
 
             <div className="preset-modifier__subtitle">List of lasers</div>
 
-            <div className="add-button" onClick={() => prepend({ ...preset.laserEffects[0] })} >
+            <div className="add-button" onClick={() => prepend({ ...laserPreset.laserEffects[0] })} >
                 <FontAwesomeIcon className="add-button" icon={["fas", "plus-circle"]} size="lg" title="Add Another Effect" />
             </div>
             {
@@ -57,22 +51,34 @@ const LaserFragment = ({
                             <RemoveEffectButton numOfFields={fields.length} remove={remove} index={index}/>
 
                             <label className="start-label">Start point ID</label>
+                            <Controller
+                                name={`laserEffects[${index}].start`}
+                                control={control}
+                                as={<input type="hidden"/>}
+                                defaultValue={effect.start}
+                            />
+
                             <input
                                 className="start-point"
-                                name={`laserEffects[${index}].start`}
                                 type="number"
                                 defaultValue={effect.start}
-                                ref={register()}
+                                onChange={(e) => setValue(`laserEffects[${index}].start`, getOnChangeInt(e))}
                             />
 
                             {isTargetingLaser || <>
                                 <label className="destination-label">Destination point ID</label>
+                                <Controller
+                                    name={`laserEffects[${index}].end`}
+                                    control={control}
+                                    as={<input type="hidden"/>}
+                                    defaultValue={effect.end}
+                                />
+
                                 <input
                                     className="destination-point"
-                                    name={`laserEffects[${index}].end`}
                                     type="number"
                                     defaultValue={effect.end}
-                                    ref={register()}
+                                    onChange={(e) => setValue(`laserEffects[${index}].end`, getOnChangeInt(e))}
                                 />
                             </>}
                         </div>
