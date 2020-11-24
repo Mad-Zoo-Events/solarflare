@@ -42,7 +42,7 @@ const ParticleFragment = ({
             <div className="preset-modifier__subtitle">List of particle effects</div>
 
             <div className="add-button" onClick={() => prepend({ ...preset.particleEffects[0] })} >
-                <FontAwesomeIcon className="add-button" icon={["fas", "plus-circle"]} size="lg" />
+                <FontAwesomeIcon className="add-button" icon={["fas", "plus-circle"]} size="lg" title="Add Another Effect" />
             </div>
             {
                 fields.map((effect, index) => {

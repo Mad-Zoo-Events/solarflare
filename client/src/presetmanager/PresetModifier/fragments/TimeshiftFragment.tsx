@@ -33,7 +33,7 @@ const TimeshiftFragment = ({
             <div className="preset-modifier__subtitle">List of timeshift effects</div>
 
             <div className="add-button" onClick={() => prepend({ ...preset.timeshiftEffects[0] })} >
-                <FontAwesomeIcon className="add-button" icon={["fas", "plus-circle"]} size="lg" />
+                <FontAwesomeIcon className="add-button" icon={["fas", "plus-circle"]} size="lg" title="Add Another Effect" />
             </div>
             {
                 fields.map((effect, index) => {

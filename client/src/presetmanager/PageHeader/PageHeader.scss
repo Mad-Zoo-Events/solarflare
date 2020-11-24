@@ -1,0 +1,30 @@
+.page-header {
+    background-color: var(--background);
+    font-size       : xx-large;
+    font-weight     : lighter;
+    padding         : 0.5em;
+
+    display              : grid;
+    gap                  : 0.5em;
+    grid-template-columns: min-content auto min-content;
+
+    & a:visited {
+        color: var(--dark-gray);
+    }
+
+    & a:hover {
+        color: var(--gray);
+    }
+
+    & .text {
+        grid-column: 2;
+    }
+
+    & .button-right {
+        grid-column: 3;
+    }
+
+    & .button-left {
+        grid-column: 1;
+    }
+}

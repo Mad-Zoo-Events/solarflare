@@ -74,8 +74,8 @@ const PresetModifier = ({
                     {preset.id ? <> Edit <span className="preset-name">{preset.displayName}</span> </> : "Create New Preset"}
 
                     <div className="form-buttons">
-                        <FontAwesomeIcon className="save-button" icon={["fas", "save"]} size="2x" onClick={handleSubmit(onSubmit)} />
-                        <FontAwesomeIcon className="close-button" icon={["fas", "window-close"]} size="2x" onClick={onClose} />
+                        <FontAwesomeIcon className="save-button" icon={["fas", "save"]} size="2x" onClick={handleSubmit(onSubmit)} title="Save This Preset" />
+                        <FontAwesomeIcon className="close-button" icon={["fas", "window-close"]} size="2x" onClick={onClose} title="Close Without Saving" />
                     </div>
                 </div>
 
@@ -96,12 +96,12 @@ const PresetModifier = ({
                             <div className="preset-modifier__subtitle">List of MIDI mappings</div>
                             <div>
                                 <div className="add-button" onClick={() => prepend(newMidiMapping())}>
-                                    <FontAwesomeIcon icon={["fas", "plus-circle"]} size="lg" />
+                                    <FontAwesomeIcon icon={["fas", "plus-circle"]} size="lg" title="Add MIDI Mapping"/>
                                 </div>
                                 {
                                     fields.map((mapping, index) => (
                                         <div key={mapping.id} className="preset-modifier__midi-mapping">
-                                            <FontAwesomeIcon className="delete-button" icon={["far", "trash-alt"]} size="2x" onClick={() => remove(index)} />
+                                            <FontAwesomeIcon className="delete-button" icon={["far", "trash-alt"]} size="2x" onClick={() => remove(index)} title="Remove MIDI Mapping" />
                                             <label>Key</label>
                                             <input name={`midiMappings[${index}].key`} type="number" defaultValue={mapping.key} ref={register()} />
 

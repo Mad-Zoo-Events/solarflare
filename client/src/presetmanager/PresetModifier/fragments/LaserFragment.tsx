@@ -48,7 +48,7 @@ const LaserFragment = ({
             <div className="preset-modifier__subtitle">List of lasers</div>
 
             <div className="add-button" onClick={() => prepend({ ...preset.laserEffects[0] })} >
-                <FontAwesomeIcon className="add-button" icon={["fas", "plus-circle"]} size="lg" />
+                <FontAwesomeIcon className="add-button" icon={["fas", "plus-circle"]} size="lg" title="Add Another Effect" />
             </div>
             {
                 fields.map((effect, index) => {

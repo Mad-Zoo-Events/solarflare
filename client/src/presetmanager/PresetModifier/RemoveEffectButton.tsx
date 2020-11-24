@@ -22,6 +22,7 @@ const RemoveEffectButton = ({
         icon={["far", "trash-alt"]}
         size="2x"
         onClick={() => removeEffect(index)}
+        title="Remove This Effect"
     />;
 };
 

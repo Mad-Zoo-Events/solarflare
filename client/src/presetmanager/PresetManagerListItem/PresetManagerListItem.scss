@@ -16,7 +16,7 @@
         grid-area  : name;
         font-weight: bold;
 
-        & .fa-edit {
+        & .edit-preset {
             cursor      : pointer;
             margin-right: 0.5em;
 
@@ -46,8 +46,7 @@
     }
 
     & .summary {
-        grid-area   : summary;
-        // color    : var(--teal);
+        grid-area: summary;
 
         & span {
             margin-left: 0.5em;
@@ -65,7 +64,7 @@
         align-items: center;
         margin     : auto 0 auto 2em;
 
-        & .fa-clone {
+        & .duplicate-preset {
             cursor: pointer;
             color : var(--teal);
             margin: 0.5em 0;
@@ -75,7 +74,7 @@
             }
         }
 
-        & .fa-trash-alt {
+        & .delete-preset {
             cursor: pointer;
             color : var(--red);
 
