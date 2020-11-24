@@ -14,7 +14,7 @@ const ParticleFragment = ({
 }: PresetModifierFragmentProps): ReactElement => {
     const particlePreset = preset as ParticlePreset;
     particlePreset.particleEffects = particlePreset.particleEffects || [{
-        name: ParticleEffectTypes[0],
+        name: "ASH",
         regionType: "POINTS",
         pointIDList: "",
         density: 20
