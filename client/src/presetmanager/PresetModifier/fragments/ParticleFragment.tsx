@@ -1,36 +1,26 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Fragment, ReactElement } from "react";
-import { Control, useFieldArray } from "react-hook-form";
+import { Controller, useFieldArray } from "react-hook-form";
 import { ParticlePreset } from "../../../domain/presets";
 import { ParticleEffectRegionTypes, ParticleEffectTypes } from "../../../domain/presets/ParticlePreset";
-import { getOnChangeNumber } from "../../../utils/utils";
+import { getOnChangeInt } from "../../../utils/utils";
 import RemoveEffectButton from "../RemoveEffectButton";
 import "./ParticleFragment.scss";
-
-interface ParticleFragmentProps {
-    preset: ParticlePreset
-    control: Control
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    register: any
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    setValue: any
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    watch: any
-}
+import { PresetModifierFragmentProps } from "./PresetModifierFragmentProps";
 
 const ParticleFragment = ({
     preset,
-    register,
-    control,
-    watch,
-    setValue
-}:ParticleFragmentProps): ReactElement => {
-    preset.particleEffects = preset.particleEffects || [{
+    formMethods
+}: PresetModifierFragmentProps): ReactElement => {
+    const particlePreset = preset as ParticlePreset;
+    particlePreset.particleEffects = particlePreset.particleEffects || [{
         name: ParticleEffectTypes[0],
         regionType: "POINTS",
         pointIDList: "",
         density: 20
     }];
+
+    const { register, control, watch, setValue } = formMethods;
 
     const { fields, prepend, remove } = useFieldArray({
         control,
@@ -41,12 +31,12 @@ const ParticleFragment = ({
         <>
             <div className="preset-modifier__subtitle">List of particle effects</div>
 
-            <div className="add-button" onClick={() => prepend({ ...preset.particleEffects[0] })} >
+            <div className="add-button" onClick={() => prepend({ ...particlePreset.particleEffects[0] })} >
                 <FontAwesomeIcon className="add-button" icon={["fas", "plus-circle"]} size="lg" title="Add Another Effect" />
             </div>
             {
                 fields.map((effect, index) => {
-                    const regionType = watch(`particleEffects[${index}].regionType`, preset.particleEffects[0].regionType);
+                    const regionType = watch(`particleEffects[${index}].regionType`, particlePreset.particleEffects[0].regionType);
 
                     return (
                         <div key={effect.id} className="preset-modifier__particle-item preset-modifier__item">
@@ -96,28 +86,39 @@ const ParticleFragment = ({
                             {regionType !== "POINTS" &&
                             <>
                                 <label className="density-label">Density</label>
-                                <input
-                                    className="density-number-input"
+                                <Controller
                                     name={`particleEffects[${index}].density`}
-                                    type="number"
-                                    min={1}
-                                    max={100}
-                                    step={0.1}
+                                    control={control}
+                                    as={<input type="hidden"/>}
                                     defaultValue={effect.density}
-                                    ref={register()}
-                                    onChange={(e) => setValue(`particleEffects[${index}].rangedensity`, getOnChangeNumber(e))}
                                 />
 
                                 <input
-                                    className="density-range-input"
-                                    name={`particleEffects[${index}].rangedensity`}
-                                    type="range"
-                                    min={1}
-                                    max={100}
-                                    step={0.1}
+                                    name={`particleEffects[${index}].numberdensity`}
+                                    className="density-number-input"
+                                    type="number"
+                                    min={1} max={100} step={0.1}
                                     defaultValue={effect.density}
                                     ref={register()}
-                                    onChange={(e) => setValue(`particleEffects[${index}].density`, getOnChangeNumber(e))}
+                                    onChange={(e) => {
+                                        const density = getOnChangeInt(e);
+                                        setValue(`particleEffects[${index}].density`, density);
+                                        setValue(`particleEffects[${index}].rangedensity`, density);
+                                    }}
+                                />
+
+                                <input
+                                    name={`particleEffects[${index}].rangedensity`}
+                                    className="density-range-input"
+                                    type="range"
+                                    min={1} max={100} step={0.1}
+                                    defaultValue={effect.density}
+                                    ref={register()}
+                                    onChange={(e) => {
+                                        const density = getOnChangeInt(e);
+                                        setValue(`particleEffects[${index}].density`, density);
+                                        setValue(`particleEffects[${index}].numberdensity`, density);
+                                    }}
                                 />
                             </>
                             }

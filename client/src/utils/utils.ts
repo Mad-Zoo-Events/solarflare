@@ -1,4 +1,4 @@
-import { FormEvent } from "react";
+import { ChangeEvent } from "react";
 import * as et from "../domain/EffectType";
 import { CommandPreset, LaserPreset, PotionPreset, TimeshiftPreset } from "../domain/presets";
 import { getCommandSummary } from "../domain/presets/CommandPreset";
@@ -17,8 +17,12 @@ export function getShortcutCode (keyBindingStr?: string): number | undefined {
     return keyBindingStr?.charCodeAt(0);
 }
 
-export function getOnChangeNumber (e: FormEvent<HTMLInputElement>): number {
-    return Number(e.currentTarget.value);
+export function getOnChangeInt (e: ChangeEvent<HTMLInputElement>): number {
+    return parseInt(e.currentTarget.value, 10);
+}
+
+export function getOnChangeFloat (e: ChangeEvent<HTMLInputElement>): number {
+    return parseFloat(e.currentTarget.value);
 }
 
 export function getEffectName (name: string): string {

@@ -1,23 +1,20 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Fragment, ReactElement } from "react";
-import { Control, useFieldArray } from "react-hook-form";
+import { Controller, useFieldArray } from "react-hook-form";
 import { PotionEffectTypes, PotionPreset } from "../../../domain/presets/PotionPreset";
+import { getOnChangeInt } from "../../../utils/utils";
 import RemoveEffectButton from "../RemoveEffectButton";
 import "./PotionFragment.scss";
-
-interface PotionFragmentProps {
-    preset: PotionPreset
-    control: Control
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    register: any
-}
+import { PresetModifierFragmentProps } from "./PresetModifierFragmentProps";
 
 const PotionFragment = ({
     preset,
-    register,
-    control
-}: PotionFragmentProps): ReactElement => {
-    preset.potionEffects = preset.potionEffects || [{ type: "BLINDNESS", amplifier: 2 }];
+    formMethods
+}: PresetModifierFragmentProps): ReactElement => {
+    const potionPreset = preset as PotionPreset;
+    potionPreset.potionEffects = potionPreset.potionEffects || [{ type: "BLINDNESS", amplifier: 2 }];
+
+    const { register, control, setValue } = formMethods;
 
     const { fields, prepend, remove } = useFieldArray({
         control,
@@ -28,7 +25,7 @@ const PotionFragment = ({
         <>
             <div className="preset-modifier__subtitle">List of potion effects</div>
 
-            <div className="add-button" onClick={() => prepend({ ...preset.potionEffects[0] })}>
+            <div className="add-button" onClick={() => prepend({ ...potionPreset.potionEffects[0] })}>
                 <FontAwesomeIcon icon={["fas", "plus-circle"]} size="lg" />
             </div>
             {
@@ -47,7 +44,18 @@ const PotionFragment = ({
                         </select>
 
                         <label className="amplifier-label">Amplifier</label>
-                        <input name={`potionEffects[${index}].amplifier`} type="number" defaultValue={effect.amplifier} ref={register()}/>
+                        <Controller
+                            name={`potionEffects[${index}].amplifier`}
+                            control={control}
+                            as={<input type="hidden"/>}
+                            defaultValue={effect.amplifier}
+                        />
+
+                        <input
+                            type="number"
+                            defaultValue={effect.amplifier}
+                            onChange={(e) => setValue(`potionEffects[${index}].amplifier`, getOnChangeInt(e))}
+                        />
                     </div>
                 ))
             }

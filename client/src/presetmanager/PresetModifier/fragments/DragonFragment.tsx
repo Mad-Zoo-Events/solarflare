@@ -1,23 +1,20 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { ReactElement } from "react";
-import { Control, useFieldArray } from "react-hook-form";
+import { Controller, useFieldArray } from "react-hook-form";
 import { DragonPreset } from "../../../domain/presets";
+import { getOnChangeInt } from "../../../utils/utils";
 import RemoveEffectButton from "../RemoveEffectButton";
 import "./DragonFragment.scss";
-
-interface DragonFragmentProps {
-    preset: DragonPreset
-    control: Control
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    register: any
-}
+import { PresetModifierFragmentProps } from "./PresetModifierFragmentProps";
 
 const DragonFragment = ({
     preset,
-    register,
-    control
-}: DragonFragmentProps): ReactElement => {
-    preset.dragonEffects = preset.dragonEffects || [{ pointId: 0, static: false }];
+    formMethods
+}: PresetModifierFragmentProps): ReactElement => {
+    const dragonPreset = preset as DragonPreset;
+    dragonPreset.dragonEffects = dragonPreset.dragonEffects || [{ pointId: 0, static: false }];
+
+    const { control, setValue, register } = formMethods;
 
     const { fields, prepend, remove } = useFieldArray({
         control,
@@ -28,7 +25,7 @@ const DragonFragment = ({
         <>
             <div className="preset-modifier__subtitle">List of dragons</div>
 
-            <div className="add-button" onClick={() => prepend({ ...preset.dragonEffects[0] })} >
+            <div className="add-button" onClick={() => prepend({ ...dragonPreset.dragonEffects[0] })} >
                 <FontAwesomeIcon className="add-button" icon={["fas", "plus-circle"]} size="lg" title="Add Another Effect" />
             </div>
             {
@@ -38,12 +35,18 @@ const DragonFragment = ({
                             <RemoveEffectButton numOfFields={fields.length} remove={remove} index={index}/>
 
                             <label className="point-label">Point ID</label>
+                            <Controller
+                                name={`dragonEffects[${index}].pointId`}
+                                control={control}
+                                as={<input type="hidden"/>}
+                                defaultValue={effect.pointId}
+                            />
+
                             <input
                                 className="point-input"
-                                name={`dragonEffects[${index}].pointId`}
                                 type="number"
                                 defaultValue={effect.pointId}
-                                ref={register()}
+                                onChange={(e) => setValue(`dragonEffects[${index}].pointId`, getOnChangeInt(e))}
                             />
 
                             <label className="checkbox-container static-checkbox">Static
