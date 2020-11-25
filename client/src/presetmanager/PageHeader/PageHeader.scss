@@ -8,7 +8,8 @@
     gap                  : 0.5em;
     grid-template-columns: min-content auto min-content;
 
-    & a:visited {
+    & a,
+    a:visited {
         color: var(--dark-gray);
     }
 
