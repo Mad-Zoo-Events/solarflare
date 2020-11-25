@@ -79,7 +79,9 @@ func main() {
 	// web UI
 	staticDir := "/static/"
 	router.Use(static.Serve(staticDir, static.LocalFile("."+staticDir, true)))
-	router.Use(static.Serve("/cp", static.LocalFile("./client/build", true)))
+	router.Use(static.Serve("/cp", static.LocalFile("./public", true)))
+	router.Use(static.Serve("/cp/controlpanel", static.LocalFile("./public", true)))
+	router.Use(static.Serve("/cp/presetmanager", static.LocalFile("./public", true)))
 
 	router.GET("/controlpanel", ControlPanelHandler)
 	router.GET("/controlpanel/presets", CPPresetManagerHandler)
