@@ -21,7 +21,7 @@ func load() {
 
 	cfg.Servers = client.GetServers()
 
-	cfg.Stages = []string{"mzitv", "stratos", "iod"}
+	cfg.Stages = []string{"mzitv", "stratos", "iod", "hotg"}
 	cfg.SelectedStage = cfg.Stages[2]
 
 	client.ReloadAllPresets()
