@@ -120,5 +120,10 @@ export const getParticleSummary = (preset: ParticlePreset): string => {
         return "";
     };
 
-    return `${particleEffects.map((x) => ` ${getEffectName(x.name)} ${regionString(x)}`)}`;
+    const summary = particleEffects.map((x) => ` ${getEffectName(x.name)} ${regionString(x)}`);
+    if (summary.length <= 3) {
+        return summary.toString();
+    }
+
+    return `${summary.slice(0, 2)}, and ${summary.length - 3} more`;
 };
