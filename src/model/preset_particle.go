@@ -31,7 +31,7 @@ type ParticleEffect struct {
 	// Region information on where and how to display the effect
 	Region Region `json:"region" form:"-"`
 	// Region information on where and how to display the effect
-	AdditionalOptions *AdditionalOptions `json:"additionalOptions,omitempty" form:"-"`
+	AdditionalOptions AdditionalOptions `json:"additionalOptions,omitempty" form:"-"`
 
 	// UI specific models
 	UIRegionPointIDs   string  `json:"-" form:"pointIds"`
@@ -48,21 +48,21 @@ type Region struct {
 	// Type of the region the effect is to be displayed in
 	RegionType string `json:"type"`
 	// Whether or not to randomize placement of particles within the region [for Cuboid and Equation region type]
-	Randomize bool `json:"randomize,omitempty"`
+	Randomize *bool `json:"randomize,omitempty"`
 	// Density of the particles [for Cuboid and Equation region type]
-	Density float64 `json:"density,omitempty"` // MIN 0.00001 | MAX 0.01
+	Density *float64 `json:"density,omitempty"` // MIN 0.00001 | MAX 0.01
 	// Equation for the shape of the effect region [for EquationRegionType]
-	Equation string `json:"equation,omitempty"`
+	Equation *string `json:"equation,omitempty"`
 }
 
 // AdditionalOptions contains optional parameters for specific particle effects (such as redstone dust color)
 type AdditionalOptions struct {
 	// Only for REDSTONE
-	DustColor []int   `json:"dustColor,omitempty"` // RGB color of redstone dust particles
-	DustSize  float64 `json:"dustSize,omitempty"`  // Size of redstone dust particles
+	DustColor *[]int   `json:"dustColor,omitempty"` // RGB color of redstone dust particles
+	DustSize  *float64 `json:"dustSize,omitempty"`  // Size of redstone dust particles
 
 	// Only for ITEM_CRACK, BLOCK_CRACK, BLOCK_DUST and FALLING_DUST
-	MaterialName string `json:"materialName,omitempty"` // Name of the Minecraft material (e.g. STONE)
+	MaterialName *string `json:"materialName,omitempty"` // Name of the Minecraft material (e.g. STONE)
 }
 
 // ********* //
@@ -89,7 +89,7 @@ type ParticleEffectAPI struct {
 	Equation    *string  `json:"equation,omitempty"`
 
 	// Only for REDSTONE
-	DustColor *[]int   `json:"dustColor,omitempty"` // RGB color of redstone dust particles
+	DustColor *string  `json:"dustColor,omitempty"` // comma-separated RGB color parts of redstone dust particles
 	DustSize  *float64 `json:"dustSize,omitempty"`  // size of redstone dust particles
 	// Only for ITEM_CRACK, BLOCK_CRACK, BLOCK_DUST and FALLING_DUST
 	MaterialName *string `json:"materialName,omitempty"` // Name of the Minecraft material (e.g. STONE)
@@ -210,23 +210,39 @@ func (preset ParticleEffectPreset) ToAPI() ParticleEffectPresetAPI {
 	for i := range preset.ParticleEffects {
 		effect := preset.ParticleEffects[i]
 
-		density := math.Round(convertDensity(effect.Region.Density, false)*10) / 10
-
-		b := strings.Builder{}
+		pointIDBuilder := strings.Builder{}
 		for _, p := range effect.Region.PointIDs {
-			b.WriteString(strconv.Itoa(p))
-			b.WriteString(",")
+			pointIDBuilder.WriteString(strconv.Itoa(p))
+			pointIDBuilder.WriteString(",")
 		}
-		pointIDList := strings.TrimSuffix(b.String(), ",")
 
-		effects = append(effects, ParticleEffectAPI{
+		apiEffect := ParticleEffectAPI{
 			Name:        effect.Name,
-			Equation:    &effect.Region.Equation,
-			Density:     &density,
-			PointIDList: pointIDList,
-			Randomize:   &effect.Region.Randomize,
+			Equation:    effect.Region.Equation,
+			PointIDList: strings.TrimSuffix(pointIDBuilder.String(), ","),
+			Randomize:   effect.Region.Randomize,
 			RegionType:  effect.Region.RegionType,
-		})
+		}
+
+		if effect.Region.Density != nil {
+			density := math.Round(convertDensity(*effect.Region.Density, false)*10) / 10
+			apiEffect.Density = &density
+		}
+
+		if effect.AdditionalOptions.DustColor != nil {
+			dustColorBuilder := strings.Builder{}
+			for _, p := range *effect.AdditionalOptions.DustColor {
+				dustColorBuilder.WriteString(strconv.Itoa(p))
+				dustColorBuilder.WriteString(",")
+			}
+			dustColor := strings.TrimSuffix(dustColorBuilder.String(), ",")
+			apiEffect.DustColor = &dustColor
+		}
+
+		apiEffect.DustSize = effect.AdditionalOptions.DustSize
+		apiEffect.MaterialName = effect.AdditionalOptions.MaterialName
+
+		effects = append(effects, apiEffect)
 	}
 	return ParticleEffectPresetAPI{
 		ID:              preset.ID,
@@ -243,11 +259,6 @@ func (preset ParticleEffectPresetAPI) FromAPI() ParticleEffectPreset {
 	for i := range preset.ParticleEffects {
 		effect := preset.ParticleEffects[i]
 
-		density := 0.005
-		if effect.Density != nil {
-			density = convertDensity(*effect.Density, true)
-		}
-
 		pointIDs := []int{}
 		for _, p := range strings.Split(effect.PointIDList, ",") {
 			if point, err := strconv.Atoi(p); err == nil {
@@ -255,26 +266,36 @@ func (preset ParticleEffectPresetAPI) FromAPI() ParticleEffectPreset {
 			}
 		}
 
-		equation := ""
-		if effect.Equation != nil {
-			equation = *effect.Equation
-		}
-
-		randomize := false
-		if effect.Randomize != nil {
-			randomize = *effect.Randomize
-		}
-
-		effects = append(effects, ParticleEffect{
+		particleEffect := ParticleEffect{
 			Name: effect.Name,
 			Region: Region{
-				Density:    density,
 				PointIDs:   pointIDs,
-				Equation:   equation,
-				Randomize:  randomize,
+				Equation:   effect.Equation,
+				Randomize:  effect.Randomize,
 				RegionType: effect.RegionType,
 			},
-		})
+		}
+
+		if effect.Density != nil {
+			density := convertDensity(*effect.Density, true)
+			particleEffect.Region.Density = &density
+		}
+
+		particleEffect.AdditionalOptions = AdditionalOptions{
+			DustSize:     effect.DustSize,
+			MaterialName: effect.MaterialName,
+		}
+
+		if effect.DustColor != nil {
+			rgb := []int{}
+			for _, part := range strings.Split(*effect.DustColor, ",") {
+				p, _ := strconv.Atoi(part)
+				rgb = append(rgb, p)
+			}
+			particleEffect.AdditionalOptions.DustColor = &rgb
+		}
+
+		effects = append(effects, particleEffect)
 	}
 	return ParticleEffectPreset{
 		ID:              preset.ID,
