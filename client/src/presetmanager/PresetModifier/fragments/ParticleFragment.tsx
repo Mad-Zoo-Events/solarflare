@@ -64,7 +64,10 @@ const ParticleFragment = ({
                             <select className="effect-input" name={`particleEffects[${index}].name`} defaultValue={effect.name} ref={register()}>
                                 {ParticleEffectTypes.map(name => (
                                     <Fragment key={name}>
-                                        <option value={name}>{name}</option>
+                                        <option value={name}>
+                                            {name}
+                                            {["ITEM_CRACK", "BLOCK_CRACK", "BLOCK_DUST", "FALLING_DUST", "REDSTONE"].includes(name) && " *"}
+                                        </option>
                                     </Fragment>
                                 ))}
                             </select>
