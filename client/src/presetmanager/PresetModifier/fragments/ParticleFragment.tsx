@@ -4,7 +4,7 @@ import { ColorResult, RGBColor, SketchPicker } from "react-color";
 import { Controller, useFieldArray } from "react-hook-form";
 import { ParticlePreset } from "../../../domain/presets";
 import { ParticleEffectRegionTypes, ParticleEffectTypes } from "../../../domain/presets/ParticlePreset";
-import { getOnChangeInt } from "../../../utils/utils";
+import { getOnChangeFloat, getOnChangeInt } from "../../../utils/utils";
 import RemoveEffectButton from "../RemoveEffectButton";
 import "./ParticleFragment.scss";
 import { PresetModifierFragmentProps } from "./PresetModifierFragmentProps";
@@ -157,13 +157,24 @@ const ParticleFragment = ({
                             {effectName === "REDSTONE" &&
                                 <>
                                     <label className="dustsize-label">Particle Size</label>
+                                    <Controller
+                                        name={`particleEffects[${index}].dustSize`}
+                                        control={control}
+                                        as={<input type="hidden"/>}
+                                        defaultValue={effect.dustSize || 1.0}
+                                    />
+
                                     <input
                                         className="dustsize-input"
-                                        name={`particleEffects[${index}].dustSize`}
+                                        name={`particleEffects[${index}].numberDustSize`}
                                         type="number"
                                         step={0.1}
                                         defaultValue={effect.dustSize}
                                         ref={register()}
+                                        onChange={(e) => {
+                                            const density = getOnChangeFloat(e);
+                                            setValue(`particleEffects[${index}].dustSize`, density);
+                                        }}
                                     />
 
                                     <label className="color-label">Particle Color</label>
@@ -171,7 +182,7 @@ const ParticleFragment = ({
                                         name={`particleEffects[${index}].dustColor`}
                                         control={control}
                                         as={<input type="hidden"/>}
-                                        defaultValue={effect.dustColor || [0, 0, 0]}
+                                        defaultValue={effect.dustColor || "0,0,0"}
                                     />
 
                                     <SketchPicker
