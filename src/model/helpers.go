@@ -73,11 +73,13 @@ func (preset *ParticleEffectPreset) TransformFromUI() {
 			}
 		}
 
+		density := convertDensity(effect.UIRegionDensity, true)
+
 		effect.Region = Region{
-			Density:    convertDensity(effect.UIRegionDensity, true),
-			Equation:   effect.UIRegionEquation,
+			Density:    &density,
+			Equation:   &effect.UIRegionEquation,
 			PointIDs:   pointIDs,
-			Randomize:  effect.UIRegionRandomize,
+			Randomize:  &effect.UIRegionRandomize,
 			RegionType: effect.UIRegionRegionType,
 		}
 	}
@@ -95,10 +97,25 @@ func (preset *ParticleEffectPreset) TransformToUI() {
 		}
 		pointIDs = strings.TrimSuffix(pointIDs, ",")
 
-		effect.UIRegionDensity = math.Round(convertDensity(region.Density, false)*10) / 10
-		effect.UIRegionEquation = region.Equation
+		density := 0.005
+		if region.Density != nil {
+			density = math.Round(convertDensity(*region.Density, false)*10) / 10
+		}
+
+		equation := ""
+		if region.Equation != nil {
+			equation = *region.Equation
+		}
+
+		randomize := false
+		if region.Randomize != nil {
+			randomize = *region.Randomize
+		}
+
+		effect.UIRegionDensity = density
+		effect.UIRegionEquation = equation
 		effect.UIRegionPointIDs = pointIDs
-		effect.UIRegionRandomize = region.Randomize
+		effect.UIRegionRandomize = randomize
 		effect.UIRegionRegionType = region.RegionType
 	}
 
