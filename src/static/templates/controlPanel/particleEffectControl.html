@@ -7,7 +7,7 @@
         onclick='doEffect("particle", "{{.ID}}", "trigger")'><i class="fas fa-step-forward fa-lg"></i></button>
     <button type="button" class="start-button" key-binding="{{.KeyBinding}}" effect-id="{{.ID}}" effect-type="particle"
         onclick='doEffect("particle", "{{.ID}}", "start")'>
-        {{if .UIKeyBinding}}<span class="keyboard-shortcut">{{.UIKeyBinding}}</span>
+        {{if .KeyBinding}}<span class="keyboard-shortcut">{{.KeyBinding | printf "%c"}}</span>
         {{else}}<i class="fas fa-play fa-lg"></i>{{end}}
     </button>
     <button type="button" class="stop-button" key-binding="{{.KeyBinding}}" effect-id="{{.ID}}" effect-type="particle"

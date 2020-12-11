@@ -4,12 +4,8 @@ const SERVERS_ENDPOINT = `${BASE_URL}/servers`;
 const SELECTSTAGE_ENDPOINT = `${BASE_URL}/selectstage`;
 const EFFECTS_ENDPOINT = `${BASE_URL}/effects`;
 const BOSSBAR_ENDPOINT = `${BASE_URL}/bossbar`;
-const PRESETS_ENDPOINT = `${BASE_URL}/presets`;
 
 const CLOCK_ENDPOINT = `${BASE_URL}/clock`;
-
-const CP_ENDPOINT = `${BASE_URL}/controlpanel`;
-const CP_PRESETS_ENDPOINT = `${CP_ENDPOINT}/presets`;
 
 // ================ EFFECTS ================
 
@@ -53,56 +49,6 @@ doClearBossbar = async () => {
     request.open("POST", `${BOSSBAR_ENDPOINT}/clear`);
 
     request.send();
-};
-
-// ================ PRESET MANAGEMENT ================
-
-doDeletePreset = async (id, effectType) => {
-    const request = new XMLHttpRequest();
-    request.open("DELETE", `${PRESETS_ENDPOINT}/${effectType}/${id}`);
-    request.addEventListener('load', () => {
-        if (request.status === 204) {
-            location.reload();
-        }
-    });
-
-    request.send();
-};
-
-doDuplicatePreset = async (id, effectType) => {
-    const request = new XMLHttpRequest();
-    request.open("POST", `${PRESETS_ENDPOINT}/${effectType}/${id}/duplicate`);
-    request.addEventListener('load', () => {
-        if (request.status === 201) {
-            location.reload();
-        }
-    });
-
-    request.send();
-};
-
-doTestPreset = async (isTrigger) => {
-    const button = document.getElementById("test-button");
-    const form = document.getElementById("preset-form");
-    const action = form.getAttribute("action");
-
-    form.setAttribute("action", `${action}/test`);
-    form.setAttribute("target", "dummyframe");
-    form.submit();
-    form.setAttribute("action", action);
-    form.removeAttribute("target");
-
-    if (isTrigger) {
-        return;
-    }
-
-    button.disabled = true;
-    button.classList.add("disabled");
-
-    setTimeout(() => {
-        button.disabled = false;
-        button.classList.remove("disabled");
-    }, 3100);
 };
 
 // ================ CLOCK ================
