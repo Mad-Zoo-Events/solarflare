@@ -2,18 +2,15 @@ package model
 
 // LaserEffectPreset is the request model for the laser effects
 type LaserEffectPreset struct {
-	ID          string `json:"id" form:"id"`
-	DisplayName string `json:"displayName" form:"displayName"`
-	Description string `json:"description" form:"description"`
-	KeyBinding  rune   `json:"keyBinding" form:"keyBinding"`
+	ID          string `json:"id"`
+	DisplayName string `json:"displayName"`
+	Description string `json:"description"`
+	KeyBinding  rune   `json:"keyBinding"`
 
-	IsEndLaser           bool          `json:"isEndLaser" form:"isEndLaser"`
-	IsNonPlayerTargeting bool          `json:"isNonPlayerTargeting" form:"isNonPlayerTargeting"`
+	IsEndLaser           bool          `json:"isEndLaser"`
+	IsNonPlayerTargeting bool          `json:"isNonPlayerTargeting"`
 	LaserType            LaserType     `json:"laserType"`
-	LaserEffects         []LaserEffect `json:"laserEffects" form:"effect"`
-
-	// UI specific models
-	UIKeyBinding string `json:"-" form:"-"`
+	LaserEffects         []LaserEffect `json:"laserEffects"`
 }
 
 // LaserEffect contains information on start and potential end point of the laser
@@ -22,9 +19,9 @@ type LaserEffectPreset struct {
 // If a destination point is specified as well, the laser will connect the two points.
 type LaserEffect struct {
 	// Predefined point where the laser originates
-	StartPointID int `json:"start" form:"startPointId"`
+	StartPointID int `json:"start"`
 	// Predefined point where the laser goes to, if specified
-	EndPointID *int `json:"end" form:"endPointId"`
+	EndPointID *int `json:"end"`
 }
 
 // LaserType represents the type of laser associated with an effect

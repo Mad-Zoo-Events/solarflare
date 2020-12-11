@@ -71,7 +71,6 @@ func GetParticleEffectPresets() (presets []model.ParticleEffectPreset) {
 			continue
 		}
 
-		preset.TransformToUI()
 		presets = append(presets, preset)
 	}
 
@@ -100,7 +99,6 @@ func GetDragonEffectPresets() (presets []model.DragonEffectPreset) {
 			continue
 		}
 
-		preset.TransformToUI()
 		presets = append(presets, preset)
 	}
 
@@ -129,7 +127,6 @@ func GetTimeshiftEffectPresets() (presets []model.TimeshiftEffectPreset) {
 			continue
 		}
 
-		preset.TransformToUI()
 		presets = append(presets, preset)
 	}
 
@@ -158,7 +155,6 @@ func GetPotionEffectPresets() (presets []model.PotionEffectPreset) {
 			continue
 		}
 
-		preset.TransformToUI()
 		presets = append(presets, preset)
 	}
 
@@ -187,7 +183,6 @@ func GetLaserEffectPresets() (presets []model.LaserEffectPreset) {
 			continue
 		}
 
-		preset.TransformToUI()
 		presets = append(presets, preset)
 	}
 
@@ -216,7 +211,6 @@ func GetCommandEffectPresets() (presets []model.CommandEffectPreset) {
 			continue
 		}
 
-		preset.TransformToUI()
 		presets = append(presets, preset)
 	}
 

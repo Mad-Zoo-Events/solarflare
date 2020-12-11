@@ -5,7 +5,7 @@
 
     <button type="button" class="trigger-button" key-binding="{{.KeyBinding}}" effect-id="{{.ID}}"
         onclick='doEffect("command", "{{.ID}}", "trigger")'>
-        {{if .UIKeyBinding}}<span class="keyboard-shortcut">{{.UIKeyBinding}}</span>
+        {{if .KeyBinding}}<span class="keyboard-shortcut">{{.KeyBinding | printf "%c"}}</span>
         {{else}}<i class="fas fa-step-forward fa-lg"></i>{{end}}
     </button>
     <div class="clock-buttons">
