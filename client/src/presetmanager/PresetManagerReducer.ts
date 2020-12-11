@@ -1,6 +1,6 @@
 import * as et from "../domain/EffectType";
 import { CommandPreset, DragonPreset, LaserPreset, ParticlePreset, PotionPreset, TimeshiftPreset } from "../domain/presets";
-import { DID_GET_ALL_PRESETS, DID_GET_PRESETS_OF_TYPE, PresetManagerAction, SHOULD_CLOSE_PRESET_MODIFIER, SHOULD_OPEN_PRESET_MODIFIER } from "./PresetManagerActions";
+import { DID_GET_ALL_PRESETS, DID_GET_PRESETS_OF_TYPE, DID_SHOW_TOAST, PresetManagerAction, SHOULD_CLOSE_PRESET_MODIFIER, SHOULD_OPEN_PRESET_MODIFIER, SHOULD_SHOW_TOAST } from "./PresetManagerActions";
 import { PresetManagerState } from "./PresetManagerState";
 
 const initialState: PresetManagerState = {
@@ -87,6 +87,16 @@ function presetManagerReducer (
         return {
             ...state,
             presetToEdit: undefined
+        };
+    case SHOULD_SHOW_TOAST:
+        return {
+            ...state,
+            toast: action.payload
+        };
+    case DID_SHOW_TOAST:
+        return {
+            ...state,
+            toast: undefined
         };
     default:
         return state;
