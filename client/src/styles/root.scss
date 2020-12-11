@@ -23,6 +23,28 @@ select {
     background-color: var(--dark-gray);
 }
 
+.color-input {
+    background-color: transparent !important;
+    padding         : 0 !important;
+    border-radius   : none !important;
+    box-shadow      : none !important;
+
+    label {
+        font-size: inherit !important;
+        color    : var(--font) !important;
+    }
+
+    input {
+        width           : 100% !important;
+        box-sizing      : border-box;
+        padding         : 0.5em !important;
+        box-shadow      : none !important;
+        font-size       : 0.9em !important;
+        color           : var(--font);
+        background-color: var(--dark-gray);
+    }
+}
+
 * {
     scrollbar-width: thin;
     scrollbar-color: var(--teal) var(--background);
