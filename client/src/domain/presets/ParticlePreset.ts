@@ -7,11 +7,16 @@ export interface ParticlePreset extends IPreset {
 
 interface ParticleEffect {
     name: string
+
     pointIDList: string
     regionType: string
     randomize?: boolean
     density?: number
     equation?: string
+
+    dustColor?: string
+    dustSize?: number
+    materialName?: string
 }
 
 export const ParticleEffectRegionTypes: Record<string, string> = {
@@ -66,7 +71,7 @@ export const ParticleEffectTypes = [
     "NAUTILUS",
     "NOTE",
     "PORTAL",
-    "REDSTONE(DustOptions.class)",
+    "REDSTONE",
     "REVERSE_PORTAL",
     "SLIME",
     "SMOKE_LARGE",

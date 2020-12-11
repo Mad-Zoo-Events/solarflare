@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Fragment, ReactElement } from "react";
+import { ColorResult, RGBColor, SketchPicker } from "react-color";
 import { Controller, useFieldArray } from "react-hook-form";
 import { ParticlePreset } from "../../../domain/presets";
 import { ParticleEffectRegionTypes, ParticleEffectTypes } from "../../../domain/presets/ParticlePreset";
@@ -27,6 +28,21 @@ const ParticleFragment = ({
         name: "particleEffects"
     });
 
+    const fromColorDto = (color: string): RGBColor => {
+        const parts = color.split(",").map(Number);
+        return {
+            r: parts[0], g: parts[1], b: parts[2]
+        };
+    };
+
+    const toColorDto = ({ r, g, b }: RGBColor): string => (
+        `${r},${g},${b}`
+    );
+
+    const onColorChange = ({ rgb }: ColorResult, index: number) => {
+        setValue(`particleEffects[${index}].dustColor`, toColorDto(rgb));
+    };
+
     return (
         <>
             <div className="preset-modifier__subtitle">List of particle effects</div>
@@ -37,6 +53,8 @@ const ParticleFragment = ({
             {
                 fields.map((effect, index) => {
                     const regionType = watch(`particleEffects[${index}].regionType`, particlePreset.particleEffects[0].regionType);
+                    const effectName = watch(`particleEffects[${index}].name`, particlePreset.particleEffects[0].name);
+                    const dustColor = watch(`particleEffects[${index}].dustColor`, "0,0,0");
 
                     return (
                         <div key={effect.id} className="preset-modifier__particle-item preset-modifier__item">
@@ -134,6 +152,36 @@ const ParticleFragment = ({
                                      ref={register()}
                                      placeholder="50-abs(x+y)-abs(y-x)" />
                              </>
+                            }
+
+                            {effectName === "REDSTONE" &&
+                                <>
+                                    <label className="dustsize-label">Particle Size</label>
+                                    <input
+                                        className="dustsize-input"
+                                        name={`particleEffects[${index}].dustSize`}
+                                        type="number"
+                                        step={0.1}
+                                        defaultValue={effect.dustSize}
+                                        ref={register()}
+                                    />
+
+                                    <label className="color-label">Particle Color</label>
+                                    <Controller
+                                        name={`particleEffects[${index}].dustColor`}
+                                        control={control}
+                                        as={<input type="hidden"/>}
+                                        defaultValue={effect.dustColor || [0, 0, 0]}
+                                    />
+
+                                    <SketchPicker
+                                        className="color-input"
+                                        presetColors={[]}
+                                        color={fromColorDto(dustColor)}
+                                        onChange={(color) => onColorChange(color, index)}
+                                        disableAlpha={true}
+                                    />
+                                </>
                             }
                         </div>
                     );
