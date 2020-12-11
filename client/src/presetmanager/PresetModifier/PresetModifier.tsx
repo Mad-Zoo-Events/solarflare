@@ -7,7 +7,7 @@ import { CommandPreset, DragonPreset, LaserPreset, ParticlePreset, PotionPreset,
 import { MidiBehaviorTypes } from "../../domain/presets/IPreset";
 import { Preset } from "../../domain/presets/Preset";
 import { RootState } from "../../RootState";
-import { getOnChangeInt, getShortcutCode, getShortcutString } from "../../utils/utils";
+import { getAccentColor, getOnChangeInt, getShortcutCode, getShortcutString } from "../../utils/utils";
 import { closePresetModifier, upsertPreset } from "../PresetManagerActions";
 import { CommandFragment, DragonFragment, LaserFragment, ParticleFragment, PotionFragment, TimeshiftFragment } from "./fragments";
 import "./PresetModifier.scss";
@@ -21,6 +21,8 @@ const PresetModifier = ({
 }: PresetModifierProps): ReactElement => {
     preset = preset || { id: "", displayName: "", keyBinding: 0 };
     preset.keyBindingStr = getShortcutString(preset.keyBinding);
+    const accentColor = getAccentColor(effectType);
+    const coloredShadow = { boxShadow: `0 0 8em var(--darker-${accentColor})` };
 
     const newMidiMapping = () => ({ channel: 1, key: 1, behavior: "trigger" });
 
@@ -72,19 +74,15 @@ const PresetModifier = ({
 
     return (
         <div className="preset-modifier__popup">
-            <div className="preset-modifier__popup-inner">
-                <div className="preset-modifier__header">
+            <div className="preset-modifier__popup-inner" style={coloredShadow}>
+                <div className="header">
                     {preset.id ? <> Edit <span className="preset-name">{preset.displayName}</span> </> : "Create New Preset"}
-
-                    <div className="form-buttons">
-                        <FontAwesomeIcon className="save-button" icon={["fas", "save"]} size="2x" onClick={handleSubmit(onSubmit)} title="Save This Preset" />
-                        <FontAwesomeIcon className="close-button" icon={["fas", "window-close"]} size="2x" onClick={onClose} title="Close Without Saving" />
-                    </div>
+                    <FontAwesomeIcon className="close-button" icon={["fas", "window-close"]} size="lg" onClick={onClose} title="Close Without Saving" />
                 </div>
 
-                <div className="preset-modifier__content">
+                <div className="content">
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        <div className="preset-modifier__common-inputs">
+                        <div className="common-inputs">
                             <input name="id" type="hidden" ref={register} />
 
                             <label>Display Name</label>
@@ -104,14 +102,14 @@ const PresetModifier = ({
                             />
                         </div>
                         <div>
-                            <div className="preset-modifier__subtitle">List of MIDI mappings</div>
+                            <div className="subtitle">List of MIDI mappings</div>
                             <div>
                                 <div className="add-button" onClick={() => prepend(newMidiMapping())}>
                                     <FontAwesomeIcon icon={["fas", "plus-circle"]} size="lg" title="Add MIDI Mapping"/>
                                 </div>
                                 {
                                     fields.map((mapping, index) => (
-                                        <div key={mapping.id} className="preset-modifier__midi-mapping">
+                                        <div key={mapping.id} className="midi-mapping">
                                             <FontAwesomeIcon className="delete-button" icon={["far", "trash-alt"]} size="2x" onClick={() => remove(index)} title="Remove MIDI Mapping" />
                                             <label>Key</label>
                                             <input name={`midiMappings[${index}].key`} type="number" defaultValue={mapping.key} ref={register()} />
@@ -136,6 +134,12 @@ const PresetModifier = ({
 
                         {specificInputs()}
                     </form>
+                </div>
+                <div className="footer">
+                    <div className="save-button" onClick={handleSubmit(onSubmit)}>
+                        <span>Save</span>
+                        <FontAwesomeIcon icon={["fas", "save"]} size="lg" title="Save This Preset" />
+                    </div>
                 </div>
             </div>
         </div>
