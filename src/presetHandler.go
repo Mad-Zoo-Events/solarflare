@@ -49,29 +49,6 @@ func PreserRetrievalHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, presets)
 }
 
-// PresetFormHandler handles requests from the UI to create a new preset
-func PresetFormHandler(c *gin.Context) {
-	err := c.Request.ParseForm()
-	if err != nil {
-		err = sferror.New(sferror.Encoding, "Error parsing form from UI", err)
-		c.JSON(http.StatusBadRequest, sferror.Get(err))
-		return
-	}
-
-	_, err = controller.UpsertPresetUI(c.Param("effectType"), c.Request.PostForm)
-	if err != nil {
-		switch sferror.GetErrorType(err) {
-		case sferror.InvalidEffectType:
-			c.JSON(http.StatusBadRequest, sferror.Get(err))
-		default:
-			c.JSON(http.StatusInternalServerError, sferror.Get(err))
-		}
-		return
-	}
-
-	c.Redirect(http.StatusFound, "/controlpanel/presets")
-}
-
 // PresetDeletionHandler deletes a preset
 func PresetDeletionHandler(c *gin.Context) {
 	err := controller.DeletePreset(c.Param("effectType"), c.Param("id"))
@@ -107,25 +84,4 @@ func PresetDuplicationHandler(c *gin.Context) {
 	}
 
 	c.String(http.StatusCreated, *newID)
-}
-
-// PresetFormTestTestHandler handles requests from the UI to test a preset
-func PresetFormTestTestHandler(c *gin.Context) {
-	err := c.Request.ParseForm()
-	if err != nil {
-		err = sferror.New(sferror.Encoding, "Error parsing form from UI", err)
-		c.JSON(http.StatusBadRequest, sferror.Get(err))
-		return
-	}
-
-	err = controller.TestPreset(c.Param("effectType"), c.Request.PostForm)
-	if err != nil {
-		switch sferror.GetErrorType(err) {
-		case sferror.InvalidEffectType:
-			c.JSON(http.StatusBadRequest, sferror.Get(err))
-		default:
-			c.JSON(http.StatusInternalServerError, sferror.Get(err))
-		}
-		return
-	}
 }

@@ -9,7 +9,7 @@
     {{end}}
     <button type="button" class="start-button" key-binding="{{.KeyBinding}}" effect-id="{{.ID}}" effect-type="laser"
         onclick='doEffect("laser", "{{.ID}}", "start")'>
-        {{if .UIKeyBinding}}<span class="keyboard-shortcut">{{.UIKeyBinding}}</span>
+        {{if .KeyBinding}}<span class="keyboard-shortcut">{{.KeyBinding | printf "%c"}}</span>
         {{else}}<i class="fas fa-play fa-lg"></i>{{end}}
     </button>
     <button type="button" class="stop-button" key-binding="{{.KeyBinding}}" effect-id="{{.ID}}" effect-type="laser"

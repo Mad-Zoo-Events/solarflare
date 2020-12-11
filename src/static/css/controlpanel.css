@@ -166,11 +166,11 @@ div.header {
     padding              : 0.3em;
     display              : grid;
     gap                  : 0 1em;
-    grid-template-columns: auto auto min-content min-content min-content;
+    grid-template-columns: auto auto min-content min-content;
     grid-template-rows   : auto auto;
     grid-template-areas  :
-        'bossbar command stageselect serverselect presetmanager'
-        'caps    caps    caps        caps         caps         ';
+        'bossbar command stageselect serverselect'
+        'caps    caps    caps        caps        ';
 
     background-color: var(--background-alpha);
 }

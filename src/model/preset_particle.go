@@ -12,33 +12,21 @@ import (
 
 // ParticleEffectPreset describes a particle effect preset
 type ParticleEffectPreset struct {
-	ID              string           `json:"id" form:"id"`
-	DisplayName     string           `json:"displayName" form:"displayName"`
-	Description     string           `json:"description" form:"description"`
-	KeyBinding      rune             `json:"keyBinding" form:"keyBinding"`
-	ParticleEffects []ParticleEffect `json:"particleEffects" form:"effect"`
-
-	// UI specific models
-	UIKeyBinding             string         `json:"-" form:"-"`
-	UIAllowedParticleEffects []string       `json:"-" form:"-"`
-	UIAllowedRegionTypes     []UIRegionType `json:"-" form:"-"`
+	ID              string           `json:"id"`
+	DisplayName     string           `json:"displayName"`
+	Description     string           `json:"description"`
+	KeyBinding      rune             `json:"keyBinding"`
+	ParticleEffects []ParticleEffect `json:"particleEffects"`
 }
 
 // ParticleEffect contains information on the effect and where to display it
 type ParticleEffect struct {
 	// Minecraft name of the particle effect
-	Name string `json:"name" form:"name"`
+	Name string `json:"name"`
 	// Region information on where and how to display the effect
-	Region Region `json:"region" form:"-"`
+	Region Region `json:"region"`
 	// Region information on where and how to display the effect
-	AdditionalOptions AdditionalOptions `json:"additionalOptions,omitempty" form:"-"`
-
-	// UI specific models
-	UIRegionPointIDs   string  `json:"-" form:"pointIds"`
-	UIRegionRegionType string  `json:"-" form:"regionType"`
-	UIRegionRandomize  bool    `json:"-" form:"randomize"`
-	UIRegionDensity    float64 `json:"-" form:"density"`
-	UIRegionEquation   string  `json:"-" form:"equation"`
+	AdditionalOptions AdditionalOptions `json:"additionalOptions,omitempty"`
 }
 
 // Region contains information on where and how to display the particle effect
@@ -93,111 +81,6 @@ type ParticleEffectAPI struct {
 	DustSize  *float64 `json:"dustSize,omitempty"`  // size of redstone dust particles
 	// Only for ITEM_CRACK, BLOCK_CRACK, BLOCK_DUST and FALLING_DUST
 	MaterialName *string `json:"materialName,omitempty"` // Name of the Minecraft material (e.g. STONE)
-}
-
-// ****** //
-// LEGACY //
-// ****** //
-
-// UIRegionType is used for displaying region type options on the UI
-type UIRegionType struct {
-	Name        string
-	Description string
-}
-
-// RegionTypes is a list of all supported region types
-var RegionTypes = []UIRegionType{
-	{
-		Name:        "POINTS",
-		Description: "One particle at each specified point",
-	},
-	{
-		Name:        "CUBOID",
-		Description: "Inside a cuboid specified by two points",
-	},
-	{
-		Name:        "EQUATION",
-		Description: "In a shape described by an equation around one point",
-	},
-}
-
-// MinecraftParticleEffects is a list of all supported Minecraft particle effects
-var MinecraftParticleEffects = []string{
-	"ASH",
-	"BARRIER",
-	"BLOCK_CRACK",
-	"BLOCK_DUST",
-	"BUBBLE_COLUMN_UP",
-	"BUBBLE_POP",
-	"CAMPFIRE_COSY_SMOKE",
-	"CAMPFIRE_SIGNAL_SMOKE",
-	"CLOUD",
-	"COMPOSTER",
-	"CRIMSON_SPORE",
-	"CRIT_MAGIC",
-	"CRIT",
-	"CURRENT_DOWN",
-	"DAMAGE_INDICATOR",
-	"DOLPHIN",
-	"DRAGON_BREATH",
-	"DRIP_LAVA",
-	"DRIP_WATER",
-	"DRIPPING_HONEY",
-	"DRIPPING_OBSIDIAN_TEAR",
-	"ENCHANTMENT_TABLE",
-	"END_ROD",
-	"EXPLOSION_HUGE",
-	"EXPLOSION_LARGE",
-	"EXPLOSION_NORMAL",
-	"FALLING_DUST",
-	"FALLING_HONEY",
-	"FALLING_LAVA",
-	"FALLING_NECTAR",
-	"FALLING_OBSIDIAN_TEAR",
-	"FALLING_WATER",
-	"FIREWORKS_SPARK",
-	"FLAME",
-	"FLASH",
-	"HEART",
-	"ITEM_CRACK(ItemStack.class)",
-	"LANDING_HONEY",
-	"LANDING_LAVA",
-	"LANDING_OBSIDIAN_TEAR",
-	"LAVA",
-	"MOB_APPEARANCE",
-	"NAUTILUS",
-	"NOTE",
-	"PORTAL",
-	"REDSTONE(DustOptions.class)",
-	"REVERSE_PORTAL",
-	"SLIME",
-	"SMOKE_LARGE",
-	"SMOKE_NORMAL",
-	"SNEEZE",
-	"SNOW_SHOVEL",
-	"SNOWBALL",
-	"SOUL_FIRE_FLAME",
-	"SOUL",
-	"SPELL_INSTANT",
-	"SPELL_MOB_AMBIENT",
-	"SPELL_MOB",
-	"SPELL_WITCH",
-	"SPELL",
-	"SPIT",
-	"SQUID_INK",
-	"SUSPENDED_DEPTH",
-	"SUSPENDED",
-	"SWEEP_ATTACK",
-	"TOTEM",
-	"TOWN_AURA",
-	"VILLAGER_ANGRY",
-	"VILLAGER_HAPPY",
-	"WARPED_SPORE",
-	"WATER_BUBBLE",
-	"WATER_DROP",
-	"WATER_SPLASH",
-	"WATER_WAKE",
-	"WHITE_AS",
 }
 
 // ******************** //

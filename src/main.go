@@ -59,11 +59,6 @@ func main() {
 	router.POST("/bossbar/:action", BossbarHandler)
 	router.POST("/command", CommandHandler)
 
-	// preset management
-	presetForm := router.Group("/presetform")
-	presetForm.POST("/:effectType", PresetFormHandler)
-	presetForm.POST("/:effectType/test", PresetFormTestTestHandler)
-
 	presets := router.Group("/presets")
 	presets.POST("/:effectType", PresetMutationHandler)
 	presets.DELETE("/:effectType/:id", PresetDeletionHandler)
@@ -84,10 +79,6 @@ func main() {
 	router.Use(static.Serve("/cp/presetmanager", static.LocalFile("./public", true)))
 
 	router.GET("/controlpanel", ControlPanelHandler)
-	router.GET("/controlpanel/presets", CPPresetManagerHandler)
-
-	router.GET("/controlpanel/presets/:effectType/new", CPPresetHandler)
-	router.GET("/controlpanel/presets/:effectType/modify/:id", CPPresetHandler)
 
 	// websocket
 	router.GET("/socket", SocketHandler)
