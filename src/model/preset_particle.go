@@ -30,6 +30,8 @@ type ParticleEffect struct {
 	Name string `json:"name" form:"name"`
 	// Region information on where and how to display the effect
 	Region Region `json:"region" form:"-"`
+	// Region information on where and how to display the effect
+	AdditionalOptions *AdditionalOptions `json:"additionalOptions,omitempty" form:"-"`
 
 	// UI specific models
 	UIRegionPointIDs   string  `json:"-" form:"pointIds"`
@@ -53,6 +55,16 @@ type Region struct {
 	Equation string `json:"equation,omitempty"`
 }
 
+// AdditionalOptions contains optional parameters for specific particle effects (such as redstone dust color)
+type AdditionalOptions struct {
+	// Only for REDSTONE
+	DustColor []int   `json:"dustColor,omitempty"` // RGB color of redstone dust particles
+	DustSize  float64 `json:"dustSize,omitempty"`  // Size of redstone dust particles
+
+	// Only for ITEM_CRACK, BLOCK_CRACK, BLOCK_DUST and FALLING_DUST
+	MaterialName string `json:"materialName,omitempty"` // Name of the Minecraft material (e.g. STONE)
+}
+
 // ********* //
 // API MODEL //
 // ********* //
@@ -68,12 +80,19 @@ type ParticleEffectPresetAPI struct {
 
 // ParticleEffectAPI is the inbound request and response model for particle effects
 type ParticleEffectAPI struct {
-	Name        string   `json:"name"`
+	Name string `json:"name"`
+
 	PointIDList string   `json:"pointIDList"` // Comma-separated list of point IDs
 	RegionType  string   `json:"regionType"`
 	Randomize   *bool    `json:"randomize,omitempty"`
 	Density     *float64 `json:"density,omitempty"` // min 1 | max 100
 	Equation    *string  `json:"equation,omitempty"`
+
+	// Only for REDSTONE
+	DustColor *[]int   `json:"dustColor,omitempty"` // RGB color of redstone dust particles
+	DustSize  *float64 `json:"dustSize,omitempty"`  // size of redstone dust particles
+	// Only for ITEM_CRACK, BLOCK_CRACK, BLOCK_DUST and FALLING_DUST
+	MaterialName *string `json:"materialName,omitempty"` // Name of the Minecraft material (e.g. STONE)
 }
 
 // ****** //
