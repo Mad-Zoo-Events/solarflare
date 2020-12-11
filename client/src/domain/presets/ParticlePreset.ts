@@ -47,6 +47,7 @@ export const ParticleEffectTypes = [
     "DRIP_WATER",
     "DRIPPING_HONEY",
     "DRIPPING_OBSIDIAN_TEAR",
+    "ELDER_GUARDIAN",
     "ENCHANTMENT_TABLE",
     "END_ROD",
     "EXPLOSION_HUGE",
