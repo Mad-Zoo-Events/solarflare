@@ -1,6 +1,6 @@
 import { HandleThunkActionCreator } from "react-redux";
 import { Preset } from "../../domain/presets/Preset";
-import { closePresetModifier, upsertPreset } from "../PresetManagerActions";
+import { closePresetModifier, testPreset, upsertPreset } from "../PresetManagerActions";
 
 export interface PresetModifierProps {
     preset: Preset
@@ -8,4 +8,5 @@ export interface PresetModifierProps {
 
     onClose: HandleThunkActionCreator<typeof closePresetModifier>
     onSubmitForm: HandleThunkActionCreator<typeof upsertPreset>
+    onTestPreset: HandleThunkActionCreator<typeof testPreset>
 }

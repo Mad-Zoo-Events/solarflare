@@ -14,6 +14,10 @@ export async function upsertPreset (effectType: string, preset: Preset): Promise
     return await axios.post(`/presets/${effectType}`, preset);
 }
 
+export async function testPreset (effectType: string, preset: Preset): Promise<void> {
+    return await axios.post(`/testPreset/${effectType}`, preset);
+}
+
 export async function duplicatePreset (id: string, effectType: string): Promise<string> {
     return (await axios.post<string>(`/presets/${effectType}/${id}/duplicate`)).data;
 }

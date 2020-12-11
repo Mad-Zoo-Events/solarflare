@@ -8,7 +8,8 @@ import {
     duplicatePreset as doDuplicatePreset,
     fetchAllPresets,
     fetchPresetsOfType,
-    upsertPreset as doUpsertPreset
+    upsertPreset as doUpsertPreset,
+    testPreset as doTestPreset
 } from "../client/Client";
 import { PresetCollection } from "../domain/PresetCollection";
 import { Preset } from "../domain/presets/Preset";
@@ -85,6 +86,9 @@ export const upsertPreset = (effectType: string, preset: Preset): ThunkAction<vo
     dispatch(didGetPresetsOfType({ effectType, presets }));
     dispatch(shouldClosePresetModifier());
     dispatch(shouldShowToast({ message: `Preset "${preset.displayName}" saved!`, type: "success", id: preset.id }));
+};
+export const testPreset = (effectType: string, preset: Preset): ThunkAction<void, RootState, null, AnyAction> => () => {
+    doTestPreset(effectType, preset);
 };
 export const closePresetModifier = (): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(shouldClosePresetModifier());

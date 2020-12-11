@@ -8,7 +8,7 @@ import { MidiBehaviorTypes } from "../../domain/presets/IPreset";
 import { Preset } from "../../domain/presets/Preset";
 import { RootState } from "../../RootState";
 import { getAccentColor, getOnChangeInt, getShortcutCode, getShortcutString } from "../../utils/utils";
-import { closePresetModifier, upsertPreset } from "../PresetManagerActions";
+import { closePresetModifier, testPreset, upsertPreset } from "../PresetManagerActions";
 import { CommandFragment, DragonFragment, LaserFragment, ParticleFragment, PotionFragment, TimeshiftFragment } from "./fragments";
 import "./PresetModifier.scss";
 import ProgressBar from "react-customizable-progressbar";
@@ -18,7 +18,8 @@ const PresetModifier = ({
     preset,
     effectType,
     onClose,
-    onSubmitForm
+    onSubmitForm,
+    onTestPreset
 }: PresetModifierProps): ReactElement => {
     preset = preset || { id: "", displayName: "", keyBinding: 0 };
     preset.keyBindingStr = getShortcutString(preset.keyBinding);
@@ -26,6 +27,15 @@ const PresetModifier = ({
     const coloredShadow = { boxShadow: `0 0 8em var(--darker-${accentColor})` };
 
     const newMidiMapping = () => ({ channel: 1, key: 1, behavior: "trigger" });
+
+    const [testProgress, setTestProgress] = useState(0);
+    useEffect(() => {
+        if (testProgress > 0) {
+            setTimeout(() => {
+                setTestProgress(testProgress - 3.33333);
+            }, 100);
+        }
+    });
 
     const formMethods = useForm<Preset>({
         defaultValues: preset
@@ -35,6 +45,11 @@ const PresetModifier = ({
 
     const onSubmit = (preset: Preset) => {
         onSubmitForm(effectType, preset);
+    };
+
+    const onTest = (preset: Preset) => {
+        setTestProgress(90);
+        onTestPreset(effectType, preset);
     };
 
     const specificInputs = () => {
@@ -71,19 +86,6 @@ const PresetModifier = ({
         const input = event.clipboardData.getData("text")[0];
         event.currentTarget.value = input;
         setValue("keyBinding", getShortcutCode(input));
-    };
-
-    const [testProgress, setTestProgress] = useState(0);
-    useEffect(() => {
-        if (testProgress > 0) {
-            setTimeout(() => {
-                setTestProgress(testProgress - 3.33333);
-            }, 100);
-        }
-    });
-
-    const startTest = () => {
-        setTestProgress(90);
     };
 
     return (
@@ -150,7 +152,7 @@ const PresetModifier = ({
                     </form>
                 </div>
                 <div className="footer">
-                    <div className="test-button" onClick={startTest} >
+                    <div className="test-button" onClick={handleSubmit(onTest)} >
                         <span>Test</span>
                         {testProgress > 0
                             ? <ProgressBar
@@ -190,7 +192,8 @@ function mapStateToProps (state: RootState) {
 
 const mapDispatchToProps = {
     onClose: closePresetModifier,
-    onSubmitForm: upsertPreset
+    onSubmitForm: upsertPreset,
+    onTestPreset: testPreset
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PresetModifier);
