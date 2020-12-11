@@ -300,16 +300,6 @@ div.server-manager-group {
     gap                  : 1em;
 }
 
-/* Preset Manager Control */
-#header-presetmanager-control {
-    grid-area            : presetmanager;
-    display              : grid;
-    gap                  : 0 0.5em;
-    grid-template-columns: max-content min-content;
-
-    cursor: pointer;
-}
-
 /* Capslock Warning Control */
 #header-caps-control {
     grid-area: caps;
