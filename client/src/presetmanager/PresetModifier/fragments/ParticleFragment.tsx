@@ -122,7 +122,7 @@ const ParticleFragment = ({
                                     defaultValue={effect.density}
                                     ref={register()}
                                     onChange={(e) => {
-                                        const density = getOnChangeInt(e);
+                                        const density = getOnChangeFloat(e);
                                         setValue(`particleEffects[${index}].density`, density);
                                         setValue(`particleEffects[${index}].rangedensity`, density);
                                     }}
