@@ -38,10 +38,8 @@ phases:
       - cd ../css
       - cleancss -o common_min.css common.css
       - cleancss -o controlpanel_min.css controlpanel.css
-      - cleancss -o presetmanager_min.css presetmanager.css
       - mv common_min.css common.css
       - mv controlpanel_min.css controlpanel.css
-      - mv presetmanager_min.css presetmanager.css
 artifacts:
   files:
     - .ebextensions/*
