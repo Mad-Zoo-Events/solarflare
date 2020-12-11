@@ -2,6 +2,7 @@ package controller
 
 import (
 	"encoding/json"
+	"time"
 
 	"github.com/eynorey/solarflare/src/utils"
 
@@ -178,6 +179,52 @@ func RetrievePresets(effectType string) (interface{}, error) {
 		return commandPresetsToAPI(cfg.CommandEffectPresets), nil
 	default:
 		return nil, sferror.New(sferror.InvalidEffectType, effectType, nil)
+	}
+}
+
+// TestPresetAPI runs a preset on the server for three seconds
+func TestPresetAPI(effectType string, body []byte) {
+	switch model.EffectType(effectType) {
+	case model.ParticleEffectType:
+		preset := model.ParticleEffectPresetAPI{}
+		json.Unmarshal(body, &preset)
+
+		manager.RunParticleEffect(preset.FromAPI(), model.StartEffectAction, false)
+		time.Sleep(3 * time.Second)
+		manager.StopEffect(preset.ID, false)
+	case model.DragonEffectType:
+		preset := model.DragonEffectPreset{}
+		json.Unmarshal(body, &preset)
+
+		manager.RunDragonEffect(preset, model.StartEffectAction, false)
+		time.Sleep(3 * time.Second)
+		manager.StopEffect(preset.ID, false)
+	case model.TimeshiftEffectType:
+		preset := model.TimeshiftEffectPreset{}
+		json.Unmarshal(body, &preset)
+
+		manager.RunTimeshiftEffect(preset, model.StartEffectAction, false)
+		time.Sleep(3 * time.Second)
+		manager.StopEffect(preset.ID, false)
+	case model.PotionEffectType:
+		preset := model.PotionEffectPreset{}
+		json.Unmarshal(body, &preset)
+
+		manager.RunPotionEffect(preset, model.StartEffectAction, false)
+		time.Sleep(3 * time.Second)
+		manager.StopEffect(preset.ID, false)
+	case model.LaserEffectType:
+		preset := model.LaserEffectPreset{}
+		json.Unmarshal(body, &preset)
+
+		manager.RunLaserEffect(preset, model.StartEffectAction, false)
+		time.Sleep(3 * time.Second)
+		manager.StopEffect(preset.ID, false)
+	case model.CommandEffectType:
+		preset := model.CommandEffectPresetAPI{}
+		json.Unmarshal(body, &preset)
+
+		manager.RunCommandEffect(preset.FromAPI(), false)
 	}
 }
 

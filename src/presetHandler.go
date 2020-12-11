@@ -85,3 +85,17 @@ func PresetDuplicationHandler(c *gin.Context) {
 
 	c.String(http.StatusCreated, *newID)
 }
+
+// PresetTestHandler handles requests to create a new preset
+func PresetTestHandler(c *gin.Context) {
+	body, err := ioutil.ReadAll(c.Request.Body)
+	if err != nil {
+		err = sferror.New(sferror.Encoding, "Error reading preset request body", err)
+		c.JSON(http.StatusBadRequest, sferror.Get(err))
+		return
+	}
+
+	controller.TestPresetAPI(c.Param("effectType"), body)
+
+	c.Status(http.StatusNoContent)
+}
