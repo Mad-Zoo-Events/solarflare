@@ -62,7 +62,7 @@ export const ParticleEffectTypes = [
     "FLAME",
     "FLASH",
     "HEART",
-    "ITEM_CRACK(ItemStack.class)",
+    "ITEM_CRACK",
     "LANDING_HONEY",
     "LANDING_LAVA",
     "LANDING_OBSIDIAN_TEAR",
