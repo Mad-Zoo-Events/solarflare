@@ -172,7 +172,7 @@ const ParticleFragment = ({
                                         name={`particleEffects[${index}].numberDustSize`}
                                         type="number"
                                         step={0.1}
-                                        defaultValue={effect.dustSize}
+                                        defaultValue={effect.dustSize || 1.0}
                                         ref={register()}
                                         onChange={(e) => {
                                             const density = getOnChangeFloat(e);
