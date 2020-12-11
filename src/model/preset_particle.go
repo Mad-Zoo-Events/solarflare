@@ -6,6 +6,11 @@ import (
 	"strings"
 )
 
+const (
+	m = 5.0404e-05
+	n = -4.0404e-05
+)
+
 // ************** //
 // INTERNAL MODEL //
 // ************** //
@@ -108,7 +113,7 @@ func (preset ParticleEffectPreset) ToAPI() ParticleEffectPresetAPI {
 		}
 
 		if effect.Region.Density != nil {
-			density := math.Round(convertDensity(*effect.Region.Density, false)*10) / 10
+			density := densityToAPI(*effect.Region.Density)
 			apiEffect.Density = &density
 		}
 
@@ -160,7 +165,7 @@ func (preset ParticleEffectPresetAPI) FromAPI() ParticleEffectPreset {
 		}
 
 		if effect.Density != nil {
-			density := convertDensity(*effect.Density, true)
+			density := densityFromAPI(*effect.Density)
 			particleEffect.Region.Density = &density
 		}
 
@@ -189,13 +194,10 @@ func (preset ParticleEffectPresetAPI) FromAPI() ParticleEffectPreset {
 	}
 }
 
-func convertDensity(density float64, fromUI bool) float64 {
-	m := 5.0404e-05
-	n := -4.0404e-05
+func densityFromAPI(density float64) float64 {
+	return m*density + n
+}
 
-	if fromUI {
-		return m*density + n
-	}
-
-	return (density - n) / m
+func densityToAPI(density float64) float64 {
+	return math.Round(((density-n)/m)*10) / 10
 }
