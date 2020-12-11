@@ -1,14 +1,16 @@
 .preset-modifier__particle-item {
-    grid-template-columns: min-content min-content 1fr 2fr max-content;
+    grid-template-columns: min-content min-content 1fr 2fr max-content max-content;
     grid-template-areas  :
-        'delete effect-label         effect-label        regiontype-label    regiontype-label'
-        'delete effect-input         effect-input        regiontype-input    regiontype-input'
-        'delete pointids-label       pointids-label      pointids-label      pointids-label'
-        'delete pointids-input       pointids-input      pointids-input      pointids-input'
-        'delete density-label        density-label       .                   .'
-        'delete density-number-input density-range-input density-range-input randomize-checkbox'
-        'delete equation-label       equation-label      equation-label      equation-label'
-        'delete equation-input       equation-input      equation-input      equation-input';
+        'delete effect-label         effect-label        regiontype-label    regiontype-label   color-label'
+        'delete effect-input         effect-input        regiontype-input    regiontype-input   color-input'
+        'delete pointids-label       pointids-label      pointids-label      pointids-label     color-input'
+        'delete pointids-input       pointids-input      pointids-input      pointids-input     color-input'
+        'delete density-label        density-label       .                   .                  color-input'
+        'delete density-number-input density-range-input density-range-input randomize-checkbox color-input'
+        'delete equation-label       equation-label      equation-label      equation-label     color-input'
+        'delete equation-input       equation-input      equation-input      equation-input     color-input'
+        'delete dustsize-label       dustsize-label      dustsize-label      dustsize-label     color-input'
+        'delete dustsize-input       dustsize-input      dustsize-input      dustsize-input     color-input';
 
     & label {
         grid-area: label;
@@ -65,4 +67,24 @@
     & .equation-input {
         grid-area: equation-input;
     }
+
+    & .dustsize-label {
+        grid-area: dustsize-label;
+    }
+
+    & .dustsize-input {
+        grid-area: dustsize-input;
+    }
+
+    & .color-label {
+        grid-area: color-label;
+    }
+
+    & .color-input {
+        grid-area: color-input;
+    }
+}
+
+.color-input {
+    // background: lawngreen;
 }
