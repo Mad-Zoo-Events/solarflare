@@ -128,12 +128,43 @@
         grid-row  : 3;
         font-size : x-large;
         border-top: 0.2em solid var(--gray);
-        padding   : 0.3em;
+        padding   : 0.3em 0.5em 0.5em 0.5em;
+
+        display              : grid;
+        grid-template-columns: auto max-content max-content;
+        gap                  : 1em;
+
+        & .test-button {
+            grid-column: 2;
+            cursor     : pointer;
+            color      : var(--teal);
+            white-space: nowrap;
+            display    : inline-block;
+
+            & span {
+                margin-right: 0.3em;
+            }
+
+            &:hover {
+                color: var(--lighter-teal);
+            }
+
+            & div {
+                display     : inline-block;
+                width       : min-content;
+                margin-left : 5px;
+                margin-right: -35px;
+
+                & svg {
+                    margin: -20px !important;
+                }
+            }
+        }
 
         & .save-button {
-            cursor: pointer;
-            color : var(--teal);
-            float : right;
+            grid-column: 3;
+            cursor     : pointer;
+            color      : var(--teal);
 
             & span {
                 margin-right: 0.3em;

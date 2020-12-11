@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { Fragment, ReactElement } from "react";
+import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { connect } from "react-redux";
 import * as et from "../../domain/EffectType";
@@ -11,6 +11,7 @@ import { getAccentColor, getOnChangeInt, getShortcutCode, getShortcutString } fr
 import { closePresetModifier, upsertPreset } from "../PresetManagerActions";
 import { CommandFragment, DragonFragment, LaserFragment, ParticleFragment, PotionFragment, TimeshiftFragment } from "./fragments";
 import "./PresetModifier.scss";
+import ProgressBar from "react-customizable-progressbar";
 import { PresetModifierProps } from "./PresetModifierProps";
 
 const PresetModifier = ({
@@ -70,6 +71,19 @@ const PresetModifier = ({
         const input = event.clipboardData.getData("text")[0];
         event.currentTarget.value = input;
         setValue("keyBinding", getShortcutCode(input));
+    };
+
+    const [testProgress, setTestProgress] = useState(0);
+    useEffect(() => {
+        if (testProgress > 0) {
+            setTimeout(() => {
+                setTestProgress(testProgress - 3.33333);
+            }, 100);
+        }
+    });
+
+    const startTest = () => {
+        setTestProgress(90);
     };
 
     return (
@@ -136,6 +150,21 @@ const PresetModifier = ({
                     </form>
                 </div>
                 <div className="footer">
+                    <div className="test-button" onClick={startTest} >
+                        <span>Test</span>
+                        {testProgress > 0
+                            ? <ProgressBar
+                                className="progress-circle"
+                                radius={10}
+                                strokeWidth={3}
+                                strokeColor="#00aba9"
+                                strokeLinecap="square"
+                                trackStrokeWidth={3}
+                                progress={testProgress}
+                            />
+                            : <FontAwesomeIcon icon={["fas", "vial"]} size="lg" title="Run This Preset For Three Seconds" />
+                        }
+                    </div>
                     <div className="save-button" onClick={handleSubmit(onSubmit)}>
                         <span>Save</span>
                         <FontAwesomeIcon icon={["fas", "save"]} size="lg" title="Save This Preset" />

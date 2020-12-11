@@ -6,7 +6,8 @@ import {
     faSave,
     faBars,
     faArrowLeft,
-    faCogs
+    faCogs,
+    faVial
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -23,6 +24,7 @@ library.add(
     faBars,
     faArrowLeft,
     faCogs,
+    faVial,
 
     faEdit,
     faClone,
