@@ -1,5 +1,5 @@
 .preset-modifier__particle-item {
-    grid-template-columns: min-content min-content 1fr 2fr max-content max-content;
+    grid-template-columns: min-content min-content 1fr 2fr max-content min-content;
     grid-template-areas  :
         'delete effect-label         effect-label        regiontype-label    regiontype-label   color-label'
         'delete effect-input         effect-input        regiontype-input    regiontype-input   color-input'
@@ -10,7 +10,9 @@
         'delete equation-label       equation-label      equation-label      equation-label     color-input'
         'delete equation-input       equation-input      equation-input      equation-input     color-input'
         'delete dustsize-label       dustsize-label      dustsize-label      dustsize-label     color-input'
-        'delete dustsize-input       dustsize-input      dustsize-input      dustsize-input     color-input';
+        'delete dustsize-input       dustsize-input      dustsize-input      dustsize-input     color-input'
+        'delete material-label       material-label      material-label      material-label     material-label'
+        'delete material-input       material-input      material-input      material-input     material-input';
 
     & label {
         grid-area: label;
@@ -83,8 +85,12 @@
     & .color-input {
         grid-area: color-input;
     }
-}
 
-.color-input {
-    // background: lawngreen;
+    & .material-label {
+        grid-area: material-label;
+    }
+
+    & .material-input {
+        grid-area: material-input;
+    }
 }
