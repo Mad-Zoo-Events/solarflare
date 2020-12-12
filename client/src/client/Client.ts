@@ -1,5 +1,5 @@
-import { PresetCollection } from "../domain/PresetCollection";
 import axios from "axios";
+import { PresetCollection } from "../domain/PresetCollection";
 import { Preset } from "../domain/presets/Preset";
 
 export async function fetchAllPresets (): Promise<PresetCollection> {
@@ -15,7 +15,6 @@ export async function upsertPreset (effectType: string, preset: Preset): Promise
 }
 
 export async function testPreset (effectType: string, preset: Preset): Promise<void> {
-    preset.id = "c6a5db38-b90a-4209-b3e3-07d97cdc8cd4";
     return await axios.post(`/testPreset/${effectType}`, preset);
 }
 
