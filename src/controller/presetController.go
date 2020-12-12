@@ -229,6 +229,7 @@ func TestPresetAPI(effectType string, body []byte) {
 }
 
 func particlePresetsToAPI(presets []model.ParticleEffectPreset) (migrated []model.ParticleEffectPresetAPI) {
+	migrated = []model.ParticleEffectPresetAPI{}
 	for _, p := range presets {
 		migrated = append(migrated, p.ToAPI())
 	}
@@ -237,6 +238,7 @@ func particlePresetsToAPI(presets []model.ParticleEffectPreset) (migrated []mode
 
 // temporary measures until the preset manager has been fully migrated to React
 func commandPresetsToAPI(presets []model.CommandEffectPreset) (migrated []model.CommandEffectPresetAPI) {
+	migrated = []model.CommandEffectPresetAPI{}
 	for _, p := range presets {
 		migrated = append(migrated, p.ToAPI())
 	}

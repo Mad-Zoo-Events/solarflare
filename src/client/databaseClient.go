@@ -53,13 +53,14 @@ func init() {
 func GetParticleEffectPresets() (presets []model.ParticleEffectPreset) {
 	cfg := config.Get()
 	tableName := fmt.Sprintf(ParticleEffectPresetsTable, cfg.SelectedStage)
+	presets = []model.ParticleEffectPreset{}
 
 	result, err := db.Scan(&dynamodb.ScanInput{
 		TableName: &tableName,
 	})
 	if err != nil {
 		sferror.New(sferror.DatabaseCRUD, "Failed to read particle effect presets", err)
-		return nil
+		return
 	}
 
 	for _, item := range result.Items {
@@ -81,13 +82,14 @@ func GetParticleEffectPresets() (presets []model.ParticleEffectPreset) {
 func GetDragonEffectPresets() (presets []model.DragonEffectPreset) {
 	cfg := config.Get()
 	tableName := fmt.Sprintf(DragonEffectPresetsTable, cfg.SelectedStage)
+	presets = []model.DragonEffectPreset{}
 
 	result, err := db.Scan(&dynamodb.ScanInput{
 		TableName: &tableName,
 	})
 	if err != nil {
 		sferror.New(sferror.DatabaseCRUD, "Failed to read dragon effect presets", err)
-		return nil
+		return
 	}
 
 	for _, item := range result.Items {
@@ -109,13 +111,14 @@ func GetDragonEffectPresets() (presets []model.DragonEffectPreset) {
 func GetTimeshiftEffectPresets() (presets []model.TimeshiftEffectPreset) {
 	cfg := config.Get()
 	tableName := fmt.Sprintf(TimeshiftEffectPresetsTable, cfg.SelectedStage)
+	presets = []model.TimeshiftEffectPreset{}
 
 	result, err := db.Scan(&dynamodb.ScanInput{
 		TableName: &tableName,
 	})
 	if err != nil {
 		sferror.New(sferror.DatabaseCRUD, "Failed to read timeshift effect presets", err)
-		return nil
+		return
 	}
 
 	for _, item := range result.Items {
@@ -137,13 +140,14 @@ func GetTimeshiftEffectPresets() (presets []model.TimeshiftEffectPreset) {
 func GetPotionEffectPresets() (presets []model.PotionEffectPreset) {
 	cfg := config.Get()
 	tableName := fmt.Sprintf(PotionEffectPresetsTable, cfg.SelectedStage)
+	presets = []model.PotionEffectPreset{}
 
 	result, err := db.Scan(&dynamodb.ScanInput{
 		TableName: &tableName,
 	})
 	if err != nil {
 		sferror.New(sferror.DatabaseCRUD, "Failed to read potion effect presets", err)
-		return nil
+		return
 	}
 
 	for _, item := range result.Items {
@@ -165,6 +169,7 @@ func GetPotionEffectPresets() (presets []model.PotionEffectPreset) {
 func GetLaserEffectPresets() (presets []model.LaserEffectPreset) {
 	cfg := config.Get()
 	tableName := fmt.Sprintf(LaserEffectPresetsTable, cfg.SelectedStage)
+	presets = []model.LaserEffectPreset{}
 
 	result, err := db.Scan(&dynamodb.ScanInput{
 		TableName: &tableName,
@@ -193,6 +198,7 @@ func GetLaserEffectPresets() (presets []model.LaserEffectPreset) {
 func GetCommandEffectPresets() (presets []model.CommandEffectPreset) {
 	cfg := config.Get()
 	tableName := fmt.Sprintf(CommandEffectPresetsTable, cfg.SelectedStage)
+	presets = []model.CommandEffectPreset{}
 
 	result, err := db.Scan(&dynamodb.ScanInput{
 		TableName: &tableName,
