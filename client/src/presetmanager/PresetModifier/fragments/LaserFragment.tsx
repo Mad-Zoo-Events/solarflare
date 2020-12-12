@@ -26,7 +26,7 @@ const LaserFragment = ({
 
     return (
         <>
-            <div className="preset-modifier__subtitle">Settings</div>
+            <div className="subtitle">Settings</div>
 
             <div className="preset-modifier__common-inputs">
                 <label>Laser Type</label>
@@ -39,10 +39,11 @@ const LaserFragment = ({
                 </select>
             </div>
 
-            <div className="preset-modifier__subtitle">List of lasers</div>
-
-            <div className="add-button" onClick={() => prepend({ ...laserPreset.laserEffects[0] })} >
-                <FontAwesomeIcon className="add-button" icon={["fas", "plus-circle"]} size="lg" title="Add Another Effect" />
+            <div className="subtitle">
+                <span>List of lasers</span>
+                <div className="add-button" onClick={() => prepend({ ...laserPreset.laserEffects[0] })} >
+                    <FontAwesomeIcon icon={["fas", "plus-circle"]} size="2x" title="Add Another Effect" />
+                </div>
             </div>
             {
                 fields.map((effect, index) => {

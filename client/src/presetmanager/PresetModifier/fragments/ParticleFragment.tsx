@@ -45,10 +45,11 @@ const ParticleFragment = ({
 
     return (
         <>
-            <div className="preset-modifier__subtitle">List of particle effects</div>
-
-            <div className="add-button" onClick={() => prepend({ ...particlePreset.particleEffects[0] })} >
-                <FontAwesomeIcon className="add-button" icon={["fas", "plus-circle"]} size="lg" title="Add Another Effect" />
+            <div className="subtitle">
+                <span>List of particle effects</span>
+                <div className="add-button" onClick={() => prepend({ ...particlePreset.particleEffects[0] })} >
+                    <FontAwesomeIcon icon={["fas", "plus-circle"]} size="2x" title="Add Another Effect" />
+                </div>
             </div>
             {
                 fields.map((effect, index) => {

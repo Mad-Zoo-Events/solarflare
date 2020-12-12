@@ -24,7 +24,7 @@ const PresetModifier = ({
     preset = preset || { id: "", displayName: "", keyBinding: 0 };
     preset.keyBindingStr = getShortcutString(preset.keyBinding);
     const accentColor = getAccentColor(effectType);
-    const coloredShadow = { boxShadow: `0 0 8em var(--darker-${accentColor})` };
+    const coloredShadow = { boxShadow: `0 0 8em 0em var(--darker-${accentColor})` };
 
     const newMidiMapping = () => ({ channel: 1, key: 1, behavior: "trigger" });
 
@@ -92,7 +92,10 @@ const PresetModifier = ({
         <div className="preset-modifier__popup">
             <div className="preset-modifier__popup-inner" style={coloredShadow}>
                 <div className="header">
-                    {preset.id ? <> Edit <span className="preset-name">{preset.displayName}</span> </> : "Create New Preset"}
+                    {preset.id
+                        ? <span>Edit <span className="preset-name">{preset.displayName}</span> Preset</span>
+                        : <span>Create New Preset</span>
+                    }
                     <FontAwesomeIcon className="close-button" icon={["fas", "window-close"]} size="lg" onClick={onClose} title="Close Without Saving" />
                 </div>
 
@@ -118,11 +121,13 @@ const PresetModifier = ({
                             />
                         </div>
                         <div>
-                            <div className="subtitle">List of MIDI mappings</div>
-                            <div>
+                            <div className="subtitle">
+                                <span>List of MIDI mappings</span>
                                 <div className="add-button" onClick={() => prepend(newMidiMapping())}>
-                                    <FontAwesomeIcon icon={["fas", "plus-circle"]} size="lg" title="Add MIDI Mapping"/>
+                                    <FontAwesomeIcon icon={["fas", "plus-circle"]} size="2x" title="Add MIDI Mapping"/>
                                 </div>
+                            </div>
+                            <div>
                                 {
                                     fields.map((mapping, index) => (
                                         <div key={mapping.id} className="midi-mapping">
@@ -164,12 +169,12 @@ const PresetModifier = ({
                                 trackStrokeWidth={3}
                                 progress={testProgress}
                             />
-                            : <FontAwesomeIcon icon={["fas", "vial"]} size="lg" title="Run This Preset For Three Seconds" />
+                            : <FontAwesomeIcon icon={["fas", "vial"]} size="1x" title="Run This Preset For Three Seconds" />
                         }
                     </div>
                     <div className="save-button" onClick={handleSubmit(onSubmit)}>
                         <span>Save</span>
-                        <FontAwesomeIcon icon={["fas", "save"]} size="lg" title="Save This Preset" />
+                        <FontAwesomeIcon icon={["fas", "save"]} size="1x" title="Save This Preset" />
                     </div>
                 </div>
             </div>

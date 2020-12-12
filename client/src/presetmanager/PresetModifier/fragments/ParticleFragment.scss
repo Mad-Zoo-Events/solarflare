@@ -11,8 +11,8 @@
         'delete equation-input       equation-input      equation-input      equation-input     color-input'
         'delete dustsize-label       dustsize-label      dustsize-label      dustsize-label     color-input'
         'delete dustsize-input       dustsize-input      dustsize-input      dustsize-input     color-input'
-        'delete material-label       material-label      material-label      material-label     material-label'
-        'delete material-input       material-input      material-input      material-input     material-input';
+        'delete material-label       material-label      material-label      material-label     color-input'
+        'delete material-input       material-input      material-input      material-input     color-input';
 
     & label {
         grid-area: label;

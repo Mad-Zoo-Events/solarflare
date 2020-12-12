@@ -10,11 +10,11 @@
 
     & a,
     a:visited {
-        color: var(--dark-gray);
+        color: var(--accent);
     }
 
     & a:hover {
-        color: var(--gray);
+        color: var(--lighter-accent);
     }
 
     & .text {

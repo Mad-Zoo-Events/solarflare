@@ -23,10 +23,11 @@ const PotionFragment = ({
 
     return (
         <>
-            <div className="preset-modifier__subtitle">List of potion effects</div>
-
-            <div className="add-button" onClick={() => prepend({ ...potionPreset.potionEffects[0] })}>
-                <FontAwesomeIcon icon={["fas", "plus-circle"]} size="lg" />
+            <div className="subtitle">
+                <span>List of potion effects</span>
+                <div className="add-button" onClick={() => prepend({ ...potionPreset.potionEffects[0] })}>
+                    <FontAwesomeIcon icon={["fas", "plus-circle"]} size="2x" title="Add Another Effect" />
+                </div>
             </div>
             {
                 fields.map((effect, index) => (

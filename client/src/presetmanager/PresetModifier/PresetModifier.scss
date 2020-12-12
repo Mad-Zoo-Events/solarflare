@@ -8,31 +8,37 @@
     right           : 0;
     bottom          : 0;
     margin          : auto;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: var(--background-alpha2);
+    backdrop-filter : blur(1.2em) saturate(40%);
 }
 
 .preset-modifier__popup-inner {
     position : absolute;
     left     : 50%;
-    top      : 5em;
+    top      : 4em;
     transform: translate(-50%);
 
     box-sizing   : border-box;
-    height       : calc(100% - 10em);
+    height       : calc(100% - 8em);
     min-width    : 50em;
-    max-width    : calc(100% - 10em);
+    max-width    : calc(100% - 8em);
     border-radius: 1em;
 
-    background: var(--background);
+    background     : var(--background-alpha4);
+    backdrop-filter: blur(0.5em);
 
     display           : grid;
     grid-template-rows: min-content auto min-content;
 
     & .header {
-        grid-row     : 1;
+        grid-row             : 1;
+        display              : grid;
+        grid-template-columns: auto min-content;
+
         font-size    : x-large;
         border-bottom: 0.2em solid var(--gray);
-        padding      : 0.5em;
+        align-items  : center;
+        padding      : 0.5em 0.6em;
 
         & .preset-name {
             font-weight: 900;
@@ -40,7 +46,6 @@
 
         & .close-button {
             cursor: pointer;
-            float : right;
             color : var(--red);
 
             &:hover {
@@ -57,10 +62,16 @@
         overflow-x: hidden;
 
         & .subtitle {
-            font-size     : larger;
-            border-bottom : 0.1em solid var(--gray);
-            padding-bottom: 0.5em;
-            margin        : 2em 0 1em 0;
+            display              : grid;
+            grid-template-columns: auto min-content;
+            font-size            : larger;
+            border-bottom        : 0.1em solid var(--gray);
+            padding-bottom       : 0.3em;
+            margin               : 2em 0 1em 0;
+
+            & span {
+                align-self: flex-end;
+            }
         }
 
         & .common-inputs {
@@ -84,7 +95,7 @@
             grid-template-columns: min-content max-content auto;
 
             &:nth-of-type(2n + 1) {
-                background-color: var(--background-alpha3);
+                background-color: var(--accent-alpha);
             }
 
             & .delete-button {
@@ -107,20 +118,18 @@
             gap          : 0.2em 1em;
 
             &:nth-of-type(2n) {
-                background-color: var(--background-alpha3);
+                background-color: var(--accent-alpha);
             }
         }
 
         div.add-button {
-            cursor         : pointer;
-            padding        : 0.5em;
-            display        : flex;
-            justify-content: center;
-            align-items    : center;
-            margin         : 1em calc(50% - 10em);
-            border         : 0.1em solid var(--green);
-            border-radius  : 3em;
-            color          : var(--green);
+            display: inline;
+            cursor : pointer;
+            color  : var(--accent);
+
+            &:hover {
+                color: var(--lighter-accent);
+            }
         }
     }
 
@@ -137,7 +146,7 @@
         & .test-button {
             grid-column: 2;
             cursor     : pointer;
-            color      : var(--teal);
+            color      : var(--accent);
             white-space: nowrap;
             display    : inline-block;
 
@@ -146,7 +155,7 @@
             }
 
             &:hover {
-                color: var(--lighter-teal);
+                color: var(--lighter-accent);
             }
 
             & div {
@@ -164,14 +173,14 @@
         & .save-button {
             grid-column: 3;
             cursor     : pointer;
-            color      : var(--teal);
+            color      : var(--accent);
 
             & span {
                 margin-right: 0.3em;
             }
 
             &:hover {
-                color: var(--lighter-teal);
+                color: var(--lighter-accent);
             }
         }
     }
