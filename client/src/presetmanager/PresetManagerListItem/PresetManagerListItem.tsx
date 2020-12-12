@@ -14,7 +14,7 @@ const PresetManagerListItem = ({
     onEdit
 }: PresetManagerListItemProps) => {
     const accentColor = getAccentColor(effectType);
-    const coloredText = { color: `var(--${accentColor})` };
+    const coloredText = { color: `var(--lighter-${accentColor})` };
 
     if (preset) {
         const { id, displayName, description, keyBinding } = preset;
@@ -25,20 +25,34 @@ const PresetManagerListItem = ({
 
         return (
             <div className="preset-manager-list-item__container" style={coloredBorder}>
+                <div className="edit-preset" style={coloredText} onClick={() => onEdit(effectType, preset)} title="Edit This Preset" >
+                    <FontAwesomeIcon icon={["far", "edit"]} size="lg" />
+                </div>
+
                 <div className="display-name" style={coloredText}>
-                    <FontAwesomeIcon className="edit-preset" icon={["far", "edit"]} size="lg" onClick={() => onEdit(effectType, preset)} title="Edit This Preset" />
-                    <span>{displayName}</span>
+                    {displayName}
                 </div>
-                {
-                    description ? <div className="description" title="Description">{description}</div> : null
-                }{
-                    keyBinding ? <div className="shortcut" title="Keyboard Shortcut"><code>{getShortcutString(keyBinding)}</code></div> : null
+
+                {keyBinding !== 0 &&
+                <div className="shortcut" title="Keyboard Shortcut">
+                    <code>{getShortcutString(keyBinding)}</code>
+                </div>
                 }
+
                 <div className="summary" style={coloredText} title="Summary">
-                    <FontAwesomeIcon icon={["fas", "bars"]} size="sm" />
-                    <span>{getSummary(preset, effectType)}</span>
+                    {getSummary(preset, effectType)}
                 </div>
+
+                { description &&
+                <div className="description" style={coloredText} title="Description">
+                    <FontAwesomeIcon icon={["fas", "quote-left"]} size="xs" />
+                    <span>{description}</span>
+                    <FontAwesomeIcon icon={["fas", "quote-right"]} size="xs" />
+                </div>
+                }
+
                 <div className="id" title="Unique Identifier (UUID) of This Preset">{id}</div>
+
                 <div className="actions">
                     <FontAwesomeIcon className="duplicate-preset" icon={["far", "clone"]} size="lg" onClick={() => onDuplicate(id, effectType)} title="Duplicate This Preset" />
                     <FontAwesomeIcon className="delete-preset" icon={["far", "trash-alt"]} size="lg" onClick={() => confirmDelete(id, effectType)} title="Delete This Preset" />

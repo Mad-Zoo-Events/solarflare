@@ -14,7 +14,7 @@
     --orange       : #f56200;
     --orange-alpha : #f5620020;
     --red          : #ec2323;
-    --teal         : #00aba9;
+    --accent       : #00aba9;
     --indigo       : #6a00ff;
     --indigo-alpha : #6a00ff20;
     --cyan         : #1ba1e2;
@@ -26,7 +26,7 @@
 
     --darker-magenta: #52002c;
     --darker-cyan   : #0b3c55;
-    --darker-teal   : #004948;
+    --darker-accent : #004948;
 }
 
 body {

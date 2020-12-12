@@ -2,6 +2,8 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import {
     faPlusCircle,
     faChevronDown,
+    faQuoteLeft,
+    faQuoteRight,
     faWindowClose,
     faSave,
     faBars,
@@ -13,12 +15,15 @@ import {
 import {
     faEdit,
     faClone,
-    faTrashAlt
+    faTrashAlt,
+    faListAlt
 } from "@fortawesome/free-regular-svg-icons";
 
 library.add(
     faPlusCircle,
     faChevronDown,
+    faQuoteLeft,
+    faQuoteRight,
     faWindowClose,
     faSave,
     faBars,
@@ -28,5 +33,6 @@ library.add(
 
     faEdit,
     faClone,
-    faTrashAlt
+    faTrashAlt,
+    faListAlt
 );

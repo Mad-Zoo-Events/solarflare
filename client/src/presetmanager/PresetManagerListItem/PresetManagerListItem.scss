@@ -4,31 +4,36 @@
 
     display              : grid;
     gap                  : 0.2em;
-    grid-template-columns: auto min-content min-content;
+    grid-template-columns: min-content auto min-content min-content;
     grid-template-rows   : max-content auto auto min-content;
     grid-template-areas  :
-        'name        shortcut actions'
-        'description shortcut actions'
-        'summary     shortcut actions'
-        'id          shortcut actions';
+        'edit name        shortcut actions'
+        'edit summary     shortcut actions'
+        'edit description shortcut actions'
+        'edit id          shortcut actions';
+
+    & .edit-preset {
+        grid-area: edit;
+        cursor   : pointer;
+        margin   : 0 0.5em 0.5em 0;
+
+        &:hover {
+            color: var(--font) !important;
+        }
+    }
 
     & .display-name {
         grid-area  : name;
         font-weight: bold;
-
-        & .edit-preset {
-            cursor      : pointer;
-            margin-right: 0.5em;
-
-            &:hover {
-                color: var(--font);
-            }
-        }
     }
 
     & .description {
-        grid-area : description;
-        font-style: italic;
+        grid-area: description;
+        font-size: small;
+
+        & span {
+            margin: 0 0.5em;
+        }
     }
 
     & .shortcut {
@@ -47,10 +52,7 @@
 
     & .summary {
         grid-area: summary;
-
-        & span {
-            margin-left: 0.5em;
-        }
+        font-size: small;
     }
 
     & .id {
@@ -65,11 +67,11 @@
 
         & .duplicate-preset {
             cursor       : pointer;
-            color        : var(--teal);
+            color        : var(--accent);
             margin-bottom: 0.5em;
 
             &:hover {
-                color: var(--font);
+                color: var(--lighter-accent);
             }
         }
 
@@ -78,7 +80,7 @@
             color : var(--red);
 
             &:hover {
-                color: var(--font);
+                color: var(--lighter-red);
             }
         }
     }
