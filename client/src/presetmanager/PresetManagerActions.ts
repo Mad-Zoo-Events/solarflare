@@ -3,13 +3,13 @@ import "react-toastify/dist/ReactToastify.css";
 import { AnyAction } from "redux";
 import { createAction } from "redux-actions";
 import { ThunkAction } from "redux-thunk";
+import { v4 as uuid } from "uuid";
 import {
     deletePreset as doDeletePreset,
     duplicatePreset as doDuplicatePreset,
     fetchAllPresets,
     fetchPresetsOfType,
-    upsertPreset as doUpsertPreset,
-    testPreset as doTestPreset
+    testPreset as doTestPreset, upsertPreset as doUpsertPreset
 } from "../client/Client";
 import { PresetCollection } from "../domain/PresetCollection";
 import { Preset } from "../domain/presets/Preset";
@@ -88,6 +88,7 @@ export const upsertPreset = (effectType: string, preset: Preset): ThunkAction<vo
     dispatch(shouldShowToast({ message: `Preset "${preset.displayName}" saved!`, type: "success", id: preset.id }));
 };
 export const testPreset = (effectType: string, preset: Preset): ThunkAction<void, RootState, null, AnyAction> => () => {
+    preset.id = uuid();
     doTestPreset(effectType, preset);
 };
 export const closePresetModifier = (): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
