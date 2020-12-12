@@ -202,13 +202,14 @@ const ParticleFragment = ({
                                 <>
                                     <label className="material-label">
                                         Material ID&nbsp;
-                                        <a target="_blank" rel="noreferrer" href="https://www.digminecraft.com/lists/item_id_list_pc.php">See Here</a>
+                                        <a target="_blank" rel="noreferrer" href="https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html">See list of materials</a>
                                     </label>
                                     <input
                                         className="material-input"
-                                        name={`particleEffects[${index}].dustColor`}
+                                        name={`particleEffects[${index}].materialName`}
                                         type="text"
-                                        placeholder="minecraft:magma_block"
+                                        defaultValue={effect.materialName}
+                                        placeholder="MAGMA_BLOCK"
                                         ref={register()}
                                     />
                                 </>
