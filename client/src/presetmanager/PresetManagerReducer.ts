@@ -1,6 +1,6 @@
 import * as et from "../domain/EffectType";
 import { CommandPreset, DragonPreset, LaserPreset, ParticlePreset, PotionPreset, TimeshiftPreset } from "../domain/presets";
-import { DID_GET_ALL_PRESETS, DID_GET_PRESETS_OF_TYPE, DID_SHOW_TOAST, PresetManagerAction, SHOULD_CLOSE_PRESET_MODIFIER, SHOULD_OPEN_PRESET_MODIFIER, SHOULD_SHOW_TOAST } from "./PresetManagerActions";
+import { DID_FINISH_TEST, DID_GET_ALL_PRESETS, DID_GET_PRESETS_OF_TYPE, DID_SHOW_TOAST, PresetManagerAction, SHOULD_CLOSE_PRESET_MODIFIER, SHOULD_OPEN_PRESET_MODIFIER, SHOULD_SHOW_TOAST, WILL_START_TEST } from "./PresetManagerActions";
 import { PresetManagerState } from "./PresetManagerState";
 
 const initialState: PresetManagerState = {
@@ -11,7 +11,8 @@ const initialState: PresetManagerState = {
         particlePresets: [],
         potionPresets: [],
         timeshiftPresets: []
-    }
+    },
+    testIsRunning: false
 };
 
 function presetManagerReducer (
@@ -87,6 +88,16 @@ function presetManagerReducer (
         return {
             ...state,
             presetToEdit: undefined
+        };
+    case WILL_START_TEST:
+        return {
+            ...state,
+            testIsRunning: true
+        };
+    case DID_FINISH_TEST:
+        return {
+            ...state,
+            testIsRunning: false
         };
     case SHOULD_SHOW_TOAST:
         return {

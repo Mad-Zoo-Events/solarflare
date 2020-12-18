@@ -6,4 +6,5 @@ export interface PresetManagerState {
     presets: PresetCollection
     presetToEdit?: {effectType: string, preset: Preset}
     toast?: {message: string, type: TypeOptions, id: string}
+    testIsRunning: boolean
 }

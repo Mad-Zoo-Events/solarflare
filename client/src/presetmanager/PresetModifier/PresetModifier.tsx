@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import React, { Fragment, ReactElement } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { connect } from "react-redux";
 import * as et from "../../domain/EffectType";
@@ -11,7 +11,6 @@ import { getAccentColor, getOnChangeInt, getShortcutCode, getShortcutString } fr
 import { closePresetModifier, testPreset, upsertPreset } from "../PresetManagerActions";
 import { CommandFragment, DragonFragment, LaserFragment, ParticleFragment, PotionFragment, TimeshiftFragment } from "./fragments";
 import "./PresetModifier.scss";
-import ProgressBar from "react-customizable-progressbar";
 import { PresetModifierProps } from "./PresetModifierProps";
 
 const PresetModifier = ({
@@ -19,7 +18,8 @@ const PresetModifier = ({
     effectType,
     onClose,
     onSubmitForm,
-    onTestPreset
+    onTestPreset,
+    testIsRunning
 }: PresetModifierProps): ReactElement => {
     preset = preset || { id: "", displayName: "", keyBinding: 0 };
     preset.keyBindingStr = getShortcutString(preset.keyBinding);
@@ -27,15 +27,6 @@ const PresetModifier = ({
     const coloredShadow = { boxShadow: `0 0 8em 0em var(--darker-${accentColor})` };
 
     const newMidiMapping = () => ({ channel: 1, key: 1, behavior: "trigger" });
-
-    const [testProgress, setTestProgress] = useState(0);
-    useEffect(() => {
-        if (testProgress > 0) {
-            setTimeout(() => {
-                setTestProgress(testProgress - 3.33333);
-            }, 100);
-        }
-    });
 
     const formMethods = useForm<Preset>({
         defaultValues: preset
@@ -48,8 +39,7 @@ const PresetModifier = ({
     };
 
     const onTest = (preset: Preset) => {
-        setTestProgress(90);
-        onTestPreset(effectType, preset);
+        !testIsRunning && onTestPreset(effectType, preset);
     };
 
     const specificInputs = () => {
@@ -157,20 +147,9 @@ const PresetModifier = ({
                     </form>
                 </div>
                 <div className="footer">
-                    <div className="test-button" onClick={handleSubmit(onTest)} >
+                    <div className={`test-button ${testIsRunning && "disabled"}`} onClick={handleSubmit(onTest)} >
                         <span>Test</span>
-                        {testProgress > 0
-                            ? <ProgressBar
-                                className="progress-circle"
-                                radius={10}
-                                strokeWidth={3}
-                                strokeColor="#00aba9"
-                                strokeLinecap="square"
-                                trackStrokeWidth={3}
-                                progress={testProgress}
-                            />
-                            : <FontAwesomeIcon icon={["fas", "vial"]} size="1x" title="Run This Preset For Three Seconds" />
-                        }
+                        <FontAwesomeIcon icon={["fas", "vial"]} size="1x" title="Run This Preset For Three Seconds" />
                     </div>
                     <div className="save-button" onClick={handleSubmit(onSubmit)}>
                         <span>Save</span>
@@ -188,10 +167,12 @@ function mapStateToProps (state: RootState) {
     }
 
     const { effectType, preset } = state.presetmanager.presetToEdit;
+    const testIsRunning = state.presetmanager.testIsRunning;
 
     return {
         preset,
-        effectType
+        effectType,
+        testIsRunning
     };
 }
 
