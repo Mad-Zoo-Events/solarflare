@@ -5,6 +5,7 @@ import { closePresetModifier, testPreset, upsertPreset } from "../PresetManagerA
 export interface PresetModifierProps {
     preset: Preset
     effectType: string
+    testIsRunning: boolean
 
     onClose: HandleThunkActionCreator<typeof closePresetModifier>
     onSubmitForm: HandleThunkActionCreator<typeof upsertPreset>

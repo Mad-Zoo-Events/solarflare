@@ -170,6 +170,15 @@
             }
         }
 
+        & .disabled {
+            cursor: not-allowed;
+            color : var(--darker-accent);
+
+            &:hover {
+                color: var(--darker-accent);
+            }
+        }
+
         & .save-button {
             grid-column: 3;
             cursor     : pointer;

@@ -20,6 +20,8 @@ export const DID_GET_ALL_PRESETS = "presetmanager/DID_GET_ALL_PRESETS";
 export const DID_GET_PRESETS_OF_TYPE = "presetmanager/DID_GET_PRESETS_OF_TYPE";
 export const SHOULD_OPEN_PRESET_MODIFIER = "presetmanager/SHOULD_OPEN_PRESET_MODIFIER";
 export const SHOULD_CLOSE_PRESET_MODIFIER = "presetmanager/SHOULD_CLOSE_PRESET_MODIFIER";
+export const WILL_START_TEST = "presetmanager/WILL_START_TEST";
+export const DID_FINISH_TEST = "presetmanager/DID_FINISH_TEST";
 export const SHOULD_SHOW_TOAST = "presetmanager/SHOULD_SHOW_TOAST";
 export const DID_SHOW_TOAST = "presetmanager/DID_SHOW_TOAST";
 
@@ -35,6 +37,12 @@ export interface OpenPresetModifier {
     type: typeof SHOULD_OPEN_PRESET_MODIFIER
     payload: { effectType: string, preset: Preset }
 }
+export interface StartTest {
+    type: typeof WILL_START_TEST
+}
+export interface FinishTest {
+    type: typeof DID_FINISH_TEST
+}
 export interface ClosePresetModifier {
     type: typeof SHOULD_CLOSE_PRESET_MODIFIER
 }
@@ -46,13 +54,17 @@ export interface ClearToast {
     type: typeof DID_SHOW_TOAST
 }
 
-export type PresetManagerAction = GetAllPresetsAction | GetPresetsOfType | OpenPresetModifier | ClosePresetModifier | ShowToast | ClearToast
+export type PresetManagerAction =
+    GetAllPresetsAction | GetPresetsOfType | OpenPresetModifier | ClosePresetModifier |
+    StartTest | FinishTest | ShowToast | ClearToast
 
 // ACTION CREATORS
 export const didGetAllPresets = createAction<PresetCollection>(DID_GET_ALL_PRESETS);
 export const didGetPresetsOfType = createAction<{effectType: string, presets: Preset[]}>(DID_GET_PRESETS_OF_TYPE);
 export const shouldOpenPresetModifier = createAction<{effectType: string, preset: Preset}>(SHOULD_OPEN_PRESET_MODIFIER);
 export const shouldClosePresetModifier = createAction(SHOULD_CLOSE_PRESET_MODIFIER);
+export const willStartTest = createAction(WILL_START_TEST);
+export const didFinishTest = createAction(DID_FINISH_TEST);
 export const shouldShowToast = createAction<{message: string, type: TypeOptions, id: string}>(SHOULD_SHOW_TOAST);
 export const didShowToast = createAction(DID_SHOW_TOAST);
 
@@ -87,9 +99,10 @@ export const upsertPreset = (effectType: string, preset: Preset): ThunkAction<vo
     dispatch(shouldClosePresetModifier());
     dispatch(shouldShowToast({ message: `Preset "${preset.displayName}" saved!`, type: "success", id: preset.id }));
 };
-export const testPreset = (effectType: string, preset: Preset): ThunkAction<void, RootState, null, AnyAction> => () => {
-    preset.id = uuid();
-    doTestPreset(effectType, preset);
+export const testPreset = (effectType: string, preset: Preset): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {
+    dispatch(willStartTest());
+    await doTestPreset(effectType, { ...preset, id: uuid() });
+    dispatch(didFinishTest());
 };
 export const closePresetModifier = (): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(shouldClosePresetModifier());
