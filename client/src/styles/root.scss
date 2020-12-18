@@ -18,9 +18,11 @@ input[type=number],
 textarea,
 select {
     color           : var(--font);
-    padding         : 0.5em;
-    border          : none;
     background-color: var(--dark-gray);
+    width           : 100%;
+    padding         : 7px;
+    box-sizing      : border-box;
+    border          : none;
 }
 
 .color-input {

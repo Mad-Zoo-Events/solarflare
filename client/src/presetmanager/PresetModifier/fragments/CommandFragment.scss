@@ -14,10 +14,5 @@
 
     & .command-input {
         grid-area: command;
-
-        & textarea {
-            width     : 100%;
-            box-sizing: border-box;
-        }
     }
 }
