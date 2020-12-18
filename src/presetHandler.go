@@ -86,7 +86,7 @@ func PresetDuplicationHandler(c *gin.Context) {
 	c.String(http.StatusCreated, *newID)
 }
 
-// PresetTestHandler handles requests to create a new preset
+// PresetTestHandler handles requests to test a preset before saving it
 func PresetTestHandler(c *gin.Context) {
 	body, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
