@@ -1,8 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Fragment, ReactElement } from "react";
 import { useFieldArray } from "react-hook-form";
-import { LaserPreset } from "../../../domain/presets";
-import { LaserTypes } from "../../../domain/presets/LaserPreset";
+import { LaserPreset } from "../../../../domain/presets";
+import { LaserTypes } from "../../../../domain/presets/LaserPreset";
 import RemoveEffectButton from "../RemoveEffectButton";
 import "./LaserFragment.scss";
 import { PresetModifierFragmentProps } from "./PresetModifierFragmentProps";

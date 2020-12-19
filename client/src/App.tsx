@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
-import ControlPanel from "./controlpanel/ControlPanel";
-import PresetManager from "./presetmanager/PresetManager";
+import ControlPanel from "./components/ControlPanel/ControlPanel";
+import PresetManager from "./components/PresetManager/PresetManager";
 import Routes from "./routes";
 
 function App (): ReactElement {

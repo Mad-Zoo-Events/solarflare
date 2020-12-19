@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect } from "react";
-import PageHeader from "../presetmanager/PageHeader/PageHeader";
+import PageHeader from "../PageHeader/PageHeader";
 import "./ControlPanel.scss";
 
 const ControlPanel = (): ReactElement => {

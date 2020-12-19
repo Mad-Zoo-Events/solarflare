@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Fragment, ReactElement } from "react";
 import { useFieldArray } from "react-hook-form";
-import { PotionEffectTypes, PotionPreset } from "../../../domain/presets/PotionPreset";
+import { PotionEffectTypes, PotionPreset } from "../../../../domain/presets/PotionPreset";
 import RemoveEffectButton from "../RemoveEffectButton";
 import "./PotionFragment.scss";
 import { PresetModifierFragmentProps } from "./PresetModifierFragmentProps";
