@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { ReactElement } from "react";
+import { toast } from "react-toastify";
 import "./RemoveEffectButton.scss";
 
 interface RemoveEffectButtonProps {
@@ -14,7 +15,9 @@ const RemoveEffectButton = ({
     index
 }: RemoveEffectButtonProps): ReactElement => {
     const removeEffect = (index: number) => {
-        numOfFields > 1 ? remove(index) : alert("Gotta keep at least one effect");
+        numOfFields > 1
+            ? remove(index)
+            : toast.error("Gotta keep at least one effect");
     };
 
     return <FontAwesomeIcon

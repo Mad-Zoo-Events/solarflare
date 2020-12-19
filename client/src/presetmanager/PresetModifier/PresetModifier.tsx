@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Fragment, ReactElement } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { connect } from "react-redux";
+import { toast } from "react-toastify";
 import * as et from "../../domain/EffectType";
 import { CommandPreset, DragonPreset, LaserPreset, ParticlePreset, PotionPreset, TimeshiftPreset } from "../../domain/presets";
 import { MidiBehaviorTypes } from "../../domain/presets/IPreset";
@@ -24,7 +25,7 @@ const PresetModifier = ({
     preset = preset || { id: "", displayName: "", keyBinding: 0 };
     preset.keyBindingStr = getShortcutString(preset.keyBinding);
     const accentColor = getAccentColor(effectType);
-    const coloredShadow = { boxShadow: `0 0 8em 0em var(--darker-${accentColor})` };
+    const coloredShadow = { boxShadow: `0 0 8em 0em var(--${accentColor})` };
     if (!preset.midiMappings) {
         preset.midiMappings = [];
     }
@@ -42,7 +43,12 @@ const PresetModifier = ({
     };
 
     const onTest = (preset: Preset) => {
-        !testIsRunning && onTestPreset(effectType, preset);
+        if (!testIsRunning) {
+            toast.dark(effectType === "command"
+                ? "Running commands..."
+                : `Running ${effectType} preset for three seconds...`);
+            onTestPreset(effectType, preset);
+        }
     };
 
     const specificInputs = () => {
@@ -109,7 +115,7 @@ const PresetModifier = ({
                                 name="keyBinding"
                                 control={control}
                                 onChange={getOnChangeInt}
-                                as={<input type="hidden"/>}
+                                as={<input type="hidden" />}
                                 defaultValue={preset.keyBinding || 0}
                             />
                         </div>
@@ -117,7 +123,7 @@ const PresetModifier = ({
                             <div className="subtitle">
                                 <span>List of MIDI mappings</span>
                                 <div className="add-button" onClick={() => prepend(newMidiMapping())}>
-                                    <FontAwesomeIcon icon={["fas", "plus-circle"]} size="2x" title="Add MIDI Mapping"/>
+                                    <FontAwesomeIcon icon={["fas", "plus-circle"]} size="2x" title="Add MIDI Mapping" />
                                 </div>
                             </div>
                             <div>
@@ -129,7 +135,7 @@ const PresetModifier = ({
                                             <input className="key-input" name={`midiMappings[${index}].key`} type="number" defaultValue={mapping.key} ref={register({ valueAsNumber: true })} />
 
                                             <label className="channel-label">Channel</label>
-                                            <input className="channel-input"name={`midiMappings[${index}].channel`} type="number" defaultValue={mapping.channel} ref={register({ valueAsNumber: true })} />
+                                            <input className="channel-input" name={`midiMappings[${index}].channel`} type="number" defaultValue={mapping.channel} ref={register({ valueAsNumber: true })} />
 
                                             <label className="behavior-label">Behavior</label>
                                             <select className="behavior-input" name={`midiMappings[${index}].behavior`} defaultValue={mapping.behavior} ref={register()}>
