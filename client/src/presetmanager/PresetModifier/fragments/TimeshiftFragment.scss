@@ -1,5 +1,5 @@
 .preset-modifier__timeshift-item {
-    grid-template-columns: min-content min-content auto;
+    grid-template-columns: min-content max-content auto;
     grid-template-areas  :
         'delete label   label'
         'delete number  range';
