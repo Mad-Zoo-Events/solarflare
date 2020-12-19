@@ -17,10 +17,12 @@ const (
 
 // ParticleEffectPreset describes a particle effect preset
 type ParticleEffectPreset struct {
-	ID              string           `json:"id"`
-	DisplayName     string           `json:"displayName"`
-	Description     string           `json:"description"`
-	KeyBinding      rune             `json:"keyBinding"`
+	ID           string        `json:"id"`
+	DisplayName  string        `json:"displayName"`
+	Description  string        `json:"description"`
+	KeyBinding   rune          `json:"keyBinding"`
+	MIDIMappings []MIDIMapping `json:"midiMappings"`
+
 	ParticleEffects []ParticleEffect `json:"particleEffects"`
 }
 
@@ -64,10 +66,12 @@ type AdditionalOptions struct {
 
 // ParticleEffectPresetAPI is the inbound request and response model for particle effect presets
 type ParticleEffectPresetAPI struct {
-	ID              string              `json:"id"`
-	DisplayName     string              `json:"displayName"`
-	Description     string              `json:"description"`
-	KeyBinding      rune                `json:"keyBinding"`
+	ID           string        `json:"id"`
+	DisplayName  string        `json:"displayName"`
+	Description  string        `json:"description"`
+	KeyBinding   rune          `json:"keyBinding"`
+	MIDIMappings []MIDIMapping `json:"midiMappings"`
+
 	ParticleEffects []ParticleEffectAPI `json:"particleEffects"`
 }
 
@@ -137,6 +141,7 @@ func (preset ParticleEffectPreset) ToAPI() ParticleEffectPresetAPI {
 		DisplayName:     preset.DisplayName,
 		Description:     preset.Description,
 		KeyBinding:      preset.KeyBinding,
+		MIDIMappings:    preset.MIDIMappings,
 		ParticleEffects: effects,
 	}
 }
@@ -190,6 +195,7 @@ func (preset ParticleEffectPresetAPI) FromAPI() ParticleEffectPreset {
 		DisplayName:     preset.DisplayName,
 		Description:     preset.Description,
 		KeyBinding:      preset.KeyBinding,
+		MIDIMappings:    preset.MIDIMappings,
 		ParticleEffects: effects,
 	}
 }

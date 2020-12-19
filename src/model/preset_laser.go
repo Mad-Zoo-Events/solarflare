@@ -2,10 +2,11 @@ package model
 
 // LaserEffectPreset is the request model for the laser effects
 type LaserEffectPreset struct {
-	ID          string `json:"id"`
-	DisplayName string `json:"displayName"`
-	Description string `json:"description"`
-	KeyBinding  rune   `json:"keyBinding"`
+	ID           string        `json:"id"`
+	DisplayName  string        `json:"displayName"`
+	Description  string        `json:"description"`
+	KeyBinding   rune          `json:"keyBinding"`
+	MIDIMappings []MIDIMapping `json:"midiMappings"`
 
 	IsEndLaser           bool          `json:"isEndLaser"`
 	IsNonPlayerTargeting bool          `json:"isNonPlayerTargeting"`

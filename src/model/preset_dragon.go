@@ -2,10 +2,12 @@ package model
 
 // DragonEffectPreset is the request model for particle effects
 type DragonEffectPreset struct {
-	ID            string         `json:"id"`
-	DisplayName   string         `json:"displayName"`
-	Description   string         `json:"description"`
-	KeyBinding    rune           `json:"keyBinding"`
+	ID           string        `json:"id"`
+	DisplayName  string        `json:"displayName"`
+	Description  string        `json:"description"`
+	KeyBinding   rune          `json:"keyBinding"`
+	MIDIMappings []MIDIMapping `json:"midiMappings"`
+
 	DragonEffects []DragonEffect `json:"dragonEffects"`
 }
 
