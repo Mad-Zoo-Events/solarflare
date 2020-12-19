@@ -59,13 +59,13 @@ export const didShowToast = createAction(DID_SHOW_TOAST);
 export const duplicatePreset = (id: string, effectType: string): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {
     await doDuplicatePreset(id, effectType);
 
-    fetchPresetsOfType(effectType);
+    dispatch(fetchPresetsOfType(effectType));
     dispatch(shouldShowToast({ message: "Preset duplicated", type: "info", id }));
 };
 export const deletePreset = (id: string, effectType: string): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {
     await doDeletePreset(id, effectType);
 
-    fetchPresetsOfType(effectType);
+    dispatch(fetchPresetsOfType(effectType));
     dispatch(shouldShowToast({ message: "Preset deleted!", type: "error", id }));
 };
 export const editPreset = (effectType: string, preset?: Preset): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
@@ -75,7 +75,7 @@ export const editPreset = (effectType: string, preset?: Preset): ThunkAction<voi
 export const upsertPreset = (effectType: string, preset: Preset): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {
     await doUpsertPreset(effectType, preset);
 
-    fetchPresetsOfType(effectType);
+    dispatch(fetchPresetsOfType(effectType));
     dispatch(shouldClosePresetModifier());
     dispatch(shouldShowToast({ message: `Preset "${preset.displayName}" saved!`, type: "success", id: preset.id }));
 };
