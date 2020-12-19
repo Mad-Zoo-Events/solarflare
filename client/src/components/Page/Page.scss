@@ -1,0 +1,49 @@
+.page {
+    & .page-header {
+        background-color: var(--background);
+        font-size       : x-large;
+        font-weight     : lighter;
+        padding         : 0.3em;
+
+        display              : grid;
+        grid-template-columns: min-content auto min-content;
+
+        & a,
+        a:visited {
+            color: var(--accent);
+        }
+
+        & a:hover {
+            color: var(--lighter-accent);
+        }
+
+        & .text {
+            grid-column: 2;
+        }
+
+        & .button-left {
+            grid-column : 1;
+            margin-right: 0.5em;
+        }
+
+        & .button-right {
+            grid-column: 3;
+            margin-left: 0.5em;
+        }
+    }
+
+    & .page-content {
+        margin-bottom: 1.1em;
+    }
+
+    & .page-footer {
+        position        : fixed;
+        bottom          : 0;
+        width           : 100%;
+        padding         : 0.1em;
+        box-sizing      : border-box;
+        font-size       : smaller;
+        background-color: var(--background);
+        text-align      : center;
+    }
+}
