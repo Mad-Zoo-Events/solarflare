@@ -1,8 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { ReactElement } from "react";
 import { useFieldArray } from "react-hook-form";
-import { TimeshiftPreset } from "../../../domain/presets";
-import { getOnChangeInt } from "../../../utils/utils";
+import { TimeshiftPreset } from "../../../../domain/presets";
+import { getOnChangeInt } from "../../../../utils/utils";
 import RemoveEffectButton from "../RemoveEffectButton";
 import { PresetModifierFragmentProps } from "./PresetModifierFragmentProps";
 import "./TimeshiftFragment.scss";

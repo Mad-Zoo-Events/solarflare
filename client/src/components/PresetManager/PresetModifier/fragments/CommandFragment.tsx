@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { ReactElement } from "react";
 import { useFieldArray } from "react-hook-form";
 import TextareaAutosize from "react-textarea-autosize";
-import { CommandPreset } from "../../../domain/presets";
+import { CommandPreset } from "../../../../domain/presets";
 import RemoveEffectButton from "../RemoveEffectButton";
 import "./CommandFragment.scss";
 import { PresetModifierFragmentProps } from "./PresetModifierFragmentProps";

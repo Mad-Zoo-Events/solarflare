@@ -1,5 +1,5 @@
-import * as et from "../domain/EffectType";
-import { CommandPreset, DragonPreset, LaserPreset, ParticlePreset, PotionPreset, TimeshiftPreset } from "../domain/presets";
+import * as et from "../../domain/EffectType";
+import { CommandPreset, DragonPreset, LaserPreset, ParticlePreset, PotionPreset, TimeshiftPreset } from "../../domain/presets";
 import { DID_FINISH_TEST, DID_GET_ALL_PRESETS, DID_GET_PRESETS_OF_TYPE, DID_SHOW_TOAST, PresetManagerAction, SHOULD_CLOSE_PRESET_MODIFIER, SHOULD_OPEN_PRESET_MODIFIER, SHOULD_SHOW_TOAST, WILL_START_TEST } from "./PresetManagerActions";
 import { PresetManagerState } from "./PresetManagerState";
 

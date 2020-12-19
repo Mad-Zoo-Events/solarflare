@@ -10,10 +10,10 @@ import {
     fetchAllPresets,
     fetchPresetsOfType,
     testPreset as doTestPreset, upsertPreset as doUpsertPreset
-} from "../client/Client";
-import { PresetCollection } from "../domain/PresetCollection";
-import { Preset } from "../domain/presets/Preset";
-import { RootState } from "../RootState";
+} from "../../client/Client";
+import { PresetCollection } from "../../domain/PresetCollection";
+import { Preset } from "../../domain/presets/Preset";
+import { RootState } from "../../RootState";
 
 // ACTION TYPES
 export const DID_GET_ALL_PRESETS = "presetmanager/DID_GET_ALL_PRESETS";
@@ -60,12 +60,12 @@ export type PresetManagerAction =
 
 // ACTION CREATORS
 export const didGetAllPresets = createAction<PresetCollection>(DID_GET_ALL_PRESETS);
-export const didGetPresetsOfType = createAction<{effectType: string, presets: Preset[]}>(DID_GET_PRESETS_OF_TYPE);
-export const shouldOpenPresetModifier = createAction<{effectType: string, preset: Preset}>(SHOULD_OPEN_PRESET_MODIFIER);
+export const didGetPresetsOfType = createAction<{ effectType: string, presets: Preset[] }>(DID_GET_PRESETS_OF_TYPE);
+export const shouldOpenPresetModifier = createAction<{ effectType: string, preset: Preset }>(SHOULD_OPEN_PRESET_MODIFIER);
 export const shouldClosePresetModifier = createAction(SHOULD_CLOSE_PRESET_MODIFIER);
 export const willStartTest = createAction(WILL_START_TEST);
 export const didFinishTest = createAction(DID_FINISH_TEST);
-export const shouldShowToast = createAction<{message: string, type: TypeOptions, id: string}>(SHOULD_SHOW_TOAST);
+export const shouldShowToast = createAction<{ message: string, type: TypeOptions, id: string }>(SHOULD_SHOW_TOAST);
 export const didShowToast = createAction(DID_SHOW_TOAST);
 
 // ACTIONS

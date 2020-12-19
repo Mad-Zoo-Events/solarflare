@@ -1,5 +1,5 @@
 import { HandleThunkActionCreator } from "react-redux";
-import { Preset } from "../../domain/presets/Preset";
+import { Preset } from "../../../domain/presets/Preset";
 import { closePresetModifier, testPreset, upsertPreset } from "../PresetManagerActions";
 
 export interface PresetModifierProps {

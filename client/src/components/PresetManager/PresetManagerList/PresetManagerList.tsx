@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { RootState } from "../../RootState";
+import { RootState } from "../../../RootState";
 import PresetManagerListGroup from "../PresetManagerListGroup/PresetManagerListGroup";
 import { PresetManagerListProps } from "./PresetManagerListProps";
 

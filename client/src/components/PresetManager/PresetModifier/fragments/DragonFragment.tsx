@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { ReactElement } from "react";
 import { useFieldArray } from "react-hook-form";
-import { DragonPreset } from "../../../domain/presets";
+import { DragonPreset } from "../../../../domain/presets";
 import RemoveEffectButton from "../RemoveEffectButton";
 import "./DragonFragment.scss";
 import { PresetModifierFragmentProps } from "./PresetModifierFragmentProps";

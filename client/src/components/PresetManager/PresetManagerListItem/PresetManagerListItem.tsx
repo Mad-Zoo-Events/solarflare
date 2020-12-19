@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { connect } from "react-redux";
-import { getAccentColor, getShortcutString, getSummary } from "../../utils/utils";
+import { getAccentColor, getShortcutString, getSummary } from "../../../utils/utils";
 import { deletePreset, duplicatePreset, editPreset } from "../PresetManagerActions";
 import "./PresetManagerListItem.scss";
 import { PresetManagerListItemProps } from "./PresetManagerListItemProps";
