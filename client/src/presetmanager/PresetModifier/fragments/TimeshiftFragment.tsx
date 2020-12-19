@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { ReactElement } from "react";
-import { Controller, useFieldArray } from "react-hook-form";
+import { useFieldArray } from "react-hook-form";
 import { TimeshiftPreset } from "../../../domain/presets";
 import { getOnChangeInt } from "../../../utils/utils";
 import RemoveEffectButton from "../RemoveEffectButton";
@@ -33,26 +33,17 @@ const TimeshiftFragment = ({
                 fields.map((effect, index) => {
                     return (
                         <div key={effect.id} className="preset-modifier__timeshift-item preset-modifier__item">
-                            <RemoveEffectButton numOfFields={fields.length} remove={remove} index={index}/>
+                            <RemoveEffectButton numOfFields={fields.length} remove={remove} index={index} />
 
                             <label>Amount #{index + 1}</label>
-                            <Controller
-                                name={`timeshiftEffects[${index}].amount`}
-                                control={control}
-                                as={<input type="hidden"/>}
-                                defaultValue={effect.amount}
-                            />
-
                             <input
-                                name={`timeshiftEffects[${index}].numberamount`}
+                                name={`timeshiftEffects[${index}].amount`}
                                 type="number"
                                 min={-12000} max={12000} step={1}
                                 defaultValue={effect.amount}
-                                ref={register()}
+                                ref={register({ valueAsNumber: true })}
                                 onChange={(e) => {
-                                    const amount = getOnChangeInt(e);
-                                    setValue(`timeshiftEffects[${index}].amount`, amount);
-                                    setValue(`timeshiftEffects[${index}].rangeamount`, amount);
+                                    setValue(`timeshiftEffects[${index}].rangeamount`, getOnChangeInt(e));
                                 }}
                             />
 
@@ -61,11 +52,9 @@ const TimeshiftFragment = ({
                                 type="range"
                                 min={-12000} max={12000} step={10}
                                 defaultValue={effect.amount}
-                                ref={register()}
+                                ref={register({ valueAsNumber: true })}
                                 onChange={(e) => {
-                                    const amount = getOnChangeInt(e);
-                                    setValue(`timeshiftEffects[${index}].amount`, amount);
-                                    setValue(`timeshiftEffects[${index}].numberamount`, amount);
+                                    setValue(`timeshiftEffects[${index}].amount`, getOnChangeInt(e));
                                 }}
                             />
                         </div>

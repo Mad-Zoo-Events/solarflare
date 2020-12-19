@@ -1,10 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Fragment, ReactElement } from "react";
-import { ColorResult, RGBColor, SketchPicker } from "react-color";
+import { RGBColor, SketchPicker } from "react-color";
 import { Controller, useFieldArray } from "react-hook-form";
 import { ParticlePreset } from "../../../domain/presets";
 import { ParticleEffectRegionTypes, ParticleEffectTypes } from "../../../domain/presets/ParticlePreset";
-import { getOnChangeFloat, getOnChangeInt } from "../../../utils/utils";
+import { getOnChangeFloat } from "../../../utils/utils";
 import RemoveEffectButton from "../RemoveEffectButton";
 import "./ParticleFragment.scss";
 import { PresetModifierFragmentProps } from "./PresetModifierFragmentProps";
@@ -38,10 +38,6 @@ const ParticleFragment = ({
     const toColorDto = ({ r, g, b }: RGBColor): string => (
         `${r},${g},${b}`
     );
-
-    const onColorChange = ({ rgb }: ColorResult, index: number) => {
-        setValue(`particleEffects[${index}].dustColor`, toColorDto(rgb));
-    };
 
     return (
         <>
@@ -108,24 +104,15 @@ const ParticleFragment = ({
                             {regionType !== "POINTS" &&
                                 <>
                                     <label className="density-label">Density</label>
-                                    <Controller
-                                        name={`particleEffects[${index}].density`}
-                                        control={control}
-                                        as={<input type="hidden" />}
-                                        defaultValue={effect.density}
-                                    />
-
                                     <input
-                                        name={`particleEffects[${index}].numberdensity`}
+                                        name={`particleEffects[${index}].density`}
                                         className="density-number-input"
                                         type="number"
-                                        min={1} max={100} step={0.1}
+                                        min={1} max={1000} step={0.1}
                                         defaultValue={effect.density}
-                                        ref={register()}
+                                        ref={register({ valueAsNumber: true })}
                                         onChange={(e) => {
-                                            const density = getOnChangeFloat(e);
-                                            setValue(`particleEffects[${index}].density`, density);
-                                            setValue(`particleEffects[${index}].rangedensity`, density);
+                                            setValue(`particleEffects[${index}].rangedensity`, getOnChangeFloat(e));
                                         }}
                                     />
 
@@ -135,11 +122,9 @@ const ParticleFragment = ({
                                         type="range"
                                         min={1} max={100} step={0.1}
                                         defaultValue={effect.density}
-                                        ref={register()}
+                                        ref={register({ valueAsNumber: true })}
                                         onChange={(e) => {
-                                            const density = getOnChangeInt(e);
-                                            setValue(`particleEffects[${index}].density`, density);
-                                            setValue(`particleEffects[${index}].numberdensity`, density);
+                                            setValue(`particleEffects[${index}].density`, getOnChangeFloat(e));
                                         }}
                                     />
                                 </>
@@ -182,7 +167,10 @@ const ParticleFragment = ({
                                         className="color-input"
                                         presetColors={[]}
                                         color={fromColorDto(dustColor)}
-                                        onChange={(color) => onColorChange(color, index)}
+                                        onChange={(color) => {
+                                            const { rgb } = color;
+                                            setValue(`particleEffects[${index}].dustColor`, toColorDto(rgb));
+                                        }}
                                         disableAlpha={true}
                                     />
                                 </>
