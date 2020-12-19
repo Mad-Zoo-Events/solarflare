@@ -123,16 +123,16 @@ const PresetModifier = ({
                             <div>
                                 {
                                     fields.map((mapping, index) => (
-                                        <div key={mapping.id} className="midi-mapping">
+                                        <div key={mapping.id} className="midi-mapping preset-modifier__item">
                                             <FontAwesomeIcon className="delete-button" icon={["far", "trash-alt"]} size="2x" onClick={() => remove(index)} title="Remove MIDI Mapping" />
-                                            <label>Key</label>
-                                            <input name={`midiMappings[${index}].key`} type="number" defaultValue={mapping.key} ref={register({ valueAsNumber: true })} />
+                                            <label className="key-label">Key</label>
+                                            <input className="key-input" name={`midiMappings[${index}].key`} type="number" defaultValue={mapping.key} ref={register({ valueAsNumber: true })} />
 
-                                            <label>Channel</label>
-                                            <input name={`midiMappings[${index}].channel`} type="number" defaultValue={mapping.channel} ref={register({ valueAsNumber: true })} />
+                                            <label className="channel-label">Channel</label>
+                                            <input className="channel-input"name={`midiMappings[${index}].channel`} type="number" defaultValue={mapping.channel} ref={register({ valueAsNumber: true })} />
 
-                                            <label>Behavior</label>
-                                            <select name={`midiMappings[${index}].behavior`} defaultValue={mapping.behavior} ref={register()}>
+                                            <label className="behavior-label">Behavior</label>
+                                            <select className="behavior-input" name={`midiMappings[${index}].behavior`} defaultValue={mapping.behavior} ref={register()}>
                                                 {Object.keys(MidiBehaviorTypes).map(key => (
                                                     <Fragment key={key}>
                                                         <option value={key}>{key}</option>
