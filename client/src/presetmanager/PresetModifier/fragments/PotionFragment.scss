@@ -2,7 +2,7 @@
     grid-template-columns: min-content auto max-content;
     grid-template-areas  :
         'delete type-label amplifier-label'
-        'delete type       amplifier';
+        'delete type       amplifier-input';
 
     & .delete-button {
         grid-area: delete;
@@ -20,7 +20,7 @@
         grid-area: amplifier-label;
     }
 
-    & input[type=number] {
-        grid-area: amplifier;
+    & .amplifier-input {
+        grid-area: amplifier-input;
     }
 }
