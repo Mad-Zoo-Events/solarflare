@@ -2,6 +2,10 @@ import axios from "axios";
 import { PresetCollection } from "../domain/PresetCollection";
 import { Preset } from "../domain/presets/Preset";
 
+export async function getVersion (): Promise<string> {
+    return (await axios.get<string>("/health")).data;
+}
+
 export async function fetchAllPresets (): Promise<PresetCollection> {
     return (await axios.get<PresetCollection>("/presets/all")).data;
 }
