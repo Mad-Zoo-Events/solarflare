@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect } from "react";
-import PageHeader from "../PageHeader/PageHeader";
+import Page from "../Page/Page";
 import "./ControlPanel.scss";
 
 const ControlPanel = (): ReactElement => {
@@ -8,12 +8,11 @@ const ControlPanel = (): ReactElement => {
     }, []);
 
     return (
-        <>
-            <PageHeader isControlPanel={true} />
+        <Page isControlPanel={true} version="0">
             <div className="legacy-panel">
                 <iframe id="controlpanel-frame" src={`${window.location.origin}/controlpanel`}></iframe>
             </div>
-        </>
+        </Page>
     );
 };
 

@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { toast as doToast, ToastContainer } from "react-toastify";
+import { toast as doToast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { RootState } from "../../RootState";
-import PageHeader from "../PageHeader/PageHeader";
+import Page from "../Page/Page";
 import { clearToast, fetchPresets } from "./PresetManagerActions";
 import PresetManagerList from "./PresetManagerList/PresetManagerList";
 import { PresetManagerProps } from "./PresetManagerProps";
@@ -30,12 +30,10 @@ const PresetManager = ({
     }
 
     return (
-        <>
-            <PageHeader isControlPanel={false} />
-            <ToastContainer />
+        <Page isControlPanel={false} version="0">
             <PresetManagerList />
             {presetToEdit && <PresetModifier />}
-        </>
+        </Page>
     );
 };
 

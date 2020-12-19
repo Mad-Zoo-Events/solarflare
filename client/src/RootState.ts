@@ -2,4 +2,5 @@ import { PresetManagerState } from "./components/PresetManager/PresetManagerStat
 
 export interface RootState {
     presetmanager: PresetManagerState
+    version: string
 }
