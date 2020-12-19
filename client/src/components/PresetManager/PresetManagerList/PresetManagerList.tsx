@@ -53,15 +53,11 @@ const PresetManagerList = ({
 };
 
 function mapStateToProps (state: RootState) {
-    const presets = state.presetmanager.presets;
+    const { presets } = state.app;
 
     return {
         presets
     };
 }
 
-const mapDispatchToProps = {
-
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(PresetManagerList);
+export default connect(mapStateToProps, {})(PresetManagerList);

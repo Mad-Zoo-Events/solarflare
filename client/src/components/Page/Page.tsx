@@ -1,7 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { ReactElement } from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import { RootState } from "../../RootState";
 import Routes from "../../routes";
 import "./Page.scss";
 import { PageProps } from "./PageProps";
@@ -42,4 +44,12 @@ const Page = ({
     </div>
 );
 
-export default Page;
+function mapStateToProps (state: RootState) {
+    const { version } = state.app;
+
+    return {
+        version
+    };
+}
+
+export default connect(mapStateToProps, {})(Page);

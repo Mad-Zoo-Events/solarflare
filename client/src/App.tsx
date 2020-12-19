@@ -1,10 +1,19 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect } from "react";
+import { connect } from "react-redux";
 import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
+import { getVersion, fetchPresets } from "./AppActions";
+import { AppProps } from "./AppProps";
 import ControlPanel from "./components/ControlPanel/ControlPanel";
 import PresetManager from "./components/PresetManager/PresetManager";
 import Routes from "./routes";
 
-function App (): ReactElement {
+function App ({
+    getVersion,
+    getPresets
+}:AppProps): ReactElement {
+    useEffect(getVersion, []);
+    useEffect(getPresets, []);
+
     return (
         <Router>
             <Switch>
@@ -16,4 +25,9 @@ function App (): ReactElement {
     );
 }
 
-export default App;
+const mapDispatchToProps = {
+    getVersion: getVersion,
+    getPresets: fetchPresets
+};
+
+export default connect(null, mapDispatchToProps)(App);
