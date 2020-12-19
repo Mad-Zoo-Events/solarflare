@@ -1,7 +1,7 @@
 import { HandleThunkActionCreator } from "react-redux";
-import { fetchPresets, getVersion } from "./AppActions";
+import { initializeApp } from "./AppActions";
 
 export interface AppProps {
-    getVersion: HandleThunkActionCreator<typeof getVersion>
-    getPresets: HandleThunkActionCreator<typeof fetchPresets>
+    isInitialized: boolean
+    initializeApp: HandleThunkActionCreator<typeof initializeApp>
 }

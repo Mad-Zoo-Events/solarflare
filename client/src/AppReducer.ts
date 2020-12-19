@@ -2,7 +2,8 @@ import {
     AppAction,
     DID_GET_ALL_PRESETS,
     DID_GET_PRESETS_OF_TYPE,
-    DID_GET_VERSION
+    DID_GET_VERSION,
+    DID_INITIALIZE_APP
 } from "./AppActions";
 import { AppState } from "./AppState";
 import * as et from "./domain/EffectType";
@@ -16,6 +17,7 @@ import {
 } from "./domain/presets";
 
 const initialState: AppState = {
+    isInitialized: false,
     version: "?",
     presets: {
         commandPresets: [],
@@ -33,6 +35,11 @@ function appReducer (
     action: AppAction
 ): AppState {
     switch (action.type) {
+    case DID_INITIALIZE_APP:
+        return {
+            ...state,
+            isInitialized: true
+        };
     case DID_GET_VERSION:
         return {
             ...state,
