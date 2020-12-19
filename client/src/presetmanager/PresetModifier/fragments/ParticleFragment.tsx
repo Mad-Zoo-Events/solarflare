@@ -59,7 +59,7 @@ const ParticleFragment = ({
 
                     return (
                         <div key={effect.id} className="preset-modifier__particle-item preset-modifier__item">
-                            <RemoveEffectButton numOfFields={fields.length} remove={remove} index={index}/>
+                            <RemoveEffectButton numOfFields={fields.length} remove={remove} index={index} />
 
                             <label className="effect-label">Effect #{index + 1}</label>
                             <select className="effect-input" name={`particleEffects[${index}].name`} defaultValue={effect.name} ref={register()}>
@@ -106,86 +106,75 @@ const ParticleFragment = ({
                             }
 
                             {regionType !== "POINTS" &&
-                            <>
-                                <label className="density-label">Density</label>
-                                <Controller
-                                    name={`particleEffects[${index}].density`}
-                                    control={control}
-                                    as={<input type="hidden"/>}
-                                    defaultValue={effect.density}
-                                />
+                                <>
+                                    <label className="density-label">Density</label>
+                                    <Controller
+                                        name={`particleEffects[${index}].density`}
+                                        control={control}
+                                        as={<input type="hidden" />}
+                                        defaultValue={effect.density}
+                                    />
 
-                                <input
-                                    name={`particleEffects[${index}].numberdensity`}
-                                    className="density-number-input"
-                                    type="number"
-                                    min={1} max={100} step={0.1}
-                                    defaultValue={effect.density}
-                                    ref={register()}
-                                    onChange={(e) => {
-                                        const density = getOnChangeFloat(e);
-                                        setValue(`particleEffects[${index}].density`, density);
-                                        setValue(`particleEffects[${index}].rangedensity`, density);
-                                    }}
-                                />
+                                    <input
+                                        name={`particleEffects[${index}].numberdensity`}
+                                        className="density-number-input"
+                                        type="number"
+                                        min={1} max={100} step={0.1}
+                                        defaultValue={effect.density}
+                                        ref={register()}
+                                        onChange={(e) => {
+                                            const density = getOnChangeFloat(e);
+                                            setValue(`particleEffects[${index}].density`, density);
+                                            setValue(`particleEffects[${index}].rangedensity`, density);
+                                        }}
+                                    />
 
-                                <input
-                                    name={`particleEffects[${index}].rangedensity`}
-                                    className="density-range-input"
-                                    type="range"
-                                    min={1} max={100} step={0.1}
-                                    defaultValue={effect.density}
-                                    ref={register()}
-                                    onChange={(e) => {
-                                        const density = getOnChangeInt(e);
-                                        setValue(`particleEffects[${index}].density`, density);
-                                        setValue(`particleEffects[${index}].numberdensity`, density);
-                                    }}
-                                />
-                            </>
+                                    <input
+                                        name={`particleEffects[${index}].rangedensity`}
+                                        className="density-range-input"
+                                        type="range"
+                                        min={1} max={100} step={0.1}
+                                        defaultValue={effect.density}
+                                        ref={register()}
+                                        onChange={(e) => {
+                                            const density = getOnChangeInt(e);
+                                            setValue(`particleEffects[${index}].density`, density);
+                                            setValue(`particleEffects[${index}].numberdensity`, density);
+                                        }}
+                                    />
+                                </>
                             }
 
                             {regionType === "EQUATION" &&
-                             <>
-                                 <label className="equation-label">Equation</label>
-                                 <input
-                                     className="equation-input"
-                                     name={`particleEffects[${index}].equation`}
-                                     type="text"
-                                     defaultValue={effect.equation}
-                                     ref={register()}
-                                     placeholder="50-abs(x+y)-abs(y-x)" />
-                             </>
+                                <>
+                                    <label className="equation-label">Equation</label>
+                                    <input
+                                        className="equation-input"
+                                        name={`particleEffects[${index}].equation`}
+                                        type="text"
+                                        defaultValue={effect.equation}
+                                        ref={register()}
+                                        placeholder="50-abs(x+y)-abs(y-x)" />
+                                </>
                             }
 
                             {effectName === "REDSTONE" &&
                                 <>
                                     <label className="dustsize-label">Particle Size</label>
-                                    <Controller
-                                        name={`particleEffects[${index}].dustSize`}
-                                        control={control}
-                                        as={<input type="hidden"/>}
-                                        defaultValue={effect.dustSize || 1.0}
-                                    />
-
                                     <input
                                         className="dustsize-input"
-                                        name={`particleEffects[${index}].numberDustSize`}
+                                        name={`particleEffects[${index}].dustSize`}
                                         type="number"
                                         step={0.1}
                                         defaultValue={effect.dustSize || 1.0}
-                                        ref={register()}
-                                        onChange={(e) => {
-                                            const density = getOnChangeFloat(e);
-                                            setValue(`particleEffects[${index}].dustSize`, density);
-                                        }}
+                                        ref={register({ valueAsNumber: true })}
                                     />
 
                                     <label className="color-label">Particle Color</label>
                                     <Controller
                                         name={`particleEffects[${index}].dustColor`}
                                         control={control}
-                                        as={<input type="hidden"/>}
+                                        as={<input type="hidden" />}
                                         defaultValue={effect.dustColor || "0,0,0"}
                                     />
 
