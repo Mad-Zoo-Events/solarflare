@@ -1,18 +1,22 @@
 import React, { ReactElement, useEffect } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
-import { getVersion, fetchPresets } from "./AppActions";
+import { initializeApp } from "./AppActions";
 import { AppProps } from "./AppProps";
 import ControlPanel from "./components/ControlPanel/ControlPanel";
 import PresetManager from "./components/PresetManager/PresetManager";
+import { RootState } from "./RootState";
 import Routes from "./routes";
 
 function App ({
-    getVersion,
-    getPresets
+    isInitialized,
+    initializeApp
 }:AppProps): ReactElement {
-    useEffect(getVersion, []);
-    useEffect(getPresets, []);
+    useEffect(() => {
+        if (!isInitialized) {
+            initializeApp();
+        }
+    }, []);
 
     return (
         <Router>
@@ -26,8 +30,15 @@ function App ({
 }
 
 const mapDispatchToProps = {
-    getVersion: getVersion,
-    getPresets: fetchPresets
+    initializeApp: initializeApp
 };
 
-export default connect(null, mapDispatchToProps)(App);
+function mapStateToProps (state: RootState) {
+    const { isInitialized } = state.app;
+
+    return {
+        isInitialized
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
