@@ -25,6 +25,9 @@ const PresetModifier = ({
     preset.keyBindingStr = getShortcutString(preset.keyBinding);
     const accentColor = getAccentColor(effectType);
     const coloredShadow = { boxShadow: `0 0 8em 0em var(--darker-${accentColor})` };
+    if (!preset.midiMappings) {
+        preset.midiMappings = [];
+    }
 
     const newMidiMapping = () => ({ channel: 1, key: 1, behavior: "trigger" });
 
@@ -123,10 +126,10 @@ const PresetModifier = ({
                                         <div key={mapping.id} className="midi-mapping">
                                             <FontAwesomeIcon className="delete-button" icon={["far", "trash-alt"]} size="2x" onClick={() => remove(index)} title="Remove MIDI Mapping" />
                                             <label>Key</label>
-                                            <input name={`midiMappings[${index}].key`} type="number" defaultValue={mapping.key} ref={register()} />
+                                            <input name={`midiMappings[${index}].key`} type="number" defaultValue={mapping.key} ref={register({ valueAsNumber: true })} />
 
                                             <label>Channel</label>
-                                            <input name={`midiMappings[${index}].channel`} type="number" defaultValue={mapping.channel} ref={register()} />
+                                            <input name={`midiMappings[${index}].channel`} type="number" defaultValue={mapping.channel} ref={register({ valueAsNumber: true })} />
 
                                             <label>Behavior</label>
                                             <select name={`midiMappings[${index}].behavior`} defaultValue={mapping.behavior} ref={register()}>

@@ -4,10 +4,10 @@ export interface IPreset {
     description?: string
     keyBinding?: number
     keyBindingStr?: string
-    midiMappings?: midiMappings[]
+    midiMappings?: midiMapping[]
 }
 
-export interface midiMappings {
+interface midiMapping {
     key: number
     channel: number
     behavior: string
