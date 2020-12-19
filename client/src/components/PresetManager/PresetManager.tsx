@@ -1,22 +1,19 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { toast as doToast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { RootState } from "../../RootState";
 import Page from "../Page/Page";
-import { clearToast, fetchPresets } from "./PresetManagerActions";
+import { clearToast } from "./PresetManagerActions";
 import PresetManagerList from "./PresetManagerList/PresetManagerList";
 import { PresetManagerProps } from "./PresetManagerProps";
 import PresetModifier from "./PresetModifier/PresetModifier";
 
 const PresetManager = ({
-    getPresets,
     presetToEdit,
     toast,
     clearToast
 }: PresetManagerProps) => {
-    useEffect(getPresets, []);
-
     if (presetToEdit) {
         document.body.style.overflow = "hidden";
     } else {
@@ -30,7 +27,7 @@ const PresetManager = ({
     }
 
     return (
-        <Page isControlPanel={false} version="0">
+        <Page isControlPanel={false}>
             <PresetManagerList />
             {presetToEdit && <PresetModifier />}
         </Page>
@@ -38,7 +35,7 @@ const PresetManager = ({
 };
 
 function mapStateToProps (state: RootState) {
-    const presets = state.presetmanager.presets;
+    const presets = state.app.presets;
     const presetToEdit = state.presetmanager.presetToEdit;
     const toast = state.presetmanager.toast;
 
@@ -50,7 +47,6 @@ function mapStateToProps (state: RootState) {
 }
 
 const mapDispatchToProps = {
-    getPresets: fetchPresets,
     clearToast: clearToast
 };
 

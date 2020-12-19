@@ -8,7 +8,7 @@ const ControlPanel = (): ReactElement => {
     }, []);
 
     return (
-        <Page isControlPanel={true} version="0">
+        <Page isControlPanel={true}>
             <div className="legacy-panel">
                 <iframe id="controlpanel-frame" src={`${window.location.origin}/controlpanel`}></iframe>
             </div>
