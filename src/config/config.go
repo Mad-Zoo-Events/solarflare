@@ -18,7 +18,7 @@ func init() {
 }
 
 // set at build time
-var appVersion = "local"
+var appVersion = "dev"
 
 // Config contains the server configuration
 type Config struct {

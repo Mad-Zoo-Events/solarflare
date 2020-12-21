@@ -48,6 +48,7 @@ func main() {
 
 	// network / service
 	router.GET("/health", HealthHandler)
+	router.GET("/version", VersionHandler)
 	router.PATCH("/servers/:id/:action", ToggleServerHandler)
 	router.POST("/selectstage/:stage", SelectStageHandler)
 
