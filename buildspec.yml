@@ -18,7 +18,7 @@ phases:
     commands:
       - echo "Building Go..."
       - cd $CODEBUILD_SRC_DIR/src
-      - go build -mod vendor -ldflags "-X github.com/eynorey/solarflare/src/config.appVersion=$(date -u '+%y%m%d-%H%M')" -o ../bin/application -i github.com/eynorey/solarflare/src
+      - go build -mod vendor -ldflags "-X github.com/eynorey/solarflare/src/config.appVersion=$(date -u '+%Y-%m-%d-%H:%M')" -o ../bin/application -i github.com/eynorey/solarflare/src
       - chmod 755 ../bin/application
       - mv static ../
       - echo "Building React..."

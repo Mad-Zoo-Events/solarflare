@@ -39,7 +39,7 @@ const Page = ({
         </div>
 
         <div className="page-footer">
-            <span>App-Version: {version}</span>
+            <span>App Version: {version}</span>
         </div>
     </div>
 );
