@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
+	"github.com/eynorey/solarflare/src/config"
 	"github.com/eynorey/solarflare/src/controller"
 	"github.com/eynorey/solarflare/src/model"
 )
@@ -12,6 +13,11 @@ import (
 // HealthHandler returns the health status of the service
 func HealthHandler(c *gin.Context) {
 	c.String(http.StatusOK, "¯\\_(ツ)_/¯")
+}
+
+// VersionHandler returns the current version of the backend
+func VersionHandler(c *gin.Context) {
+	c.String(http.StatusOK, config.Get().AppVersion)
 }
 
 // ToggleServerHandler handles requests to enable or disable a server
