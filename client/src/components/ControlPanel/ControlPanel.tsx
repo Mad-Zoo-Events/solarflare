@@ -1,16 +1,14 @@
-import React, { ReactElement, useEffect } from "react";
+import React, { ReactElement } from "react";
 import Page from "../Page/Page";
 import "./ControlPanel.scss";
+import PresetControl from "./PresetControl/PresetControl";
 
 const ControlPanel = (): ReactElement => {
-    useEffect(() => {
-        document.getElementById("controlpanel-frame")?.focus();
-    }, []);
-
     return (
         <Page isControlPanel={true}>
-            <div className="legacy-panel">
-                <iframe id="controlpanel-frame" src={`${window.location.origin}/controlpanel`}></iframe>
+            <div className="control-panel__main-content-holder">
+                <PresetControl effectType="particle" dispalyName="Particle" />
+                <PresetControl effectType="laser" isGuardianLaser dispalyName="Lazer" />
             </div>
         </Page>
     );
