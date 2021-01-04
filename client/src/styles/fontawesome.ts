@@ -9,7 +9,12 @@ import {
     faBars,
     faArrowLeft,
     faCogs,
-    faVial
+    faVial,
+    faStepForward,
+    faPalette,
+    faSync,
+    faPlay,
+    faStop
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -30,6 +35,11 @@ library.add(
     faArrowLeft,
     faCogs,
     faVial,
+    faStepForward,
+    faPalette,
+    faSync,
+    faPlay,
+    faStop,
 
     faEdit,
     faClone,
