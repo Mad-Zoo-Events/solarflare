@@ -1,15 +1,16 @@
 button.control-panel-button {
     margin-top: 0.2em;
     padding   : 0.5em 1.5em;
+    width     : 100%;
     cursor    : pointer;
 
     background-color: var(--darker-gray);
-    border          : 0.1em solid;
+    border          : 0.05em solid;
     border-radius   : 0.5em;
 
     &:hover {
-        color       : var(--font);
-        border-color: var(--font);
+        color       : var(--font) !important;
+        border-color: var(--font) !important;
     }
 }
 

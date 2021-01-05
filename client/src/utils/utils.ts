@@ -67,3 +67,13 @@ export function getSummary (preset: Preset, effectType: string): string {
 
     return "";
 }
+
+export function presetSorter (p1: Preset, p2: Preset): number {
+    if (p1.displayName > p2.displayName) {
+        return 1;
+    }
+    if (p1.displayName < p2.displayName) {
+        return -1;
+    }
+    return 0;
+}
