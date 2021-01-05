@@ -7,6 +7,7 @@ import { PresetControlProps } from "./PresetControlProps";
 const PresetControl = ({
     effectType,
     dispalyName,
+    keyBinding,
     isGuardianLaser
 }: PresetControlProps): ReactElement => {
     const renderStartStop =
@@ -24,7 +25,7 @@ const PresetControl = ({
             <span style={coloredText}>{dispalyName}</span>
 
             {effectType === "command" && <>
-                <PresetControlButton action="trigger" color="steel"/>
+                <PresetControlButton action="run" color="steel" keyBinding={keyBinding}/>
             </>}
 
             {effectType === "dragon" && <>
@@ -40,7 +41,7 @@ const PresetControl = ({
             </>}
 
             {renderStartStop && <>
-                <PresetControlButton action="start" color="green"/>
+                <PresetControlButton action="start" color="green" keyBinding={keyBinding}/>
                 <PresetControlButton action="stop" color="red"/>
             </>}
         </div>

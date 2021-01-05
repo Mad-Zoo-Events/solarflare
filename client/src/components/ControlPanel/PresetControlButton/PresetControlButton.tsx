@@ -6,13 +6,17 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 const PresetControlButton = ({
     action,
-    color
+    color,
+    keyBinding
 }: PresetControlButtonProps): ReactElement => {
     const style = { borderColor: `var(--${color})`, color: `var(--${color})` };
     let icon: IconProp = ["fas", "chevron-down"];
 
     switch (action) {
     case "trigger":
+        icon = ["fas", "step-forward"];
+        break;
+    case "run":
         icon = ["fas", "step-forward"];
         break;
     case "color":
@@ -33,7 +37,10 @@ const PresetControlButton = ({
 
     return (
         <button className="control-panel-button" style={style}>
-            <FontAwesomeIcon icon={icon} size="sm" />
+            {keyBinding
+                ? <span>{keyBinding}</span>
+                : <FontAwesomeIcon icon={icon} size="sm" />
+            }
         </button>
     );
 };
