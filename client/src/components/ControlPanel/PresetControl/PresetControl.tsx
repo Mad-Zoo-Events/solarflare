@@ -1,15 +1,19 @@
 import React, { ReactElement } from "react";
-import { getAccentColor } from "../../../utils/utils";
+import { LaserPreset } from "../../../domain/presets";
+import { getAccentColor, getShortcutString } from "../../../utils/utils";
 import PresetControlButton from "../PresetControlButton/PresetControlButton";
 import "./PresetControl.scss";
 import { PresetControlProps } from "./PresetControlProps";
 
 const PresetControl = ({
-    effectType,
-    dispalyName,
-    keyBinding,
-    isGuardianLaser
+    preset
 }: PresetControlProps): ReactElement => {
+    const { effectType, displayName, keyBinding } = preset;
+
+    if (!effectType) {
+        return <span>?</span>;
+    }
+
     const renderStartStop =
     effectType === "dragon" ||
     effectType === "laser" ||
@@ -17,15 +21,18 @@ const PresetControl = ({
     effectType === "potion" ||
     effectType === "timeshift";
 
+    const isGuardianLaser = effectType === "laser" && (preset as LaserPreset).laserType !== "end";
+
     const color = getAccentColor(effectType);
     const coloredText = { borderColor: `var(--${color})`, color: `var(--${color})` };
+    const keyBindingStr = getShortcutString(keyBinding);
 
     return (
         <div className="control-panel__visual-control">
-            <span style={coloredText}>{dispalyName}</span>
+            <span style={coloredText}>{displayName}</span>
 
             {effectType === "command" && <>
-                <PresetControlButton action="run" color="steel" keyBinding={keyBinding}/>
+                <PresetControlButton action="run" color="steel" keyBinding={keyBindingStr}/>
             </>}
 
             {effectType === "dragon" && <>
@@ -41,7 +48,7 @@ const PresetControl = ({
             </>}
 
             {renderStartStop && <>
-                <PresetControlButton action="start" color="green" keyBinding={keyBinding}/>
+                <PresetControlButton action="start" color="green" keyBinding={keyBindingStr}/>
                 <PresetControlButton action="stop" color="red"/>
             </>}
         </div>
