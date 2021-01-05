@@ -1,5 +1,6 @@
 import { ChangeEvent } from "react";
 import * as et from "../domain/EffectType";
+import { PresetCollection } from "../domain/PresetCollection";
 import { CommandPreset, LaserPreset, PotionPreset, TimeshiftPreset } from "../domain/presets";
 import { getCommandSummary } from "../domain/presets/CommandPreset";
 import { DragonPreset, getDragonSummary } from "../domain/presets/DragonPreset";
@@ -76,4 +77,16 @@ export function presetSorter (p1: Preset, p2: Preset): number {
         return -1;
     }
     return 0;
+}
+
+export function combinePresets (presets: PresetCollection): Preset[] {
+    const { commandPresets, dragonPresets, laserPresets, particlePresets, potionPresets, timeshiftPresets } = presets;
+
+    return ([] as Preset[])
+        .concat(commandPresets.map((p) => ({ ...p, effectType: "command" })))
+        .concat(dragonPresets.map((p) => ({ ...p, effectType: "dragon" })))
+        .concat(laserPresets.map((p) => ({ ...p, effectType: "laser" })))
+        .concat(particlePresets.map((p) => ({ ...p, effectType: "particle" })))
+        .concat(potionPresets.map((p) => ({ ...p, effectType: "potion" })))
+        .concat(timeshiftPresets.map((p) => ({ ...p, effectType: "timeshift" })));
 }

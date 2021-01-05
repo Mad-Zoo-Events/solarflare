@@ -1,3 +1,5 @@
+import { EffectType } from "../EffectType";
+
 export interface IPreset {
     id: string
     displayName: string
@@ -5,6 +7,7 @@ export interface IPreset {
     keyBinding?: number
     keyBindingStr?: string
     midiMappings?: midiMapping[]
+    effectType?: EffectType
 }
 
 interface midiMapping {
