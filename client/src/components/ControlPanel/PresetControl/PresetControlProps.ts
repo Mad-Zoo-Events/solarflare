@@ -1,8 +1,5 @@
-import { EffectType } from "../../../domain/EffectType";
+import { Preset } from "../../../domain/presets/Preset";
 
 export interface PresetControlProps {
-    effectType: EffectType
-    dispalyName: string
-    keyBinding?: string
-    isGuardianLaser?: boolean
+    preset: Preset
 }
