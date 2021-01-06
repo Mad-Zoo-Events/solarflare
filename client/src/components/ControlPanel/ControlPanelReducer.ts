@@ -2,7 +2,7 @@ import { ControlPanelState } from "./ControlPanelState";
 import { ControlPanelAction, SHOULD_CHANGE_DISPLAY_MODE } from "./ControlPanelActions";
 
 const initialState: ControlPanelState = {
-    categorize: false
+    categorize: true
 };
 
 function controlPanelReducer (
