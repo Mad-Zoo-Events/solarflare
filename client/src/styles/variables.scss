@@ -6,20 +6,21 @@
     --background-alpha2: #000000ad;
     --background-alpha3: #00000040;
     --background-alpha3: #00000018;
-    --dark-gray        : rgba(30, 40, 50, 0.8);
     --darker-gray      : #222;
+    --dark-gray        : #444;
     --gray             : #888;
     --lighter-gray     : #bbb;
     --font             : hsl(180, 100%, 90%);
     --font-alpha       : hsla(180, 100%, 90%, 0.125);
 
-    --accent        : hsl(195, 40%, 45%);
-    --lighter-accent: hsl(195, 40%, 80%);
-    --darker-accent : hsl(195, 40%, 14%);
-    --accent-alpha  : hsla(195, 40%, 20%, 0.125);
-    --red           : hsl(0, 90%, 50%);
-    --lighter-red   : hsl(0, 90%, 80%);
-    --darker-red    : hsl(0, 90%, 30%);
+    --accent             : hsl(195, 40%, 45%);
+    --lighter-accent     : hsl(195, 40%, 80%);
+    --darker-accent      : hsl(195, 40%, 14%);
+    --darker-accent-alpha: hsl(195, 40%, 14%, 0.8);
+    --accent-alpha       : hsla(195, 40%, 20%, 0.125);
+    --red                : hsl(0, 90%, 50%);
+    --lighter-red        : hsl(0, 90%, 80%);
+    --darker-red         : hsl(0, 90%, 30%);
 
     --green          : hsl(131, 85%, 37%);
     --lighter-green  : hsl(131, 85%, 70%);

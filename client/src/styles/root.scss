@@ -18,7 +18,7 @@ input[type=number],
 textarea,
 select {
     color           : var(--font);
-    background-color: var(--dark-gray);
+    background-color: var(--darker-accent-alpha);
     width           : 100%;
     padding         : 7px;
     box-sizing      : border-box;
@@ -43,7 +43,7 @@ select {
         box-shadow      : none !important;
         font-size       : 0.9em !important;
         color           : var(--font);
-        background-color: var(--dark-gray);
+        background-color: var(--darker-accent-alpha);
     }
 }
 
