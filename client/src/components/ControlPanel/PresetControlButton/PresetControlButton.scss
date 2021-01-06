@@ -1,16 +1,19 @@
 button.control-panel-button {
     margin-top: 0.2em;
-    padding   : 0.5em 1.5em;
+    padding   : 0.3em 1.5em;
     width     : 100%;
     cursor    : pointer;
 
     background-color: var(--darker-gray);
     border          : 0.05em solid;
-    border-radius   : 0.5em;
+
+    transition: all 0.2s ease-out;
 
     &:hover {
-        color       : var(--font) !important;
-        border-color: var(--font) !important;
+        color           : var(--font) !important;
+        border-color    : var(--font) !important;
+        background-color: var(--dark-gray) !important;
+        transition      : none;
     }
 }
 
