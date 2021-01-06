@@ -8,27 +8,26 @@ import CategorySection from "./CategorySection/CategorySection";
 import "./ControlPanel.scss";
 import { ControlPanelProps } from "./ControlPanelProps";
 import PresetControl from "./PresetControl/PresetControl";
+import HeaderControls from "./HeaderControls/HeaderControls";
 
 const ControlPanel = ({
     presets,
     categorize
 }:ControlPanelProps) => {
     return (
-        <Page isControlPanel={true}>
-            <div className="control-panel__main-content-holder">
-                {categorize && <div className="control-panel__categorized-holder">
-                    <CategorySection effectType={et.Command} presets={presets.commandPresets}/>
-                    <CategorySection effectType={et.Dragon} presets={presets.dragonPresets}/>
-                    <CategorySection effectType={et.Laser} presets={presets.laserPresets}/>
-                    <CategorySection effectType={et.Particle} presets={presets.particlePresets}/>
-                    <CategorySection effectType={et.Potion} presets={presets.potionPresets}/>
-                    <CategorySection effectType={et.Timeshift} presets={presets.timeshiftPresets}/>
-                </div>}
+        <Page isControlPanel={true} headerElements={<HeaderControls/>}>
+            {categorize && <div className="control-panel__categorized-holder">
+                <CategorySection effectType={et.Command} presets={presets.commandPresets}/>
+                <CategorySection effectType={et.Dragon} presets={presets.dragonPresets}/>
+                <CategorySection effectType={et.Laser} presets={presets.laserPresets}/>
+                <CategorySection effectType={et.Particle} presets={presets.particlePresets}/>
+                <CategorySection effectType={et.Potion} presets={presets.potionPresets}/>
+                <CategorySection effectType={et.Timeshift} presets={presets.timeshiftPresets}/>
+            </div>}
 
-                {!categorize && combinePresets(presets).sort(presetSorter).map(preset =>
-                    <PresetControl key={preset.id} preset={preset}/>
-                )}
-            </div>
+            {!categorize && combinePresets(presets).sort(presetSorter).map(preset =>
+                <PresetControl key={preset.id} preset={preset}/>
+            )}
         </Page>
     );
 };
