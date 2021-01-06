@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import * as et from "../../../domain/EffectType";
 import { RootState } from "../../../RootState";
 import PresetManagerListGroup from "../PresetManagerListGroup/PresetManagerListGroup";
 import { PresetManagerListProps } from "./PresetManagerListProps";
@@ -20,32 +21,32 @@ const PresetManagerList = ({
         <>
             <PresetManagerListGroup
                 presets={particlePresets}
-                effectType={"particle"}
+                effectType={et.Particle}
                 headerText={"Particle Effect Presets"}
             />
             <PresetManagerListGroup
                 presets={dragonPresets}
-                effectType={"dragon"}
+                effectType={et.Dragon}
                 headerText={"Dragon Effect Presets"}
             />
             <PresetManagerListGroup
                 presets={laserPresets}
-                effectType={"laser"}
+                effectType={et.Laser}
                 headerText={"Laser Effect Presets"}
             />
             <PresetManagerListGroup
                 presets={potionPresets}
-                effectType={"potion"}
+                effectType={et.Potion}
                 headerText={"Potion Effect Presets"}
             />
             <PresetManagerListGroup
                 presets={timeshiftPresets}
-                effectType={"timeshift"}
+                effectType={et.Timeshift}
                 headerText={"Timeshift Effect Presets"}
             />
             <PresetManagerListGroup
                 presets={commandPresets}
-                effectType={"command"}
+                effectType={et.Command}
                 headerText={"Command Presets"}
             />
         </>

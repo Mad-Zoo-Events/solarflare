@@ -1,4 +1,5 @@
 import React, { ReactElement } from "react";
+import * as et from "../../../domain/EffectType";
 import { LaserPreset } from "../../../domain/presets";
 import { getAccentColor, getShortcutString } from "../../../utils/utils";
 import PresetControlButton from "../PresetControlButton/PresetControlButton";
@@ -15,13 +16,13 @@ const PresetControl = ({
     }
 
     const renderStartStop =
-    effectType === "dragon" ||
-    effectType === "laser" ||
-    effectType === "particle" ||
-    effectType === "potion" ||
-    effectType === "timeshift";
+    effectType === et.Dragon ||
+    effectType === et.Laser ||
+    effectType === et.Particle ||
+    effectType === et.Potion ||
+    effectType === et.Timeshift;
 
-    const isGuardianLaser = effectType === "laser" && (preset as LaserPreset).laserType !== "end";
+    const isGuardianLaser = effectType === et.Laser && (preset as LaserPreset).laserType !== "end";
 
     const color = getAccentColor(effectType);
     const coloredText = { borderColor: `var(--${color})`, color: `var(--${color})` };
@@ -31,19 +32,19 @@ const PresetControl = ({
         <div className="control-panel__visual-control">
             <span style={coloredText}>{displayName}</span>
 
-            {effectType === "command" && <>
+            {effectType === et.Command && <>
                 <PresetControlButton action="run" color="steel" keyBinding={keyBindingStr}/>
             </>}
 
-            {effectType === "dragon" && <>
+            {effectType === et.Dragon && <>
                 <PresetControlButton action="restart" color="orange"/>
             </>}
 
-            {effectType === "laser" && isGuardianLaser && <>
+            {effectType === et.Laser && isGuardianLaser && <>
                 <PresetControlButton action="color" color="indigo"/>
             </>}
 
-            {effectType === "particle" && <>
+            {effectType === et.Particle && <>
                 <PresetControlButton action="trigger" color="orange"/>
             </>}
 

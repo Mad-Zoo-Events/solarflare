@@ -83,10 +83,10 @@ export function combinePresets (presets: PresetCollection): Preset[] {
     const { commandPresets, dragonPresets, laserPresets, particlePresets, potionPresets, timeshiftPresets } = presets;
 
     return ([] as Preset[])
-        .concat(commandPresets.map((p) => ({ ...p, effectType: "command" })))
-        .concat(dragonPresets.map((p) => ({ ...p, effectType: "dragon" })))
-        .concat(laserPresets.map((p) => ({ ...p, effectType: "laser" })))
-        .concat(particlePresets.map((p) => ({ ...p, effectType: "particle" })))
-        .concat(potionPresets.map((p) => ({ ...p, effectType: "potion" })))
-        .concat(timeshiftPresets.map((p) => ({ ...p, effectType: "timeshift" })));
+        .concat(commandPresets.map((p) => ({ ...p, effectType: et.Command })))
+        .concat(dragonPresets.map((p) => ({ ...p, effectType: et.Dragon })))
+        .concat(laserPresets.map((p) => ({ ...p, effectType: et.Laser })))
+        .concat(particlePresets.map((p) => ({ ...p, effectType: et.Particle })))
+        .concat(potionPresets.map((p) => ({ ...p, effectType: et.Potion })))
+        .concat(timeshiftPresets.map((p) => ({ ...p, effectType: et.Timeshift })));
 }

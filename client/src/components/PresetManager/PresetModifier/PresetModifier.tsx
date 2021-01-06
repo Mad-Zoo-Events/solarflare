@@ -44,7 +44,7 @@ const PresetModifier = ({
 
     const onTest = (preset: Preset) => {
         if (!testIsRunning) {
-            toast.dark(effectType === "command"
+            toast.dark(effectType === et.Command
                 ? "Running commands..."
                 : `Running ${effectType} preset for three seconds...`);
             onTestPreset(effectType, preset);
