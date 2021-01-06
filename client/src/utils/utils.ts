@@ -1,5 +1,6 @@
 import { ChangeEvent } from "react";
 import * as et from "../domain/EffectType";
+import { EffectType } from "../domain/EffectType";
 import { PresetCollection } from "../domain/PresetCollection";
 import { CommandPreset, LaserPreset, PotionPreset, TimeshiftPreset } from "../domain/presets";
 import { getCommandSummary } from "../domain/presets/CommandPreset";
@@ -31,7 +32,7 @@ export function getEffectName (name: string): string {
     return nameParts.join(" ");
 }
 
-export function getAccentColor (effectType: string): string {
+export function getAccentColor (effectType: EffectType): string {
     switch (effectType) {
     case et.Particle:
         return "cyan";
@@ -50,7 +51,7 @@ export function getAccentColor (effectType: string): string {
     return "teal";
 }
 
-export function getSummary (preset: Preset, effectType: string): string {
+export function getSummary (preset: Preset, effectType: EffectType): string {
     switch (effectType) {
     case et.Particle:
         return getParticleSummary(preset as ParticlePreset);

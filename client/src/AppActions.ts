@@ -7,6 +7,7 @@ import {
     fetchPresetsOfType as doFetchPresetsOfType,
     getVersion as doGetVersion
 } from "./client/Client";
+import { EffectType } from "./domain/EffectType";
 import { PresetCollection } from "./domain/PresetCollection";
 import { Preset } from "./domain/presets/Preset";
 import { RootState } from "./RootState";
@@ -32,7 +33,7 @@ export interface GetAllPresets {
 }
 export interface GetPresetsOfType {
     type: typeof DID_GET_PRESETS_OF_TYPE
-    payload: { effectType: string, presets: Preset[] }
+    payload: { effectType: EffectType, presets: Preset[] }
 }
 
 export type AppAction = InitializeApp | GetVersion | GetAllPresets | GetPresetsOfType;
@@ -41,7 +42,7 @@ export type AppAction = InitializeApp | GetVersion | GetAllPresets | GetPresetsO
 export const didInitializeApp = createAction(DID_INITIALIZE_APP);
 export const didGetVersion = createAction<string>(DID_GET_VERSION);
 export const didGetAllPresets = createAction<PresetCollection>(DID_GET_ALL_PRESETS);
-export const didGetPresetsOfType = createAction<{ effectType: string, presets: Preset[] }>(DID_GET_PRESETS_OF_TYPE);
+export const didGetPresetsOfType = createAction<{ effectType: EffectType, presets: Preset[] }>(DID_GET_PRESETS_OF_TYPE);
 
 // ACTIONS
 export const initializeApp = (): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {
@@ -55,7 +56,7 @@ export const initializeApp = (): ThunkAction<void, RootState, null, AnyAction> =
 
     dispatch(didInitializeApp());
 };
-export const fetchPresetsOfType = (effectType: string): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {
+export const fetchPresetsOfType = (effectType: EffectType): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {
     const presets = await doFetchPresetsOfType(effectType);
     dispatch(didGetPresetsOfType({ effectType, presets }));
 };

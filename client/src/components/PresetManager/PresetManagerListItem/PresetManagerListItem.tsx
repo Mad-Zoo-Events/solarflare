@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { connect } from "react-redux";
+import { EffectType } from "../../../domain/EffectType";
 import { getAccentColor, getShortcutString, getSummary } from "../../../utils/utils";
 import { deletePreset, duplicatePreset, editPreset } from "../PresetManagerActions";
 import "./PresetManagerListItem.scss";
@@ -19,7 +20,7 @@ const PresetManagerListItem = ({
     if (preset) {
         const { id, displayName, description, keyBinding } = preset;
         const coloredBorder = { borderColor: `var(--${accentColor})` };
-        const confirmDelete = (id: string, effectType: string) => {
+        const confirmDelete = (id: string, effectType: EffectType) => {
             window.confirm("Are you sure you wish to delete this preset?") && onDelete(id, effectType);
         };
 
