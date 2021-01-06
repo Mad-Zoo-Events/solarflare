@@ -1,0 +1,15 @@
+.control-panel__category-section {
+    text-align: center;
+    padding   : 0.8em;
+
+    & .header {
+        float       : left;
+        writing-mode: vertical-lr;
+        margin-right: 0.8em;
+
+        &>span {
+            font-size   : x-large;
+            font-variant: small-caps;
+        }
+    }
+}

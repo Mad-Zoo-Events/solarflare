@@ -13,3 +13,41 @@
 }
 
 .control-panel__main-content-holder {}
+
+.control-panel__categorized-holder {
+    zoom                 : 85%;
+    display              : grid;
+    grid-template-columns: 45% 25% 30%;
+    grid-template-areas  :
+        'particle particle potion'
+        'particle particle timeshift'
+        'dragon   laser laser'
+        'command  command command';
+
+    padding-top   : 3.4em;
+    padding-bottom: 14em;
+
+    & .particle-controls {
+        grid-area: particle;
+    }
+
+    & .dragon-controls {
+        grid-area: dragon;
+    }
+
+    & .laser-controls {
+        grid-area: laser;
+    }
+
+    & .timeshift-controls {
+        grid-area: timeshift;
+    }
+
+    & .potion-controls {
+        grid-area: potion;
+    }
+
+    & .command-controls {
+        grid-area: command;
+    }
+}
