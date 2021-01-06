@@ -10,6 +10,7 @@ import {
 import { PresetCollection } from "./domain/PresetCollection";
 import { Preset } from "./domain/presets/Preset";
 import { RootState } from "./RootState";
+import { setEffectTypes } from "./utils/utils";
 
 // ACTION TYPES
 export const DID_INITIALIZE_APP = "app/DID_INITIALIZE_APP";
@@ -48,6 +49,8 @@ export const initializeApp = (): ThunkAction<void, RootState, null, AnyAction> =
     dispatch(didGetVersion(version));
 
     const presetCollection = await doFetchAllPresets();
+    setEffectTypes(presetCollection);
+
     dispatch(didGetAllPresets(presetCollection));
 
     dispatch(didInitializeApp());

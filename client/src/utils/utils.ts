@@ -82,11 +82,16 @@ export function presetSorter (p1: Preset, p2: Preset): number {
 export function combinePresets (presets: PresetCollection): Preset[] {
     const { commandPresets, dragonPresets, laserPresets, particlePresets, potionPresets, timeshiftPresets } = presets;
 
-    return ([] as Preset[])
-        .concat(commandPresets.map((p) => ({ ...p, effectType: et.Command })))
-        .concat(dragonPresets.map((p) => ({ ...p, effectType: et.Dragon })))
-        .concat(laserPresets.map((p) => ({ ...p, effectType: et.Laser })))
-        .concat(particlePresets.map((p) => ({ ...p, effectType: et.Particle })))
-        .concat(potionPresets.map((p) => ({ ...p, effectType: et.Potion })))
-        .concat(timeshiftPresets.map((p) => ({ ...p, effectType: et.Timeshift })));
+    return ([] as Preset[]).concat(commandPresets, dragonPresets, laserPresets, particlePresets, potionPresets, timeshiftPresets);
+}
+
+export function setEffectTypes (presets: PresetCollection): void {
+    const { commandPresets, dragonPresets, laserPresets, particlePresets, potionPresets, timeshiftPresets } = presets;
+
+    commandPresets.forEach(p => { p.effectType = et.Command; });
+    dragonPresets.forEach(p => { p.effectType = et.Dragon; });
+    laserPresets.forEach(p => { p.effectType = et.Laser; });
+    particlePresets.forEach(p => { p.effectType = et.Particle; });
+    potionPresets.forEach(p => { p.effectType = et.Potion; });
+    timeshiftPresets.forEach(p => { p.effectType = et.Timeshift; });
 }
