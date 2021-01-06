@@ -1,4 +1,5 @@
 import { ChangeEvent } from "react";
+import { ControlPanelState } from "../components/ControlPanel/ControlPanelState";
 import * as et from "../domain/EffectType";
 import { EffectType } from "../domain/EffectType";
 import { PresetCollection } from "../domain/PresetCollection";
@@ -95,4 +96,8 @@ export function setEffectTypes (presets: PresetCollection): void {
     particlePresets.forEach(p => { p.effectType = et.Particle; });
     potionPresets.forEach(p => { p.effectType = et.Potion; });
     timeshiftPresets.forEach(p => { p.effectType = et.Timeshift; });
+}
+
+export function isRunning ({ id }: Preset, { runningEffects }: ControlPanelState): boolean {
+    return !!runningEffects.find(e => e.preset.id === id);
 }

@@ -1,7 +1,8 @@
 import React, { ReactElement } from "react";
+import * as ea from "../../../domain/EffectAction";
 import * as et from "../../../domain/EffectType";
 import { LaserPreset } from "../../../domain/presets";
-import { getAccentColor, getShortcutString } from "../../../utils/utils";
+import { getAccentColor } from "../../../utils/utils";
 import PresetControlButton from "../PresetControlButton/PresetControlButton";
 import "./PresetControl.scss";
 import { PresetControlProps } from "./PresetControlProps";
@@ -9,7 +10,7 @@ import { PresetControlProps } from "./PresetControlProps";
 const PresetControl = ({
     preset
 }: PresetControlProps): ReactElement => {
-    const { effectType, displayName, keyBinding } = preset;
+    const { effectType, displayName } = preset;
 
     if (!effectType) {
         return <span>?</span>;
@@ -26,31 +27,30 @@ const PresetControl = ({
 
     const color = getAccentColor(effectType);
     const coloredText = { borderColor: `var(--${color})`, color: `var(--${color})` };
-    const keyBindingStr = getShortcutString(keyBinding);
 
     return (
         <div className="control-panel__visual-control">
             <span style={coloredText}>{displayName}</span>
 
             {effectType === et.Command && <>
-                <PresetControlButton action="run" color="steel" keyBinding={keyBindingStr}/>
+                <PresetControlButton preset={preset} action={ea.Trigger} color="steel"/>
             </>}
 
             {effectType === et.Dragon && <>
-                <PresetControlButton action="restart" color="orange"/>
+                <PresetControlButton preset={preset} action={ea.Restart} color="orange"/>
             </>}
 
             {effectType === et.Laser && isGuardianLaser && <>
-                <PresetControlButton action="color" color="indigo"/>
+                <PresetControlButton preset={preset} action={ea.Trigger} color="indigo"/>
             </>}
 
             {effectType === et.Particle && <>
-                <PresetControlButton action="trigger" color="orange"/>
+                <PresetControlButton preset={preset} action={ea.Trigger} color="orange"/>
             </>}
 
             {renderStartStop && <>
-                <PresetControlButton action="start" color="green" keyBinding={keyBindingStr}/>
-                <PresetControlButton action="stop" color="red"/>
+                <PresetControlButton preset={preset} action={ea.Start} color="green"/>
+                <PresetControlButton preset={preset} action={ea.Stop} color="red"/>
             </>}
         </div>
     );

@@ -1,48 +1,82 @@
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { ReactElement } from "react";
+import { connect } from "react-redux";
+import * as ea from "../../../domain/EffectAction";
+import * as et from "../../../domain/EffectType";
+import { RootState } from "../../../RootState";
+import { getShortcutString } from "../../../utils/utils";
+import { runEffect } from "../ControlPanelActions";
 import "./PresetControlButton.scss";
 import { PresetControlButtonProps } from "./PresetControlButtonProps";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 const PresetControlButton = ({
+    preset,
     action,
     color,
-    keyBinding
+    runningEffects,
+    runEffect
 }: PresetControlButtonProps): ReactElement => {
+    const { id, effectType, keyBinding } = preset;
+
+    let displayCounter;
+    let displayKeyBinding;
+
     const style = { borderColor: `var(--${color})`, color: `var(--${color})` };
     let icon: IconProp = ["fas", "chevron-down"];
 
+    const counter = runningEffects.find(e => e.preset.id === id)?.counter;
+
     switch (action) {
-    case "trigger":
-        icon = ["fas", "step-forward"];
+    case ea.Trigger:
+        if (effectType === et.Laser) {
+            icon = ["fas", "palette"];
+        } else {
+            icon = ["fas", "step-forward"];
+        }
+        if (effectType === et.Command) {
+            displayKeyBinding = true;
+        }
         break;
-    case "run":
-        icon = ["fas", "step-forward"];
-        break;
-    case "color":
-        icon = ["fas", "palette"];
-        break;
-    case "restart":
+    case ea.Restart:
         icon = ["fas", "sync"];
         break;
-    case "start":
+    case ea.Start:
         icon = ["fas", "play"];
+        displayKeyBinding = true;
         break;
-    case "stop":
+    case ea.Stop:
         icon = ["fas", "stop"];
+        displayCounter = true;
         break;
     default:
         break;
     }
 
+    const handleClick = () => runEffect(preset, action);
+
     return (
-        <button className="control-panel-button" style={style}>
-            {keyBinding
-                ? <span>{keyBinding}</span>
-                : <FontAwesomeIcon icon={icon} size="sm" />
+        <button className="control-panel-button" style={style} onClick={handleClick}>
+            {displayKeyBinding && keyBinding
+                ? <span>{getShortcutString(keyBinding)}</span>
+                : displayCounter && counter
+                    ? <div>{counter}</div>
+                    : <FontAwesomeIcon icon={icon} size="sm" />
             }
         </button>
     );
 };
 
-export default PresetControlButton;
+function mapStateToProps (state: RootState) {
+    const runningEffects = state.controlpanel.runningEffects;
+
+    return {
+        runningEffects
+    };
+}
+
+const mapDispatchToProps = {
+    runEffect: runEffect
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PresetControlButton);
