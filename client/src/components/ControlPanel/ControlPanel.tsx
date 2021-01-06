@@ -7,13 +7,16 @@ import Page from "../Page/Page";
 import CategorySection from "./CategorySection/CategorySection";
 import "./ControlPanel.scss";
 import { ControlPanelProps } from "./ControlPanelProps";
-import PresetControl from "./PresetControl/PresetControl";
 import HeaderControls from "./HeaderControls/HeaderControls";
+import PresetControl from "./PresetControl/PresetControl";
 
 const ControlPanel = ({
     presets,
-    categorize
+    categorize,
+    runningEffects
 }:ControlPanelProps) => {
+    console.log(runningEffects);
+
     return (
         <Page isControlPanel={true} headerElements={<HeaderControls/>}>
             {categorize && <div className="control-panel__categorized-holder">
@@ -34,14 +37,13 @@ const ControlPanel = ({
 
 function mapStateToProps (state: RootState) {
     const presets = state.app.presets;
-    const categorize = state.controlpanel.categorize;
+    const { categorize, runningEffects } = state.controlpanel;
 
     return {
         presets,
-        categorize
+        categorize,
+        runningEffects
     };
 }
 
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ControlPanel);
+export default connect(mapStateToProps, {})(ControlPanel);

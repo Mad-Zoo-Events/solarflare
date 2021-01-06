@@ -7,7 +7,7 @@ export interface IPreset {
     keyBinding?: number
     keyBindingStr?: string
     midiMappings?: midiMapping[]
-    effectType?: EffectType
+    effectType: EffectType
 }
 
 interface midiMapping {
