@@ -10,6 +10,7 @@ import { PageProps } from "./PageProps";
 
 const Page = ({
     isControlPanel,
+    headerElements,
     children,
     version
 }: PageProps): ReactElement => (
@@ -20,6 +21,9 @@ const Page = ({
             ? (
                 <div className="page-header">
                     <div className="text">Visual Effect Control Panel</div>
+
+                    <div className="additional-elements">{headerElements}</div>
+
                     <Link className="button-right" to={Routes.presetManager} title="Manage Presets">
                         <FontAwesomeIcon icon={["fas", "cogs"]} size="lg" />
                     </Link>
@@ -30,7 +34,10 @@ const Page = ({
                     <Link className="button-left" to={Routes.controlPanel} title="Back To Control Panel">
                         <FontAwesomeIcon icon={["fas", "arrow-left"]} size="lg" />
                     </Link>
+
                     <div className="text">Preset Management System</div>
+
+                    <div className="additional-elements">{headerElements}</div>
                 </div>
             )}
 

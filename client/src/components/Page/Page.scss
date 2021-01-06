@@ -1,12 +1,10 @@
 .page {
     & .page-header {
         background-color: var(--background);
-        font-size       : x-large;
-        font-weight     : lighter;
         padding         : 0.3em;
 
         display              : grid;
-        grid-template-columns: min-content auto min-content;
+        grid-template-columns: min-content max-content auto min-content;
 
         & a,
         a:visited {
@@ -17,18 +15,27 @@
             color: var(--lighter-accent);
         }
 
-        & .text {
-            grid-column: 2;
-        }
-
         & .button-left {
             grid-column : 1;
             margin-right: 0.5em;
+            font-size   : x-large;
+        }
+
+        & .text {
+            grid-column : 2;
+            margin-right: 0.5em;
+            font-size   : x-large;
+            font-weight : lighter;
+        }
+
+        & .additional-elements {
+            grid-column: 3;
         }
 
         & .button-right {
-            grid-column: 3;
+            grid-column: 4;
             margin-left: 0.5em;
+            font-size  : x-large;
         }
     }
 
