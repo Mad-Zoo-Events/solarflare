@@ -1,7 +1,6 @@
 import { HandleThunkActionCreator } from "react-redux";
 import { EffectAction } from "../../../domain/EffectAction";
 import { Preset } from "../../../domain/presets/Preset";
-import { RunningEffect } from "../../../domain/RunningEffect";
 import { runEffect } from "../ControlPanelActions";
 
 export interface PresetControlButtonProps {
@@ -9,7 +8,8 @@ export interface PresetControlButtonProps {
     action: EffectAction
     color: string
 
-    runningEffects: RunningEffect[]
+    displayKeyBinding?: boolean
+    secondsRunning?: number
 
     runEffect: HandleThunkActionCreator<typeof runEffect>
 }

@@ -7,6 +7,7 @@ import { CategorySectionProps } from "./CategorySectionProps";
 
 const CategorySection = ({
     presets,
+    runningEffects,
     effectType
 }: CategorySectionProps): ReactElement => {
     let header = "";
@@ -44,6 +45,7 @@ const CategorySection = ({
                 return <PresetControl
                     key={preset.id}
                     preset={preset}
+                    secondsRunning={runningEffects.get(preset.id)?.secondsRunning}
                 />;
             })}
         </div>
