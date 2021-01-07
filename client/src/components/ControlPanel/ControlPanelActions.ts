@@ -20,7 +20,7 @@ export interface ChangeDisplayMode {
 }
 export interface StartEffect {
     type: typeof DID_START_EFFECT
-    payload: string
+    payload: {id: string, interval: number}
 }
 export interface StopEffect {
     type: typeof DID_STOP_EFFECT
@@ -38,7 +38,7 @@ export type ControlPanelAction =
 
 // ACTION CREATORS
 export const changeDisplayMode = createAction(SHOULD_CHANGE_DISPLAY_MODE);
-export const startEffect = createAction<string>(DID_START_EFFECT);
+export const startEffect = createAction<{id: string, interval: number}>(DID_START_EFFECT);
 export const stopEffect = createAction<string>(DID_STOP_EFFECT);
 export const incrementCounter = createAction<string>(INCREMENT_COUNTER);
 
@@ -52,14 +52,17 @@ export const runEffect = (preset: Preset, action: EffectAction): ThunkAction<voi
     doRunEffect(effectType, id, action);
 
     if (action === ea.Start) {
-        dispatch(startEffect(id));
+        const interval = window.setInterval(() => dispatch(incrementCounter(id)), 1000);
+        dispatch(startEffect({ id, interval }));
     }
     if (action === ea.Stop) {
         dispatch(stopEffect(id));
     }
     if (action === ea.Restart) {
         dispatch(stopEffect(id));
-        dispatch(startEffect(id));
+
+        const interval = window.setInterval(() => dispatch(incrementCounter(id)), 1000);
+        dispatch(startEffect({ id, interval }));
     }
 };
 export const count = (id: string): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
