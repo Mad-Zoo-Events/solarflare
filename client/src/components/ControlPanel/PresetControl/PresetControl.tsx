@@ -8,7 +8,8 @@ import "./PresetControl.scss";
 import { PresetControlProps } from "./PresetControlProps";
 
 const PresetControl = ({
-    preset
+    preset,
+    secondsRunning
 }: PresetControlProps): ReactElement => {
     const { effectType, displayName } = preset;
 
@@ -33,7 +34,7 @@ const PresetControl = ({
             <span style={coloredText}>{displayName}</span>
 
             {effectType === et.Command && <>
-                <PresetControlButton preset={preset} action={ea.Trigger} color="steel"/>
+                <PresetControlButton preset={preset} action={ea.Trigger} color="steel" displayKeyBinding/>
             </>}
 
             {effectType === et.Dragon && <>
@@ -49,8 +50,8 @@ const PresetControl = ({
             </>}
 
             {renderStartStop && <>
-                <PresetControlButton preset={preset} action={ea.Start} color="green"/>
-                <PresetControlButton preset={preset} action={ea.Stop} color="red"/>
+                <PresetControlButton preset={preset} action={ea.Start} color="green" displayKeyBinding/>
+                <PresetControlButton preset={preset} action={ea.Stop} color="red" secondsRunning={secondsRunning}/>
             </>}
         </div>
     );

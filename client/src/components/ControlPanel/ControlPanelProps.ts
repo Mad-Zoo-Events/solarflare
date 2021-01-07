@@ -3,7 +3,6 @@ import { RunningEffect } from "../../domain/RunningEffect";
 
 export interface ControlPanelProps {
     presets: PresetCollection
+    runningEffects: Map<string, RunningEffect>
     categorize: boolean
-
-    runningEffects: RunningEffect[]
 }

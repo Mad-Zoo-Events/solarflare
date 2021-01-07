@@ -12,37 +12,35 @@ import PresetControl from "./PresetControl/PresetControl";
 
 const ControlPanel = ({
     presets,
-    categorize,
-    runningEffects
+    runningEffects,
+    categorize
 }:ControlPanelProps) => {
-    console.log(runningEffects);
-
     return (
         <Page isControlPanel={true} headerElements={<HeaderControls/>}>
             {categorize && <div className="control-panel__categorized-holder">
-                <CategorySection effectType={et.Command} presets={presets.commandPresets}/>
-                <CategorySection effectType={et.Dragon} presets={presets.dragonPresets}/>
-                <CategorySection effectType={et.Laser} presets={presets.laserPresets}/>
-                <CategorySection effectType={et.Particle} presets={presets.particlePresets}/>
-                <CategorySection effectType={et.Potion} presets={presets.potionPresets}/>
-                <CategorySection effectType={et.Timeshift} presets={presets.timeshiftPresets}/>
+                <CategorySection effectType={et.Command} presets={presets.commandPresets} runningEffects={runningEffects}/>
+                <CategorySection effectType={et.Dragon} presets={presets.dragonPresets} runningEffects={runningEffects}/>
+                <CategorySection effectType={et.Laser} presets={presets.laserPresets} runningEffects={runningEffects}/>
+                <CategorySection effectType={et.Particle} presets={presets.particlePresets} runningEffects={runningEffects}/>
+                <CategorySection effectType={et.Potion} presets={presets.potionPresets} runningEffects={runningEffects}/>
+                <CategorySection effectType={et.Timeshift} presets={presets.timeshiftPresets} runningEffects={runningEffects}/>
             </div>}
 
             {!categorize && combinePresets(presets).sort(presetSorter).map(preset =>
-                <PresetControl key={preset.id} preset={preset}/>
+                <PresetControl key={preset.id} preset={preset} secondsRunning={runningEffects.get(preset.id)?.secondsRunning}/>
             )}
         </Page>
     );
 };
 
 function mapStateToProps (state: RootState) {
-    const presets = state.app.presets;
+    const { presets } = state.app;
     const { categorize, runningEffects } = state.controlpanel;
 
     return {
         presets,
-        categorize,
-        runningEffects
+        runningEffects,
+        categorize
     };
 }
 
