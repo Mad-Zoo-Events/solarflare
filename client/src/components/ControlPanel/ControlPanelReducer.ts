@@ -7,19 +7,32 @@ const initialState: ControlPanelState = {
     runningEffects: new Map()
 };
 
-const addRunning = (id: string, { runningEffects }: ControlPanelState): Map<string, RunningEffect> => {
+const addRunning = (
+    { id, interval }: {id: string, interval: number},
+    { runningEffects }: ControlPanelState
+): Map<string, RunningEffect> => {
     const effects = new Map(runningEffects);
-    effects.set(id, { secondsRunning: 0 });
+    effects.set(id, { secondsRunning: 0, interval });
     return effects;
 };
 
-const removeRunning = (id: string, { runningEffects }: ControlPanelState): Map<string, RunningEffect> => {
+const removeRunning = (
+    id: string,
+    { runningEffects }: ControlPanelState
+): Map<string, RunningEffect> => {
     const effects = new Map(runningEffects);
-    effects.delete(id);
+    const effect = effects.get(id);
+    if (effect) {
+        clearTimeout(effect.interval);
+        effects.delete(id);
+    }
     return effects;
 };
 
-const increaseCounter = (id: string, { runningEffects }: ControlPanelState): Map<string, RunningEffect> => {
+const incrementCounter = (
+    id: string,
+    { runningEffects }: ControlPanelState
+): Map<string, RunningEffect> => {
     const effects = new Map(runningEffects);
     const effect = effects.get(id);
     if (effect) {
@@ -52,7 +65,7 @@ function controlPanelReducer (
     case INCREMENT_COUNTER:
         return {
             ...state,
-            runningEffects: increaseCounter(action.payload, state)
+            runningEffects: incrementCounter(action.payload, state)
         };
     default:
         return state;
