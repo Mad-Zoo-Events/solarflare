@@ -24,12 +24,12 @@ const Page = ({
 
                         <div className="additional-header-elements">{headerElements}</div>
 
-                        <Link className="button-right" to={Routes.presetManager} title="Manage Presets">
+                        <Link className="button button-right" to={Routes.presetManager} title="Manage Presets">
                             <FontAwesomeIcon icon={["fas", "cogs"]} size="lg" />
                         </Link>
                     </>
                     : <>
-                        <Link className="button-left" to={Routes.controlPanel} title="Back To Control Panel">
+                        <Link className="button button-left" to={Routes.controlPanel} title="Back To Control Panel">
                             <FontAwesomeIcon icon={["fas", "arrow-left"]} size="lg" />
                         </Link>
 

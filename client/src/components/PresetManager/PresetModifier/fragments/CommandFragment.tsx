@@ -25,7 +25,7 @@ const CommandFragment = ({
         <>
             <div className="subtitle">
                 <span>List of commands</span>
-                <div className="add-button" onClick={() => prepend({ ...commandPreset.commands[0] })}>
+                <div className="button add-button" onClick={() => prepend({ ...commandPreset.commands[0] })}>
                     <FontAwesomeIcon icon={["fas", "plus-circle"]} size="2x" title="Add Another Effect" />
                 </div>
             </div>

@@ -95,7 +95,7 @@ const PresetModifier = ({
                         ? <span>Edit <span className="preset-name">{preset.displayName}</span> Preset</span>
                         : <span>Create New Preset</span>
                     }
-                    <FontAwesomeIcon className="close-button" icon={["fas", "window-close"]} size="lg" onClick={onClose} title="Close Without Saving" />
+                    <FontAwesomeIcon className="button close-button" icon={["fas", "window-close"]} size="lg" onClick={onClose} title="Close Without Saving" />
                 </div>
 
                 <div className="content">
@@ -122,7 +122,7 @@ const PresetModifier = ({
                         <div>
                             <div className="subtitle">
                                 <span>List of MIDI mappings</span>
-                                <div className="add-button" onClick={() => prepend(newMidiMapping())}>
+                                <div className="button add-button" onClick={() => prepend(newMidiMapping())}>
                                     <FontAwesomeIcon icon={["fas", "plus-circle"]} size="2x" title="Add MIDI Mapping" />
                                 </div>
                             </div>
@@ -130,7 +130,7 @@ const PresetModifier = ({
                                 {
                                     fields.map((mapping, index) => (
                                         <div key={mapping.id} className="midi-mapping preset-modifier__item">
-                                            <FontAwesomeIcon className="delete-button" icon={["far", "trash-alt"]} size="2x" onClick={() => remove(index)} title="Remove MIDI Mapping" />
+                                            <FontAwesomeIcon className="button delete-button" icon={["far", "trash-alt"]} size="2x" onClick={() => remove(index)} title="Remove MIDI Mapping" />
                                             <label className="key-label">Key</label>
                                             <input className="key-input" name={`midiMappings[${index}].key`} type="number" defaultValue={mapping.key} ref={register({ valueAsNumber: true })} />
 
@@ -156,11 +156,11 @@ const PresetModifier = ({
                     </form>
                 </div>
                 <div className="footer">
-                    <div className={`test-button ${testIsRunning && "disabled"}`} onClick={handleSubmit(onTest)} >
+                    <div className={`button test-button ${testIsRunning && "disabled"}`} onClick={handleSubmit(onTest)} >
                         <span>Test</span>
                         <FontAwesomeIcon icon={["fas", "vial"]} size="1x" title="Run This Preset For Three Seconds" />
                     </div>
-                    <div className="save-button" onClick={handleSubmit(onSubmit)}>
+                    <div className="button save-button" onClick={handleSubmit(onSubmit)}>
                         <span>Save</span>
                         <FontAwesomeIcon icon={["fas", "save"]} size="1x" title="Save This Preset" />
                     </div>

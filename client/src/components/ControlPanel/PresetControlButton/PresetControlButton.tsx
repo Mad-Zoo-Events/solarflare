@@ -28,7 +28,7 @@ const PresetControlButton = ({
         color: isRunning ? "var(--background)" : `var(--${color})`,
         backgroundColor: isRunning ? `var(--${color})` : "var(--darker-gray)"
     };
-    const className = `control-panel-button code${isRunning ? " running" : ""}`;
+    const className = `button control-panel-button code${isRunning ? " running" : ""}`;
 
     switch (action) {
     case ea.Trigger:

@@ -47,10 +47,6 @@
         & .close-button {
             cursor: pointer;
             color : var(--red);
-
-            &:hover {
-                color: var(--lighter-red);
-            }
         }
     }
 
@@ -140,10 +136,6 @@
             display: inline;
             cursor : pointer;
             color  : var(--accent);
-
-            &:hover {
-                color: var(--lighter-accent);
-            }
         }
     }
 
@@ -168,10 +160,6 @@
                 margin-right: 0.3em;
             }
 
-            &:hover {
-                color: var(--lighter-accent);
-            }
-
             & div {
                 display     : inline-block;
                 width       : min-content;
@@ -189,7 +177,7 @@
             color : var(--darker-accent);
 
             &:hover {
-                color: var(--darker-accent);
+                color: var(--darker-accent) !important;
             }
         }
 
@@ -200,10 +188,6 @@
 
             & span {
                 margin-right: 0.3em;
-            }
-
-            &:hover {
-                color: var(--lighter-accent);
             }
         }
     }

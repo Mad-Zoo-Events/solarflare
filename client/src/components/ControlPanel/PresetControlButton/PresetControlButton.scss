@@ -6,13 +6,9 @@ button.control-panel-button {
 
     border: 0.05em solid;
 
-    transition: all 0.2s ease-out;
-
     &:hover {
-        color           : var(--font) !important;
         border-color    : var(--font) !important;
         background-color: var(--dark-gray) !important;
-        transition      : none;
     }
 }
 
