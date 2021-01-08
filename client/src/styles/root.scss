@@ -10,8 +10,14 @@ a:visited {
     color: var(--accent);
 }
 
-a:hover {
-    color: var(--lighter-accent)
+.button,
+a {
+    transition: all 0.2s ease-out;
+
+    &:hover {
+        color     : var(--font) !important;
+        transition: none;
+    }
 }
 
 input[type=text],
@@ -122,14 +128,5 @@ select {
         -webkit-transform: rotate(45deg);
         -ms-transform    : rotate(45deg);
         transform        : rotate(45deg);
-    }
-}
-
-.button {
-    transition: all 0.2s ease-out;
-
-    &:hover {
-        color     : var(--font) !important;
-        transition: none;
     }
 }
