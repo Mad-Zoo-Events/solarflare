@@ -47,7 +47,7 @@ const Page = ({
 
             <div className="page-footer">
                 <div className="additional-footer-elements">{footerElements}</div>
-                <span>App Version: {version}</span>
+                <div className="status-bar">App Version: {version}</div>
             </div>
         </div>
     </>

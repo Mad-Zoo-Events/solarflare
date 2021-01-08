@@ -3,7 +3,7 @@ import React, { ReactElement } from "react";
 import { connect } from "react-redux";
 import * as et from "../../../domain/EffectType";
 import { getAccentColor } from "../../../utils/utils";
-import { stopAll } from "../ControlPanelActions";
+import { runStopAll } from "../ControlPanelActions";
 import PresetControl from "../PresetControl/PresetControl";
 import "./CategorySection.scss";
 import { CategorySectionProps } from "./CategorySectionProps";
@@ -44,18 +44,21 @@ const CategorySection = ({
         <div className={`control-panel__category-section ${effectType}-controls`} style={coloredBackground}>
             <div className="header" style={coloredText}>
                 <FontAwesomeIcon
+                    className="button"
                     icon={["fas", "stop-circle"]}
                     size="lg"
                     title="Stop Effects + Detach Clocks"
                     onClick={() => stopAll({ stopEffects: true, detachClocks: true, specificTypeOnly: effectType })}
                 />
                 <FontAwesomeIcon
+                    className="button"
                     icon={["far", "stop-circle"]}
                     size="lg"
                     title="Stop Effects"
                     onClick={() => stopAll({ stopEffects: true, detachClocks: false, specificTypeOnly: effectType })}
                 />
                 <FontAwesomeIcon
+                    className="button"
                     icon={["fas", "stopwatch"]}
                     size="lg"
                     title="Detach Clocks"
@@ -75,7 +78,7 @@ const CategorySection = ({
 };
 
 const mapDispatchToProps = {
-    stopAll: stopAll
+    stopAll: runStopAll
 };
 
 export default connect(null, mapDispatchToProps)(CategorySection);

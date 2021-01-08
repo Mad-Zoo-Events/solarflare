@@ -1,6 +1,17 @@
 div.control-panel__footer-controls {
-    padding: 0.5em;
-    display: inline-block;
+    display              : grid;
+    grid-template-columns: auto min-content;
+    gap                  : 0.5em;
+    padding              : 0.5em 0.5em 0 0.5em;
+
+    & .log-console {
+        padding   : 0.5em;
+        height    : 10em;
+        overflow-y: scroll;
+        font-size : smaller;
+
+        border: 1px solid var(--dark-gray);
+    }
 
     & .stop-buttons {
         display              : grid;
@@ -8,13 +19,10 @@ div.control-panel__footer-controls {
         grid-template-areas  :
             'effects    clocks'
             'everything everything';
-        gap: 0.3em;
+        gap   : 0.3em;
+        height: min-content;
 
         color: var(--red);
-
-        & .button {
-            cursor: pointer;
-        }
 
         & .stop-effects {
             grid-area: effects;

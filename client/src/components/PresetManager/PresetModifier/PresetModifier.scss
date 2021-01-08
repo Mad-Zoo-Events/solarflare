@@ -45,8 +45,7 @@
         }
 
         & .close-button {
-            cursor: pointer;
-            color : var(--red);
+            color: var(--red);
         }
     }
 
@@ -134,7 +133,6 @@
 
         div.add-button {
             display: inline;
-            cursor : pointer;
             color  : var(--accent);
         }
     }
@@ -151,7 +149,6 @@
 
         & .test-button {
             grid-column: 2;
-            cursor     : pointer;
             color      : var(--accent);
             white-space: nowrap;
             display    : inline-block;
@@ -183,7 +180,6 @@
 
         & .save-button {
             grid-column: 3;
-            cursor     : pointer;
             color      : var(--accent);
 
             & span {

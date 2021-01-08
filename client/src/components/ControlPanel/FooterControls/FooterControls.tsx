@@ -1,15 +1,21 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { ReactElement } from "react";
 import { connect } from "react-redux";
-import { stopAll } from "../ControlPanelActions";
+import { RootState } from "../../../RootState";
+import { runStopAll } from "../ControlPanelActions";
 import "./FooterControls.scss";
 import { FooterControlsProps } from "./FooterControlsProps";
+import LogEntry from "./LogEntry/LogEntry";
 
 const FooterControls = ({
+    logEntries,
     stopAll
 }: FooterControlsProps): ReactElement => {
     return (
         <div className="control-panel__footer-controls">
+            <div className="log-console">
+                {logEntries.map((log, index) => <LogEntry key={index} logEntry={log} />)}
+            </div>
             <div className="stop-buttons">
                 <FontAwesomeIcon
                     className="button stop-effects"
@@ -37,8 +43,16 @@ const FooterControls = ({
     );
 };
 
+function mapStateToProps (state: RootState) {
+    const logEntries = state.controlpanel.logEntries;
+
+    return {
+        logEntries
+    };
+}
+
 const mapDispatchToProps = {
-    stopAll: stopAll
+    stopAll: runStopAll
 };
 
-export default connect(null, mapDispatchToProps)(FooterControls);
+export default connect(mapStateToProps, mapDispatchToProps)(FooterControls);
