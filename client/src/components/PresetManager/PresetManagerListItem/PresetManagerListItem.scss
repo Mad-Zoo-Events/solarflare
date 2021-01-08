@@ -16,10 +16,6 @@
         grid-area: edit;
         cursor   : pointer;
         margin   : 0 0.5em 0.5em 0;
-
-        &:hover {
-            color: var(--font) !important;
-        }
     }
 
     & .display-name {
@@ -69,19 +65,11 @@
             cursor       : pointer;
             color        : var(--accent);
             margin-bottom: 0.5em;
-
-            &:hover {
-                color: var(--lighter-accent);
-            }
         }
 
         & .delete-preset {
             cursor: pointer;
             color : var(--red);
-
-            &:hover {
-                color: var(--lighter-red);
-            }
         }
     }
 
@@ -94,4 +82,8 @@
     justify-content : center;
     align-items     : center;
     padding         : 1em;
+
+    &:hover {
+        background-color: var(--darker-gray);
+    }
 }
