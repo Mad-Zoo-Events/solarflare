@@ -7,4 +7,4 @@ export type EffectAction =
     typeof Trigger |
     typeof Start |
     typeof Restart |
-    typeof Stop
+    typeof Stop;
