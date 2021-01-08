@@ -13,5 +13,7 @@ button.control-panel-button {
 }
 
 button.running {
-    cursor: not-allowed;
+    cursor       : not-allowed;
+    border-radius: 1em;
+    transition   : border-radius 0.2s ease-out !important;
 }

@@ -25,7 +25,11 @@ const PresetControlButton = ({
     let icon: IconProp;
     const style = {
         borderColor: `var(--${color})`,
-        color: isRunning ? "var(--background)" : `var(--${color})`,
+        color: isRunning
+            ? "var(--background)"
+            : secondsRunning !== undefined
+                ? "var(--lighter-accent)"
+                : `var(--${color})`,
         backgroundColor: isRunning ? `var(--${color})` : "var(--darker-gray)"
     };
     const className = `button control-panel-button code${isRunning ? " running" : ""}`;
