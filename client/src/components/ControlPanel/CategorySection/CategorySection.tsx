@@ -1,7 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { ReactElement } from "react";
+import { connect } from "react-redux";
 import * as et from "../../../domain/EffectType";
 import { getAccentColor } from "../../../utils/utils";
+import { stopAll } from "../ControlPanelActions";
 import PresetControl from "../PresetControl/PresetControl";
 import "./CategorySection.scss";
 import { CategorySectionProps } from "./CategorySectionProps";
@@ -9,7 +11,8 @@ import { CategorySectionProps } from "./CategorySectionProps";
 const CategorySection = ({
     presets,
     runningEffects,
-    effectType
+    effectType,
+    stopAll
 }: CategorySectionProps): ReactElement => {
     let header = "";
     switch (effectType) {
@@ -40,9 +43,24 @@ const CategorySection = ({
     return (
         <div className={`control-panel__category-section ${effectType}-controls`} style={coloredBackground}>
             <div className="header" style={coloredText}>
-                <FontAwesomeIcon icon={["fas", "stop-circle"]} size="lg" title="Stop Effects + Detach Clocks" />
-                <FontAwesomeIcon icon={["far", "stop-circle"]} size="lg" title="Stop Effects" />
-                <FontAwesomeIcon icon={["fas", "stopwatch"]} size="lg" title="Detach Clocks" />
+                <FontAwesomeIcon
+                    icon={["fas", "stop-circle"]}
+                    size="lg"
+                    title="Stop Effects + Detach Clocks"
+                    onClick={() => stopAll({ stopEffects: true, detachClocks: true, specificTypeOnly: effectType })}
+                />
+                <FontAwesomeIcon
+                    icon={["far", "stop-circle"]}
+                    size="lg"
+                    title="Stop Effects"
+                    onClick={() => stopAll({ stopEffects: true, detachClocks: false, specificTypeOnly: effectType })}
+                />
+                <FontAwesomeIcon
+                    icon={["fas", "stopwatch"]}
+                    size="lg"
+                    title="Detach Clocks"
+                    onClick={() => stopAll({ stopEffects: false, detachClocks: true, specificTypeOnly: effectType })}
+                />
                 <span>{header}</span>
             </div>
             {presets.map((preset) => {
@@ -56,4 +74,8 @@ const CategorySection = ({
     );
 };
 
-export default CategorySection;
+const mapDispatchToProps = {
+    stopAll: stopAll
+};
+
+export default connect(null, mapDispatchToProps)(CategorySection);
