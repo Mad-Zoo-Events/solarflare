@@ -8,7 +8,7 @@ import {
     DID_START_EFFECT,
     DID_STOP_ALL,
     DID_STOP_EFFECT,
-    INCREMENT_COUNTER,
+    SHOULD_INCREMENT_COUNTER,
     SHOULD_CHANGE_DISPLAY_MODE,
     SHOULD_CLEAR_LOGS
 } from "./ControlPanelActions";
@@ -20,7 +20,7 @@ const initialState: ControlPanelState = {
     logEntries: []
 };
 
-const addRunning = (
+const addToRunning = (
     { preset, interval }: {preset: Preset, interval: number},
     { runningEffects }: ControlPanelState
 ): RunningEffect[] => {
@@ -31,7 +31,7 @@ const addRunning = (
     return effects;
 };
 
-const removeRunning = (
+const removeFromRunning = (
     id: string,
     { runningEffects }: ControlPanelState
 ): RunningEffect[] => {
@@ -43,7 +43,7 @@ const removeRunning = (
     return effects.filter(e => e.preset.id !== id);
 };
 
-const stopAll = (
+const stopAllRunning = (
     { stopEffects, specificTypeOnly }: StopAllOptions,
     { runningEffects }: ControlPanelState
 ): RunningEffect[] => {
@@ -72,8 +72,11 @@ const incrementCounter = (
     return effects;
 };
 
-const trimLogs = (logEntries: LogEntry[]): LogEntry[] => {
-    const logs = [...logEntries];
+const addToLogs = (
+    entry: LogEntry,
+    { logEntries }: ControlPanelState
+): LogEntry[] => {
+    const logs = [entry, ...logEntries];
     if (logs.length > 50) {
         logs.pop();
     }
@@ -94,32 +97,32 @@ function controlPanelReducer (
     case DID_START_EFFECT:
         return {
             ...state,
-            runningEffects: addRunning(action.payload, state)
+            runningEffects: addToRunning(action.payload, state)
         };
     case DID_STOP_EFFECT:
         return {
             ...state,
-            runningEffects: removeRunning(action.payload, state)
+            runningEffects: removeFromRunning(action.payload, state)
         };
     case DID_STOP_ALL:
         return {
             ...state,
-            runningEffects: stopAll(action.payload, state)
+            runningEffects: stopAllRunning(action.payload, state)
+        };
+    case SHOULD_INCREMENT_COUNTER:
+        return {
+            ...state,
+            runningEffects: incrementCounter(action.payload, state)
         };
     case DID_RECEIVE_LOG_MESSAGE:
         return {
             ...state,
-            logEntries: [action.payload, ...trimLogs(state.logEntries)]
+            logEntries: addToLogs(action.payload, state)
         };
     case SHOULD_CLEAR_LOGS:
         return {
             ...state,
             logEntries: []
-        };
-    case INCREMENT_COUNTER:
-        return {
-            ...state,
-            runningEffects: incrementCounter(action.payload, state)
         };
     default:
         return state;

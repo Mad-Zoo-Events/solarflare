@@ -3,7 +3,7 @@ import React, { ReactElement } from "react";
 import { connect } from "react-redux";
 import * as et from "../../../domain/EffectType";
 import { getAccentColor } from "../../../utils/utils";
-import { runStopAll } from "../ControlPanelActions";
+import { stopAll } from "../ControlPanelActions";
 import PresetControl from "../PresetControl/PresetControl";
 import "./CategorySection.scss";
 import { CategorySectionProps } from "./CategorySectionProps";
@@ -78,7 +78,7 @@ const CategorySection = ({
 };
 
 const mapDispatchToProps = {
-    stopAll: runStopAll
+    stopAll: stopAll
 };
 
 export default connect(null, mapDispatchToProps)(CategorySection);
