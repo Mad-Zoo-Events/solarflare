@@ -8,8 +8,14 @@
         margin-right: 0.8em;
 
         &>span {
-            font-size   : x-large;
-            font-variant: small-caps;
+            font-size     : large;
+            vertical-align: middle;
+        }
+
+        &>svg {
+            margin        : 0 auto 0.3em auto;
+            vertical-align: middle;
+            cursor        : pointer;
         }
     }
 }

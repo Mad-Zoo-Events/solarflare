@@ -15,14 +15,17 @@ import {
     faSync,
     faPlay,
     faStop,
-    faQuestion
+    faQuestion,
+    faStopCircle as fasStopCircle,
+    faStopwatch
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
     faEdit,
     faClone,
     faTrashAlt,
-    faListAlt
+    faListAlt,
+    faStopCircle as farStopCircle
 } from "@fortawesome/free-regular-svg-icons";
 
 library.add(
@@ -42,9 +45,12 @@ library.add(
     faPlay,
     faStop,
     faQuestion,
+    fasStopCircle,
+    faStopwatch,
 
     faEdit,
     faClone,
     faTrashAlt,
-    faListAlt
+    faListAlt,
+    farStopCircle
 );
