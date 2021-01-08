@@ -27,16 +27,20 @@ const ControlPanel = ({
             </div>}
 
             {!categorize && <div className="control-panel__placeholder-category-holder">
-                <CategorySection effectType={et.Command} presets={[]} runningEffects={new Map()}/>
-                <CategorySection effectType={et.Dragon} presets={[]} runningEffects={new Map()}/>
-                <CategorySection effectType={et.Laser} presets={[]} runningEffects={new Map()}/>
-                <CategorySection effectType={et.Particle} presets={[]} runningEffects={new Map()}/>
-                <CategorySection effectType={et.Potion} presets={[]} runningEffects={new Map()}/>
-                <CategorySection effectType={et.Timeshift} presets={[]} runningEffects={new Map()}/>
+                <CategorySection effectType={et.Command} presets={[]} runningEffects={[]}/>
+                <CategorySection effectType={et.Dragon} presets={[]} runningEffects={[]}/>
+                <CategorySection effectType={et.Laser} presets={[]} runningEffects={[]}/>
+                <CategorySection effectType={et.Particle} presets={[]} runningEffects={[]}/>
+                <CategorySection effectType={et.Potion} presets={[]} runningEffects={[]}/>
+                <CategorySection effectType={et.Timeshift} presets={[]} runningEffects={[]}/>
             </div>}
 
             {!categorize && combinePresets(presets).sort(presetSorter).map(preset =>
-                <PresetControl key={preset.id} preset={preset} secondsRunning={runningEffects.get(preset.id)?.secondsRunning}/>
+                <PresetControl
+                    key={preset.id}
+                    preset={preset}
+                    secondsRunning={runningEffects.find(e => e.preset.id === preset.id)?.secondsRunning}
+                />
             )}
         </Page>
     );

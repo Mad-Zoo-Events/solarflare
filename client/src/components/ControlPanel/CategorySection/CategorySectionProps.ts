@@ -4,6 +4,6 @@ import { RunningEffect } from "../../../domain/RunningEffect";
 
 export interface CategorySectionProps {
     presets: Preset[]
-    runningEffects: Map<string, RunningEffect>
+    runningEffects: RunningEffect[]
     effectType: EffectType
 }

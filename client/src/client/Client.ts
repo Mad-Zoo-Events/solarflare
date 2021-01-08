@@ -1,4 +1,5 @@
 import axios from "axios";
+import { StopAllOptions } from "../domain/client/StopAllOptions";
 import { EffectAction } from "../domain/EffectAction";
 import { EffectType } from "../domain/EffectType";
 import { PresetCollection } from "../domain/PresetCollection";
@@ -34,4 +35,7 @@ export async function deletePreset (id: string, effectType: EffectType): Promise
 // Effects
 export async function runEffect (effectType: EffectType, id: string, action: EffectAction): Promise<void> {
     // return await axios.post(`/effects/run/${effectType}/${id}/${action}`);
+}
+export async function stopAll (options: StopAllOptions): Promise<void> {
+    return await axios.post("/effects/stopall", { ...options });
 }
