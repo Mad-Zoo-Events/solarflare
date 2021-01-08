@@ -1,6 +1,9 @@
 import { HandleThunkActionCreator } from "react-redux";
-import { stopAll } from "../ControlPanelActions";
+import { LogEntry } from "../../../domain/LogEntry";
+import { runStopAll } from "../ControlPanelActions";
 
 export interface FooterControlsProps {
-    stopAll: HandleThunkActionCreator<typeof stopAll>
+    logEntries: LogEntry[]
+
+    stopAll: HandleThunkActionCreator<typeof runStopAll>
 }

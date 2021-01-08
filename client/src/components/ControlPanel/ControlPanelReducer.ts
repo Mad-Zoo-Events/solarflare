@@ -1,12 +1,22 @@
 import { StopAllOptions } from "../../domain/client/StopAllOptions";
+import { LogEntry } from "../../domain/LogEntry";
 import { Preset } from "../../domain/presets/Preset";
 import { RunningEffect } from "../../domain/RunningEffect";
-import { ControlPanelAction, DID_START_EFFECT, DID_STOP_ALL, DID_STOP_EFFECT, INCREMENT_COUNTER, SHOULD_CHANGE_DISPLAY_MODE } from "./ControlPanelActions";
+import {
+    ControlPanelAction,
+    DID_RECEIVE_LOG_MESSAGE,
+    DID_START_EFFECT,
+    DID_STOP_ALL,
+    DID_STOP_EFFECT,
+    INCREMENT_COUNTER,
+    SHOULD_CHANGE_DISPLAY_MODE
+} from "./ControlPanelActions";
 import { ControlPanelState } from "./ControlPanelState";
 
 const initialState: ControlPanelState = {
     categorize: true,
-    runningEffects: []
+    runningEffects: [],
+    logEntries: []
 };
 
 const addRunning = (
@@ -61,6 +71,14 @@ const incrementCounter = (
     return effects;
 };
 
+const trimLogs = (logEntries: LogEntry[]): LogEntry[] => {
+    const logs = [...logEntries];
+    if (logs.length > 50) {
+        logs.pop();
+    }
+    return logs;
+};
+
 function controlPanelReducer (
     // eslint-disable-next-line default-param-last
     state: ControlPanelState = initialState,
@@ -86,6 +104,11 @@ function controlPanelReducer (
         return {
             ...state,
             runningEffects: stopAll(action.payload, state)
+        };
+    case DID_RECEIVE_LOG_MESSAGE:
+        return {
+            ...state,
+            logEntries: [action.payload, ...trimLogs(state.logEntries)]
         };
     case INCREMENT_COUNTER:
         return {

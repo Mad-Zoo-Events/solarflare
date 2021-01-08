@@ -50,10 +50,12 @@
     & .page-footer {
         grid-row        : 3;
         width           : 100%;
-        padding         : 0.1em;
-        box-sizing      : border-box;
-        font-size       : smaller;
         background-color: var(--background);
-        text-align      : center;
+
+        & .status-bar {
+            padding   : 0.3em;
+            font-size : smaller;
+            text-align: center;
+        }
     }
 }

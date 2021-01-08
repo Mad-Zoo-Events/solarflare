@@ -14,7 +14,6 @@
 
     & .edit-preset {
         grid-area: edit;
-        cursor   : pointer;
         margin   : 0 0.5em 0.5em 0;
     }
 
@@ -62,14 +61,12 @@
         margin   : auto 0 auto 1.5em;
 
         & .duplicate-preset {
-            cursor       : pointer;
             color        : var(--accent);
             margin-bottom: 0.5em;
         }
 
         & .delete-preset {
-            cursor: pointer;
-            color : var(--red);
+            color: var(--red);
         }
     }
 
@@ -77,7 +74,6 @@
 
 .preset-manager-list-item__add-new {
     background-color: var(--background-alpha);
-    cursor          : pointer;
     display         : flex;
     justify-content : center;
     align-items     : center;
