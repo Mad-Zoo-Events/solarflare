@@ -13,6 +13,7 @@ a:visited {
 .button,
 a {
     transition: all 0.2s ease-out;
+    outline   : none;
 
     &:hover {
         color     : var(--font) !important;
