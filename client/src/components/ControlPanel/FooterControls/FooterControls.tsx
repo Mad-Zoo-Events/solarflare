@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { ReactElement } from "react";
 import { connect } from "react-redux";
 import { RootState } from "../../../RootState";
-import { runStopAll } from "../ControlPanelActions";
+import { stopAll } from "../ControlPanelActions";
 import "./FooterControls.scss";
 import { FooterControlsProps } from "./FooterControlsProps";
 import LogEntry from "./LogEntry/LogEntry";
@@ -52,7 +52,7 @@ function mapStateToProps (state: RootState) {
 }
 
 const mapDispatchToProps = {
-    stopAll: runStopAll
+    stopAll: stopAll
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FooterControls);

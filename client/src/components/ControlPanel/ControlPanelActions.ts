@@ -20,54 +20,54 @@ export const DID_STOP_EFFECT = "controlpanel/DID_STOP_EFFECT";
 export const DID_STOP_ALL = "controlpanel/DID_STOP_ALL";
 export const DID_RECEIVE_LOG_MESSAGE = "controlpanel/DID_RECEIVE_LOG_MESSAGE";
 export const SHOULD_CLEAR_LOGS = "controlpanel/SHOULD_CLEAR_LOGS";
-export const INCREMENT_COUNTER = "controlpanel/INCREMENT_COUNTER";
+export const SHOULD_INCREMENT_COUNTER = "controlpanel/INCREMENT_COUNTER";
 
-export interface ChangeDisplayMode {
+interface ShouldChangeDisplayMode {
     type: typeof SHOULD_CHANGE_DISPLAY_MODE
     payload: boolean
 }
-export interface StartEffect {
+interface DidStartEffect {
     type: typeof DID_START_EFFECT
     payload: {preset: Preset, interval: number}
 }
-export interface StopEffect {
+interface DIdStopEffect {
     type: typeof DID_STOP_EFFECT
     payload: string
 }
-export interface StopAll {
+interface DidStopAll {
     type: typeof DID_STOP_ALL
     payload: StopAllOptions
 }
-export interface ReceiveLogMessage {
+interface DidReceiveLogMessage {
     type: typeof DID_RECEIVE_LOG_MESSAGE
     payload: LogEntry
 }
-export interface ClearLogs {
+interface ShouldClearLogs {
     type: typeof SHOULD_CLEAR_LOGS
 }
-export interface IncrementCounter {
-    type: typeof INCREMENT_COUNTER
+interface ShouldIncrementCounter {
+    type: typeof SHOULD_INCREMENT_COUNTER
     payload: string
 }
 
 export type ControlPanelAction =
-    ChangeDisplayMode |
-    StartEffect | StopEffect | StopAll |
-    ReceiveLogMessage | ClearLogs |
-    IncrementCounter
+    ShouldChangeDisplayMode |
+    DidStartEffect | DIdStopEffect | DidStopAll |
+    DidReceiveLogMessage | ShouldClearLogs |
+    ShouldIncrementCounter
 
 // ACTION CREATORS
-export const changeDisplayMode = createAction(SHOULD_CHANGE_DISPLAY_MODE);
-export const startEffect = createAction<{preset: Preset, interval: number}>(DID_START_EFFECT);
-export const stopEffect = createAction<string>(DID_STOP_EFFECT);
-export const stopAll = createAction<StopAllOptions>(DID_STOP_ALL);
-export const postLogMessage = createAction<LogEntry>(DID_RECEIVE_LOG_MESSAGE);
-export const shouldClearLogs = createAction(SHOULD_CLEAR_LOGS);
-export const incrementCounter = createAction<string>(INCREMENT_COUNTER);
+const shouldChangeDisplayMode = createAction(SHOULD_CHANGE_DISPLAY_MODE);
+const didStartEffect = createAction<{preset: Preset, interval: number}>(DID_START_EFFECT);
+const didStopEffect = createAction<string>(DID_STOP_EFFECT);
+const didStopAll = createAction<StopAllOptions>(DID_STOP_ALL);
+const didReceiveLogMessage = createAction<LogEntry>(DID_RECEIVE_LOG_MESSAGE);
+const shouldClearLogs = createAction(SHOULD_CLEAR_LOGS);
+const shouldIncrementCounter = createAction<string>(SHOULD_INCREMENT_COUNTER);
 
 // ACTIONS
 export const selectDisplayMode = (categorized: boolean): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
-    dispatch(changeDisplayMode(categorized));
+    dispatch(shouldChangeDisplayMode(categorized));
 };
 export const runEffect = (preset: Preset, action: EffectAction): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     const { id, effectType } = preset;
@@ -75,33 +75,33 @@ export const runEffect = (preset: Preset, action: EffectAction): ThunkAction<voi
     doRunEffect(effectType, id, action);
 
     if (action === ea.Start) {
-        const interval = window.setInterval(() => dispatch(incrementCounter(id)), 1000);
-        dispatch(startEffect({ preset, interval }));
+        const interval = window.setInterval(() => dispatch(shouldIncrementCounter(id)), 1000);
+        dispatch(didStartEffect({ preset, interval }));
     }
     if (action === ea.Stop) {
-        dispatch(stopEffect(id));
+        dispatch(didStopEffect(id));
     }
     if (action === ea.Restart) {
-        dispatch(stopEffect(id));
+        dispatch(didStopEffect(id));
 
-        const interval = window.setInterval(() => dispatch(incrementCounter(id)), 1000);
-        dispatch(startEffect({ preset, interval }));
+        const interval = window.setInterval(() => dispatch(shouldIncrementCounter(id)), 1000);
+        dispatch(didStartEffect({ preset, interval }));
     }
 
-    dispatch(postLogMessage({
+    dispatch(didReceiveLogMessage({
         level: LogLevel.Success,
         category: action,
         message: preset.displayName
     }));
 };
-export const runStopAll = (options: StopAllOptions): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
+export const stopAll = (options: StopAllOptions): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     doStopAll(options);
 
-    dispatch(stopAll(options));
+    dispatch(didStopAll(options));
 
     dispatch(shouldClearLogs());
 
-    dispatch(postLogMessage({
+    dispatch(didReceiveLogMessage({
         level: LogLevel.Success,
         category: "STOP_ALL",
         message: options.specificTypeOnly || ""
