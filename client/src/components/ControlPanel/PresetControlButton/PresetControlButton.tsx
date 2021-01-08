@@ -14,6 +14,7 @@ const PresetControlButton = ({
     action,
     color,
 
+    isRunning,
     displayKeyBinding,
     secondsRunning,
 
@@ -21,8 +22,13 @@ const PresetControlButton = ({
 }: PresetControlButtonProps): ReactElement => {
     const { effectType, keyBinding } = preset;
 
-    const style = { borderColor: `var(--${color})`, color: `var(--${color})` };
-    let icon: IconProp = ["fas", "chevron-down"];
+    let icon: IconProp;
+    const style = {
+        borderColor: `var(--${color})`,
+        color: isRunning ? "var(--background)" : `var(--${color})`,
+        backgroundColor: isRunning ? `var(--${color})` : "var(--darker-gray)"
+    };
+    const className = `control-panel-button code${isRunning ? " running" : ""}`;
 
     switch (action) {
     case ea.Trigger:
@@ -42,13 +48,19 @@ const PresetControlButton = ({
         icon = ["fas", "stop"];
         break;
     default:
+        icon = ["fas", "question"];
         break;
     }
 
-    const handleClick = () => runEffect(preset, action);
+    const handleClick = () => !isRunning && runEffect(preset, action);
 
     return (
-        <button className="control-panel-button" style={style} onClick={handleClick}>
+        <button
+            className={className}
+            style={style}
+            onClick={handleClick}
+        >
+
             {displayKeyBinding && keyBinding
                 ? <span>{getShortcutString(keyBinding)}</span>
                 : secondsRunning !== undefined
