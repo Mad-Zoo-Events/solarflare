@@ -14,7 +14,8 @@ import {
     faPalette,
     faSync,
     faPlay,
-    faStop
+    faStop,
+    faQuestion
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -40,6 +41,7 @@ library.add(
     faSync,
     faPlay,
     faStop,
+    faQuestion,
 
     faEdit,
     faClone,

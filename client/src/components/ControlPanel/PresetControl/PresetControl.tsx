@@ -50,7 +50,7 @@ const PresetControl = ({
             </>}
 
             {renderStartStop && <>
-                <PresetControlButton preset={preset} action={ea.Start} color="green" displayKeyBinding/>
+                <PresetControlButton preset={preset} action={ea.Start} color="green" displayKeyBinding isRunning={secondsRunning !== undefined}/>
                 <PresetControlButton preset={preset} action={ea.Stop} color="red" secondsRunning={secondsRunning}/>
             </>}
         </div>

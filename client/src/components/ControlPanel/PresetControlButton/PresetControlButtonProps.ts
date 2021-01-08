@@ -8,6 +8,7 @@ export interface PresetControlButtonProps {
     action: EffectAction
     color: string
 
+    isRunning?: boolean
     displayKeyBinding?: boolean
     secondsRunning?: number
 
