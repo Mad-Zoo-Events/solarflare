@@ -31,3 +31,17 @@
         grid-area: command;
     }
 }
+
+.control-panel__placeholder-category-holder {
+    display     : inline-flex;
+    height      : max-content;
+    margin-right: 0.8em;
+
+    & .control-panel__category-section {
+        min-height: 100%;
+
+        & .header {
+            margin-right: 0;
+        }
+    }
+}
