@@ -124,3 +124,12 @@ select {
         transform        : rotate(45deg);
     }
 }
+
+.button {
+    transition: all 0.2s ease-out;
+
+    &:hover {
+        color     : var(--font) !important;
+        transition: none;
+    }
+}

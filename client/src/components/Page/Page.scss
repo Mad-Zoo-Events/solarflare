@@ -18,10 +18,6 @@
             color: var(--accent);
         }
 
-        & a:hover {
-            color: var(--lighter-accent);
-        }
-
         & .button-left {
             grid-column : 1;
             margin-right: 0.5em;
