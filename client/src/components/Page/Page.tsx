@@ -18,28 +18,26 @@ const Page = ({
     <>
         <ToastContainer />
         <div className="page">
-            <div className="page-header">
-                {isControlPanel
-                    ? <>
-                        <div className="text">Visual Effect Control Panel</div>
+            {isControlPanel
+                ? <div className="page-header controlpanel-header">
+                    <div className="text">Visual Effect Control Panel</div>
 
-                        <div className="additional-header-elements">{headerElements}</div>
+                    <div className="additional-header-elements">{headerElements}</div>
 
-                        <Link className="button button-right" to={Routes.presetManager} title="Manage Presets">
-                            <FontAwesomeIcon icon={["fas", "cogs"]} size="lg" />
-                        </Link>
-                    </>
-                    : <>
-                        <Link className="button button-left" to={Routes.controlPanel} title="Back To Control Panel">
-                            <FontAwesomeIcon icon={["fas", "arrow-left"]} size="lg" />
-                        </Link>
+                    <Link className="button nav-button" to={Routes.presetManager} title="Manage Presets">
+                        <FontAwesomeIcon icon={["fas", "cogs"]} size="lg" />
+                    </Link>
+                </div>
+                : <div className="page-header presetmanager-header">
+                    <Link className="button nav-button" to={Routes.controlPanel} title="Back To Control Panel">
+                        <FontAwesomeIcon icon={["fas", "arrow-left"]} size="lg" />
+                    </Link>
 
-                        <div className="text">Preset Management System</div>
+                    <div className="text">Preset Management System</div>
 
-                        <div className="additional-header-elements">{headerElements}</div>
-                    </>
-                }
-            </div>
+                    <div className="additional-header-elements">{headerElements}</div>
+                </div>
+            }
 
             <div className="page-content">
                 {children}

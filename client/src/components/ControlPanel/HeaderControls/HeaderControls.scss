@@ -1,3 +1,9 @@
 div.control-panel__header-controls {
-    display: inline-block;
+    display              : grid;
+    grid-template-columns: min-content;
+
+    &>div {
+        display       : flex;
+        vertical-align: middle;
+    }
 }
