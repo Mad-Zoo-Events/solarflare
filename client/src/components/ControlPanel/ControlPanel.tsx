@@ -7,6 +7,7 @@ import Page from "../Page/Page";
 import CategorySection from "./CategorySection/CategorySection";
 import "./ControlPanel.scss";
 import { ControlPanelProps } from "./ControlPanelProps";
+import FooterControls from "./FooterControls/FooterControls";
 import HeaderControls from "./HeaderControls/HeaderControls";
 import PresetControl from "./PresetControl/PresetControl";
 
@@ -16,7 +17,11 @@ const ControlPanel = ({
     categorize
 }:ControlPanelProps) => {
     return (
-        <Page isControlPanel={true} headerElements={<HeaderControls/>}>
+        <Page
+            isControlPanel={true}
+            headerElements={<HeaderControls/>}
+            footerElements={<FooterControls/>}
+        >
             {categorize && <div className="control-panel__categorized-holder">
                 <CategorySection effectType={et.Command} presets={presets.commandPresets} runningEffects={runningEffects}/>
                 <CategorySection effectType={et.Dragon} presets={presets.dragonPresets} runningEffects={runningEffects}/>

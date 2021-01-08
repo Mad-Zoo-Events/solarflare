@@ -4,5 +4,6 @@ export interface PageProps {
     isControlPanel: boolean
     headerElements?: ReactNode | ReactNodeArray
     children: ReactNode | ReactNodeArray
+    footerElements?: ReactNode | ReactNodeArray
     version: string
 }
