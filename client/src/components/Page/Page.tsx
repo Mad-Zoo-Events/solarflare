@@ -14,41 +14,41 @@ const Page = ({
     children,
     version
 }: PageProps): ReactElement => (
-    <div className="page">
+    <>
         <ToastContainer />
+        <div className="page">
+            <div className="page-header">
+                {isControlPanel
+                    ? <>
+                        <div className="text">Visual Effect Control Panel</div>
 
-        {isControlPanel
-            ? (
-                <div className="page-header">
-                    <div className="text">Visual Effect Control Panel</div>
+                        <div className="additional-header-elements">{headerElements}</div>
 
-                    <div className="additional-elements">{headerElements}</div>
+                        <Link className="button-right" to={Routes.presetManager} title="Manage Presets">
+                            <FontAwesomeIcon icon={["fas", "cogs"]} size="lg" />
+                        </Link>
+                    </>
+                    : <>
+                        <Link className="button-left" to={Routes.controlPanel} title="Back To Control Panel">
+                            <FontAwesomeIcon icon={["fas", "arrow-left"]} size="lg" />
+                        </Link>
 
-                    <Link className="button-right" to={Routes.presetManager} title="Manage Presets">
-                        <FontAwesomeIcon icon={["fas", "cogs"]} size="lg" />
-                    </Link>
-                </div>
-            )
-            : (
-                <div className="page-header">
-                    <Link className="button-left" to={Routes.controlPanel} title="Back To Control Panel">
-                        <FontAwesomeIcon icon={["fas", "arrow-left"]} size="lg" />
-                    </Link>
+                        <div className="text">Preset Management System</div>
 
-                    <div className="text">Preset Management System</div>
+                        <div className="additional-header-elements">{headerElements}</div>
+                    </>
+                }
+            </div>
 
-                    <div className="additional-elements">{headerElements}</div>
-                </div>
-            )}
+            <div className="page-content">
+                {children}
+            </div>
 
-        <div className="page-content">
-            {children}
+            <div className="page-footer">
+                <span>App Version: {version}</span>
+            </div>
         </div>
-
-        <div className="page-footer">
-            <span>App Version: {version}</span>
-        </div>
-    </div>
+    </>
 );
 
 function mapStateToProps (state: RootState) {
