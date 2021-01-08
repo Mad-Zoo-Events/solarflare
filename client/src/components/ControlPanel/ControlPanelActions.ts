@@ -19,6 +19,7 @@ export const DID_START_EFFECT = "controlpanel/DID_START_EFFECT";
 export const DID_STOP_EFFECT = "controlpanel/DID_STOP_EFFECT";
 export const DID_STOP_ALL = "controlpanel/DID_STOP_ALL";
 export const DID_RECEIVE_LOG_MESSAGE = "controlpanel/DID_RECEIVE_LOG_MESSAGE";
+export const SHOULD_CLEAR_LOGS = "controlpanel/SHOULD_CLEAR_LOGS";
 export const INCREMENT_COUNTER = "controlpanel/INCREMENT_COUNTER";
 
 export interface ChangeDisplayMode {
@@ -41,6 +42,9 @@ export interface ReceiveLogMessage {
     type: typeof DID_RECEIVE_LOG_MESSAGE
     payload: LogEntry
 }
+export interface ClearLogs {
+    type: typeof SHOULD_CLEAR_LOGS
+}
 export interface IncrementCounter {
     type: typeof INCREMENT_COUNTER
     payload: string
@@ -49,7 +53,7 @@ export interface IncrementCounter {
 export type ControlPanelAction =
     ChangeDisplayMode |
     StartEffect | StopEffect | StopAll |
-    ReceiveLogMessage |
+    ReceiveLogMessage | ClearLogs |
     IncrementCounter
 
 // ACTION CREATORS
@@ -58,6 +62,7 @@ export const startEffect = createAction<{preset: Preset, interval: number}>(DID_
 export const stopEffect = createAction<string>(DID_STOP_EFFECT);
 export const stopAll = createAction<StopAllOptions>(DID_STOP_ALL);
 export const postLogMessage = createAction<LogEntry>(DID_RECEIVE_LOG_MESSAGE);
+export const shouldClearLogs = createAction(SHOULD_CLEAR_LOGS);
 export const incrementCounter = createAction<string>(INCREMENT_COUNTER);
 
 // ACTIONS
@@ -94,9 +99,14 @@ export const runStopAll = (options: StopAllOptions): ThunkAction<void, RootState
 
     dispatch(stopAll(options));
 
+    dispatch(shouldClearLogs());
+
     dispatch(postLogMessage({
         level: LogLevel.Success,
         category: "STOP_ALL",
         message: options.specificTypeOnly || ""
     }));
+};
+export const clearLogs = (): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
+    dispatch(shouldClearLogs());
 };
