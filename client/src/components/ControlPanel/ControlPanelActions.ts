@@ -1,7 +1,11 @@
 import { AnyAction } from "redux";
 import { createAction } from "redux-actions";
 import { ThunkAction } from "redux-thunk";
-import { runEffect as doRunEffect } from "../../client/Client";
+import {
+    runEffect as doRunEffect,
+    stopAll as doStopAll
+} from "../../client/Client";
+import { StopAllOptions } from "../../domain/client/StopAllOptions";
 import * as ea from "../../domain/EffectAction";
 import { EffectAction } from "../../domain/EffectAction";
 import { Preset } from "../../domain/presets/Preset";
@@ -12,6 +16,7 @@ export const SHOULD_CHANGE_DISPLAY_MODE = "controlpanel/SHOULD_CHANGE_DISPLAY_MO
 export const DID_SELECT_SERVERS = "controlpanel/DID_SELECT_SERVERS";
 export const DID_START_EFFECT = "controlpanel/DID_START_EFFECT";
 export const DID_STOP_EFFECT = "controlpanel/DID_STOP_EFFECT";
+export const DID_STOP_ALL = "controlpanel/DID_STOP_ALL";
 export const INCREMENT_COUNTER = "controlpanel/INCREMENT_COUNTER";
 
 export interface ChangeDisplayMode {
@@ -20,11 +25,15 @@ export interface ChangeDisplayMode {
 }
 export interface StartEffect {
     type: typeof DID_START_EFFECT
-    payload: {id: string, interval: number}
+    payload: {preset: Preset, interval: number}
 }
 export interface StopEffect {
     type: typeof DID_STOP_EFFECT
     payload: string
+}
+export interface StopAll {
+    type: typeof DID_STOP_ALL
+    payload: StopAllOptions
 }
 export interface IncrementCounter {
     type: typeof INCREMENT_COUNTER
@@ -33,13 +42,14 @@ export interface IncrementCounter {
 
 export type ControlPanelAction =
     ChangeDisplayMode |
-    StartEffect | StopEffect |
+    StartEffect | StopEffect | StopAll |
     IncrementCounter
 
 // ACTION CREATORS
 export const changeDisplayMode = createAction(SHOULD_CHANGE_DISPLAY_MODE);
-export const startEffect = createAction<{id: string, interval: number}>(DID_START_EFFECT);
+export const startEffect = createAction<{preset: Preset, interval: number}>(DID_START_EFFECT);
 export const stopEffect = createAction<string>(DID_STOP_EFFECT);
+export const stopAll = createAction<StopAllOptions>(DID_STOP_ALL);
 export const incrementCounter = createAction<string>(INCREMENT_COUNTER);
 
 // ACTIONS
@@ -53,7 +63,7 @@ export const runEffect = (preset: Preset, action: EffectAction): ThunkAction<voi
 
     if (action === ea.Start) {
         const interval = window.setInterval(() => dispatch(incrementCounter(id)), 1000);
-        dispatch(startEffect({ id, interval }));
+        dispatch(startEffect({ preset, interval }));
     }
     if (action === ea.Stop) {
         dispatch(stopEffect(id));
@@ -62,9 +72,11 @@ export const runEffect = (preset: Preset, action: EffectAction): ThunkAction<voi
         dispatch(stopEffect(id));
 
         const interval = window.setInterval(() => dispatch(incrementCounter(id)), 1000);
-        dispatch(startEffect({ id, interval }));
+        dispatch(startEffect({ preset, interval }));
     }
 };
-export const count = (id: string): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
-    dispatch(incrementCounter(id));
+export const runStopAll = (options: StopAllOptions): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
+    doStopAll(options);
+
+    dispatch(stopAll(options));
 };

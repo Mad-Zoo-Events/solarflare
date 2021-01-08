@@ -1,40 +1,60 @@
+import { StopAllOptions } from "../../domain/client/StopAllOptions";
+import { Preset } from "../../domain/presets/Preset";
 import { RunningEffect } from "../../domain/RunningEffect";
-import { ControlPanelAction, DID_START_EFFECT, DID_STOP_EFFECT, INCREMENT_COUNTER, SHOULD_CHANGE_DISPLAY_MODE } from "./ControlPanelActions";
+import { ControlPanelAction, DID_START_EFFECT, DID_STOP_ALL, DID_STOP_EFFECT, INCREMENT_COUNTER, SHOULD_CHANGE_DISPLAY_MODE } from "./ControlPanelActions";
 import { ControlPanelState } from "./ControlPanelState";
 
 const initialState: ControlPanelState = {
     categorize: true,
-    runningEffects: new Map()
+    runningEffects: []
 };
 
 const addRunning = (
-    { id, interval }: {id: string, interval: number},
+    { preset, interval }: {preset: Preset, interval: number},
     { runningEffects }: ControlPanelState
-): Map<string, RunningEffect> => {
-    const effects = new Map(runningEffects);
-    effects.set(id, { secondsRunning: 0, interval });
+): RunningEffect[] => {
+    const effects = [...runningEffects];
+    if (!effects.find(e => e.preset.id === preset.id)) {
+        effects.push({ preset, secondsRunning: 0, interval });
+    }
     return effects;
 };
 
 const removeRunning = (
     id: string,
     { runningEffects }: ControlPanelState
-): Map<string, RunningEffect> => {
-    const effects = new Map(runningEffects);
-    const effect = effects.get(id);
+): RunningEffect[] => {
+    const effects = [...runningEffects];
+    const effect = effects.find(e => e.preset.id === id);
     if (effect) {
         clearTimeout(effect.interval);
-        effects.delete(id);
     }
-    return effects;
+    return effects.filter(e => e.preset.id !== id);
+};
+
+const stopAll = (
+    { stopEffects, specificTypeOnly }: StopAllOptions,
+    { runningEffects }: ControlPanelState
+): RunningEffect[] => {
+    const toStop = specificTypeOnly
+        ? runningEffects.filter(e => e.preset.effectType === specificTypeOnly)
+        : [...runningEffects];
+    toStop.forEach(e => {
+        if (stopEffects) {
+            clearTimeout(e.interval);
+        }
+    });
+    return specificTypeOnly
+        ? runningEffects.filter(e => e.preset.effectType !== specificTypeOnly)
+        : [];
 };
 
 const incrementCounter = (
     id: string,
     { runningEffects }: ControlPanelState
-): Map<string, RunningEffect> => {
-    const effects = new Map(runningEffects);
-    const effect = effects.get(id);
+): RunningEffect[] => {
+    const effects = [...runningEffects];
+    const effect = effects.find(e => e.preset.id === id);
     if (effect) {
         effect.secondsRunning++;
     }
@@ -61,6 +81,11 @@ function controlPanelReducer (
         return {
             ...state,
             runningEffects: removeRunning(action.payload, state)
+        };
+    case DID_STOP_ALL:
+        return {
+            ...state,
+            runningEffects: stopAll(action.payload, state)
         };
     case INCREMENT_COUNTER:
         return {

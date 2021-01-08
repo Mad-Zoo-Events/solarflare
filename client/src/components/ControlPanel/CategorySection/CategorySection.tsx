@@ -49,7 +49,7 @@ const CategorySection = ({
                 return <PresetControl
                     key={preset.id}
                     preset={preset}
-                    secondsRunning={runningEffects.get(preset.id)?.secondsRunning}
+                    secondsRunning={runningEffects.find(e => e.preset.id === preset.id)?.secondsRunning}
                 />;
             })}
         </div>
