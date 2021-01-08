@@ -15,14 +15,16 @@ const HeaderControls = ({
 
     return (
         <div className="control-panel__header-controls">
-            <label className="checkbox-container">Display Categories
-                <input
-                    type="checkbox"
-                    defaultChecked={isCategorizedView}
-                    onChange={handleCategorizedSwitch}
-                />
-                <span></span>
-            </label>
+            <div>
+                <label className="checkbox-container">Display Categories
+                    <input
+                        type="checkbox"
+                        defaultChecked={isCategorizedView}
+                        onChange={handleCategorizedSwitch}
+                    />
+                    <span></span>
+                </label>
+            </div>
         </div>
     );
 };

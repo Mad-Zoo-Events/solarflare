@@ -96,7 +96,9 @@ select {
     & span {
         position        : absolute;
         top             : 0;
+        bottom          : 0;
         left            : 0;
+        margin          : auto;
         height          : 1.5em;
         width           : 1.5em;
         background-color: var(--gray);

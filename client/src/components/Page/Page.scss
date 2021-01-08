@@ -5,40 +5,35 @@
     width             : 100%;
     height            : 100%;
 
-    & .page-header {
-        grid-row        : 1;
-        background-color: var(--background);
-        padding         : 0.3em;
-
+    & .controlpanel-header {
         display              : grid;
-        grid-template-columns: min-content max-content auto min-content;
+        grid-template-columns: max-content auto min-content;
+        gap                  : 0.5em;
+    }
+
+    & .presetmanager-header {
+        display              : grid;
+        grid-template-columns: min-content max-content auto;
+        gap                  : 0.5em;
+    }
+
+    & .page-header {
+        background-color: var(--background);
+        padding         : 0.5em;
 
         & a,
         a:visited {
             color: var(--accent);
         }
 
-        & .button-left {
-            grid-column : 1;
-            margin-right: 0.5em;
-            font-size   : x-large;
+        & .nav-button {
+            font-size: x-large;
         }
 
         & .text {
-            grid-column : 2;
-            margin-right: 0.5em;
-            font-size   : x-large;
-            font-weight : lighter;
-        }
-
-        & .additional-header-elements {
-            grid-column: 3;
-        }
-
-        & .button-right {
-            grid-column: 4;
-            margin-left: 0.5em;
             font-size  : x-large;
+            font-weight: lighter;
+            margin     : auto;
         }
     }
 
