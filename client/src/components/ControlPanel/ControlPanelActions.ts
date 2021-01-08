@@ -30,7 +30,7 @@ interface DidStartEffect {
     type: typeof DID_START_EFFECT
     payload: {preset: Preset, interval: number}
 }
-interface DIdStopEffect {
+interface DidStopEffect {
     type: typeof DID_STOP_EFFECT
     payload: string
 }
@@ -52,7 +52,7 @@ interface ShouldIncrementCounter {
 
 export type ControlPanelAction =
     ShouldChangeDisplayMode |
-    DidStartEffect | DIdStopEffect | DidStopAll |
+    DidStartEffect | DidStopEffect | DidStopAll |
     DidReceiveLogMessage | ShouldClearLogs |
     ShouldIncrementCounter
 

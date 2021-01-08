@@ -1,4 +1,3 @@
-import { TypeOptions } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AnyAction } from "redux";
 import { createAction } from "redux-actions";
@@ -13,6 +12,7 @@ import {
 } from "../../client/Client";
 import { EffectType } from "../../domain/EffectType";
 import { Preset } from "../../domain/presets/Preset";
+import { ToastOptions } from "../../domain/ToastOptions";
 import { RootState } from "../../RootState";
 
 // ACTION TYPES
@@ -23,38 +23,39 @@ export const DID_FINISH_TEST = "presetmanager/DID_FINISH_TEST";
 export const SHOULD_SHOW_TOAST = "presetmanager/SHOULD_SHOW_TOAST";
 export const DID_SHOW_TOAST = "presetmanager/DID_SHOW_TOAST";
 
-export interface OpenPresetModifier {
+interface ShouldOpenPresetModifier {
     type: typeof SHOULD_OPEN_PRESET_MODIFIER
     payload: { effectType: EffectType, preset: Preset }
 }
-export interface StartTest {
+interface DidStartTest {
     type: typeof WILL_START_TEST
 }
-export interface FinishTest {
+interface DidFinishTest {
     type: typeof DID_FINISH_TEST
 }
-export interface ClosePresetModifier {
+interface ShouldClosePresetModifier {
     type: typeof SHOULD_CLOSE_PRESET_MODIFIER
 }
-export interface ShowToast {
+interface ShouldShowToast {
     type: typeof SHOULD_SHOW_TOAST
-    payload: { message: string, type: TypeOptions, id: string }
+    payload: ToastOptions
 }
-export interface ClearToast {
+interface DidShowToast {
     type: typeof DID_SHOW_TOAST
 }
 
 export type PresetManagerAction =
-    OpenPresetModifier | ClosePresetModifier |
-    StartTest | FinishTest | ShowToast | ClearToast
+    ShouldOpenPresetModifier | ShouldClosePresetModifier |
+    DidStartTest | DidFinishTest |
+    ShouldShowToast | DidShowToast
 
 // ACTION CREATORS
-export const shouldOpenPresetModifier = createAction<{ effectType: EffectType, preset: Preset }>(SHOULD_OPEN_PRESET_MODIFIER);
-export const shouldClosePresetModifier = createAction(SHOULD_CLOSE_PRESET_MODIFIER);
-export const willStartTest = createAction(WILL_START_TEST);
-export const didFinishTest = createAction(DID_FINISH_TEST);
-export const shouldShowToast = createAction<{ message: string, type: TypeOptions, id: string }>(SHOULD_SHOW_TOAST);
-export const didShowToast = createAction(DID_SHOW_TOAST);
+const shouldOpenPresetModifier = createAction<{ effectType: EffectType, preset: Preset }>(SHOULD_OPEN_PRESET_MODIFIER);
+const shouldClosePresetModifier = createAction(SHOULD_CLOSE_PRESET_MODIFIER);
+const willStartTest = createAction(WILL_START_TEST);
+const didFinishTest = createAction(DID_FINISH_TEST);
+const shouldShowToast = createAction<ToastOptions>(SHOULD_SHOW_TOAST);
+const didShowToast = createAction(DID_SHOW_TOAST);
 
 // ACTIONS
 export const duplicatePreset = (id: string, effectType: EffectType): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {
