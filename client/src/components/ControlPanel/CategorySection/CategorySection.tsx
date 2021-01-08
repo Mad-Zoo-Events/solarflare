@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { ReactElement } from "react";
 import * as et from "../../../domain/EffectType";
 import { getAccentColor } from "../../../utils/utils";
@@ -39,6 +40,9 @@ const CategorySection = ({
     return (
         <div className={`control-panel__category-section ${effectType}-controls`} style={coloredBackground}>
             <div className="header" style={coloredText}>
+                <FontAwesomeIcon icon={["fas", "stop-circle"]} size="lg" title="Stop Effects + Detach Clocks" />
+                <FontAwesomeIcon icon={["far", "stop-circle"]} size="lg" title="Stop Effects" />
+                <FontAwesomeIcon icon={["fas", "stopwatch"]} size="lg" title="Detach Clocks" />
                 <span>{header}</span>
             </div>
             {presets.map((preset) => {
