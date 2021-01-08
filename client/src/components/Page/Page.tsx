@@ -12,6 +12,7 @@ const Page = ({
     isControlPanel,
     headerElements,
     children,
+    footerElements,
     version
 }: PageProps): ReactElement => (
     <>
@@ -45,6 +46,7 @@ const Page = ({
             </div>
 
             <div className="page-footer">
+                <div className="additional-footer-elements">{footerElements}</div>
                 <span>App Version: {version}</span>
             </div>
         </div>

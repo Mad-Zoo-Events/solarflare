@@ -1,0 +1,36 @@
+div.control-panel__footer-controls {
+    padding: 0.5em;
+    display: inline-block;
+
+    & .stop-buttons {
+        display              : grid;
+        grid-template-columns: 50% 50%;
+        grid-template-areas  :
+            'effects    clocks'
+            'everything everything';
+        gap: 0.3em;
+
+        color: var(--red);
+
+        & .button {
+            cursor: pointer;
+
+            &:hover {
+                color: var(--lighter-red);
+            }
+        }
+
+        & .stop-effects {
+            grid-area: effects;
+        }
+
+        & .detach-clocks {
+            grid-area: clocks;
+        }
+
+        & .stop-everything {
+            grid-area: everything;
+            margin   : auto;
+        }
+    }
+}
