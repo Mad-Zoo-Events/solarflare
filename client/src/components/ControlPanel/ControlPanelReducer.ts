@@ -9,7 +9,8 @@ import {
     DID_STOP_ALL,
     DID_STOP_EFFECT,
     INCREMENT_COUNTER,
-    SHOULD_CHANGE_DISPLAY_MODE
+    SHOULD_CHANGE_DISPLAY_MODE,
+    SHOULD_CLEAR_LOGS
 } from "./ControlPanelActions";
 import { ControlPanelState } from "./ControlPanelState";
 
@@ -109,6 +110,11 @@ function controlPanelReducer (
         return {
             ...state,
             logEntries: [action.payload, ...trimLogs(state.logEntries)]
+        };
+    case SHOULD_CLEAR_LOGS:
+        return {
+            ...state,
+            logEntries: []
         };
     case INCREMENT_COUNTER:
         return {
