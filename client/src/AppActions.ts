@@ -19,30 +19,32 @@ export const DID_GET_VERSION = "app/DID_GET_VERSION";
 export const DID_GET_ALL_PRESETS = "presetmanager/DID_GET_ALL_PRESETS";
 export const DID_GET_PRESETS_OF_TYPE = "presetmanager/DID_GET_PRESETS_OF_TYPE";
 
-export interface InitializeApp {
+interface DidInitializeApp {
     type: typeof DID_INITIALIZE_APP,
     payload: string
 }
-export interface GetVersion {
+interface DidGetVersion {
     type: typeof DID_GET_VERSION,
     payload: string
 }
-export interface GetAllPresets {
+interface DidGetAllPresets {
     type: typeof DID_GET_ALL_PRESETS
     payload: PresetCollection
 }
-export interface GetPresetsOfType {
+interface DidGetPresetsOfType {
     type: typeof DID_GET_PRESETS_OF_TYPE
     payload: { effectType: EffectType, presets: Preset[] }
 }
 
-export type AppAction = InitializeApp | GetVersion | GetAllPresets | GetPresetsOfType;
+export type AppAction =
+    DidInitializeApp | DidGetVersion |
+    DidGetAllPresets | DidGetPresetsOfType;
 
 // ACTION CREATORS
-export const didInitializeApp = createAction(DID_INITIALIZE_APP);
-export const didGetVersion = createAction<string>(DID_GET_VERSION);
-export const didGetAllPresets = createAction<PresetCollection>(DID_GET_ALL_PRESETS);
-export const didGetPresetsOfType = createAction<{ effectType: EffectType, presets: Preset[] }>(DID_GET_PRESETS_OF_TYPE);
+const didInitializeApp = createAction(DID_INITIALIZE_APP);
+const didGetVersion = createAction<string>(DID_GET_VERSION);
+const didGetAllPresets = createAction<PresetCollection>(DID_GET_ALL_PRESETS);
+const didGetPresetsOfType = createAction<{ effectType: EffectType, presets: Preset[] }>(DID_GET_PRESETS_OF_TYPE);
 
 // ACTIONS
 export const initializeApp = (): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {
