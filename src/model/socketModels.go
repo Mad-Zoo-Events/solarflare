@@ -2,25 +2,25 @@ package model
 
 // UIUpdate is the model used to send updates to the UI
 type UIUpdate struct {
-	EffectUpdate     *EffectUpdate     `json:"effectUpdate"`
-	BossbarUpdate    *BossbarUpdate    `json:"bossbarUpdate"`
-	ClockUpdate      *ClockUpdate      `json:"clockUpdate"`
-	ClockSpeedUpdate *ClockSpeedUpdate `json:"clockSpeedUpdate"`
-	StatusUpdate     *StatusUpdate     `json:"statusUpdate"`
-	StageUpdate      *StageUpdate      `json:"stageUpdate"`
-	CommandUpdate    *CommandUpdate    `json:"commandUpdate"`
+	EffectUpdate     *EffectUpdate     `json:"effectUpdate,omitempty"`
+	BossbarUpdate    *BossbarUpdate    `json:"bossbarUpdate,omitempty"`
+	ClockUpdate      *ClockUpdate      `json:"clockUpdate,omitempty"`
+	ClockSpeedUpdate *ClockSpeedUpdate `json:"clockSpeedUpdate,omitempty"`
+	StatusUpdate     *StatusUpdate     `json:"statusUpdate,omitempty"`
+	StageUpdate      *StageUpdate      `json:"stageUpdate,omitempty"`
+	CommandUpdate    *CommandUpdate    `json:"commandUpdate,omitempty"`
 }
 
 // EffectUpdate is the model used to send updates on effect actions to the UI
 type EffectUpdate struct {
-	ID          string       `json:"id"`
-	EffectType  EffectType   `json:"effectType"`
-	DisplayName string       `json:"displayName"`
-	Action      EffectAction `json:"action"`
+	ID          *string       `json:"id,omitempty"`
+	EffectType  *EffectType   `json:"effectType,omitempty"`
+	DisplayName *string       `json:"displayName,omitempty"`
+	Action      *EffectAction `json:"action,omitempty"`
 
-	ErrorMessage string `json:"errorMessage"`
+	ErrorMessage *string `json:"errorMessage,omitempty"`
 
-	StopAll *StopAllRequest `json:"stopAll"`
+	StopAll *StopAllRequest `json:"stopAll,omitempty"`
 }
 
 // BossbarUpdate is the model used to send updates on the bossbar to the UI
