@@ -5,7 +5,8 @@ import {
     DID_GET_SERVERS,
     DID_GET_STAGES,
     DID_GET_VERSION,
-    DID_INITIALIZE_APP
+    DID_INITIALIZE_APP,
+    DID_RECEIVE_WEBSOCKET_MESSAGE
 } from "./AppActions";
 import { AppState } from "./AppState";
 import * as et from "./domain/EffectType";
@@ -23,6 +24,7 @@ const initialState: AppState = {
     version: "?",
     servers: [],
     stages: [],
+    messageQueue: [],
     presets: {
         commandPresets: [],
         dragonPresets: [],
@@ -117,6 +119,11 @@ function appReducer (
         default:
             return state;
         }
+    case DID_RECEIVE_WEBSOCKET_MESSAGE:
+        return {
+            ...state,
+            messageQueue: [...state.messageQueue, action.payload.message]
+        };
     default:
         return state;
     }

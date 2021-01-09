@@ -1,7 +1,7 @@
-import { StopAllOptions } from "./client/StopAllOptions";
-import { ClockAction } from "./ClockAction";
-import { EffectAction } from "./EffectAction";
-import { EffectType } from "./EffectType";
+import { StopAllOptions } from "./StopAllOptions";
+import { ClockAction } from "../ClockAction";
+import { EffectAction } from "../EffectAction";
+import { EffectType } from "../EffectType";
 
 export interface BackendMessage {
     effectUpdate?: EffectMessage

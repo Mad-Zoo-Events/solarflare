@@ -10,13 +10,19 @@ import Routes from "./routes";
 
 function App ({
     isInitialized,
+    messageQueue,
     initializeApp
-}:AppProps): ReactElement {
+} :AppProps): ReactElement {
     useEffect(() => {
         if (!isInitialized) {
             initializeApp();
         }
     }, []);
+
+    messageQueue.forEach(m => {
+        console.log(m);
+        messageQueue.shift();
+    });
 
     return (
         <Router>
@@ -34,10 +40,11 @@ const mapDispatchToProps = {
 };
 
 function mapStateToProps (state: RootState) {
-    const { isInitialized } = state.app;
+    const { isInitialized, messageQueue } = state.app;
 
     return {
-        isInitialized
+        isInitialized,
+        messageQueue
     };
 }
 

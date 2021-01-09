@@ -9,7 +9,7 @@ import {
     duplicatePreset as doDuplicatePreset,
     testPreset as doTestPreset,
     upsertPreset as doUpsertPreset
-} from "../../client/Client";
+} from "../../client/HttpClient";
 import { EffectType } from "../../domain/EffectType";
 import { Preset } from "../../domain/presets/Preset";
 import { ToastOptions } from "../../domain/ToastOptions";
