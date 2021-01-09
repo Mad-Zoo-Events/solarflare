@@ -14,12 +14,23 @@ import {
     selectStage as doSelectStage,
     toggleServer as doToggleServer
 } from "./client/HttpClient";
+import {
+    didStartEffect,
+    didStopAll,
+    didStopEffect,
+    shouldClearLogs,
+    shouldIncrementCounter,
+    shouldWriteLog
+} from "./components/ControlPanel/ControlPanelActions";
+import { BackendMessage } from "./domain/client/BackendMessage";
 import { Server } from "./domain/client/Server";
+import * as ea from "./domain/EffectAction";
 import { EffectType } from "./domain/EffectType";
+import { LogEntry, LogLevel } from "./domain/LogEntry";
 import { PresetCollection } from "./domain/PresetCollection";
 import { Preset } from "./domain/presets/Preset";
 import { RootState } from "./RootState";
-import { setEffectTypes } from "./utils/utils";
+import { getPreset, setEffectTypes } from "./utils/utils";
 
 // ACTION TYPES
 export const DID_INITIALIZE_APP = "app/DID_INITIALIZE_APP";
@@ -31,19 +42,18 @@ export const DID_GET_PRESETS_OF_TYPE = "app/DID_GET_PRESETS_OF_TYPE";
 export const DID_RECEIVE_WEBSOCKET_MESSAGE = "REDUX_WEBSOCKET::MESSAGE";
 
 interface DidInitializeApp {
-    type: typeof DID_INITIALIZE_APP,
-    payload: string
+    type: typeof DID_INITIALIZE_APP
 }
 interface DidGetVersion {
-    type: typeof DID_GET_VERSION,
+    type: typeof DID_GET_VERSION
     payload: string
 }
 interface DidGetServers {
-    type: typeof DID_GET_SERVERS,
+    type: typeof DID_GET_SERVERS
     payload: Server[]
 }
 interface DidGetStages {
-    type: typeof DID_GET_STAGES,
+    type: typeof DID_GET_STAGES
     payload: string[]
 }
 interface DidGetAllPresets {
@@ -55,7 +65,7 @@ interface DidGetPresetsOfType {
     payload: { effectType: EffectType, presets: Preset[] }
 }
 interface DidReceiveWebsocketMessage {
-    type: typeof DID_RECEIVE_WEBSOCKET_MESSAGE,
+    type: typeof DID_RECEIVE_WEBSOCKET_MESSAGE
     payload: {
         message: string,
         origin: string,
@@ -107,11 +117,58 @@ export const fetchPresetsOfType = (effectType: EffectType): ThunkAction<void, Ro
 export const toggleServer = (server: Server): ThunkAction<void, RootState, null, AnyAction> => () => {
     doToggleServer(server);
 };
-export const selectStage = (stage: string): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {
-    await doSelectStage(stage);
+export const selectStage = (stage: string): ThunkAction<void, RootState, null, AnyAction> => () => {
+    doSelectStage(stage);
+};
+export const handleSocketMessage = (message: BackendMessage, presets: PresetCollection): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {
+    const {
+        effectUpdate,
+        stageUpdate
+    } = message;
 
-    const presetCollection = await doFetchAllPresets();
-    setEffectTypes(presetCollection);
+    if (effectUpdate) {
+        const { id, effectType, displayName, action, errorMessage, stopAll } = effectUpdate;
+        const log: LogEntry = {
+            level: errorMessage ? LogLevel.Error : LogLevel.Success,
+            category: stopAll ? "STOP_ALL" : action,
+            message: (stopAll
+                ? stopAll.specificTypeOnly || ""
+                : displayName) +
+                 (errorMessage
+                     ? ` | ${errorMessage}`
+                     : "")
+        };
 
-    dispatch(didGetAllPresets(presetCollection));
+        if (!errorMessage) {
+            if (stopAll) {
+                dispatch(didStopAll({ ...stopAll }));
+                dispatch(shouldClearLogs());
+            } else {
+                if (action === ea.Stop || action === ea.Restart) {
+                    dispatch(didStopEffect(id));
+                }
+                if (action === ea.Start || action === ea.Restart) {
+                    const preset = getPreset(id, effectType, presets);
+                    if (preset) {
+                        const interval = window.setInterval(() => dispatch(shouldIncrementCounter(id)), 1000);
+                        dispatch(didStartEffect({ preset, interval }));
+                    }
+                }
+            }
+        }
+
+        dispatch(shouldWriteLog(log));
+    }
+
+    if (stageUpdate) {
+        const presetCollection = await doFetchAllPresets();
+        setEffectTypes(presetCollection);
+        dispatch(didGetAllPresets(presetCollection));
+
+        dispatch(shouldWriteLog({
+            level: LogLevel.Info,
+            category: "STAGE",
+            message: `Switched to ${stageUpdate.selectedStage} stage`
+        }));
+    }
 };

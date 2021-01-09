@@ -1,18 +1,21 @@
 import React, { ReactElement, useEffect } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
-import { initializeApp } from "./AppActions";
+import { handleSocketMessage, initializeApp } from "./AppActions";
 import { AppProps } from "./AppProps";
 import ControlPanel from "./components/ControlPanel/ControlPanel";
 import PresetManager from "./components/PresetManager/PresetManager";
+import { BackendMessage } from "./domain/client/BackendMessage";
 import { RootState } from "./RootState";
 import Routes from "./routes";
 
 function App ({
     isInitialized,
     messageQueue,
+    presets,
+    handleSocketMessage,
     initializeApp
-} :AppProps): ReactElement {
+}: AppProps): ReactElement {
     useEffect(() => {
         if (!isInitialized) {
             initializeApp();
@@ -20,7 +23,10 @@ function App ({
     }, []);
 
     messageQueue.forEach(m => {
-        console.log(m);
+        const message: BackendMessage = JSON.parse(m);
+        if (message) {
+            handleSocketMessage(message, presets);
+        }
         messageQueue.shift();
     });
 
@@ -36,15 +42,17 @@ function App ({
 }
 
 const mapDispatchToProps = {
-    initializeApp: initializeApp
+    initializeApp: initializeApp,
+    handleSocketMessage: handleSocketMessage
 };
 
 function mapStateToProps (state: RootState) {
-    const { isInitialized, messageQueue } = state.app;
+    const { isInitialized, messageQueue, presets } = state.app;
 
     return {
         isInitialized,
-        messageQueue
+        messageQueue,
+        presets
     };
 }
 

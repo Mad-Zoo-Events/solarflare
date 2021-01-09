@@ -5,7 +5,7 @@ import { Preset } from "../../domain/presets/Preset";
 import { RunningEffect } from "../../domain/RunningEffect";
 import {
     ControlPanelAction,
-    DID_RECEIVE_LOG_MESSAGE,
+    SHOULD_WRITE_LOG,
     DID_START_EFFECT,
     DID_STOP_ALL,
     DID_STOP_EFFECT,
@@ -115,7 +115,7 @@ function controlPanelReducer (
             ...state,
             runningEffects: incrementCounter(action.payload, state)
         };
-    case DID_RECEIVE_LOG_MESSAGE:
+    case SHOULD_WRITE_LOG:
         return {
             ...state,
             logEntries: addToLogs(action.payload, state)

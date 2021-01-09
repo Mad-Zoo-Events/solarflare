@@ -102,3 +102,29 @@ export function setEffectTypes (presets: PresetCollection): void {
     potionPresets.forEach(p => { p.effectType = et.Potion; });
     timeshiftPresets.forEach(p => { p.effectType = et.Timeshift; });
 }
+
+export function getPreset (id: string, effectType: EffectType, presets: PresetCollection): Preset | undefined {
+    const {
+        commandPresets,
+        dragonPresets,
+        laserPresets,
+        particlePresets,
+        timeshiftPresets,
+        potionPresets
+    } = presets;
+
+    switch (effectType) {
+    case et.Command:
+        return commandPresets.find(p => p.id === id);
+    case et.Dragon:
+        return dragonPresets.find(p => p.id === id);
+    case et.Laser:
+        return laserPresets.find(p => p.id === id);
+    case et.Particle:
+        return particlePresets.find(p => p.id === id);
+    case et.Timeshift:
+        return timeshiftPresets.find(p => p.id === id);
+    case et.Potion:
+        return potionPresets.find(p => p.id === id);
+    }
+}

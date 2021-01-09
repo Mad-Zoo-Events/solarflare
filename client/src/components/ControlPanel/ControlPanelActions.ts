@@ -7,9 +7,8 @@ import {
 } from "../../client/HttpClient";
 import { StopAllOptions } from "../../domain/client/StopAllOptions";
 import DisplayMode from "../../domain/controlpanel/DisplayMode";
-import * as ea from "../../domain/EffectAction";
 import { EffectAction } from "../../domain/EffectAction";
-import { LogEntry, LogLevel } from "../../domain/LogEntry";
+import { LogEntry } from "../../domain/LogEntry";
 import { Preset } from "../../domain/presets/Preset";
 import { RootState } from "../../RootState";
 
@@ -19,7 +18,7 @@ export const DID_SELECT_SERVERS = "controlpanel/DID_SELECT_SERVERS";
 export const DID_START_EFFECT = "controlpanel/DID_START_EFFECT";
 export const DID_STOP_EFFECT = "controlpanel/DID_STOP_EFFECT";
 export const DID_STOP_ALL = "controlpanel/DID_STOP_ALL";
-export const DID_RECEIVE_LOG_MESSAGE = "controlpanel/DID_RECEIVE_LOG_MESSAGE";
+export const SHOULD_WRITE_LOG = "controlpanel/SHOULD_WRITE_LOG";
 export const SHOULD_CLEAR_LOGS = "controlpanel/SHOULD_CLEAR_LOGS";
 export const SHOULD_INCREMENT_COUNTER = "controlpanel/INCREMENT_COUNTER";
 
@@ -39,8 +38,8 @@ interface DidStopAll {
     type: typeof DID_STOP_ALL
     payload: StopAllOptions
 }
-interface DidReceiveLogMessage {
-    type: typeof DID_RECEIVE_LOG_MESSAGE
+interface ShouldWriteLog {
+    type: typeof SHOULD_WRITE_LOG
     payload: LogEntry
 }
 interface ShouldClearLogs {
@@ -54,59 +53,28 @@ interface ShouldIncrementCounter {
 export type ControlPanelAction =
     ShouldChangeDisplayMode |
     DidStartEffect | DidStopEffect | DidStopAll |
-    DidReceiveLogMessage | ShouldClearLogs |
+    ShouldWriteLog | ShouldClearLogs |
     ShouldIncrementCounter;
 
 // ACTION CREATORS
 const shouldChangeDisplayMode = createAction(SHOULD_CHANGE_DISPLAY_MODE);
-const didStartEffect = createAction<{preset: Preset, interval: number}>(DID_START_EFFECT);
-const didStopEffect = createAction<string>(DID_STOP_EFFECT);
-const didStopAll = createAction<StopAllOptions>(DID_STOP_ALL);
-const didReceiveLogMessage = createAction<LogEntry>(DID_RECEIVE_LOG_MESSAGE);
-const shouldClearLogs = createAction(SHOULD_CLEAR_LOGS);
-const shouldIncrementCounter = createAction<string>(SHOULD_INCREMENT_COUNTER);
+export const didStartEffect = createAction<{preset: Preset, interval: number}>(DID_START_EFFECT);
+export const didStopEffect = createAction<string>(DID_STOP_EFFECT);
+export const didStopAll = createAction<StopAllOptions>(DID_STOP_ALL);
+export const shouldWriteLog = createAction<LogEntry>(SHOULD_WRITE_LOG);
+export const shouldClearLogs = createAction(SHOULD_CLEAR_LOGS);
+export const shouldIncrementCounter = createAction<string>(SHOULD_INCREMENT_COUNTER);
 
 // ACTIONS
 export const selectDisplayMode = (displayMode: DisplayMode): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(shouldChangeDisplayMode(displayMode));
 };
-export const runEffect = (preset: Preset, action: EffectAction): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
+export const runEffect = (preset: Preset, action: EffectAction): ThunkAction<void, RootState, null, AnyAction> => () => {
     const { id, effectType } = preset;
-
     doRunEffect(effectType, id, action);
-
-    if (action === ea.Start) {
-        const interval = window.setInterval(() => dispatch(shouldIncrementCounter(id)), 1000);
-        dispatch(didStartEffect({ preset, interval }));
-    }
-    if (action === ea.Stop) {
-        dispatch(didStopEffect(id));
-    }
-    if (action === ea.Restart) {
-        dispatch(didStopEffect(id));
-
-        const interval = window.setInterval(() => dispatch(shouldIncrementCounter(id)), 1000);
-        dispatch(didStartEffect({ preset, interval }));
-    }
-
-    dispatch(didReceiveLogMessage({
-        level: LogLevel.Success,
-        category: action,
-        message: preset.displayName
-    }));
 };
-export const stopAll = (options: StopAllOptions): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
+export const stopAll = (options: StopAllOptions): ThunkAction<void, RootState, null, AnyAction> => () => {
     doStopAll(options);
-
-    dispatch(didStopAll(options));
-
-    dispatch(shouldClearLogs());
-
-    dispatch(didReceiveLogMessage({
-        level: LogLevel.Success,
-        category: "STOP_ALL",
-        message: options.specificTypeOnly || ""
-    }));
 };
 export const clearLogs = (): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(shouldClearLogs());
