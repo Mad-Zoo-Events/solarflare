@@ -1,4 +1,5 @@
 import { StopAllOptions } from "../../domain/client/StopAllOptions";
+import DisplayMode from "../../domain/controlpanel/DisplayMode";
 import { LogEntry } from "../../domain/LogEntry";
 import { Preset } from "../../domain/presets/Preset";
 import { RunningEffect } from "../../domain/RunningEffect";
@@ -8,14 +9,14 @@ import {
     DID_START_EFFECT,
     DID_STOP_ALL,
     DID_STOP_EFFECT,
-    SHOULD_INCREMENT_COUNTER,
     SHOULD_CHANGE_DISPLAY_MODE,
-    SHOULD_CLEAR_LOGS
+    SHOULD_CLEAR_LOGS,
+    SHOULD_INCREMENT_COUNTER
 } from "./ControlPanelActions";
 import { ControlPanelState } from "./ControlPanelState";
 
 const initialState: ControlPanelState = {
-    categorize: true,
+    displayMode: DisplayMode.Categorized,
     runningEffects: [],
     logEntries: []
 };
@@ -92,7 +93,7 @@ function controlPanelReducer (
     case SHOULD_CHANGE_DISPLAY_MODE:
         return {
             ...state,
-            categorize: action.payload
+            displayMode: action.payload
         };
     case DID_START_EFFECT:
         return {

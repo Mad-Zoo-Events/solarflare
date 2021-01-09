@@ -1,9 +1,13 @@
 div.control-panel__header-controls {
     display              : grid;
-    grid-template-columns: min-content;
+    grid-template-columns: min-content min-content;
+    gap                  : 0 1em;
 
-    &>div {
-        display       : flex;
-        vertical-align: middle;
+    & .separator {
+        border-left: 2px solid;
+    }
+
+    & .header-button {
+        color: var(--accent);
     }
 }
