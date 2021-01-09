@@ -2,6 +2,7 @@ import {
     AppAction,
     DID_GET_ALL_PRESETS,
     DID_GET_PRESETS_OF_TYPE,
+    DID_GET_SERVERS,
     DID_GET_VERSION,
     DID_INITIALIZE_APP
 } from "./AppActions";
@@ -19,6 +20,7 @@ import {
 const initialState: AppState = {
     isInitialized: false,
     version: "?",
+    servers: [],
     presets: {
         commandPresets: [],
         dragonPresets: [],
@@ -44,6 +46,11 @@ function appReducer (
         return {
             ...state,
             version: action.payload
+        };
+    case DID_GET_SERVERS:
+        return {
+            ...state,
+            servers: action.payload
         };
     case DID_GET_ALL_PRESETS:
         return {

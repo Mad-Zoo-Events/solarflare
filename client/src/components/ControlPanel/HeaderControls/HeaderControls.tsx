@@ -32,9 +32,11 @@ const HeaderControls = ({
 
 function mapStateToProps (state: RootState) {
     const displayMode = state.controlpanel.displayMode;
+    const servers = state.app.servers;
 
     return {
-        displayMode
+        displayMode,
+        servers
     };
 }
 
