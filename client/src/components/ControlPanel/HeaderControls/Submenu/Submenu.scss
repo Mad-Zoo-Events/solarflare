@@ -2,6 +2,10 @@
     color  : var(--accent);
     display: inline-flex;
 
+    & div {
+        margin: auto;
+    }
+
     & svg {
         margin-right: 0.3em;
     }

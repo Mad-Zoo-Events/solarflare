@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { ReactElement, useState } from "react";
 import "./Submenu.scss";
-import { SubmenuProps } from "./SubmenuProps";
+import { Option, SubmenuProps } from "./SubmenuProps";
 
 const Submenu = ({
     label,
@@ -11,15 +11,15 @@ const Submenu = ({
     onChange
 }: SubmenuProps): ReactElement => {
     const getSelected = () => {
-        const selected: string[] = [];
-        options.forEach(o => { o.selected && selected.push(o.value); });
+        const selected: Option[] = [];
+        options.forEach(o => { o.selected && selected.push(o); });
         return selected;
     };
 
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <>
+        <div>
             <div className="button header-control-label" onClick={() => setIsOpen(!isOpen)}>
                 {iconProps && <div><FontAwesomeIcon {...iconProps}/></div>}
                 <div>{label}</div>
@@ -30,14 +30,14 @@ const Submenu = ({
                         const { value, text, selected } = option;
                         if (multiselect) {
                             return (
-                                <div className="button option">
-                                    <label key={value} className="checkbox-container">{text}
+                                <div key={value} className="button option">
+                                    <label className="checkbox-container">{text}
                                         <input
                                             type="checkbox"
                                             defaultChecked={selected}
                                             onChange={(e) => {
                                                 option.selected = e.currentTarget.checked;
-                                                onChange(getSelected());
+                                                onChange(option, getSelected());
                                             }}
                                         />
                                         <span></span>
@@ -47,14 +47,14 @@ const Submenu = ({
                         }
 
                         return (
-                            <div key={value} className="button option" onClick={() => onChange([value])}>
+                            <div key={value} className="button option" onClick={() => onChange(option)}>
                                 {text}
                             </div>
                         );
                     })}
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

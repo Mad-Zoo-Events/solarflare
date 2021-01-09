@@ -5,8 +5,9 @@ import { ThunkAction } from "redux-thunk";
 import {
     fetchAllPresets as doFetchAllPresets,
     fetchPresetsOfType as doFetchPresetsOfType,
-
-    getServers as doGetServers, getVersion as doGetVersion
+    getVersion as doGetVersion,
+    getServers as doGetServers,
+    toggleServer as doToggleServer
 } from "./client/Client";
 import { Server } from "./domain/client/Server";
 import { EffectType } from "./domain/EffectType";
@@ -72,4 +73,7 @@ export const initializeApp = (): ThunkAction<void, RootState, null, AnyAction> =
 export const fetchPresetsOfType = (effectType: EffectType): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {
     const presets = await doFetchPresetsOfType(effectType);
     dispatch(didGetPresetsOfType({ effectType, presets }));
+};
+export const toggleServer = (server: Server): ThunkAction<void, RootState, null, AnyAction> => () => {
+    doToggleServer(server);
 };
