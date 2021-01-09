@@ -8,7 +8,7 @@ const LogEntry = ({
 }: LogEntryProps): ReactElement => {
     const { message, category } = logEntry;
     const timestamp = new Date().toLocaleTimeString();
-    const style = { color: getColor(logEntry) };
+    const style = { color: `var(--${getColor(logEntry)})` };
     return (
         <div className="control-panel__log-entry">
             <span>{timestamp}</span>
