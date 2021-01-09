@@ -1,8 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
+import DisplayMode from "../../domain/controlpanel/DisplayMode";
 import * as et from "../../domain/EffectType";
 import { RootState } from "../../RootState";
-import { combinePresets, presetSorter } from "../../utils/utils";
+import { combinePresets } from "../../utils/utils";
 import Page from "../Page/Page";
 import CategorySection from "./CategorySection/CategorySection";
 import "./ControlPanel.scss";
@@ -14,7 +15,7 @@ import PresetControl from "./PresetControl/PresetControl";
 const ControlPanel = ({
     presets,
     runningEffects,
-    categorize
+    displayMode
 }:ControlPanelProps) => {
     return (
         <Page
@@ -22,7 +23,7 @@ const ControlPanel = ({
             headerElements={<HeaderControls/>}
             footerElements={<FooterControls/>}
         >
-            {categorize && <div className="control-panel__categorized-holder">
+            {displayMode === DisplayMode.Categorized && <div className="control-panel__categorized-holder">
                 <CategorySection effectType={et.Command} presets={presets.commandPresets} runningEffects={runningEffects}/>
                 <CategorySection effectType={et.Dragon} presets={presets.dragonPresets} runningEffects={runningEffects}/>
                 <CategorySection effectType={et.Laser} presets={presets.laserPresets} runningEffects={runningEffects}/>
@@ -31,7 +32,7 @@ const ControlPanel = ({
                 <CategorySection effectType={et.Timeshift} presets={presets.timeshiftPresets} runningEffects={runningEffects}/>
             </div>}
 
-            {!categorize && <div className="control-panel__placeholder-category-holder">
+            {displayMode === DisplayMode.Uncategorized && <div className="control-panel__placeholder-category-holder">
                 <CategorySection effectType={et.Command} presets={[]} runningEffects={[]}/>
                 <CategorySection effectType={et.Dragon} presets={[]} runningEffects={[]}/>
                 <CategorySection effectType={et.Laser} presets={[]} runningEffects={[]}/>
@@ -40,7 +41,7 @@ const ControlPanel = ({
                 <CategorySection effectType={et.Timeshift} presets={[]} runningEffects={[]}/>
             </div>}
 
-            {!categorize && combinePresets(presets).sort(presetSorter).map(preset =>
+            {displayMode === DisplayMode.Uncategorized && combinePresets(presets).map(preset =>
                 <PresetControl
                     key={preset.id}
                     preset={preset}
@@ -53,12 +54,12 @@ const ControlPanel = ({
 
 function mapStateToProps (state: RootState) {
     const { presets } = state.app;
-    const { categorize, runningEffects } = state.controlpanel;
+    const { displayMode, runningEffects } = state.controlpanel;
 
     return {
         presets,
         runningEffects,
-        categorize
+        displayMode
     };
 }
 

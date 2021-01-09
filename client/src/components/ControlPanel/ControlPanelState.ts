@@ -1,8 +1,9 @@
+import DisplayMode from "../../domain/controlpanel/DisplayMode";
 import { LogEntry } from "../../domain/LogEntry";
 import { RunningEffect } from "../../domain/RunningEffect";
 
 export interface ControlPanelState {
-    categorize: boolean
+    displayMode: DisplayMode
     runningEffects: RunningEffect[]
 
     logEntries: LogEntry[]

@@ -17,7 +17,8 @@ import {
     faStop,
     faQuestion,
     faStopCircle as fasStopCircle,
-    faStopwatch
+    faStopwatch,
+    faEye
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -47,6 +48,7 @@ library.add(
     faQuestion,
     fasStopCircle,
     faStopwatch,
+    faEye,
 
     faEdit,
     faClone,

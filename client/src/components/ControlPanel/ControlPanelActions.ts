@@ -6,6 +6,7 @@ import {
     stopAll as doStopAll
 } from "../../client/Client";
 import { StopAllOptions } from "../../domain/client/StopAllOptions";
+import DisplayMode from "../../domain/controlpanel/DisplayMode";
 import * as ea from "../../domain/EffectAction";
 import { EffectAction } from "../../domain/EffectAction";
 import { LogEntry, LogLevel } from "../../domain/LogEntry";
@@ -24,7 +25,7 @@ export const SHOULD_INCREMENT_COUNTER = "controlpanel/INCREMENT_COUNTER";
 
 interface ShouldChangeDisplayMode {
     type: typeof SHOULD_CHANGE_DISPLAY_MODE
-    payload: boolean
+    payload: DisplayMode
 }
 interface DidStartEffect {
     type: typeof DID_START_EFFECT
@@ -66,8 +67,8 @@ const shouldClearLogs = createAction(SHOULD_CLEAR_LOGS);
 const shouldIncrementCounter = createAction<string>(SHOULD_INCREMENT_COUNTER);
 
 // ACTIONS
-export const selectDisplayMode = (categorized: boolean): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
-    dispatch(shouldChangeDisplayMode(categorized));
+export const selectDisplayMode = (displayMode: DisplayMode): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
+    dispatch(shouldChangeDisplayMode(displayMode));
 };
 export const runEffect = (preset: Preset, action: EffectAction): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     const { id, effectType } = preset;

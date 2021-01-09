@@ -83,7 +83,13 @@ export function presetSorter (p1: Preset, p2: Preset): number {
 export function combinePresets (presets: PresetCollection): Preset[] {
     const { commandPresets, dragonPresets, laserPresets, particlePresets, potionPresets, timeshiftPresets } = presets;
 
-    return ([] as Preset[]).concat(commandPresets, dragonPresets, laserPresets, particlePresets, potionPresets, timeshiftPresets);
+    return ([] as Preset[]).concat(commandPresets, dragonPresets, laserPresets, particlePresets, potionPresets, timeshiftPresets).sort(presetSorter);
+}
+
+export function combinePresetsWithoutCommands (presets: PresetCollection): Preset[] {
+    const { dragonPresets, laserPresets, particlePresets, potionPresets, timeshiftPresets } = presets;
+
+    return ([] as Preset[]).concat(dragonPresets, laserPresets, particlePresets, potionPresets, timeshiftPresets).sort(presetSorter);
 }
 
 export function setEffectTypes (presets: PresetCollection): void {

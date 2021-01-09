@@ -1,44 +1,46 @@
-import React, { ChangeEvent, ReactElement } from "react";
+import React, { ReactElement } from "react";
 import { connect } from "react-redux";
+import DisplayMode from "../../../domain/controlpanel/DisplayMode";
 import { RootState } from "../../../RootState";
 import { selectDisplayMode } from "../ControlPanelActions";
 import "./HeaderControls.scss";
 import { HeaderControlsProps } from "./HeaderControlsProps";
+import Submenu from "./Submenu/Submenu";
 
 const HeaderControls = ({
-    isCategorizedView,
-    toggleCategorizedView
+    displayMode,
+    selectDisplayMode
 }: HeaderControlsProps): ReactElement => {
-    const handleCategorizedSwitch = (e: ChangeEvent<HTMLInputElement>) => {
-        toggleCategorizedView(e.currentTarget.checked);
-    };
+    const displayOptions = Object.keys(DisplayMode).map(key => ({
+        value: key,
+        text: key as DisplayMode,
+        selected: displayMode === key
+    }));
+    console.log(displayOptions);
 
     return (
         <div className="control-panel__header-controls">
-            <div>
-                <label className="checkbox-container">Display Categories
-                    <input
-                        type="checkbox"
-                        defaultChecked={isCategorizedView}
-                        onChange={handleCategorizedSwitch}
-                    />
-                    <span></span>
-                </label>
-            </div>
+            <div className="separator"/>
+            <Submenu
+                label="Display Options"
+                iconProps={{ icon: ["fas", "eye"], size: "2x" }}
+                options={displayOptions}
+                onChange={(selected) => selectDisplayMode(selected[0] as DisplayMode)}
+            />
         </div>
     );
 };
 
 function mapStateToProps (state: RootState) {
-    const isCategorizedView = state.controlpanel.categorize;
+    const displayMode = state.controlpanel.displayMode;
 
     return {
-        isCategorizedView
+        displayMode
     };
 }
 
 const mapDispatchToProps = {
-    toggleCategorizedView: selectDisplayMode
+    selectDisplayMode: selectDisplayMode
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderControls);

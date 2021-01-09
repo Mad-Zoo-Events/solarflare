@@ -2,7 +2,7 @@ import { HandleThunkActionCreator } from "react-redux";
 import { selectDisplayMode } from "../ControlPanelActions";
 
 export interface HeaderControlsProps {
-    isCategorizedView: boolean
+    displayMode: string
 
-    toggleCategorizedView: HandleThunkActionCreator<typeof selectDisplayMode>
+    selectDisplayMode: HandleThunkActionCreator<typeof selectDisplayMode>
 }
