@@ -51,6 +51,7 @@ func main() {
 	router.GET("/version", VersionHandler)
 	router.PATCH("/servers/:id/:action", ToggleServerHandler)
 	router.GET("/servers", GetServersHandler)
+	router.GET("/stages", GetStagesHandler)
 	router.POST("/selectstage/:stage", SelectStageHandler)
 
 	// effect execution

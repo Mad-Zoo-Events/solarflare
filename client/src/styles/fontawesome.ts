@@ -19,7 +19,8 @@ import {
     faStopCircle as fasStopCircle,
     faStopwatch,
     faEye,
-    faSatelliteDish
+    faSatelliteDish,
+    faGlobeAsia
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -51,6 +52,7 @@ library.add(
     faStopwatch,
     faEye,
     faSatelliteDish,
+    faGlobeAsia,
 
     faEdit,
     faClone,

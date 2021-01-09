@@ -1,29 +1,36 @@
 import React, { ReactElement } from "react";
 import { connect } from "react-redux";
-import { toggleServer } from "../../../AppActions";
+import { selectStage, toggleServer } from "../../../AppActions";
 import DisplayMode from "../../../domain/controlpanel/DisplayMode";
 import { RootState } from "../../../RootState";
 import { selectDisplayMode } from "../ControlPanelActions";
 import "./HeaderControls.scss";
 import { HeaderControlsProps } from "./HeaderControlsProps";
-import Submenu from "./Submenu/Submenu";
+import Submenu from "./Subment/Submenu";
 
 const HeaderControls = ({
-    displayMode,
     servers,
+    stages,
     selectDisplayMode,
-    toggleServer
+    toggleServer,
+    selectStage
 }: HeaderControlsProps): ReactElement => {
     const displayModeOptions = Object.values(DisplayMode).map(key => ({
         value: key,
         text: key as DisplayMode,
-        selected: displayMode === key
+        selected: false
     }));
 
     const serverOptions = servers.map(({ id, name, isActive }) => ({
         value: id,
         text: name,
         selected: isActive
+    }));
+
+    const stageOptions = stages.map(stage => ({
+        value: stage,
+        text: stage.toUpperCase(),
+        selected: false
     }));
 
     return (
@@ -43,23 +50,30 @@ const HeaderControls = ({
                 multiselect
                 onChange={(changed) => toggleServer({ id: changed.value, isActive: changed.selected, name: changed.text })}
             />
+            <div className="separator"/>
+            <Submenu
+                label="Stage Selection"
+                iconProps={{ icon: ["fas", "globe-asia"], size: "2x" }}
+                options={stageOptions}
+                onChange={(changed) => selectStage(changed.value)}
+            />
         </div>
     );
 };
 
 function mapStateToProps (state: RootState) {
-    const displayMode = state.controlpanel.displayMode;
-    const servers = state.app.servers;
+    const { servers, stages } = state.app;
 
     return {
-        displayMode,
-        servers
+        servers,
+        stages
     };
 }
 
 const mapDispatchToProps = {
     selectDisplayMode: selectDisplayMode,
-    toggleServer: toggleServer
+    toggleServer: toggleServer,
+    selectStage: selectStage
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderControls);

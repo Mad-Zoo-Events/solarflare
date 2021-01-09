@@ -5,5 +5,6 @@ export interface AppState {
     isInitialized: boolean
     version: string
     servers: Server[]
+    stages: string[]
     presets: PresetCollection
 }

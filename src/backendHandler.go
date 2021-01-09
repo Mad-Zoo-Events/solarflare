@@ -38,3 +38,8 @@ func SelectStageHandler(c *gin.Context) {
 
 	c.Status(http.StatusNoContent)
 }
+
+// GetStagesHandler handles requests to retrieve the list of stages currently set up
+func GetStagesHandler(c *gin.Context) {
+	c.JSON(http.StatusOK, config.Get().Stages)
+}
