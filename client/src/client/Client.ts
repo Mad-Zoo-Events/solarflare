@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Server } from "../domain/client/Server";
 import { StopAllOptions } from "../domain/client/StopAllOptions";
 import { EffectAction } from "../domain/EffectAction";
 import { EffectType } from "../domain/EffectType";
@@ -8,6 +9,9 @@ import { Preset } from "../domain/presets/Preset";
 // Status
 export async function getVersion (): Promise<string> {
     return (await axios.get<string>("/version")).data;
+}
+export async function getServers (): Promise<Server[]> {
+    return (await axios.get<Server[]>("/servers")).data;
 }
 
 // Preset Retrieval
