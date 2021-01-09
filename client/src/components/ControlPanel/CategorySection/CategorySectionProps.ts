@@ -5,8 +5,8 @@ import { RunningEffect } from "../../../domain/RunningEffect";
 import { stopAll } from "../ControlPanelActions";
 
 export interface CategorySectionProps {
-    presets: Preset[]
-    runningEffects: RunningEffect[]
+    presets?: Preset[]
+    runningEffects?: RunningEffect[]
     effectType: EffectType
 
     stopAll: HandleThunkActionCreator<typeof stopAll>
