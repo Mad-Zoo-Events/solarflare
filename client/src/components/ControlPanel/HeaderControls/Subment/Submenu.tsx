@@ -47,7 +47,11 @@ const Submenu = ({
                         }
 
                         return (
-                            <div key={value} className="button option" onClick={() => onChange(option)}>
+                            <div
+                                key={value}
+                                className={`button option${selected ? " selected" : ""}`}
+                                onClick={() => onChange(option)}
+                            >
                                 {text}
                             </div>
                         );
