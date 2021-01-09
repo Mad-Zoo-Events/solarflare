@@ -167,7 +167,8 @@ func StopAll(request *model.StopAllRequest) (err error) {
 	}
 
 	if err != nil {
-		update.EffectUpdate.ErrorMessage = err.Error()
+		errMsg := err.Error()
+		update.EffectUpdate.ErrorMessage = &errMsg
 	}
 
 	SendUIUpdate(update)
@@ -205,15 +206,16 @@ func runStopAll(effectType *model.EffectType) error {
 func sendEffectUpdate(id string, effectType model.EffectType, dispalyName string, action model.EffectAction, err error) {
 	update := model.UIUpdate{
 		EffectUpdate: &model.EffectUpdate{
-			ID:          id,
-			EffectType:  effectType,
-			DisplayName: dispalyName,
-			Action:      action,
+			ID:          &id,
+			EffectType:  &effectType,
+			DisplayName: &dispalyName,
+			Action:      &action,
 		},
 	}
 
 	if err != nil {
-		update.EffectUpdate.ErrorMessage = err.Error()
+		errMsg := err.Error()
+		update.EffectUpdate.ErrorMessage = &errMsg
 	}
 
 	SendUIUpdate(update)
