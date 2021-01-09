@@ -33,6 +33,11 @@
             color            : var(--accent);
             font-variant-caps: petite-caps;
         }
+
+        & .selected {
+            background-color: var(--background-alpha2);
+            border-radius   : 0.5em;
+        }
     }
 
     & .show-popup {
