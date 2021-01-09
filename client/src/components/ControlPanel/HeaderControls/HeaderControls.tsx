@@ -1,5 +1,6 @@
 import React, { ReactElement } from "react";
 import { connect } from "react-redux";
+import { toggleServer } from "../../../AppActions";
 import DisplayMode from "../../../domain/controlpanel/DisplayMode";
 import { RootState } from "../../../RootState";
 import { selectDisplayMode } from "../ControlPanelActions";
@@ -9,12 +10,20 @@ import Submenu from "./Submenu/Submenu";
 
 const HeaderControls = ({
     displayMode,
-    selectDisplayMode
+    servers,
+    selectDisplayMode,
+    toggleServer
 }: HeaderControlsProps): ReactElement => {
-    const displayOptions = Object.values(DisplayMode).map(key => ({
+    const displayModeOptions = Object.values(DisplayMode).map(key => ({
         value: key,
         text: key as DisplayMode,
         selected: displayMode === key
+    }));
+
+    const serverOptions = servers.map(({ id, name, isActive }) => ({
+        value: id,
+        text: name,
+        selected: isActive
     }));
 
     return (
@@ -23,8 +32,16 @@ const HeaderControls = ({
             <Submenu
                 label="Display Mode"
                 iconProps={{ icon: ["fas", "eye"], size: "2x" }}
-                options={displayOptions}
-                onChange={(selected) => selectDisplayMode(selected[0] as DisplayMode)}
+                options={displayModeOptions}
+                onChange={(changed) => selectDisplayMode(changed.value as DisplayMode)}
+            />
+            <div className="separator"/>
+            <Submenu
+                label="Server Selection"
+                iconProps={{ icon: ["fas", "satellite-dish"], size: "2x" }}
+                options={serverOptions}
+                multiselect
+                onChange={(changed) => toggleServer({ id: changed.value, isActive: changed.selected, name: changed.text })}
             />
         </div>
     );
@@ -41,7 +58,8 @@ function mapStateToProps (state: RootState) {
 }
 
 const mapDispatchToProps = {
-    selectDisplayMode: selectDisplayMode
+    selectDisplayMode: selectDisplayMode,
+    toggleServer: toggleServer
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderControls);

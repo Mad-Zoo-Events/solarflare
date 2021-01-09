@@ -13,6 +13,10 @@ export async function getVersion (): Promise<string> {
 export async function getServers (): Promise<Server[]> {
     return (await axios.get<Server[]>("/servers")).data;
 }
+export async function toggleServer ({ id, isActive }: Server): Promise<void> {
+    const action = isActive ? "enable" : "disable";
+    return await axios.patch(`/servers/${id}/${action}`);
+}
 
 // Preset Retrieval
 export async function fetchAllPresets (): Promise<PresetCollection> {
