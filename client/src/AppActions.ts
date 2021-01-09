@@ -1,3 +1,4 @@
+import { connect } from "@giantmachines/redux-websocket";
 import "react-toastify/dist/ReactToastify.css";
 import { AnyAction } from "redux";
 import { createAction } from "redux-actions";
@@ -7,10 +8,12 @@ import {
     fetchPresetsOfType as doFetchPresetsOfType,
 
     getServers as doGetServers,
-    getStages as doGetStages, getVersion as doGetVersion,
+    getStages as doGetStages,
+    getVersion as doGetVersion,
 
-    selectStage as doSelectStage, toggleServer as doToggleServer
-} from "./client/Client";
+    selectStage as doSelectStage,
+    toggleServer as doToggleServer
+} from "./client/HttpClient";
 import { Server } from "./domain/client/Server";
 import { EffectType } from "./domain/EffectType";
 import { PresetCollection } from "./domain/PresetCollection";
@@ -23,8 +26,9 @@ export const DID_INITIALIZE_APP = "app/DID_INITIALIZE_APP";
 export const DID_GET_VERSION = "app/DID_GET_VERSION";
 export const DID_GET_SERVERS = "app/DID_GET_SERVERS";
 export const DID_GET_STAGES = "app/DID_GET_STAGES";
-export const DID_GET_ALL_PRESETS = "presetmanager/DID_GET_ALL_PRESETS";
-export const DID_GET_PRESETS_OF_TYPE = "presetmanager/DID_GET_PRESETS_OF_TYPE";
+export const DID_GET_ALL_PRESETS = "app/DID_GET_ALL_PRESETS";
+export const DID_GET_PRESETS_OF_TYPE = "app/DID_GET_PRESETS_OF_TYPE";
+export const DID_RECEIVE_WEBSOCKET_MESSAGE = "REDUX_WEBSOCKET::MESSAGE";
 
 interface DidInitializeApp {
     type: typeof DID_INITIALIZE_APP,
@@ -50,11 +54,19 @@ interface DidGetPresetsOfType {
     type: typeof DID_GET_PRESETS_OF_TYPE
     payload: { effectType: EffectType, presets: Preset[] }
 }
+interface DidReceiveWebsocketMessage {
+    type: typeof DID_RECEIVE_WEBSOCKET_MESSAGE,
+    payload: {
+        message: string,
+        origin: string,
+    },
+}
 
 export type AppAction =
     DidInitializeApp |
     DidGetVersion | DidGetServers | DidGetStages |
-    DidGetAllPresets | DidGetPresetsOfType;
+    DidGetAllPresets | DidGetPresetsOfType |
+    DidReceiveWebsocketMessage;
 
 // ACTION CREATORS
 const didInitializeApp = createAction(DID_INITIALIZE_APP);
@@ -66,6 +78,12 @@ const didGetPresetsOfType = createAction<{ effectType: EffectType, presets: Pres
 
 // ACTIONS
 export const initializeApp = (): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {
+    const url = location.hostname === "localhost"
+        ? "ws://localhost:5000/socket"
+        : `wss://${window.location.host}/socket`;
+
+    dispatch(connect(url));
+
     const version = await doGetVersion();
     dispatch(didGetVersion(version));
 

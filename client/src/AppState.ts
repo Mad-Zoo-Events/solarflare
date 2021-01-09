@@ -1,3 +1,4 @@
+import { BackendMessage } from "./domain/client/BackendMessage";
 import { Server } from "./domain/client/Server";
 import { PresetCollection } from "./domain/PresetCollection";
 
@@ -7,4 +8,5 @@ export interface AppState {
     servers: Server[]
     stages: string[]
     presets: PresetCollection
+    messageQueue: string[]
 }

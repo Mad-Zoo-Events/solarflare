@@ -9,6 +9,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.12",
+    "@giantmachines/redux-websocket": "^1.4.0",
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.53",
     "@types/react-color": "^3.0.4",

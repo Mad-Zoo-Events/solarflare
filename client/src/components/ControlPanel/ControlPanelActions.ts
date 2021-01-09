@@ -4,7 +4,7 @@ import { ThunkAction } from "redux-thunk";
 import {
     runEffect as doRunEffect,
     stopAll as doStopAll
-} from "../../client/Client";
+} from "../../client/HttpClient";
 import { StopAllOptions } from "../../domain/client/StopAllOptions";
 import DisplayMode from "../../domain/controlpanel/DisplayMode";
 import * as ea from "../../domain/EffectAction";
@@ -55,7 +55,7 @@ export type ControlPanelAction =
     ShouldChangeDisplayMode |
     DidStartEffect | DidStopEffect | DidStopAll |
     DidReceiveLogMessage | ShouldClearLogs |
-    ShouldIncrementCounter
+    ShouldIncrementCounter;
 
 // ACTION CREATORS
 const shouldChangeDisplayMode = createAction(SHOULD_CHANGE_DISPLAY_MODE);
