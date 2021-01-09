@@ -11,18 +11,17 @@ const HeaderControls = ({
     displayMode,
     selectDisplayMode
 }: HeaderControlsProps): ReactElement => {
-    const displayOptions = Object.keys(DisplayMode).map(key => ({
+    const displayOptions = Object.values(DisplayMode).map(key => ({
         value: key,
         text: key as DisplayMode,
         selected: displayMode === key
     }));
-    console.log(displayOptions);
 
     return (
         <div className="control-panel__header-controls">
             <div className="separator"/>
             <Submenu
-                label="Display Options"
+                label="Display Mode"
                 iconProps={{ icon: ["fas", "eye"], size: "2x" }}
                 options={displayOptions}
                 onChange={(selected) => selectDisplayMode(selected[0] as DisplayMode)}

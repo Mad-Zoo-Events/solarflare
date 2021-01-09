@@ -66,11 +66,11 @@ const CategorySection = ({
                 />
                 <span>{header}</span>
             </div>
-            {presets.map((preset) => {
+            {presets?.map((preset) => {
                 return <PresetControl
                     key={preset.id}
                     preset={preset}
-                    secondsRunning={runningEffects.find(e => e.preset.id === preset.id)?.secondsRunning}
+                    secondsRunning={runningEffects?.find(e => e.preset.id === preset.id)?.secondsRunning}
                 />;
             })}
         </div>
