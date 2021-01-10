@@ -6,7 +6,7 @@ import { RootState } from "../../../RootState";
 import { selectDisplayMode } from "../ControlPanelActions";
 import "./HeaderControls.scss";
 import { HeaderControlsProps } from "./HeaderControlsProps";
-import Submenu from "./Subment/Submenu";
+import Submenu from "./Submenu/Submenu";
 
 const HeaderControls = ({
     servers,
