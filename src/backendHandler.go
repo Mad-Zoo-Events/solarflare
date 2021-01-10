@@ -41,5 +41,11 @@ func SelectStageHandler(c *gin.Context) {
 
 // GetStagesHandler handles requests to retrieve the list of stages currently set up
 func GetStagesHandler(c *gin.Context) {
-	c.JSON(http.StatusOK, config.Get().Stages)
+	cfg := config.Get()
+	stageResponse := model.StageUpdate{
+		Stages:        cfg.Stages,
+		SelectedStage: cfg.SelectedStage,
+	}
+
+	c.JSON(http.StatusOK, stageResponse)
 }

@@ -54,7 +54,7 @@ interface DidGetServers {
 }
 interface DidGetStages {
     type: typeof DID_GET_STAGES
-    payload: string[]
+    payload: {stages: string[], selectedStage: string}
 }
 interface DidGetAllPresets {
     type: typeof DID_GET_ALL_PRESETS
@@ -82,7 +82,7 @@ export type AppAction =
 const didInitializeApp = createAction(DID_INITIALIZE_APP);
 const didGetVersion = createAction<string>(DID_GET_VERSION);
 const didGetServers = createAction<Server[]>(DID_GET_SERVERS);
-const didGetStages = createAction<string[]>(DID_GET_STAGES);
+const didGetStages = createAction<{stages: string[], selectedStage: string}>(DID_GET_STAGES);
 const didGetAllPresets = createAction<PresetCollection>(DID_GET_ALL_PRESETS);
 const didGetPresetsOfType = createAction<{ effectType: EffectType, presets: Preset[] }>(DID_GET_PRESETS_OF_TYPE);
 
@@ -123,7 +123,8 @@ export const selectStage = (stage: string): ThunkAction<void, RootState, null, A
 export const handleSocketMessage = (message: BackendMessage, presets: PresetCollection): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {
     const {
         effectUpdate,
-        stageUpdate
+        stageUpdate,
+        serverUpdate
     } = message;
 
     if (effectUpdate) {
@@ -161,6 +162,8 @@ export const handleSocketMessage = (message: BackendMessage, presets: PresetColl
     }
 
     if (stageUpdate) {
+        dispatch(didGetStages(stageUpdate));
+
         const presetCollection = await doFetchAllPresets();
         setEffectTypes(presetCollection);
         dispatch(didGetAllPresets(presetCollection));
@@ -170,5 +173,10 @@ export const handleSocketMessage = (message: BackendMessage, presets: PresetColl
             category: "STAGE",
             message: `Switched to ${stageUpdate.selectedStage} stage`
         }));
+    }
+
+    if (serverUpdate) {
+        const { servers } = serverUpdate;
+        dispatch(didGetServers(servers));
     }
 };

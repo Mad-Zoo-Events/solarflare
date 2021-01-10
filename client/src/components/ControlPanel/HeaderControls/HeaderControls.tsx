@@ -11,6 +11,7 @@ import Submenu from "./Subment/Submenu";
 const HeaderControls = ({
     servers,
     stages,
+    selectedStage,
     displayMode,
     selectDisplayMode,
     toggleServer,
@@ -31,7 +32,7 @@ const HeaderControls = ({
     const stageOptions = stages.map(stage => ({
         value: stage,
         text: stage.toUpperCase(),
-        selected: false
+        selected: stage === selectedStage
     }));
 
     return (
@@ -63,12 +64,13 @@ const HeaderControls = ({
 };
 
 function mapStateToProps (state: RootState) {
-    const { servers, stages } = state.app;
+    const { servers, stages, selectedStage } = state.app;
     const { displayMode } = state.controlpanel;
 
     return {
         servers,
         stages,
+        selectedStage,
         displayMode
     };
 }

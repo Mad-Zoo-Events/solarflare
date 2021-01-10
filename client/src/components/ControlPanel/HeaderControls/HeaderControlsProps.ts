@@ -7,6 +7,7 @@ import { selectDisplayMode } from "../ControlPanelActions";
 export interface HeaderControlsProps {
     servers: Server[]
     stages: string[]
+    selectedStage: string
     displayMode: DisplayMode
 
     selectDisplayMode: HandleThunkActionCreator<typeof selectDisplayMode>

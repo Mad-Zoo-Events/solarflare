@@ -13,7 +13,6 @@ type ControlPanel struct {
 	MinecraftColors        []MinecraftColor
 
 	RegisteredServers []Server
-	ActiveServerCount int
 
 	Stages        []string
 	SelectedStage string
