@@ -8,6 +8,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/gorilla/websocket"
 
+	"github.com/eynorey/solarflare/src/config"
 	"github.com/eynorey/solarflare/src/model"
 	"github.com/eynorey/solarflare/src/utils/sferror"
 )
@@ -23,6 +24,7 @@ var conns = make(map[uuid.UUID]*connection, 0)
 
 // RegisterSocket adds a new socket to the pool
 func RegisterSocket(conn *websocket.Conn) {
+	cfg := config.Get()
 	log.Println("Registering socket connection with " + conn.RemoteAddr().String())
 	id := uuid.New()
 	conns[id] = &connection{
@@ -34,6 +36,13 @@ func RegisterSocket(conn *websocket.Conn) {
 	bpm, multiplier := GetClockSpeed()
 
 	update := model.UIUpdate{
+		ServerUpdate: &model.ServerUpdate{
+			Servers: cfg.Servers,
+		},
+		StageUpdate: &model.StageUpdate{
+			Stages:        cfg.Stages,
+			SelectedStage: cfg.SelectedStage,
+		},
 		ClockSpeedUpdate: &model.ClockSpeedUpdate{
 			ClockSpeedBPM:        bpm,
 			ClockSpeedMultiplier: multiplier,

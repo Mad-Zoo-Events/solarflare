@@ -5,18 +5,13 @@ import { EffectAction } from "../domain/EffectAction";
 import { EffectType } from "../domain/EffectType";
 import { PresetCollection } from "../domain/PresetCollection";
 import { Preset } from "../domain/presets/Preset";
-import { StageMessage } from "../domain/client/BackendMessage";
 
 // Status
 export async function getVersion (): Promise<string> {
     return (await axios.get<string>("/version")).data;
 }
-export async function getServers (): Promise<Server[]> {
-    return (await axios.get<Server[]>("/servers")).data;
-}
-export async function getStages (): Promise<StageMessage> {
-    return (await axios.get<StageMessage>("/stages")).data;
-}
+
+// Backend
 export async function toggleServer ({ id, isActive }: Server): Promise<void> {
     const action = isActive ? "enable" : "disable";
     return await axios.patch(`/servers/${id}/${action}`);

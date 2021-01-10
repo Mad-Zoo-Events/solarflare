@@ -27,25 +27,9 @@ func ToggleServerHandler(c *gin.Context) {
 	c.Status(http.StatusNoContent)
 }
 
-// GetServersHandler handles requests to retrieve the list of servers currently set up
-func GetServersHandler(c *gin.Context) {
-	c.JSON(http.StatusOK, config.Get().Servers)
-}
-
 // SelectStageHandler handles requests to select a different data source for presets
 func SelectStageHandler(c *gin.Context) {
 	controller.SelectStage(c.Param("stage"))
 
 	c.Status(http.StatusNoContent)
-}
-
-// GetStagesHandler handles requests to retrieve the list of stages currently set up
-func GetStagesHandler(c *gin.Context) {
-	cfg := config.Get()
-	stageResponse := model.StageUpdate{
-		Stages:        cfg.Stages,
-		SelectedStage: cfg.SelectedStage,
-	}
-
-	c.JSON(http.StatusOK, stageResponse)
 }
