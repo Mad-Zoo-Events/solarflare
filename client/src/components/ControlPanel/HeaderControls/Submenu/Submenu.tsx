@@ -47,12 +47,15 @@ const Submenu = ({
                         }
 
                         return (
-                            <div
-                                key={value}
-                                className={`button option${selected ? " selected" : ""}`}
-                                onClick={() => onChange(option)}
-                            >
-                                {text}
+                            <div key={value} className="button option">
+                                <label className="radio-container">{text}
+                                    <input
+                                        type="radio"
+                                        checked={selected}
+                                        onClick={() => onChange(option)}
+                                    />
+                                    <span></span>
+                                </label>
                             </div>
                         );
                     })}
