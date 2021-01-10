@@ -26,8 +26,8 @@ func ToggleServer(id string, action model.ServerAction) error {
 	}
 
 	update := model.UIUpdate{
-		StatusUpdate: &model.StatusUpdate{
-			ActiveServerIDs: getActiveServerIDs(),
+		ServerUpdate: &model.ServerUpdate{
+			Servers: cfg.Servers,
 		},
 	}
 
@@ -50,6 +50,7 @@ func SelectStage(stage string) {
 
 	update := model.UIUpdate{
 		StageUpdate: &model.StageUpdate{
+			Stages:        cfg.Stages,
 			SelectedStage: stage,
 		},
 	}

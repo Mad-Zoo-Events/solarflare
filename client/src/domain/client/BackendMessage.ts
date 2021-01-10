@@ -2,13 +2,14 @@ import { StopAllOptions } from "./StopAllOptions";
 import { ClockAction } from "../ClockAction";
 import { EffectAction } from "../EffectAction";
 import { EffectType } from "../EffectType";
+import { Server } from "./Server";
 
 export interface BackendMessage {
     effectUpdate?: EffectMessage
     bossbarUpdate?: BossbarMessage
     clockUpdate?: ClockMessage
     clockSpeedUpdate?: ClockSpeedMessage
-    statusUpdate?: StatusMessage
+    serverUpdate?: ServerMessage
     stageUpdate?: StageMessage
     commandUpdate?: CommandMessage
 }
@@ -42,11 +43,12 @@ export interface ClockSpeedMessage {
     clockSpeedMultiplier: number
 }
 
-export interface StatusMessage {
-    activeServerIDs: string[]
+export interface ServerMessage {
+    servers: Server[]
 }
 
 export interface StageMessage {
+    stages: string[]
     selectedStage: string
 }
 

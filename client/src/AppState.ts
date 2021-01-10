@@ -8,6 +8,8 @@ export interface AppState {
     version: string
     servers: Server[]
     stages: string[]
+    selectedStage: string
+
     presets: PresetCollection
 
     messageQueue: BackendMessage[]

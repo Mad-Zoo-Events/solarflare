@@ -24,6 +24,7 @@ const initialState: AppState = {
     version: "?",
     servers: [],
     stages: [],
+    selectedStage: "",
     messageQueue: [],
     presets: {
         commandPresets: [],
@@ -59,7 +60,8 @@ function appReducer (
     case DID_GET_STAGES:
         return {
             ...state,
-            stages: action.payload
+            stages: action.payload.stages,
+            selectedStage: action.payload.selectedStage
         };
     case DID_GET_ALL_PRESETS:
         return {

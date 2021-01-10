@@ -6,7 +6,7 @@ type UIUpdate struct {
 	BossbarUpdate    *BossbarUpdate    `json:"bossbarUpdate,omitempty"`
 	ClockUpdate      *ClockUpdate      `json:"clockUpdate,omitempty"`
 	ClockSpeedUpdate *ClockSpeedUpdate `json:"clockSpeedUpdate,omitempty"`
-	StatusUpdate     *StatusUpdate     `json:"statusUpdate,omitempty"`
+	ServerUpdate     *ServerUpdate     `json:"serverUpdate,omitempty"`
 	StageUpdate      *StageUpdate      `json:"stageUpdate,omitempty"`
 	CommandUpdate    *CommandUpdate    `json:"commandUpdate,omitempty"`
 }
@@ -44,14 +44,15 @@ type ClockSpeedUpdate struct {
 	ClockSpeedMultiplier float64 `json:"clockSpeedMultiplier"`
 }
 
-// StatusUpdate is the model used to send updates on network status to the UI
-type StatusUpdate struct {
-	ActiveServerIDs []string `json:"activeServerIDs"`
+// ServerUpdate is the model used to send an update for when a server selection has been made
+type ServerUpdate struct {
+	Servers []Server `json:"servers"`
 }
 
 // StageUpdate is the model used to send the update for when a different stage has been selected
 type StageUpdate struct {
-	SelectedStage string `json:"selectedStage"`
+	Stages        []string `json:"stages"`
+	SelectedStage string   `json:"selectedStage"`
 }
 
 // CommandUpdate is the model used to send the update for when a command was executed
