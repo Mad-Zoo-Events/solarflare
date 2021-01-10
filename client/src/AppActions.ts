@@ -178,5 +178,13 @@ export const handleSocketMessage = (message: BackendMessage, presets: PresetColl
     if (serverUpdate) {
         const { servers } = serverUpdate;
         dispatch(didGetServers(servers));
+
+        const serverCount = servers.filter(s => s.isActive).length;
+
+        dispatch(shouldWriteLog({
+            level: LogLevel.Info,
+            category: "SERVERS",
+            message: `${serverCount === 1 ? "One server is" : `${serverCount} servers are`} now listening`
+        }));
     }
 };
