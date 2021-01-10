@@ -7,8 +7,6 @@ import {
     fetchAllPresets as doFetchAllPresets,
     fetchPresetsOfType as doFetchPresetsOfType,
 
-    getServers as doGetServers,
-    getStages as doGetStages,
     getVersion as doGetVersion,
 
     selectStage as doSelectStage,
@@ -96,12 +94,6 @@ export const initializeApp = (): ThunkAction<void, RootState, null, AnyAction> =
 
     const version = await doGetVersion();
     dispatch(didGetVersion(version));
-
-    const servers = await doGetServers();
-    dispatch(didGetServers(servers));
-
-    const stages = await doGetStages();
-    dispatch(didGetStages(stages));
 
     const presetCollection = await doFetchAllPresets();
     setEffectTypes(presetCollection);
