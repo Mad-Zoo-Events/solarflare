@@ -5,7 +5,6 @@ import { handleSocketMessage, initializeApp } from "./AppActions";
 import { AppProps } from "./AppProps";
 import ControlPanel from "./components/ControlPanel/ControlPanel";
 import PresetManager from "./components/PresetManager/PresetManager";
-import { BackendMessage } from "./domain/client/BackendMessage";
 import { RootState } from "./RootState";
 import Routes from "./routes";
 
@@ -23,10 +22,7 @@ function App ({
     }, []);
 
     messageQueue.forEach(m => {
-        const message: BackendMessage = JSON.parse(m);
-        if (message) {
-            handleSocketMessage(message, presets);
-        }
+        handleSocketMessage(m, presets);
         messageQueue.shift();
     });
 
