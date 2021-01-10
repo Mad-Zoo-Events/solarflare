@@ -34,7 +34,7 @@ const Submenu = ({
                                     <label className="checkbox-container">{text}
                                         <input
                                             type="checkbox"
-                                            defaultChecked={selected}
+                                            checked={selected}
                                             onChange={(e) => {
                                                 option.selected = e.currentTarget.checked;
                                                 onChange(option, getSelected());
