@@ -75,7 +75,7 @@ select {
     border          : 3px solid var(--background);
 }
 
-.checkbox-container {
+@mixin checkbox-radio-container {
     display            : block;
     position           : relative;
     padding-left       : 2em;
@@ -122,15 +122,42 @@ select {
         display : none;
     }
 
+
+}
+
+.checkbox-container {
+    @include checkbox-radio-container;
+
+    & span {
+        border-radius: 0.2em;
+    }
+
     & span:after {
-        left             : 0.5em;
         top              : 0.1em;
+        left             : 0.5em;
         width            : 0.3em;
         height           : 0.9em;
-        border           : solid white;
+        border           : solid var(--font);
         border-width     : 0 0.2em 0.2em 0;
         -webkit-transform: rotate(45deg);
         -ms-transform    : rotate(45deg);
         transform        : rotate(45deg);
+    }
+}
+
+.radio-container {
+    @include checkbox-radio-container;
+
+    & span {
+        border-radius: 2em;
+    }
+
+    & span:after {
+        background-color: var(--font);
+        top             : 0.3em;
+        right           : 0.3em;
+        bottom          : 0.3em;
+        left            : 0.3em;
+        border-radius   : 2em;
     }
 }
