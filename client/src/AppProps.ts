@@ -1,10 +1,11 @@
 import { HandleThunkActionCreator } from "react-redux";
 import { handleSocketMessage, initializeApp } from "./AppActions";
+import { BackendMessage } from "./domain/client/BackendMessage";
 import { PresetCollection } from "./domain/PresetCollection";
 
 export interface AppProps {
     isInitialized: boolean
-    messageQueue: string[]
+    messageQueue: BackendMessage[]
     presets: PresetCollection
 
     handleSocketMessage: HandleThunkActionCreator<typeof handleSocketMessage>

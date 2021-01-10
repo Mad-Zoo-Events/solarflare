@@ -122,7 +122,7 @@ function appReducer (
     case DID_RECEIVE_WEBSOCKET_MESSAGE:
         return {
             ...state,
-            messageQueue: [...state.messageQueue, action.payload.message]
+            messageQueue: [...state.messageQueue, JSON.parse(action.payload.message)]
         };
     default:
         return state;
