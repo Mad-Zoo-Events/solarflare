@@ -7,10 +7,14 @@ import {
 } from "../../client/HttpClient";
 import { StopAllOptions } from "../../domain/client/StopAllOptions";
 import DisplayMode from "../../domain/controlpanel/DisplayMode";
+import * as ea from "../../domain/EffectAction";
 import { EffectAction } from "../../domain/EffectAction";
+import * as et from "../../domain/EffectType";
 import { LogEntry } from "../../domain/LogEntry";
 import { Preset } from "../../domain/presets/Preset";
+import { RunningEffect } from "../../domain/RunningEffect";
 import { RootState } from "../../RootState";
+import { getShortcutString } from "../../utils/utils";
 
 // ACTION TYPES
 export const SHOULD_CHANGE_DISPLAY_MODE = "controlpanel/SHOULD_CHANGE_DISPLAY_MODE";
@@ -78,4 +82,39 @@ export const stopAll = (options: StopAllOptions): ThunkAction<void, RootState, n
 };
 export const clearLogs = (): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(shouldClearLogs());
+};
+export const handleKeyPress = (event: KeyboardEvent, presets: Preset[], runningEffects: RunningEffect[]): ThunkAction<void, RootState, null, AnyAction> => () => {
+    const { key } = event;
+
+    if (event.getModifierState("CapsLock")) {
+        // Caps Lock on
+    } else {
+        // Caps Lock off
+    }
+
+    switch (key) {
+    case "0":
+        doStopAll({ detachClocks: true, stopEffects: true });
+        return;
+    case "Escape" || "Esc":
+        doStopAll({ detachClocks: true, stopEffects: false });
+        return;
+    case "-":
+        doStopAll({ detachClocks: false, stopEffects: true });
+        return;
+    case "+":
+        // TAP
+        return;
+    }
+
+    const toStop = runningEffects.filter(e => getShortcutString(e.preset.keyBinding) === key);
+    const toStartOrTrigger = presets.filter(p => getShortcutString(p.keyBinding) === key);
+    const toStart = toStartOrTrigger
+        .filter(p => p.effectType !== et.Command)
+        .filter(p => !toStop.some(e => e.preset.id === p.id)); // don't start the ones that are to be stopped
+    const toTrigger = toStartOrTrigger.filter(p => p.effectType === et.Command);
+
+    toStop.forEach(e => doRunEffect(e.preset.effectType, e.preset.id, ea.Stop));
+    toStart.forEach(p => doRunEffect(p.effectType, p.id, ea.Start));
+    toTrigger.forEach(p => doRunEffect(p.effectType, p.id, ea.Trigger));
 };
