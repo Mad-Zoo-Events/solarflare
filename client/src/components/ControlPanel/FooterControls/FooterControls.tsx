@@ -3,6 +3,7 @@ import React, { ReactElement } from "react";
 import { connect } from "react-redux";
 import { RootState } from "../../../RootState";
 import { stopAll } from "../ControlPanelActions";
+import Clock from "./Clock/Clock";
 import "./FooterControls.scss";
 import { FooterControlsProps } from "./FooterControlsProps";
 import LogEntry from "./LogEntry/LogEntry";
@@ -16,6 +17,13 @@ const FooterControls = ({
             <div className="log-console">
                 {logEntries.map((log, index) => <LogEntry key={index} logEntry={log} />)}
             </div>
+
+            <div className="separator"/>
+            <div className="clock-controls">
+                <Clock/>
+            </div>
+
+            <div className="separator"/>
             <div className="stop-buttons">
                 <div className="button stop-effects" onClick={() => stopAll({ stopEffects: true, detachClocks: false })}>
                     <FontAwesomeIcon
@@ -31,7 +39,6 @@ const FooterControls = ({
                         icon={["fas", "stopwatch"]}
                         size="3x"
                         title="'ESC' Detach Clocks"
-
                     />
                     <br/>
                     <span>ESC</span>

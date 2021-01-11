@@ -1,16 +1,18 @@
 div.control-panel__footer-controls {
     display              : grid;
-    grid-template-columns: auto min-content;
+    grid-template-columns: auto repeat(4, min-content);
     gap                  : 0.5em;
     padding              : 0.5em 0.5em 0 0.5em;
+
+    & .separator {
+        border-left: 2px solid;
+    }
 
     & .log-console {
         padding   : 0.5em;
         height    : 10em;
         overflow-y: scroll;
         font-size : smaller;
-
-        border: 1px solid var(--dark-gray);
     }
 
     & .stop-buttons {

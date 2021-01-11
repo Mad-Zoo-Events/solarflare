@@ -8,4 +8,7 @@ export interface ControlPanelState {
     runningEffects: RunningEffect[]
 
     logEntries: LogEntry[]
+
+    clockBpm: number
+    clockNoteLength: number
 }

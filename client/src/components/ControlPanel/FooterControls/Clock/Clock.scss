@@ -1,0 +1,17 @@
+.clock {
+    display              : grid;
+    grid-template-columns: 5em auto max-content;
+    gap                  : 0.5em;
+
+    & .bpm-number-input {
+        grid-column: 1;
+    }
+
+    & .bpm-range-input {
+        grid-column: 2;
+    }
+
+    & .note-length-input {
+        grid-column: 3;
+    }
+}
