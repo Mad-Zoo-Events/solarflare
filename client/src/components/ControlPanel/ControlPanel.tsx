@@ -21,7 +21,9 @@ const ControlPanel = ({
     handleKeyPress
 }: ControlPanelProps) => {
     const combinedPresets = combinePresets(presets);
-    document.onkeydown = e => !ignoreKeystrokes && handleKeyPress(e, combinedPresets, runningEffects);
+    document.onkeydown = e => {
+        if (!ignoreKeystrokes) handleKeyPress(e, combinedPresets, runningEffects);
+    };
 
     const getChildren = () => {
         switch (displayMode) {

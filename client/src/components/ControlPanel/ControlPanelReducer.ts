@@ -20,7 +20,9 @@ const initialState: ControlPanelState = {
     displayMode: DisplayMode.Categorized,
     ignoreKeystrokes: false,
     runningEffects: [],
-    logEntries: []
+    logEntries: [],
+    clockBpm: 128.0,
+    clockNoteLength: 1.0
 };
 
 const addToRunning = (
