@@ -8,7 +8,7 @@ export interface ControlPanelProps {
     displayMode: DisplayMode
     ignoreKeystrokes: boolean
     presets: PresetCollection
-    runningEffects: RunningEffect[]
+    runningEffects: Map<string, RunningEffect>
 
     handleKeyPress: HandleThunkActionCreator<typeof handleKeyPress>
 }

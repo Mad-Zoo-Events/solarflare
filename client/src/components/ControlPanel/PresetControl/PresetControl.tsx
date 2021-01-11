@@ -1,7 +1,9 @@
 import React, { ReactElement } from "react";
+import { connect } from "react-redux";
 import * as ea from "../../../domain/EffectAction";
 import * as et from "../../../domain/EffectType";
 import { LaserPreset } from "../../../domain/presets";
+import { RootState } from "../../../RootState";
 import { getAccentColor } from "../../../utils/utils";
 import PresetControlButton from "../PresetControlButton/PresetControlButton";
 import "./PresetControl.scss";
@@ -9,9 +11,10 @@ import { PresetControlProps } from "./PresetControlProps";
 
 const PresetControl = ({
     preset,
-    secondsRunning
+    runningEffects
 }: PresetControlProps): ReactElement => {
-    const { effectType, displayName } = preset;
+    const { id, effectType, displayName } = preset;
+    const secondsRunning = runningEffects.get(id)?.secondsRunning;
 
     if (!effectType) {
         return <span>?</span>;
@@ -57,4 +60,15 @@ const PresetControl = ({
     );
 };
 
-export default PresetControl;
+function mapStateToProps (state: RootState) {
+    const { runningEffects } = state.controlpanel;
+
+    return {
+        runningEffects
+    };
+}
+
+const mapDispatchToProps = {
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PresetControl);
