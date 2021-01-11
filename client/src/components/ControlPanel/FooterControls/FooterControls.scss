@@ -19,8 +19,9 @@ div.control-panel__footer-controls {
         grid-template-areas  :
             'effects    clocks'
             'everything everything';
-        gap   : 0.3em;
-        height: min-content;
+        gap       : 0.3em;
+        height    : min-content;
+        text-align: center;
 
         color: var(--red);
 
