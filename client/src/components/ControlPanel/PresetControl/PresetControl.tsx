@@ -21,11 +21,7 @@ const PresetControl = ({
     }
 
     const renderStartStop =
-    effectType === et.Dragon ||
-    effectType === et.Laser ||
-    effectType === et.Particle ||
-    effectType === et.Potion ||
-    effectType === et.Timeshift;
+    effectType !== et.Command;
 
     const isGuardianLaser = effectType === et.Laser && (preset as LaserPreset).laserType !== "end";
 
