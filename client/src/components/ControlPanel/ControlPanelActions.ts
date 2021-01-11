@@ -18,6 +18,7 @@ import { getShortcutString } from "../../utils/utils";
 
 // ACTION TYPES
 export const SHOULD_CHANGE_DISPLAY_MODE = "controlpanel/SHOULD_CHANGE_DISPLAY_MODE";
+export const SHOULD_IGNORE_KEYSTROKES = "controlpanel/SHOULD_IGNORE_KEYSTROKES";
 export const DID_SELECT_SERVERS = "controlpanel/DID_SELECT_SERVERS";
 export const DID_START_EFFECT = "controlpanel/DID_START_EFFECT";
 export const DID_STOP_EFFECT = "controlpanel/DID_STOP_EFFECT";
@@ -29,6 +30,10 @@ export const SHOULD_INCREMENT_COUNTER = "controlpanel/INCREMENT_COUNTER";
 interface ShouldChangeDisplayMode {
     type: typeof SHOULD_CHANGE_DISPLAY_MODE
     payload: DisplayMode
+}
+interface ShouldIgnoreKeystrokes {
+    type: typeof SHOULD_IGNORE_KEYSTROKES
+    payload: boolean
 }
 interface DidStartEffect {
     type: typeof DID_START_EFFECT
@@ -55,13 +60,14 @@ interface ShouldIncrementCounter {
 }
 
 export type ControlPanelAction =
-    ShouldChangeDisplayMode |
+    ShouldChangeDisplayMode | ShouldIgnoreKeystrokes |
     DidStartEffect | DidStopEffect | DidStopAll |
     ShouldWriteLog | ShouldClearLogs |
     ShouldIncrementCounter;
 
 // ACTION CREATORS
 const shouldChangeDisplayMode = createAction(SHOULD_CHANGE_DISPLAY_MODE);
+const shouldIgnoreKeystrokes = createAction<boolean>(SHOULD_IGNORE_KEYSTROKES);
 export const didStartEffect = createAction<{preset: Preset, interval: number}>(DID_START_EFFECT);
 export const didStopEffect = createAction<string>(DID_STOP_EFFECT);
 export const didStopAll = createAction<StopAllOptions>(DID_STOP_ALL);
@@ -72,6 +78,9 @@ export const shouldIncrementCounter = createAction<string>(SHOULD_INCREMENT_COUN
 // ACTIONS
 export const selectDisplayMode = (displayMode: DisplayMode): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(shouldChangeDisplayMode(displayMode));
+};
+export const setIgnoreKeystrokes = (ignore: boolean): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
+    dispatch(shouldIgnoreKeystrokes(ignore));
 };
 export const runEffect = (preset: Preset, action: EffectAction): ThunkAction<void, RootState, null, AnyAction> => () => {
     const { id, effectType } = preset;

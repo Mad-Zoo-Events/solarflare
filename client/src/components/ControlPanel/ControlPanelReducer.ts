@@ -11,12 +11,14 @@ import {
     DID_STOP_EFFECT,
     SHOULD_CHANGE_DISPLAY_MODE,
     SHOULD_CLEAR_LOGS,
-    SHOULD_INCREMENT_COUNTER
+    SHOULD_INCREMENT_COUNTER,
+    SHOULD_IGNORE_KEYSTROKES
 } from "./ControlPanelActions";
 import { ControlPanelState } from "./ControlPanelState";
 
 const initialState: ControlPanelState = {
     displayMode: DisplayMode.Categorized,
+    ignoreKeystrokes: false,
     runningEffects: [],
     logEntries: []
 };
@@ -94,6 +96,11 @@ function controlPanelReducer (
         return {
             ...state,
             displayMode: action.payload
+        };
+    case SHOULD_IGNORE_KEYSTROKES:
+        return {
+            ...state,
+            ignoreKeystrokes: action.payload
         };
     case DID_START_EFFECT:
         return {

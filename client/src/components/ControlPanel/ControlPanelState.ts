@@ -4,6 +4,7 @@ import { RunningEffect } from "../../domain/RunningEffect";
 
 export interface ControlPanelState {
     displayMode: DisplayMode
+    ignoreKeystrokes: boolean
     runningEffects: RunningEffect[]
 
     logEntries: LogEntry[]

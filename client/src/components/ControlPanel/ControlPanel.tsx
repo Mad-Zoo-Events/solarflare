@@ -14,13 +14,14 @@ import HeaderControls from "./HeaderControls/HeaderControls";
 import PresetControl from "./PresetControl/PresetControl";
 
 const ControlPanel = ({
+    displayMode,
+    ignoreKeystrokes,
     presets,
     runningEffects,
-    displayMode,
     handleKeyPress
-}:ControlPanelProps) => {
+}: ControlPanelProps) => {
     const combinedPresets = combinePresets(presets);
-    document.onkeydown = e => handleKeyPress(e, combinedPresets, runningEffects);
+    document.onkeydown = e => !ignoreKeystrokes && handleKeyPress(e, combinedPresets, runningEffects);
 
     const getChildren = () => {
         switch (displayMode) {
@@ -87,12 +88,13 @@ const ControlPanel = ({
 
 function mapStateToProps (state: RootState) {
     const { presets } = state.app;
-    const { displayMode, runningEffects } = state.controlpanel;
+    const { displayMode, ignoreKeystrokes, runningEffects } = state.controlpanel;
 
     return {
+        displayMode,
+        ignoreKeystrokes,
         presets,
-        runningEffects,
-        displayMode
+        runningEffects
     };
 }
 
