@@ -14,7 +14,6 @@ import { LogEntry } from "../../domain/LogEntry";
 import { Preset } from "../../domain/presets/Preset";
 import { RunningEffect } from "../../domain/RunningEffect";
 import { RootState } from "../../RootState";
-import { getShortcutString } from "../../utils/utils";
 
 // ACTION TYPES
 export const SHOULD_CHANGE_DISPLAY_MODE = "controlpanel/SHOULD_CHANGE_DISPLAY_MODE";
@@ -116,8 +115,8 @@ export const handleKeyPress = (event: KeyboardEvent, presets: Preset[], runningE
         return;
     }
 
-    const toStop = runningEffects.filter(e => getShortcutString(e.preset.keyBinding) === key);
-    const toStartOrTrigger = presets.filter(p => getShortcutString(p.keyBinding) === key);
+    const toStop = runningEffects.filter(e => e.preset.keyBindingStr === key);
+    const toStartOrTrigger = presets.filter(p => p.keyBindingStr === key);
     const toStart = toStartOrTrigger
         .filter(p => p.effectType !== et.Command)
         .filter(p => !toStop.some(e => e.preset.id === p.id)); // don't start the ones that are to be stopped

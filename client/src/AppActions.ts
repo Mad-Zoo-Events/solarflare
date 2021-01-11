@@ -28,7 +28,7 @@ import { LogEntry, LogLevel } from "./domain/LogEntry";
 import { PresetCollection } from "./domain/PresetCollection";
 import { Preset } from "./domain/presets/Preset";
 import { RootState } from "./RootState";
-import { getPreset, setEffectTypes } from "./utils/utils";
+import { getPreset, decoratePresets } from "./utils/utils";
 
 // ACTION TYPES
 export const DID_INITIALIZE_APP = "app/DID_INITIALIZE_APP";
@@ -96,7 +96,7 @@ export const initializeApp = (): ThunkAction<void, RootState, null, AnyAction> =
     dispatch(didGetVersion(version));
 
     const presetCollection = await doFetchAllPresets();
-    setEffectTypes(presetCollection);
+    decoratePresets(presetCollection);
 
     dispatch(didGetAllPresets(presetCollection));
 
@@ -157,7 +157,7 @@ export const handleSocketMessage = (message: BackendMessage, presets: PresetColl
         dispatch(didGetStages(stageUpdate));
 
         const presetCollection = await doFetchAllPresets();
-        setEffectTypes(presetCollection);
+        decoratePresets(presetCollection);
         dispatch(didGetAllPresets(presetCollection));
 
         dispatch(shouldWriteLog({

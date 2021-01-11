@@ -4,7 +4,6 @@ import React, { ReactElement } from "react";
 import { connect } from "react-redux";
 import * as ea from "../../../domain/EffectAction";
 import * as et from "../../../domain/EffectType";
-import { getShortcutString } from "../../../utils/utils";
 import { runEffect } from "../ControlPanelActions";
 import "./PresetControlButton.scss";
 import { PresetControlButtonProps } from "./PresetControlButtonProps";
@@ -20,7 +19,7 @@ const PresetControlButton = ({
 
     runEffect
 }: PresetControlButtonProps): ReactElement => {
-    const { effectType, keyBinding } = preset;
+    const { effectType, keyBindingStr } = preset;
 
     let icon: IconProp;
     const style = {
@@ -65,8 +64,8 @@ const PresetControlButton = ({
             onClick={handleClick}
         >
 
-            {displayKeyBinding && keyBinding
-                ? <span>{getShortcutString(keyBinding)}</span>
+            {displayKeyBinding && keyBindingStr
+                ? <span>{keyBindingStr}</span>
                 : secondsRunning !== undefined
                     ? <div>{secondsRunning}</div>
                     : <FontAwesomeIcon icon={icon} size="sm" />

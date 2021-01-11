@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { connect } from "react-redux";
 import { EffectType } from "../../../domain/EffectType";
-import { getAccentColor, getShortcutString, getSummary } from "../../../utils/utils";
+import { getAccentColor, getSummary } from "../../../utils/utils";
 import { deletePreset, duplicatePreset, editPreset } from "../PresetManagerActions";
 import "./PresetManagerListItem.scss";
 import { PresetManagerListItemProps } from "./PresetManagerListItemProps";
@@ -18,7 +18,7 @@ const PresetManagerListItem = ({
     const coloredText = { color: `var(--lighter-${accentColor})` };
 
     if (preset) {
-        const { id, displayName, description, keyBinding } = preset;
+        const { id, displayName, description, keyBindingStr } = preset;
         const coloredBorder = { borderColor: `var(--${accentColor})` };
         const confirmDelete = (id: string, effectType: EffectType) => {
             window.confirm("Are you sure you wish to delete this preset?") && onDelete(id, effectType);
@@ -34,9 +34,9 @@ const PresetManagerListItem = ({
                     {displayName}
                 </div>
 
-                {keyBinding !== 0 &&
+                {keyBindingStr &&
                 <div className="shortcut" title="Keyboard Shortcut">
-                    <code>{getShortcutString(keyBinding)}</code>
+                    <code>{keyBindingStr}</code>
                 </div>
                 }
 
