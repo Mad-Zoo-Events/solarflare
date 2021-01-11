@@ -92,15 +92,15 @@ export function combinePresetsWithoutCommands (presets: PresetCollection): Prese
     return ([] as Preset[]).concat(dragonPresets, laserPresets, particlePresets, potionPresets, timeshiftPresets).sort(presetSorter);
 }
 
-export function setEffectTypes (presets: PresetCollection): void {
+export function decoratePresets (presets: PresetCollection): void {
     const { commandPresets, dragonPresets, laserPresets, particlePresets, potionPresets, timeshiftPresets } = presets;
 
-    commandPresets.forEach(p => { p.effectType = et.Command; });
-    dragonPresets.forEach(p => { p.effectType = et.Dragon; });
-    laserPresets.forEach(p => { p.effectType = et.Laser; });
-    particlePresets.forEach(p => { p.effectType = et.Particle; });
-    potionPresets.forEach(p => { p.effectType = et.Potion; });
-    timeshiftPresets.forEach(p => { p.effectType = et.Timeshift; });
+    commandPresets.forEach(p => { p.effectType = et.Command; p.keyBindingStr = getShortcutString(p.keyBinding); });
+    dragonPresets.forEach(p => { p.effectType = et.Dragon; p.keyBindingStr = getShortcutString(p.keyBinding); });
+    laserPresets.forEach(p => { p.effectType = et.Laser; p.keyBindingStr = getShortcutString(p.keyBinding); });
+    particlePresets.forEach(p => { p.effectType = et.Particle; p.keyBindingStr = getShortcutString(p.keyBinding); });
+    potionPresets.forEach(p => { p.effectType = et.Potion; p.keyBindingStr = getShortcutString(p.keyBinding); });
+    timeshiftPresets.forEach(p => { p.effectType = et.Timeshift; p.keyBindingStr = getShortcutString(p.keyBinding); });
 }
 
 export function getPreset (id: string, effectType: EffectType, presets: PresetCollection): Preset | undefined {
