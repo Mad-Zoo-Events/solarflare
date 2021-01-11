@@ -52,7 +52,7 @@ const Submenu = ({
                                     <input
                                         type="radio"
                                         checked={selected}
-                                        onClick={() => onChange(option)}
+                                        onChange={() => onChange(option)}
                                     />
                                     <span></span>
                                 </label>
