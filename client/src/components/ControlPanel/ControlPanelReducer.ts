@@ -19,7 +19,7 @@ import { ControlPanelState } from "./ControlPanelState";
 const initialState: ControlPanelState = {
     displayMode: DisplayMode.Categorized,
     ignoreKeystrokes: false,
-    runningEffects: [],
+    runningEffects: new Map(),
     logEntries: [],
     clockBpm: 128.0,
     clockNoteLength: 1.0
@@ -28,52 +28,45 @@ const initialState: ControlPanelState = {
 const addToRunning = (
     { preset, interval }: {preset: Preset, interval: number},
     { runningEffects }: ControlPanelState
-): RunningEffect[] => {
-    const effects = [...runningEffects];
-    if (!effects.find(e => e.preset.id === preset.id)) {
-        effects.push({ preset, secondsRunning: 0, interval });
-    }
-    return effects;
+): Map<string, RunningEffect> => {
+    return new Map(runningEffects).set(preset.id, { preset, secondsRunning: 0, interval });
 };
 
 const removeFromRunning = (
     id: string,
     { runningEffects }: ControlPanelState
-): RunningEffect[] => {
-    const effects = [...runningEffects];
-    const effect = effects.find(e => e.preset.id === id);
-    if (effect) {
-        clearTimeout(effect.interval);
-    }
-    return effects.filter(e => e.preset.id !== id);
+): Map<string, RunningEffect> => {
+    const effects = new Map(runningEffects);
+    clearTimeout(effects.get(id)?.interval);
+    effects.delete(id);
+    return effects;
 };
 
 const stopAllRunning = (
     { stopEffects, specificTypeOnly }: StopAllOptions,
     { runningEffects }: ControlPanelState
-): RunningEffect[] => {
+): Map<string, RunningEffect> => {
+    const running = Array.from(runningEffects.values());
     const toStop = specificTypeOnly
-        ? runningEffects.filter(e => e.preset.effectType === specificTypeOnly)
-        : [...runningEffects];
+        ? running.filter(e => e.preset.effectType === specificTypeOnly)
+        : running;
     toStop.forEach(e => {
         if (stopEffects) {
             clearTimeout(e.interval);
         }
     });
     return specificTypeOnly
-        ? runningEffects.filter(e => e.preset.effectType !== specificTypeOnly)
-        : [];
+        ? new Map(running.filter(e => e.preset.effectType !== specificTypeOnly).map(e => [e.preset.id, e]))
+        : new Map();
 };
 
 const incrementCounter = (
     id: string,
     { runningEffects }: ControlPanelState
-): RunningEffect[] => {
-    const effects = [...runningEffects];
-    const effect = effects.find(e => e.preset.id === id);
-    if (effect) {
-        effect.secondsRunning++;
-    }
+): Map<string, RunningEffect> => {
+    const effects = new Map(runningEffects);
+    const effect = effects.get(id);
+    if (effect) effect.secondsRunning++;
     return effects;
 };
 

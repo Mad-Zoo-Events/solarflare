@@ -91,7 +91,7 @@ export const stopAll = (options: StopAllOptions): ThunkAction<void, RootState, n
 export const clearLogs = (): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(shouldClearLogs());
 };
-export const handleKeyPress = (event: KeyboardEvent, presets: Preset[], runningEffects: RunningEffect[]): ThunkAction<void, RootState, null, AnyAction> => () => {
+export const handleKeyPress = (event: KeyboardEvent, presets: Preset[], runningEffects: Map<string, RunningEffect>): ThunkAction<void, RootState, null, AnyAction> => () => {
     const { key } = event;
 
     if (event.getModifierState("CapsLock")) {
@@ -115,7 +115,7 @@ export const handleKeyPress = (event: KeyboardEvent, presets: Preset[], runningE
         return;
     }
 
-    const toStop = runningEffects.filter(e => e.preset.keyBindingStr === key);
+    const toStop = Array.from(runningEffects.values()).filter(e => e.preset.keyBindingStr === key);
     const toStartOrTrigger = presets.filter(p => p.keyBindingStr === key);
     const toStart = toStartOrTrigger
         .filter(p => p.effectType !== et.Command)

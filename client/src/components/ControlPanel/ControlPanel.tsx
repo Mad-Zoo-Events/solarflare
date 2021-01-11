@@ -30,12 +30,12 @@ const ControlPanel = ({
         case DisplayMode.Categorized:
             return (
                 <div className="control-panel__categorized-holder">
-                    <CategorySection effectType={et.Dragon} presets={presets.dragonPresets} runningEffects={runningEffects}/>
-                    <CategorySection effectType={et.Laser} presets={presets.laserPresets} runningEffects={runningEffects}/>
-                    <CategorySection effectType={et.Particle} presets={presets.particlePresets} runningEffects={runningEffects}/>
-                    <CategorySection effectType={et.Potion} presets={presets.potionPresets} runningEffects={runningEffects}/>
-                    <CategorySection effectType={et.Timeshift} presets={presets.timeshiftPresets} runningEffects={runningEffects}/>
-                    <CategorySection effectType={et.Command} presets={presets.commandPresets} runningEffects={runningEffects}/>
+                    <CategorySection effectType={et.Dragon} presets={presets.dragonPresets} />
+                    <CategorySection effectType={et.Laser} presets={presets.laserPresets} />
+                    <CategorySection effectType={et.Particle} presets={presets.particlePresets} />
+                    <CategorySection effectType={et.Potion} presets={presets.potionPresets} />
+                    <CategorySection effectType={et.Timeshift} presets={presets.timeshiftPresets} />
+                    <CategorySection effectType={et.Command} presets={presets.commandPresets} />
                 </div>
             );
         case DisplayMode.Uncategorized:
@@ -52,7 +52,6 @@ const ControlPanel = ({
                     <PresetControl
                         key={preset.id}
                         preset={preset}
-                        secondsRunning={runningEffects.find(e => e.preset.id === preset.id)?.secondsRunning}
                     />
                 )}
             </>);
@@ -69,10 +68,9 @@ const ControlPanel = ({
                     <PresetControl
                         key={preset.id}
                         preset={preset}
-                        secondsRunning={runningEffects.find(e => e.preset.id === preset.id)?.secondsRunning}
                     />
                 )}
-                <CategorySection effectType={et.Command} presets={presets.commandPresets} runningEffects={runningEffects}/>
+                <CategorySection effectType={et.Command} presets={presets.commandPresets} />
             </>);
         }
     };
