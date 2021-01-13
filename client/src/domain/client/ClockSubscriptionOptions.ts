@@ -6,5 +6,4 @@ export interface ClockSubscriptionOptions {
         effectType: EffectType
         isRunning: boolean
         offBeat: boolean
-        action: ClockAction
 }
