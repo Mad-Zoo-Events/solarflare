@@ -6,6 +6,7 @@ import { LaserPreset } from "../../../domain/presets";
 import { RootState } from "../../../RootState";
 import { getAccentColor } from "../../../utils/utils";
 import PresetControlButton from "../PresetControlButton/PresetControlButton";
+import ClockControls from "./ClockControls/ClockControls";
 import "./PresetControl.scss";
 import { PresetControlProps } from "./PresetControlProps";
 
@@ -14,7 +15,11 @@ const PresetControl = ({
     runningEffects
 }: PresetControlProps): ReactElement => {
     const { id, effectType, displayName } = preset;
-    const secondsRunning = runningEffects.get(id)?.secondsRunning;
+
+    const runningEffect = runningEffects.get(id);
+    const secondsRunning = runningEffect?.secondsRunning;
+    const onBeatAttached = runningEffect?.onBeatClock;
+    const offBeatAttached = runningEffect?.offBeatClock;
 
     if (!effectType) {
         return <span>?</span>;
@@ -52,6 +57,8 @@ const PresetControl = ({
                 <PresetControlButton preset={preset} action={ea.Start} color="green" displayKeyBinding isRunning={secondsRunning !== undefined}/>
                 <PresetControlButton preset={preset} action={ea.Stop} color="red" secondsRunning={secondsRunning}/>
             </>}
+
+            <ClockControls onBeatAttached={onBeatAttached} offBeatAttached={offBeatAttached} />
         </div>
     );
 };
