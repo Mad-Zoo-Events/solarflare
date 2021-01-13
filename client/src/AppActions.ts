@@ -146,7 +146,7 @@ export const handleSocketMessage = (message: BackendMessage, presets: PresetColl
                     const preset = getPreset(id, effectType, presets);
                     if (preset) {
                         const interval = window.setInterval(() => dispatch(shouldIncrementCounter(id)), 1000);
-                        dispatch(didStartEffect({ preset, interval }));
+                        dispatch(didStartEffect({ preset, interval, secondsRunning: 0 }));
                     }
                 }
             }
