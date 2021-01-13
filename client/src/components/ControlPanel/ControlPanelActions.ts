@@ -3,13 +3,17 @@ import { AnyAction } from "redux";
 import { createAction } from "redux-actions";
 import { ThunkAction } from "redux-thunk";
 import {
+    changeClockSpeed as doChangeClockSpeed,
     runEffect as doRunEffect,
     stopAll as doStopAll,
-    changeClockSpeed as doChangeClockSpeed
+    subscribeToClock as doSubscribeToClock,
+    unsubscribeFromClock as doUnsubscribeFromClock
 } from "../../client/HttpClient";
 import { ClockSpeedMessage } from "../../domain/client/BackendMessage";
 import { ClockSpeedOptions } from "../../domain/client/ClockSpeedOptions";
+import { ClockSubscriptionOptions } from "../../domain/client/ClockSubscriptionOptions";
 import { StopAllOptions } from "../../domain/client/StopAllOptions";
+import { Subscribe } from "../../domain/ClockAction";
 import DisplayMode from "../../domain/controlpanel/DisplayMode";
 import * as ea from "../../domain/EffectAction";
 import { EffectAction } from "../../domain/EffectAction";
@@ -108,10 +112,15 @@ export const clearLogs = (): ThunkAction<void, RootState, null, AnyAction> => di
     dispatch(shouldClearLogs());
 };
 const debouncedClockSpeedUpdate = debounce((options: ClockSpeedOptions) => doChangeClockSpeed(options), 1000);
-export const changeClockSpeed = (options: ClockSpeedOptions): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {
+export const changeClockSpeed = (options: ClockSpeedOptions): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     const { bpm: clockSpeedBpm, noteLength: clockSpeedMultiplier } = options;
     dispatch(shouldChangeClockSpeed({ clockSpeedBpm, clockSpeedMultiplier }));
     debouncedClockSpeedUpdate(options);
+};
+export const handleClockSubscription = (options: ClockSubscriptionOptions): ThunkAction<void, RootState, null, AnyAction> => () => {
+    options.action === Subscribe
+        ? doSubscribeToClock(options)
+        : doUnsubscribeFromClock(options);
 };
 export const toggleClock = (): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(shouldToggleClock());

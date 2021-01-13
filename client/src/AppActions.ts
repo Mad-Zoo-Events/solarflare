@@ -118,7 +118,8 @@ export const handleSocketMessage = (message: BackendMessage, presets: PresetColl
         effectUpdate,
         stageUpdate,
         serverUpdate,
-        clockSpeedUpdate
+        clockSpeedUpdate,
+        clockUpdate
     } = message;
 
     if (effectUpdate) {
@@ -184,5 +185,9 @@ export const handleSocketMessage = (message: BackendMessage, presets: PresetColl
 
     if (clockSpeedUpdate) {
         dispatch(shouldChangeClockSpeed(clockSpeedUpdate));
+    }
+
+    if (clockUpdate) {
+        console.log(clockUpdate);
     }
 };

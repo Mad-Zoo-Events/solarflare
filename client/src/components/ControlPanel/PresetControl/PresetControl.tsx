@@ -1,5 +1,7 @@
 import React, { ReactElement } from "react";
 import { connect } from "react-redux";
+import { ClockSubscriptionOptions } from "../../../domain/client/ClockSubscriptionOptions";
+import { Subscribe, Unsubscribe } from "../../../domain/ClockAction";
 import * as ea from "../../../domain/EffectAction";
 import * as et from "../../../domain/EffectType";
 import { LaserPreset } from "../../../domain/presets";
@@ -16,22 +18,30 @@ const PresetControl = ({
 }: PresetControlProps): ReactElement => {
     const { id, effectType, displayName } = preset;
 
+    if (!effectType) {
+        return <span>?</span>;
+    }
+
     const runningEffect = runningEffects.get(id);
     const secondsRunning = runningEffect?.secondsRunning;
     const onBeatAttached = runningEffect?.onBeatClock;
     const offBeatAttached = runningEffect?.offBeatClock;
 
-    if (!effectType) {
-        return <span>?</span>;
-    }
-
-    const renderStartStop =
-    effectType !== et.Command;
-
+    const isAttachedToClock = onBeatAttached || offBeatAttached;
+    const isRunningButNotOnClock = secondsRunning !== undefined && !isAttachedToClock;
     const isGuardianLaser = effectType === et.Laser && (preset as LaserPreset).laserType !== "end";
+    const renderStartStop = effectType !== et.Command;
 
     const color = getAccentColor(effectType);
     const coloredText = { borderColor: `var(--${color})`, color: `var(--${color})` };
+
+    const subscriptionOptions: ClockSubscriptionOptions = {
+        presetId: id,
+        effectType,
+        isRunning: isRunningButNotOnClock,
+        offBeat: false,
+        action: isAttachedToClock ? Unsubscribe : Subscribe
+    };
 
     return (
         <div className="control-panel__visual-control">
@@ -54,11 +64,15 @@ const PresetControl = ({
             </>}
 
             {renderStartStop && <>
-                <PresetControlButton preset={preset} action={ea.Start} color="green" displayKeyBinding isRunning={secondsRunning !== undefined}/>
+                <PresetControlButton preset={preset} action={ea.Start} color="green" displayKeyBinding isRunning={isRunningButNotOnClock}/>
                 <PresetControlButton preset={preset} action={ea.Stop} color="red" secondsRunning={secondsRunning}/>
             </>}
 
-            <ClockControls onBeatAttached={onBeatAttached} offBeatAttached={offBeatAttached} />
+            <ClockControls
+                onBeatAttached={onBeatAttached}
+                offBeatAttached={offBeatAttached}
+                subscriptionOptions={subscriptionOptions}
+            />
         </div>
     );
 };

@@ -1,4 +1,6 @@
 import axios from "axios";
+import { ClockSpeedOptions } from "../domain/client/ClockSpeedOptions";
+import { ClockSubscriptionOptions } from "../domain/client/ClockSubscriptionOptions";
 import { Server } from "../domain/client/Server";
 import { StopAllOptions } from "../domain/client/StopAllOptions";
 import { EffectAction } from "../domain/EffectAction";
@@ -47,10 +49,16 @@ export async function runEffect (effectType: EffectType, id: string, action: Eff
     return await axios.post(`/effects/run/${effectType}/${id}/${action}`);
 }
 export async function stopAll (options: StopAllOptions): Promise<void> {
-    return await axios.post("/effects/stopall", { ...options });
+    return await axios.post("/effects/stopall", options);
 }
 
 // Clock
 export async function changeClockSpeed (options: ClockSpeedOptions): Promise<void> {
-    return await axios.post("/clock/speed", { ...options });
+    return await axios.post("/clock/speed", options);
+}
+export async function subscribeToClock (options: ClockSubscriptionOptions): Promise<void> {
+    return await axios.put("/clock/subscribe", options);
+}
+export async function unsubscribeFromClock (options: ClockSubscriptionOptions): Promise<void> {
+    return await axios.put("/clock/unsubscribe", options);
 }
