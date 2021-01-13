@@ -39,7 +39,7 @@ interface ShouldIgnoreKeystrokes {
 }
 interface DidStartEffect {
     type: typeof DID_START_EFFECT
-    payload: {preset: Preset, interval: number}
+    payload: RunningEffect
 }
 interface DidStopEffect {
     type: typeof DID_STOP_EFFECT
@@ -78,7 +78,7 @@ export type ControlPanelAction =
 // ACTION CREATORS
 const shouldChangeDisplayMode = createAction(SHOULD_CHANGE_DISPLAY_MODE);
 const shouldIgnoreKeystrokes = createAction<boolean>(SHOULD_IGNORE_KEYSTROKES);
-export const didStartEffect = createAction<{preset: Preset, interval: number}>(DID_START_EFFECT);
+export const didStartEffect = createAction<RunningEffect>(DID_START_EFFECT);
 export const didStopEffect = createAction<string>(DID_STOP_EFFECT);
 export const didStopAll = createAction<StopAllOptions>(DID_STOP_ALL);
 export const shouldWriteLog = createAction<LogEntry>(SHOULD_WRITE_LOG);

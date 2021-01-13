@@ -1,7 +1,6 @@
 import { StopAllOptions } from "../../domain/client/StopAllOptions";
 import DisplayMode from "../../domain/controlpanel/DisplayMode";
 import { LogEntry } from "../../domain/LogEntry";
-import { Preset } from "../../domain/presets/Preset";
 import { RunningEffect } from "../../domain/RunningEffect";
 import {
     ControlPanelAction,
@@ -30,10 +29,10 @@ const initialState: ControlPanelState = {
 };
 
 const addToRunning = (
-    { preset, interval }: {preset: Preset, interval: number},
+    effect: RunningEffect,
     { runningEffects }: ControlPanelState
 ): Map<string, RunningEffect> => {
-    return new Map(runningEffects).set(preset.id, { preset, secondsRunning: 0, interval });
+    return new Map(runningEffects).set(effect.preset.id, effect);
 };
 
 const removeFromRunning = (
