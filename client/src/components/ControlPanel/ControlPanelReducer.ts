@@ -12,7 +12,8 @@ import {
     SHOULD_CHANGE_DISPLAY_MODE,
     SHOULD_CLEAR_LOGS,
     SHOULD_INCREMENT_COUNTER,
-    SHOULD_IGNORE_KEYSTROKES
+    SHOULD_IGNORE_KEYSTROKES,
+    SHOULD_TOGGLE_CLOCK
 } from "./ControlPanelActions";
 import { ControlPanelState } from "./ControlPanelState";
 
@@ -22,7 +23,8 @@ const initialState: ControlPanelState = {
     runningEffects: new Map(),
     logEntries: [],
     clockBpm: 128.0,
-    clockNoteLength: 1.0
+    clockNoteLength: 1.0,
+    clockOnBeat: true
 };
 
 const addToRunning = (
@@ -116,6 +118,11 @@ function controlPanelReducer (
         return {
             ...state,
             runningEffects: incrementCounter(action.payload, state)
+        };
+    case SHOULD_TOGGLE_CLOCK:
+        return {
+            ...state,
+            clockOnBeat: !state.clockOnBeat
         };
     case SHOULD_WRITE_LOG:
         return {
