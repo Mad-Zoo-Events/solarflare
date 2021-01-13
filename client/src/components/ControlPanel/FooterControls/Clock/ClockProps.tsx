@@ -1,9 +1,12 @@
 import { HandleThunkActionCreator } from "react-redux";
-import { setIgnoreKeystrokes } from "../../ControlPanelActions";
+import { changeClockSpeed, setIgnoreKeystrokes, toggleClock } from "../../ControlPanelActions";
 
 export interface ClockProps {
-    initialBpm: number
-    initialNoteLength: number
+    bpm: number
+    noteLength: number
+    onBeat: boolean
 
     setIgnoreKeystrokes: HandleThunkActionCreator<typeof setIgnoreKeystrokes>
+    toggleClock: HandleThunkActionCreator<typeof toggleClock>
+    changeClockSpeed: HandleThunkActionCreator<typeof changeClockSpeed>
 }

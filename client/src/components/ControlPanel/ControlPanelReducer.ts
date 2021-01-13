@@ -5,15 +5,17 @@ import { Preset } from "../../domain/presets/Preset";
 import { RunningEffect } from "../../domain/RunningEffect";
 import {
     ControlPanelAction,
-    SHOULD_WRITE_LOG,
+
     DID_START_EFFECT,
     DID_STOP_ALL,
     DID_STOP_EFFECT,
+    SHOULD_CHANGE_CLOCK_SPEED,
     SHOULD_CHANGE_DISPLAY_MODE,
     SHOULD_CLEAR_LOGS,
-    SHOULD_INCREMENT_COUNTER,
     SHOULD_IGNORE_KEYSTROKES,
-    SHOULD_TOGGLE_CLOCK
+    SHOULD_INCREMENT_COUNTER,
+    SHOULD_TOGGLE_CLOCK,
+    SHOULD_WRITE_LOG
 } from "./ControlPanelActions";
 import { ControlPanelState } from "./ControlPanelState";
 
@@ -118,6 +120,12 @@ function controlPanelReducer (
         return {
             ...state,
             runningEffects: incrementCounter(action.payload, state)
+        };
+    case SHOULD_CHANGE_CLOCK_SPEED:
+        return {
+            ...state,
+            clockBpm: action.payload.clockSpeedBPM,
+            clockNoteLength: action.payload.clockSpeedMultiplier
         };
     case SHOULD_TOGGLE_CLOCK:
         return {

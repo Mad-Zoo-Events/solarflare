@@ -5,6 +5,7 @@ import {
     runEffect as doRunEffect,
     stopAll as doStopAll
 } from "../../client/HttpClient";
+import { ClockSpeedMessage } from "../../domain/client/BackendMessage";
 import { StopAllOptions } from "../../domain/client/StopAllOptions";
 import DisplayMode from "../../domain/controlpanel/DisplayMode";
 import * as ea from "../../domain/EffectAction";
@@ -25,6 +26,7 @@ export const DID_STOP_ALL = "controlpanel/DID_STOP_ALL";
 export const SHOULD_WRITE_LOG = "controlpanel/SHOULD_WRITE_LOG";
 export const SHOULD_CLEAR_LOGS = "controlpanel/SHOULD_CLEAR_LOGS";
 export const SHOULD_INCREMENT_COUNTER = "controlpanel/INCREMENT_COUNTER";
+export const SHOULD_CHANGE_CLOCK_SPEED = "controlpanel/SHOULD_CHANGE_CLOCK_SPEED";
 export const SHOULD_TOGGLE_CLOCK = "controlpanel/SHOULD_TOGGLE_CLOCK";
 
 interface ShouldChangeDisplayMode {
@@ -58,6 +60,10 @@ interface ShouldIncrementCounter {
     type: typeof SHOULD_INCREMENT_COUNTER
     payload: string
 }
+interface ShouldChangeClockSpeed {
+    type: typeof SHOULD_CHANGE_CLOCK_SPEED
+    payload: ClockSpeedMessage
+}
 interface ShouldToggleClock {
     type: typeof SHOULD_TOGGLE_CLOCK
 }
@@ -67,7 +73,7 @@ export type ControlPanelAction =
     DidStartEffect | DidStopEffect | DidStopAll |
     ShouldWriteLog | ShouldClearLogs |
     ShouldIncrementCounter |
-    ShouldToggleClock;
+    ShouldChangeClockSpeed | ShouldToggleClock;
 
 // ACTION CREATORS
 const shouldChangeDisplayMode = createAction(SHOULD_CHANGE_DISPLAY_MODE);
@@ -78,6 +84,7 @@ export const didStopAll = createAction<StopAllOptions>(DID_STOP_ALL);
 export const shouldWriteLog = createAction<LogEntry>(SHOULD_WRITE_LOG);
 export const shouldClearLogs = createAction(SHOULD_CLEAR_LOGS);
 export const shouldIncrementCounter = createAction<string>(SHOULD_INCREMENT_COUNTER);
+export const shouldChangeClockSpeed = createAction<ClockSpeedMessage>(SHOULD_CHANGE_CLOCK_SPEED);
 export const shouldToggleClock = createAction(SHOULD_TOGGLE_CLOCK);
 
 // ACTIONS
@@ -96,6 +103,10 @@ export const stopAll = (options: StopAllOptions): ThunkAction<void, RootState, n
 };
 export const clearLogs = (): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(shouldClearLogs());
+};
+export const changeClockSpeed = (options: ClockSpeedMessage): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {
+    dispatch(shouldChangeClockSpeed(options));
+    // TODO: debounced call to backend
 };
 export const toggleClock = (): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(shouldToggleClock());

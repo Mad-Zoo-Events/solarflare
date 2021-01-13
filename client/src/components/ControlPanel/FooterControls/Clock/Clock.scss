@@ -1,17 +1,41 @@
 .clock {
     display              : grid;
     grid-template-columns: 5em auto max-content;
+    grid-template-rows   : 3em auto;
     gap                  : 0.5em;
 
+    & .indicator {
+        grid-row   : 1;
+        grid-column: 1 / span 3;
+        display    : inline-flex;
+
+        &-active {
+            background-color: var(--font);
+            color           : var(--darker-gray);
+        }
+
+        &-inactive {
+            background-color: var(--darker-gray);
+            color           : var(--font);
+        }
+
+        & span {
+            margin: auto;
+        }
+    }
+
     & .bpm-number-input {
+        grid-row   : 2;
         grid-column: 1;
     }
 
     & .bpm-range-input {
+        grid-row   : 2;
         grid-column: 2;
     }
 
     & .note-length-input {
+        grid-row   : 2;
         grid-column: 3;
     }
 }
