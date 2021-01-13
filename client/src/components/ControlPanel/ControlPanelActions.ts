@@ -13,7 +13,7 @@ import { ClockSpeedMessage } from "../../domain/client/BackendMessage";
 import { ClockSpeedOptions } from "../../domain/client/ClockSpeedOptions";
 import { ClockSubscriptionOptions } from "../../domain/client/ClockSubscriptionOptions";
 import { StopAllOptions } from "../../domain/client/StopAllOptions";
-import { Subscribe } from "../../domain/ClockAction";
+import { ClockAction, Subscribe } from "../../domain/ClockAction";
 import DisplayMode from "../../domain/controlpanel/DisplayMode";
 import * as ea from "../../domain/EffectAction";
 import { EffectAction } from "../../domain/EffectAction";
@@ -117,8 +117,8 @@ export const changeClockSpeed = (options: ClockSpeedOptions): ThunkAction<void, 
     dispatch(shouldChangeClockSpeed({ clockSpeedBpm, clockSpeedMultiplier }));
     debouncedClockSpeedUpdate(options);
 };
-export const handleClockSubscription = (options: ClockSubscriptionOptions): ThunkAction<void, RootState, null, AnyAction> => () => {
-    options.action === Subscribe
+export const handleClockSubscription = (options: ClockSubscriptionOptions, action: ClockAction): ThunkAction<void, RootState, null, AnyAction> => () => {
+    action === Subscribe
         ? doSubscribeToClock(options)
         : doUnsubscribeFromClock(options);
 };

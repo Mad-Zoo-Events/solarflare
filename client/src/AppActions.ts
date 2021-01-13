@@ -23,6 +23,7 @@ import {
 } from "./components/ControlPanel/ControlPanelActions";
 import { BackendMessage } from "./domain/client/BackendMessage";
 import { Server } from "./domain/client/Server";
+import { Subscribe } from "./domain/ClockAction";
 import * as ea from "./domain/EffectAction";
 import { EffectType } from "./domain/EffectType";
 import { LogEntry, LogLevel } from "./domain/LogEntry";
@@ -188,6 +189,21 @@ export const handleSocketMessage = (message: BackendMessage, presets: PresetColl
     }
 
     if (clockUpdate) {
-        console.log(clockUpdate);
+        const { id, effectType, action, isOffBeat } = clockUpdate;
+        if (action === Subscribe) {
+            const preset = getPreset(id, effectType, presets);
+            if (preset) {
+                const interval = window.setInterval(() => dispatch(shouldIncrementCounter(id)), 1000);
+                dispatch(didStartEffect({
+                    preset,
+                    interval,
+                    secondsRunning: 0,
+                    offBeatClock: isOffBeat,
+                    onBeatClock: !isOffBeat
+                }));
+            }
+        } else {
+            dispatch(didStopEffect(id));
+        }
     }
 };

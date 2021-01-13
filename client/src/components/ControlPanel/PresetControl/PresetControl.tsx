@@ -1,7 +1,6 @@
 import React, { ReactElement } from "react";
 import { connect } from "react-redux";
 import { ClockSubscriptionOptions } from "../../../domain/client/ClockSubscriptionOptions";
-import { Subscribe, Unsubscribe } from "../../../domain/ClockAction";
 import * as ea from "../../../domain/EffectAction";
 import * as et from "../../../domain/EffectType";
 import { LaserPreset } from "../../../domain/presets";
@@ -27,8 +26,8 @@ const PresetControl = ({
     const onBeatAttached = runningEffect?.onBeatClock;
     const offBeatAttached = runningEffect?.offBeatClock;
 
-    const isAttachedToClock = onBeatAttached || offBeatAttached;
-    const isRunningButNotOnClock = secondsRunning !== undefined && !isAttachedToClock;
+    const isRunning = secondsRunning !== undefined;
+    const isRunningButNotOnClock = isRunning && !onBeatAttached && !offBeatAttached;
     const isGuardianLaser = effectType === et.Laser && (preset as LaserPreset).laserType !== "end";
     const renderStartStop = effectType !== et.Command;
 
@@ -38,9 +37,8 @@ const PresetControl = ({
     const subscriptionOptions: ClockSubscriptionOptions = {
         presetId: id,
         effectType,
-        isRunning: isRunningButNotOnClock,
-        offBeat: false,
-        action: isAttachedToClock ? Unsubscribe : Subscribe
+        isRunning,
+        offBeat: false
     };
 
     return (
