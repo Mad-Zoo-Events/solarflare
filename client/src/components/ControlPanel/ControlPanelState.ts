@@ -11,4 +11,5 @@ export interface ControlPanelState {
 
     clockBpm: number
     clockNoteLength: number
+    clockOnBeat: boolean
 }

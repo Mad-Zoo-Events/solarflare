@@ -25,6 +25,7 @@ export const DID_STOP_ALL = "controlpanel/DID_STOP_ALL";
 export const SHOULD_WRITE_LOG = "controlpanel/SHOULD_WRITE_LOG";
 export const SHOULD_CLEAR_LOGS = "controlpanel/SHOULD_CLEAR_LOGS";
 export const SHOULD_INCREMENT_COUNTER = "controlpanel/INCREMENT_COUNTER";
+export const SHOULD_TOGGLE_CLOCK = "controlpanel/SHOULD_TOGGLE_CLOCK";
 
 interface ShouldChangeDisplayMode {
     type: typeof SHOULD_CHANGE_DISPLAY_MODE
@@ -57,12 +58,16 @@ interface ShouldIncrementCounter {
     type: typeof SHOULD_INCREMENT_COUNTER
     payload: string
 }
+interface ShouldToggleClock {
+    type: typeof SHOULD_TOGGLE_CLOCK
+}
 
 export type ControlPanelAction =
     ShouldChangeDisplayMode | ShouldIgnoreKeystrokes |
     DidStartEffect | DidStopEffect | DidStopAll |
     ShouldWriteLog | ShouldClearLogs |
-    ShouldIncrementCounter;
+    ShouldIncrementCounter |
+    ShouldToggleClock;
 
 // ACTION CREATORS
 const shouldChangeDisplayMode = createAction(SHOULD_CHANGE_DISPLAY_MODE);
@@ -73,6 +78,7 @@ export const didStopAll = createAction<StopAllOptions>(DID_STOP_ALL);
 export const shouldWriteLog = createAction<LogEntry>(SHOULD_WRITE_LOG);
 export const shouldClearLogs = createAction(SHOULD_CLEAR_LOGS);
 export const shouldIncrementCounter = createAction<string>(SHOULD_INCREMENT_COUNTER);
+export const shouldToggleClock = createAction(SHOULD_TOGGLE_CLOCK);
 
 // ACTIONS
 export const selectDisplayMode = (displayMode: DisplayMode): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
@@ -90,6 +96,9 @@ export const stopAll = (options: StopAllOptions): ThunkAction<void, RootState, n
 };
 export const clearLogs = (): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(shouldClearLogs());
+};
+export const toggleClock = (): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
+    dispatch(shouldToggleClock());
 };
 export const handleKeyPress = (event: KeyboardEvent, presets: Preset[], runningEffects: Map<string, RunningEffect>): ThunkAction<void, RootState, null, AnyAction> => () => {
     const { key } = event;
