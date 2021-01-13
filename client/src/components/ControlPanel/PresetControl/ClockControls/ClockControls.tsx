@@ -21,7 +21,7 @@ const ClockControls = ({
     return (
         <div className="clock-controls">
             <FontAwesomeIcon
-                className="button"
+                className={`button${isRunning && onBeatAttached && " active"}`}
                 icon={[onBeatIcon, "circle"]}
                 size="2x"
                 onClick={() => handleClockSubscription({
@@ -30,7 +30,7 @@ const ClockControls = ({
                 }, (!isRunning || offBeatAttached) ? Subscribe : Unsubscribe)}
             />
             <FontAwesomeIcon
-                className="button"
+                className={`button${isRunning && offBeatAttached && " active"}`}
                 icon={[offBeatIcon, "circle"]}
                 size="2x"
                 onClick={() => handleClockSubscription({
