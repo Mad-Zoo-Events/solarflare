@@ -90,6 +90,10 @@ func SubscribeEffectToClock(id string, effectType model.EffectType, isOffBeat, i
 
 // UnsubscribeEffectFromClock unsubscribes an effect from the clock
 func UnsubscribeEffectFromClock(id string, effectType model.EffectType, isOffBeat bool) {
+	if tickTock.effects[id] == nil {
+		return
+	}
+
 	tickTock.effects[id].detach = true
 
 	sendClockUpdate(id, effectType, model.UnsubscribeClockAction, isOffBeat)
