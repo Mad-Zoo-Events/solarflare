@@ -1,11 +1,14 @@
+import { debounce } from "lodash";
 import { AnyAction } from "redux";
 import { createAction } from "redux-actions";
 import { ThunkAction } from "redux-thunk";
 import {
     runEffect as doRunEffect,
-    stopAll as doStopAll
+    stopAll as doStopAll,
+    changeClockSpeed as doChangeClockSpeed
 } from "../../client/HttpClient";
 import { ClockSpeedMessage } from "../../domain/client/BackendMessage";
+import { ClockSpeedOptions } from "../../domain/client/ClockSpeedOptions";
 import { StopAllOptions } from "../../domain/client/StopAllOptions";
 import DisplayMode from "../../domain/controlpanel/DisplayMode";
 import * as ea from "../../domain/EffectAction";
@@ -104,9 +107,11 @@ export const stopAll = (options: StopAllOptions): ThunkAction<void, RootState, n
 export const clearLogs = (): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(shouldClearLogs());
 };
-export const changeClockSpeed = (options: ClockSpeedMessage): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {
-    dispatch(shouldChangeClockSpeed(options));
-    // TODO: debounced call to backend
+const debouncedClockSpeedUpdate = debounce((options: ClockSpeedOptions) => doChangeClockSpeed(options), 1000);
+export const changeClockSpeed = (options: ClockSpeedOptions): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {
+    const { bpm: clockSpeedBpm, noteLength: clockSpeedMultiplier } = options;
+    dispatch(shouldChangeClockSpeed({ clockSpeedBpm, clockSpeedMultiplier }));
+    debouncedClockSpeedUpdate(options);
 };
 export const toggleClock = (): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(shouldToggleClock());

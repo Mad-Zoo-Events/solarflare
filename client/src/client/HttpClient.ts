@@ -49,3 +49,8 @@ export async function runEffect (effectType: EffectType, id: string, action: Eff
 export async function stopAll (options: StopAllOptions): Promise<void> {
     return await axios.post("/effects/stopall", { ...options });
 }
+
+// Clock
+export async function changeClockSpeed (options: ClockSpeedOptions): Promise<void> {
+    return await axios.post("/clock/speed", { ...options });
+}
