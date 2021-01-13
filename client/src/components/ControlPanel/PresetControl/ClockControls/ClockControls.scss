@@ -1,4 +1,8 @@
 .clock-controls {
     margin-top: 0.3em;
-    color     : var(--gray)
+    color     : var(--gray);
+
+    & .active {
+        color: var(--font)
+    }
 }
