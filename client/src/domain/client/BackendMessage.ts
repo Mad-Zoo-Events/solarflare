@@ -39,7 +39,7 @@ export interface ClockMessage {
 }
 
 export interface ClockSpeedMessage {
-    clockSpeedBPM: number
+    clockSpeedBpm: number
     clockSpeedMultiplier: number
 }
 

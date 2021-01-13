@@ -16,6 +16,7 @@ import {
     didStartEffect,
     didStopAll,
     didStopEffect,
+    shouldChangeClockSpeed,
     shouldClearLogs,
     shouldIncrementCounter,
     shouldWriteLog
@@ -116,7 +117,8 @@ export const handleSocketMessage = (message: BackendMessage, presets: PresetColl
     const {
         effectUpdate,
         stageUpdate,
-        serverUpdate
+        serverUpdate,
+        clockSpeedUpdate
     } = message;
 
     if (effectUpdate) {
@@ -178,5 +180,9 @@ export const handleSocketMessage = (message: BackendMessage, presets: PresetColl
             category: "SERVERS",
             message: `${serverCount === 1 ? "One server is" : `${serverCount} servers are`} now listening`
         }));
+    }
+
+    if (clockSpeedUpdate) {
+        dispatch(shouldChangeClockSpeed(clockSpeedUpdate));
     }
 };
