@@ -34,12 +34,12 @@ const Clock = ({
 
     const handleBpmChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.currentTarget.valueAsNumber;
-        changeClockSpeed({ clockSpeedBPM: value, clockSpeedMultiplier: noteLength });
+        changeClockSpeed({ clockSpeedBpm: value, clockSpeedMultiplier: noteLength });
     };
 
     const handleNoteLengthChange = (e: ChangeEvent<HTMLSelectElement>) => {
         const value = parseFloat(e.currentTarget.value);
-        changeClockSpeed({ clockSpeedBPM: bpm, clockSpeedMultiplier: value });
+        changeClockSpeed({ clockSpeedBpm: bpm, clockSpeedMultiplier: value });
     };
 
     const indicatorClass = onBeat

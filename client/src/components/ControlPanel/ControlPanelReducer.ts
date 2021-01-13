@@ -124,7 +124,7 @@ function controlPanelReducer (
     case SHOULD_CHANGE_CLOCK_SPEED:
         return {
             ...state,
-            clockBpm: action.payload.clockSpeedBPM,
+            clockBpm: action.payload.clockSpeedBpm,
             clockNoteLength: action.payload.clockSpeedMultiplier
         };
     case SHOULD_TOGGLE_CLOCK:
