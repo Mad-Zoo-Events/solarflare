@@ -1,41 +1,56 @@
-import debounce from "lodash/debounce";
-import React, { ChangeEvent, useCallback, useState } from "react";
+import React, { ChangeEvent, useEffect } from "react";
 import { connect } from "react-redux";
 import { RootState } from "../../../../RootState";
-import { setIgnoreKeystrokes } from "../../ControlPanelActions";
+import { changeClockSpeed, setIgnoreKeystrokes, toggleClock } from "../../ControlPanelActions";
 import "./Clock.scss";
 import { ClockProps } from "./ClockProps";
 
 const Clock = ({
-    initialBpm,
-    initialNoteLength,
-    setIgnoreKeystrokes
+    bpm,
+    noteLength,
+    onBeat,
+    setIgnoreKeystrokes,
+    toggleClock,
+    changeClockSpeed
 }: ClockProps) => {
-    const [bpm, setBpm] = useState(initialBpm);
-    const [noteLength, setNoteLength] = useState(initialNoteLength);
+    const millis = 60000 / bpm * noteLength;
 
-    const updateBpm = useCallback(
-        debounce((bpm: number) => console.log("BPM: ", bpm), 1000), []
-    );
+    let interval: number;
+    const restartInterval = (newMillis: number) => {
+        if (interval) {
+            window.clearInterval(interval);
+        }
+        interval = window.setInterval(() => {
+            toggleClock();
+        }, newMillis);
+    };
 
-    const updateNoteLength = useCallback(
-        (noteLength: number) => console.log("Note Length: ", noteLength), []
-    );
+    useEffect(() => {
+        restartInterval(millis);
+        return () => {
+            window.clearInterval(interval);
+        };
+    }, [millis]);
 
     const handleBpmChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.currentTarget.valueAsNumber;
-        setBpm(value);
-        updateBpm(value);
+        changeClockSpeed({ clockSpeedBPM: value, clockSpeedMultiplier: noteLength });
     };
 
     const handleNoteLengthChange = (e: ChangeEvent<HTMLSelectElement>) => {
         const value = parseFloat(e.currentTarget.value);
-        setNoteLength(value);
-        updateNoteLength(value);
+        changeClockSpeed({ clockSpeedBPM: bpm, clockSpeedMultiplier: value });
     };
+
+    const indicatorClass = onBeat
+        ? "indicator indicator-active"
+        : "indicator indicator-inactive";
 
     return (
         <div className="clock">
+            <div className={indicatorClass}>
+                <span>{millis.toFixed(3)} ms</span>
+            </div>
             <input
                 className="bpm-number-input"
                 type="number"
@@ -75,17 +90,23 @@ const Clock = ({
 };
 
 function mapStateToProps (state: RootState) {
-    const initialBpm = state.controlpanel.clockBpm;
-    const initialNoteLength = state.controlpanel.clockNoteLength;
+    const {
+        clockBpm: bpm,
+        clockNoteLength: noteLength,
+        clockOnBeat: onBeat
+    } = state.controlpanel;
 
     return {
-        initialBpm,
-        initialNoteLength
+        bpm,
+        noteLength,
+        onBeat
     };
 }
 
 const mapDispatchToProps = {
-    setIgnoreKeystrokes: setIgnoreKeystrokes
+    setIgnoreKeystrokes: setIgnoreKeystrokes,
+    toggleClock: toggleClock,
+    changeClockSpeed: changeClockSpeed
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Clock);
