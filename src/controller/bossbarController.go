@@ -1,8 +1,8 @@
 package controller
 
 import (
+	"encoding/json"
 	"fmt"
-	"net/url"
 
 	"github.com/eynorey/solarflare/src/manager"
 	"github.com/eynorey/solarflare/src/model"
@@ -10,20 +10,19 @@ import (
 )
 
 // SetBossbar controls the bossbar
-func SetBossbar(action model.EffectAction, values url.Values) error {
+func SetBossbar(action model.EffectAction, body []byte) error {
 	if !action.IsAllowedOn(model.BossbarEffectType) {
-		return sferror.New(sferror.ActionNotAllowed, fmt.Sprintf("Action %s is not allowed for the bossbar", action), nil)
+		return sferror.New(sferror.ActionNotAllowed, fmt.Sprintf("Action %s is not allowed for the boss bar", action), nil)
 	}
 
 	if action == model.ClearBossbarAction {
 		return manager.ClearBossbar(true)
 	}
 
-	bossbarRequest := model.BossbarRequest{}
-	err := decoder.Decode(&bossbarRequest, values)
-	if err != nil {
-		return sferror.New(sferror.Encoding, "Error parsing data from the bossbar request", err)
+	request := model.BossbarRequest{}
+	if err := json.Unmarshal(body, &request); err != nil {
+		return sferror.New(sferror.Encoding, "Error unmarshalling bossbar request", err)
 	}
 
-	return manager.SetBossbar(bossbarRequest, true)
+	return manager.SetBossbar(request, true)
 }
