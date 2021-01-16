@@ -1,6 +1,7 @@
 package main
 
 import (
+	"io/ioutil"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -12,14 +13,14 @@ import (
 
 // BossbarHandler handles requests to control the bossbar
 func BossbarHandler(c *gin.Context) {
-	err := c.Request.ParseForm()
+	body, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
-		err = sferror.New(sferror.Encoding, "Error parsing the bossbar request", err)
+		err = sferror.New(sferror.Encoding, "Error reading bossbar request body", err)
 		c.JSON(http.StatusBadRequest, sferror.Get(err))
 		return
 	}
 
-	err = controller.SetBossbar(model.EffectAction(c.Param("action")), c.Request.PostForm)
+	err = controller.SetBossbar(model.EffectAction(c.Param("action")), body)
 	if err != nil {
 		switch sferror.GetErrorType(err) {
 		case sferror.ActionNotAllowed, sferror.InvalidEffectType, sferror.Encoding:
