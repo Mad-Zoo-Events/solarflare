@@ -19,7 +19,8 @@ import {
     shouldChangeClockSpeed,
     shouldClearLogs,
     shouldIncrementCounter,
-    shouldWriteLog
+    shouldWriteLog,
+    stopAll
 } from "./components/ControlPanel/ControlPanelActions";
 import { BackendMessage } from "./domain/client/BackendMessage";
 import { Server } from "./domain/client/Server";
@@ -111,7 +112,8 @@ export const fetchPresetsOfType = (effectType: EffectType): ThunkAction<void, Ro
 export const toggleServer = (server: Server): ThunkAction<void, RootState, null, AnyAction> => () => {
     doToggleServer(server);
 };
-export const chooseStage = (stage: string): ThunkAction<void, RootState, null, AnyAction> => () => {
+export const chooseStage = (stage: string): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
+    dispatch(stopAll({ stopEffects: true, detachClocks: true }));
     doSelectStage(stage);
 };
 export const handleSocketMessage = (message: BackendMessage, presets: PresetCollection): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {
