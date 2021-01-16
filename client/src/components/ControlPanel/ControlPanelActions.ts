@@ -78,7 +78,7 @@ interface ShouldToggleClock {
 }
 interface ShouldUpdateBossbar {
     type: typeof SHOULD_UPDATE_BOSSBAR
-    payload: BossbarOptions
+    payload: BossbarOptions | null
 }
 
 export type ControlPanelAction =
@@ -100,7 +100,7 @@ export const shouldClearLogs = createAction(SHOULD_CLEAR_LOGS);
 export const shouldIncrementCounter = createAction<string>(SHOULD_INCREMENT_COUNTER);
 export const shouldChangeClockSpeed = createAction<ClockSpeedMessage>(SHOULD_CHANGE_CLOCK_SPEED);
 export const shouldToggleClock = createAction(SHOULD_TOGGLE_CLOCK);
-export const shouldUpdateBossbar = createAction<BossbarOptions>(SHOULD_UPDATE_BOSSBAR);
+export const shouldUpdateBossbar = createAction<BossbarOptions | null>(SHOULD_UPDATE_BOSSBAR);
 
 // ACTIONS
 export const chooseDisplayMode = (displayMode: DisplayMode): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
@@ -136,7 +136,7 @@ export const toggleClock = (): ThunkAction<void, RootState, null, AnyAction> => 
 export const updateBossbar = (options: BossbarOptions, sendUpdate: boolean): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(shouldUpdateBossbar(options));
     if (sendUpdate) {
-        console.log("TODO: http request");
+        doUpdateBossbar(SetBossbar, options);
     }
 };
 

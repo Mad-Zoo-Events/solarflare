@@ -1,4 +1,6 @@
 import axios from "axios";
+import { BossbarAction } from "../domain/BossbarAction";
+import { BossbarOptions } from "../domain/client/BossbarOptions";
 import { ClockSpeedOptions } from "../domain/client/ClockSpeedOptions";
 import { ClockSubscriptionOptions } from "../domain/client/ClockSubscriptionOptions";
 import { Server } from "../domain/client/Server";
@@ -50,6 +52,9 @@ export async function runEffect (effectType: EffectType, id: string, action: Eff
 }
 export async function stopAll (options: StopAllOptions): Promise<void> {
     return await axios.post("/effects/stopall", options);
+}
+export async function updateBossbar (action: BossbarAction, options?: BossbarOptions): Promise<void> {
+    return await axios.post(`/bossbar/${action}`, options);
 }
 
 // Clock
