@@ -22,7 +22,8 @@ import {
     faSatelliteDish,
     faGlobeAsia,
     faCircle as fasFaCircle,
-    faSkull
+    faSkull,
+    faPaperPlane
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -31,7 +32,8 @@ import {
     faTrashAlt,
     faListAlt,
     faStopCircle as farStopCircle,
-    faCircle as farFaCircle
+    faCircle as farFaCircle,
+    faEyeSlash
 } from "@fortawesome/free-regular-svg-icons";
 
 library.add(
@@ -58,11 +60,13 @@ library.add(
     faGlobeAsia,
     fasFaCircle,
     faSkull,
+    faPaperPlane,
 
     faEdit,
     faClone,
     faTrashAlt,
     faListAlt,
     farStopCircle,
-    farFaCircle
+    farFaCircle,
+    faEyeSlash
 );

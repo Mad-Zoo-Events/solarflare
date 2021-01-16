@@ -7,8 +7,10 @@ import {
     runEffect as doRunEffect,
     stopAll as doStopAll,
     subscribeToClock as doSubscribeToClock,
-    unsubscribeFromClock as doUnsubscribeFromClock
+    unsubscribeFromClock as doUnsubscribeFromClock,
+    updateBossbar as doUpdateBossbar
 } from "../../client/HttpClient";
+import { ClearBossbar, SetBossbar } from "../../domain/BossbarAction";
 import { ClockSpeedMessage } from "../../domain/client/BackendMessage";
 import { BossbarOptions } from "../../domain/client/BossbarOptions";
 import { ClockSpeedOptions } from "../../domain/client/ClockSpeedOptions";
@@ -138,6 +140,10 @@ export const updateBossbar = (options: BossbarOptions, sendUpdate: boolean): Thu
     if (sendUpdate) {
         doUpdateBossbar(SetBossbar, options);
     }
+};
+export const clearBossbar = (): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
+    doUpdateBossbar(ClearBossbar);
+    dispatch(shouldUpdateBossbar(null));
 };
 
 export const handleKeyPress = (event: KeyboardEvent, presets: Preset[], runningEffects: Map<string, RunningEffect>): ThunkAction<void, RootState, null, AnyAction> => () => {
