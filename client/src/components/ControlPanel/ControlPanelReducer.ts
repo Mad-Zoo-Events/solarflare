@@ -1,4 +1,5 @@
 import { StopAllOptions } from "../../domain/client/StopAllOptions";
+import BossbarColor from "../../domain/controlpanel/BossbarColor";
 import DisplayMode from "../../domain/controlpanel/DisplayMode";
 import { LogEntry } from "../../domain/LogEntry";
 import { RunningEffect } from "../../domain/RunningEffect";
@@ -14,6 +15,7 @@ import {
     SHOULD_IGNORE_KEYSTROKES,
     SHOULD_INCREMENT_COUNTER,
     SHOULD_TOGGLE_CLOCK,
+    SHOULD_UPDATE_BOSSBAR,
     SHOULD_WRITE_LOG
 } from "./ControlPanelActions";
 import { ControlPanelState } from "./ControlPanelState";
@@ -25,7 +27,9 @@ const initialState: ControlPanelState = {
     logEntries: [],
     clockBpm: 128.0,
     clockNoteLength: 1.0,
-    clockOnBeat: true
+    clockOnBeat: true,
+    bossbarText: "",
+    bossbarColor: BossbarColor.ColorBlue
 };
 
 const addToRunning = (
@@ -130,6 +134,12 @@ function controlPanelReducer (
         return {
             ...state,
             clockOnBeat: !state.clockOnBeat
+        };
+    case SHOULD_UPDATE_BOSSBAR:
+        return {
+            ...state,
+            bossbarText: action.payload.title,
+            bossbarColor: action.payload.color
         };
     case SHOULD_WRITE_LOG:
         return {
