@@ -3,16 +3,17 @@ import React, { ChangeEvent, ReactElement, useState } from "react";
 import { connect } from "react-redux";
 import BossbarColor from "../../../../domain/controlpanel/BossbarColor";
 import { RootState } from "../../../../RootState";
-import { setIgnoreKeystrokes, updateBossbar } from "../../ControlPanelActions";
+import { clearBossbar, setIgnoreKeystrokes, updateBossbar } from "../../ControlPanelActions";
 import { selectBossbarColor, selectBossbarText } from "../../ControlPanelSelectors";
 import "./BossbarControl.scss";
 import { BossbarControlProps } from "./BossbarControlProps";
 import BossbarPreview from "./BossbarPreview";
 
 const BossbarControls = ({
-    text,
+    title,
     color,
     updateBossbar,
+    clearBossbar,
     setIgnoreKeystrokes
 }: BossbarControlProps): ReactElement => {
     const [autoUpdate, setAutoUpdate] = useState(true);
@@ -20,7 +21,7 @@ const BossbarControls = ({
     const handleColorChange = (e: ChangeEvent<HTMLSelectElement>) => {
         updateBossbar({
             color: e.currentTarget.value as BossbarColor,
-            title: text
+            title
         }, autoUpdate);
     };
 
@@ -38,13 +39,13 @@ const BossbarControls = ({
             <input
                 type="text"
                 placeholder="Now Playing: Bob Ross"
-                value={text}
+                value={title}
                 onFocus={() => setIgnoreKeystrokes(true)}
                 onBlur={() => setIgnoreKeystrokes(false)}
                 onChange={handleTitleChange}
             />
             <div className="code bossbar-preview fake-input">
-                <BossbarPreview rawText={text} />
+                <BossbarPreview rawText={title} />
             </div>
             <select
                 value={color}
@@ -54,7 +55,20 @@ const BossbarControls = ({
                     <option key={key} value={key}>{key as BossbarColor}</option>
                 )}
             </select>
-            <label className="checkbox-container">Update Immediately
+            {!autoUpdate && <FontAwesomeIcon
+                className="button"
+                icon={["fas", "paper-plane"]} size="2x"
+                onClick={() => updateBossbar({ color, title }, true)}
+                title="Set Boss Bar"
+            />}
+            <FontAwesomeIcon
+                className="button"
+                icon={["far", "eye-slash"]} size="2x"
+                onClick={clearBossbar}
+                title="Hide Boss Bar"
+            />
+            <label className="checkbox-container">
+                Update Live
                 <input
                     type="checkbox"
                     checked={autoUpdate}
@@ -67,18 +81,19 @@ const BossbarControls = ({
 };
 
 function mapStateToProps (state: RootState) {
-    const text = selectBossbarText(state);
+    const title = selectBossbarText(state);
     const color = selectBossbarColor(state);
 
     return {
-        text,
+        title,
         color
     };
 }
 
 const mapDispatchToProps = {
     setIgnoreKeystrokes: setIgnoreKeystrokes,
-    updateBossbar: updateBossbar
+    updateBossbar: updateBossbar,
+    clearBossbar: clearBossbar
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BossbarControls);
