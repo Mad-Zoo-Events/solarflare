@@ -25,6 +25,7 @@ a {
 input[type=text],
 input[type=number],
 textarea,
+.fake-input,
 select {
     color           : var(--font);
     background-color: var(--darker-accent-alpha);
@@ -32,6 +33,7 @@ select {
     padding         : 7px;
     box-sizing      : border-box;
     border          : none;
+    border-radius   : 0.2em;
 }
 
 .color-input {
@@ -78,7 +80,7 @@ select {
 @mixin checkbox-radio-container {
     display            : block;
     position           : relative;
-    padding-left       : 2em;
+    padding-left       : 2.2em;
     cursor             : pointer;
     -webkit-user-select: none;
     -moz-user-select   : none;
@@ -121,8 +123,6 @@ select {
         position: absolute;
         display : none;
     }
-
-
 }
 
 .checkbox-container {

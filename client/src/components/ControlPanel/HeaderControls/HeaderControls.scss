@@ -1,6 +1,6 @@
 div.control-panel__header-controls {
     display              : grid;
-    grid-template-columns: repeat(6, min-content);
+    grid-template-columns: min-content auto repeat(6, min-content);
     gap                  : 0 1em;
 
     & .separator {
