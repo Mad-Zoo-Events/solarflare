@@ -12,6 +12,7 @@ export const selectLogEntries = createSelector(selectControlPanelState, ({ logEn
 export const selectClockOnBeat = createSelector(selectControlPanelState, ({ clockOnBeat }) => clockOnBeat);
 export const selectClockBpm = createSelector(selectControlPanelState, ({ clockBpm }) => clockBpm);
 export const selectClockNoteLength = createSelector(selectControlPanelState, ({ clockNoteLength }) => clockNoteLength);
+export const selectClockMillis = createSelector(selectControlPanelState, ({ clockNoteLength, clockBpm }) => 60000 / clockBpm * clockNoteLength);
 
 export function selectRunningEffect (state: RootState, id: string): RunningEffect | undefined {
     return selectRunningEffects(state)?.get(id);
