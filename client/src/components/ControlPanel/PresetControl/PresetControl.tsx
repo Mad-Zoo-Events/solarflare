@@ -6,6 +6,7 @@ import * as et from "../../../domain/EffectType";
 import { LaserPreset } from "../../../domain/presets";
 import { RootState } from "../../../RootState";
 import { getAccentColor } from "../../../utils/utils";
+import { selectOffBeatAttached, selectOnBeatAttached, selectSecondsRunning } from "../ControlPanelSelectors";
 import PresetControlButton from "../PresetControlButton/PresetControlButton";
 import ClockControls from "./ClockControls/ClockControls";
 import "./PresetControl.scss";
@@ -13,18 +14,15 @@ import { PresetControlProps } from "./PresetControlProps";
 
 const PresetControl = ({
     preset,
-    runningEffects
+    secondsRunning,
+    onBeatAttached,
+    offBeatAttached
 }: PresetControlProps): ReactElement => {
     const { id, effectType, displayName } = preset;
 
     if (!effectType) {
         return <span>?</span>;
     }
-
-    const runningEffect = runningEffects.get(id);
-    const secondsRunning = runningEffect?.secondsRunning;
-    const onBeatAttached = runningEffect?.onBeatClock;
-    const offBeatAttached = runningEffect?.offBeatClock;
 
     const isRunning = secondsRunning !== undefined;
     const isRunningButNotOnClock = isRunning && !onBeatAttached && !offBeatAttached;
@@ -75,11 +73,15 @@ const PresetControl = ({
     );
 };
 
-function mapStateToProps (state: RootState) {
-    const { runningEffects } = state.controlpanel;
+function mapStateToProps (state: RootState, { preset }: PresetControlProps) {
+    const secondsRunning = selectSecondsRunning(state, preset.id);
+    const onBeatAttached = selectOnBeatAttached(state, preset.id);
+    const offBeatAttached = selectOffBeatAttached(state, preset.id);
 
     return {
-        runningEffects
+        secondsRunning,
+        onBeatAttached,
+        offBeatAttached
     };
 }
 

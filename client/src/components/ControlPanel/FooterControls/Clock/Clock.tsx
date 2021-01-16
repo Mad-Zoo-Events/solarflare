@@ -2,6 +2,7 @@ import React, { ChangeEvent, useEffect } from "react";
 import { connect } from "react-redux";
 import { RootState } from "../../../../RootState";
 import { changeClockSpeed, setIgnoreKeystrokes, toggleClock } from "../../ControlPanelActions";
+import { selectClockBpm, selectClockNoteLength, selectClockOnBeat } from "../../ControlPanelSelectors";
 import "./Clock.scss";
 import { ClockProps } from "./ClockProps";
 
@@ -90,11 +91,9 @@ const Clock = ({
 };
 
 function mapStateToProps (state: RootState) {
-    const {
-        clockBpm: bpm,
-        clockNoteLength: noteLength,
-        clockOnBeat: onBeat
-    } = state.controlpanel;
+    const bpm = selectClockBpm(state);
+    const noteLength = selectClockNoteLength(state);
+    const onBeat = selectClockOnBeat(state);
 
     return {
         bpm,

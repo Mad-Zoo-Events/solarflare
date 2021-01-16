@@ -95,7 +95,7 @@ export const shouldChangeClockSpeed = createAction<ClockSpeedMessage>(SHOULD_CHA
 export const shouldToggleClock = createAction(SHOULD_TOGGLE_CLOCK);
 
 // ACTIONS
-export const selectDisplayMode = (displayMode: DisplayMode): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
+export const chooseDisplayMode = (displayMode: DisplayMode): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(shouldChangeDisplayMode(displayMode));
 };
 export const setIgnoreKeystrokes = (ignore: boolean): ThunkAction<void, RootState, null, AnyAction> => dispatch => {

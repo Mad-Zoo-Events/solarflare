@@ -3,6 +3,7 @@ import React, { ReactElement } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import { selectVersion } from "../../AppSelectors";
 import { RootState } from "../../RootState";
 import Routes from "../../routes";
 import "./Page.scss";
@@ -52,7 +53,7 @@ const Page = ({
 );
 
 function mapStateToProps (state: RootState) {
-    const { version } = state.app;
+    const version = selectVersion(state);
 
     return {
         version
