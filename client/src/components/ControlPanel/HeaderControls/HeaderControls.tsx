@@ -9,6 +9,7 @@ import { selectDisplayMode } from "../ControlPanelSelectors";
 import "./HeaderControls.scss";
 import { HeaderControlsProps } from "./HeaderControlsProps";
 import Submenu from "./Submenu/Submenu";
+import BossbarControl from "./BossbarControl/BossbarControl";
 
 const HeaderControls = ({
     servers,
@@ -39,6 +40,8 @@ const HeaderControls = ({
 
     return (
         <div className="control-panel__header-controls">
+            <div className="separator"/>
+            <BossbarControl/>
             <div className="separator"/>
             <Submenu
                 label="Display Mode"
