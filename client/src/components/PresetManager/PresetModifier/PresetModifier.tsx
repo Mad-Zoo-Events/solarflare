@@ -13,6 +13,7 @@ import { closePresetModifier, testPreset, upsertPreset } from "../PresetManagerA
 import { CommandFragment, DragonFragment, LaserFragment, ParticleFragment, PotionFragment, TimeshiftFragment } from "./fragments";
 import "./PresetModifier.scss";
 import { PresetModifierProps } from "./PresetModifierProps";
+import { selectPresetToEdit, selectTestIsRunning } from "../PresetManagerSelectors";
 
 const PresetModifier = ({
     preset,
@@ -171,12 +172,13 @@ const PresetModifier = ({
 };
 
 function mapStateToProps (state: RootState) {
-    if (!state.presetmanager.presetToEdit) {
+    const presetToEdit = selectPresetToEdit(state);
+    if (!presetToEdit) {
         return;
     }
 
-    const { effectType, preset } = state.presetmanager.presetToEdit;
-    const testIsRunning = state.presetmanager.testIsRunning;
+    const { effectType, preset } = presetToEdit;
+    const testIsRunning = selectTestIsRunning(state);
 
     return {
         preset,

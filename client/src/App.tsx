@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 import { handleSocketMessage, initializeApp } from "./AppActions";
 import { AppProps } from "./AppProps";
+import { selectIsInitialized, selectMessageQueue, selectPresets } from "./AppSelectors";
 import ControlPanel from "./components/ControlPanel/ControlPanel";
 import PresetManager from "./components/PresetManager/PresetManager";
 import { RootState } from "./RootState";
@@ -43,7 +44,9 @@ const mapDispatchToProps = {
 };
 
 function mapStateToProps (state: RootState) {
-    const { isInitialized, messageQueue, presets } = state.app;
+    const presets = selectPresets(state);
+    const isInitialized = selectIsInitialized(state);
+    const messageQueue = selectMessageQueue(state);
 
     return {
         isInitialized,

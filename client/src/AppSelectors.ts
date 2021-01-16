@@ -3,6 +3,8 @@ import { selectAppState } from "./rootSelectors";
 import { combinePresets, combinePresetsWithoutCommands } from "./utils/utils";
 
 export const selectVersion = createSelector(selectAppState, ({ version }) => version);
+export const selectIsInitialized = createSelector(selectAppState, ({ isInitialized }) => isInitialized);
+export const selectMessageQueue = createSelector(selectAppState, ({ messageQueue }) => messageQueue);
 
 export const selectServers = createSelector(selectAppState, ({ servers }) => servers);
 export const selectStages = createSelector(selectAppState, ({ stages }) => stages);
