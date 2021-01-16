@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { selectPresets } from "../../../AppSelectors";
 import * as et from "../../../domain/EffectType";
 import { RootState } from "../../../RootState";
 import PresetManagerListGroup from "../PresetManagerListGroup/PresetManagerListGroup";
@@ -54,7 +55,7 @@ const PresetManagerList = ({
 };
 
 function mapStateToProps (state: RootState) {
-    const { presets } = state.app;
+    const presets = selectPresets(state);
 
     return {
         presets
