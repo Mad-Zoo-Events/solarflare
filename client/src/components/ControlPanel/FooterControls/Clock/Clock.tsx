@@ -2,20 +2,19 @@ import React, { ChangeEvent, useEffect } from "react";
 import { connect } from "react-redux";
 import { RootState } from "../../../../RootState";
 import { changeClockSpeed, setIgnoreKeystrokes, toggleClock } from "../../ControlPanelActions";
-import { selectClockBpm, selectClockNoteLength, selectClockOnBeat } from "../../ControlPanelSelectors";
+import { selectClockBpm, selectClockMillis, selectClockNoteLength, selectClockOnBeat } from "../../ControlPanelSelectors";
 import "./Clock.scss";
 import { ClockProps } from "./ClockProps";
 
 const Clock = ({
     bpm,
     noteLength,
+    millis,
     onBeat,
     setIgnoreKeystrokes,
     toggleClock,
     changeClockSpeed
 }: ClockProps) => {
-    const millis = 60000 / bpm * noteLength;
-
     let interval: number;
     const restartInterval = (newMillis: number) => {
         if (interval) {
@@ -93,11 +92,13 @@ const Clock = ({
 function mapStateToProps (state: RootState) {
     const bpm = selectClockBpm(state);
     const noteLength = selectClockNoteLength(state);
+    const millis = selectClockMillis(state);
     const onBeat = selectClockOnBeat(state);
 
     return {
         bpm,
         noteLength,
+        millis,
         onBeat
     };
 }

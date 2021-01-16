@@ -4,6 +4,7 @@ import { changeClockSpeed, setIgnoreKeystrokes, toggleClock } from "../../Contro
 export interface ClockProps {
     bpm: number
     noteLength: number
+    millis: number
     onBeat: boolean
 
     setIgnoreKeystrokes: HandleThunkActionCreator<typeof setIgnoreKeystrokes>
