@@ -14,6 +14,9 @@ export const selectClockBpm = createSelector(selectControlPanelState, ({ clockBp
 export const selectClockNoteLength = createSelector(selectControlPanelState, ({ clockNoteLength }) => clockNoteLength);
 export const selectClockMillis = createSelector(selectControlPanelState, ({ clockNoteLength, clockBpm }) => 60000 / clockBpm * clockNoteLength);
 
+export const selectBossbarText = createSelector(selectControlPanelState, ({ bossbarText }) => bossbarText);
+export const selectBossbarColor = createSelector(selectControlPanelState, ({ bossbarColor }) => bossbarColor);
+
 export function selectRunningEffect (state: RootState, id: string): RunningEffect | undefined {
     return selectRunningEffects(state)?.get(id);
 }

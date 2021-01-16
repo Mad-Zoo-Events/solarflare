@@ -10,6 +10,7 @@ import {
     unsubscribeFromClock as doUnsubscribeFromClock
 } from "../../client/HttpClient";
 import { ClockSpeedMessage } from "../../domain/client/BackendMessage";
+import { BossbarOptions } from "../../domain/client/BossbarOptions";
 import { ClockSpeedOptions } from "../../domain/client/ClockSpeedOptions";
 import { ClockSubscriptionOptions } from "../../domain/client/ClockSubscriptionOptions";
 import { StopAllOptions } from "../../domain/client/StopAllOptions";
@@ -35,6 +36,7 @@ export const SHOULD_CLEAR_LOGS = "controlpanel/SHOULD_CLEAR_LOGS";
 export const SHOULD_INCREMENT_COUNTER = "controlpanel/INCREMENT_COUNTER";
 export const SHOULD_CHANGE_CLOCK_SPEED = "controlpanel/SHOULD_CHANGE_CLOCK_SPEED";
 export const SHOULD_TOGGLE_CLOCK = "controlpanel/SHOULD_TOGGLE_CLOCK";
+export const SHOULD_UPDATE_BOSSBAR = "controlpanel/SHOULD_UPDATE_BOSSBAR";
 
 interface ShouldChangeDisplayMode {
     type: typeof SHOULD_CHANGE_DISPLAY_MODE
@@ -74,13 +76,18 @@ interface ShouldChangeClockSpeed {
 interface ShouldToggleClock {
     type: typeof SHOULD_TOGGLE_CLOCK
 }
+interface ShouldUpdateBossbar {
+    type: typeof SHOULD_UPDATE_BOSSBAR
+    payload: BossbarOptions
+}
 
 export type ControlPanelAction =
     ShouldChangeDisplayMode | ShouldIgnoreKeystrokes |
     DidStartEffect | DidStopEffect | DidStopAll |
     ShouldWriteLog | ShouldClearLogs |
     ShouldIncrementCounter |
-    ShouldChangeClockSpeed | ShouldToggleClock;
+    ShouldChangeClockSpeed | ShouldToggleClock |
+    ShouldUpdateBossbar;
 
 // ACTION CREATORS
 const shouldChangeDisplayMode = createAction(SHOULD_CHANGE_DISPLAY_MODE);
@@ -93,6 +100,7 @@ export const shouldClearLogs = createAction(SHOULD_CLEAR_LOGS);
 export const shouldIncrementCounter = createAction<string>(SHOULD_INCREMENT_COUNTER);
 export const shouldChangeClockSpeed = createAction<ClockSpeedMessage>(SHOULD_CHANGE_CLOCK_SPEED);
 export const shouldToggleClock = createAction(SHOULD_TOGGLE_CLOCK);
+export const shouldUpdateBossbar = createAction<BossbarOptions>(SHOULD_UPDATE_BOSSBAR);
 
 // ACTIONS
 export const chooseDisplayMode = (displayMode: DisplayMode): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
@@ -125,6 +133,13 @@ export const handleClockSubscription = (options: ClockSubscriptionOptions, actio
 export const toggleClock = (): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(shouldToggleClock());
 };
+export const updateBossbar = (options: BossbarOptions, sendUpdate: boolean): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
+    dispatch(shouldUpdateBossbar(options));
+    if (sendUpdate) {
+        console.log("TODO: http request");
+    }
+};
+
 export const handleKeyPress = (event: KeyboardEvent, presets: Preset[], runningEffects: Map<string, RunningEffect>): ThunkAction<void, RootState, null, AnyAction> => () => {
     const { key } = event;
 

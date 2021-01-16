@@ -1,8 +1,9 @@
-import { StopAllOptions } from "./StopAllOptions";
+import { BossbarAction } from "../BossbarAction";
 import { ClockAction } from "../ClockAction";
 import { EffectAction } from "../EffectAction";
 import { EffectType } from "../EffectType";
 import { Server } from "./Server";
+import { StopAllOptions } from "./StopAllOptions";
 
 export interface BackendMessage {
     effectUpdate?: EffectMessage
@@ -28,7 +29,7 @@ export interface EffectMessage {
 export interface BossbarMessage {
     text: string
     color: string
-    action: EffectAction
+    action: BossbarAction
 }
 
 export interface ClockMessage {
