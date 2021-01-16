@@ -138,8 +138,8 @@ function controlPanelReducer (
     case SHOULD_UPDATE_BOSSBAR:
         return {
             ...state,
-            bossbarText: action.payload.title,
-            bossbarColor: action.payload.color
+            bossbarText: action.payload?.title || "",
+            bossbarColor: action.payload?.color || state.bossbarColor
         };
     case SHOULD_WRITE_LOG:
         return {
