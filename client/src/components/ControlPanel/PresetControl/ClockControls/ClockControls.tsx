@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Subscribe, Unsubscribe } from "../../../../domain/ClockAction";
 import { RootState } from "../../../../RootState";
 import { handleClockSubscription } from "../../ControlPanelActions";
+import { selectClockOnBeat } from "../../ControlPanelSelectors";
 import "./ClockControls.scss";
 import { ClockControlsProps } from "./ClockControlsProps";
 
@@ -43,7 +44,7 @@ const ClockControls = ({
 };
 
 function mapStateToProps (state: RootState) {
-    const { clockOnBeat } = state.controlpanel;
+    const clockOnBeat = selectClockOnBeat(state);
 
     return {
         clockOnBeat

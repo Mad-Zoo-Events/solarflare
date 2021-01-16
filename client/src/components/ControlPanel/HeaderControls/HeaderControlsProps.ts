@@ -1,8 +1,8 @@
 import { HandleThunkActionCreator } from "react-redux";
-import { toggleServer, selectStage } from "../../../AppActions";
+import { chooseStage, toggleServer } from "../../../AppActions";
 import { Server } from "../../../domain/client/Server";
 import DisplayMode from "../../../domain/controlpanel/DisplayMode";
-import { selectDisplayMode } from "../ControlPanelActions";
+import { chooseDisplayMode } from "../ControlPanelActions";
 
 export interface HeaderControlsProps {
     servers: Server[]
@@ -10,7 +10,7 @@ export interface HeaderControlsProps {
     selectedStage: string
     displayMode: DisplayMode
 
-    selectDisplayMode: HandleThunkActionCreator<typeof selectDisplayMode>
+    chooseDisplayMode: HandleThunkActionCreator<typeof chooseDisplayMode>
     toggleServer: HandleThunkActionCreator<typeof toggleServer>
-    selectStage: HandleThunkActionCreator<typeof selectStage>
+    chooseStage: HandleThunkActionCreator<typeof chooseStage>
 }

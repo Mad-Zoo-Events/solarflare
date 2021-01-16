@@ -1,14 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
+import { selectCombinedPresets, selectCombinedPresetsWithoutCommands, selectPresets } from "../../AppSelectors";
 import DisplayMode from "../../domain/controlpanel/DisplayMode";
 import * as et from "../../domain/EffectType";
 import { RootState } from "../../RootState";
-import { combinePresets, combinePresetsWithoutCommands } from "../../utils/utils";
 import Page from "../Page/Page";
 import CategorySection from "./CategorySection/CategorySection";
 import "./ControlPanel.scss";
 import { handleKeyPress } from "./ControlPanelActions";
 import { ControlPanelProps } from "./ControlPanelProps";
+import { selectDisplayMode, selectIgnoreKeystrokes, selectRunningEffects } from "./ControlPanelSelectors";
 import FooterControls from "./FooterControls/FooterControls";
 import HeaderControls from "./HeaderControls/HeaderControls";
 import PresetControl from "./PresetControl/PresetControl";
@@ -17,10 +18,11 @@ const ControlPanel = ({
     displayMode,
     ignoreKeystrokes,
     presets,
+    combinedPresets,
+    combinedPresetsWithoutCommands,
     runningEffects,
     handleKeyPress
 }: ControlPanelProps) => {
-    const combinedPresets = combinePresets(presets);
     document.onkeydown = e => {
         if (!ignoreKeystrokes) handleKeyPress(e, combinedPresets, runningEffects);
     };
@@ -64,7 +66,7 @@ const ControlPanel = ({
                     <CategorySection effectType={et.Potion} />
                     <CategorySection effectType={et.Timeshift} />
                 </div>
-                {combinePresetsWithoutCommands(presets).map(preset =>
+                {combinedPresetsWithoutCommands.map(preset =>
                     <PresetControl
                         key={preset.id}
                         preset={preset}
@@ -87,14 +89,20 @@ const ControlPanel = ({
 };
 
 function mapStateToProps (state: RootState) {
-    const { presets } = state.app;
-    const { displayMode, ignoreKeystrokes, runningEffects } = state.controlpanel;
+    const presets = selectPresets(state);
+    const combinedPresets = selectCombinedPresets(state);
+    const combinedPresetsWithoutCommands = selectCombinedPresetsWithoutCommands(state);
+    const runningEffects = selectRunningEffects(state);
+    const displayMode = selectDisplayMode(state);
+    const ignoreKeystrokes = selectIgnoreKeystrokes(state);
 
     return {
-        displayMode,
-        ignoreKeystrokes,
         presets,
-        runningEffects
+        combinedPresets,
+        combinedPresetsWithoutCommands,
+        runningEffects,
+        displayMode,
+        ignoreKeystrokes
     };
 }
 

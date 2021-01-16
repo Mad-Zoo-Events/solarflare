@@ -111,7 +111,7 @@ export const fetchPresetsOfType = (effectType: EffectType): ThunkAction<void, Ro
 export const toggleServer = (server: Server): ThunkAction<void, RootState, null, AnyAction> => () => {
     doToggleServer(server);
 };
-export const selectStage = (stage: string): ThunkAction<void, RootState, null, AnyAction> => () => {
+export const chooseStage = (stage: string): ThunkAction<void, RootState, null, AnyAction> => () => {
     doSelectStage(stage);
 };
 export const handleSocketMessage = (message: BackendMessage, presets: PresetCollection): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {

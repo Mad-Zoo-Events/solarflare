@@ -1,9 +1,11 @@
 import React, { ReactElement } from "react";
 import { connect } from "react-redux";
-import { selectStage, toggleServer } from "../../../AppActions";
+import { chooseStage, toggleServer } from "../../../AppActions";
+import { selectSelectedStage, selectServers, selectStages } from "../../../AppSelectors";
 import DisplayMode from "../../../domain/controlpanel/DisplayMode";
 import { RootState } from "../../../RootState";
-import { selectDisplayMode } from "../ControlPanelActions";
+import { chooseDisplayMode } from "../ControlPanelActions";
+import { selectDisplayMode } from "../ControlPanelSelectors";
 import "./HeaderControls.scss";
 import { HeaderControlsProps } from "./HeaderControlsProps";
 import Submenu from "./Submenu/Submenu";
@@ -13,9 +15,9 @@ const HeaderControls = ({
     stages,
     selectedStage,
     displayMode,
-    selectDisplayMode,
+    chooseDisplayMode,
     toggleServer,
-    selectStage
+    chooseStage
 }: HeaderControlsProps): ReactElement => {
     const displayModeOptions = Object.values(DisplayMode).map(key => ({
         value: key,
@@ -42,7 +44,7 @@ const HeaderControls = ({
                 label="Display Mode"
                 iconProps={{ icon: ["fas", "eye"], size: "2x" }}
                 options={displayModeOptions}
-                onChange={(changed) => selectDisplayMode(changed.value as DisplayMode)}
+                onChange={(changed) => chooseDisplayMode(changed.value as DisplayMode)}
             />
             <div className="separator"/>
             <Submenu
@@ -57,15 +59,18 @@ const HeaderControls = ({
                 label="Stage Selection"
                 iconProps={{ icon: ["fas", "globe-asia"], size: "2x" }}
                 options={stageOptions}
-                onChange={(changed) => selectStage(changed.value)}
+                onChange={(changed) => chooseStage(changed.value)}
             />
         </div>
     );
 };
 
 function mapStateToProps (state: RootState) {
-    const { servers, stages, selectedStage } = state.app;
-    const { displayMode } = state.controlpanel;
+    const servers = selectServers(state);
+    const stages = selectStages(state);
+    const selectedStage = selectSelectedStage(state);
+
+    const displayMode = selectDisplayMode(state);
 
     return {
         servers,
@@ -76,9 +81,9 @@ function mapStateToProps (state: RootState) {
 }
 
 const mapDispatchToProps = {
-    selectDisplayMode: selectDisplayMode,
+    chooseDisplayMode: chooseDisplayMode,
     toggleServer: toggleServer,
-    selectStage: selectStage
+    chooseStage: chooseStage
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderControls);

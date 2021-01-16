@@ -3,6 +3,7 @@ import React, { ReactElement } from "react";
 import { connect } from "react-redux";
 import { RootState } from "../../../RootState";
 import { stopAll } from "../ControlPanelActions";
+import { selectLogEntries } from "../ControlPanelSelectors";
 import Clock from "./Clock/Clock";
 import "./FooterControls.scss";
 import { FooterControlsProps } from "./FooterControlsProps";
@@ -58,7 +59,7 @@ const FooterControls = ({
 };
 
 function mapStateToProps (state: RootState) {
-    const logEntries = state.controlpanel.logEntries;
+    const logEntries = selectLogEntries(state);
 
     return {
         logEntries
