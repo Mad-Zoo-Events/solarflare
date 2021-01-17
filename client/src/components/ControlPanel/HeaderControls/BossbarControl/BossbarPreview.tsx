@@ -22,6 +22,7 @@ const BossbarPreview = ({
         const allCodes = inputText.match(/(§.{1}|START)+/g) || [];
 
         let style = {};
+        let obfuscated = false;
         return allCodes.map((code, i) => {
             const startIndex = inputText.indexOf(code);
             const endIndex = allCodes[i + 1] ? inputText.indexOf(allCodes[i + 1]) : inputText.length;
@@ -30,7 +31,6 @@ const BossbarPreview = ({
 
             inputText = inputText.replace(code, "\x00\x00");
 
-            let obfuscated = false;
             code.match(/§.{1}/g)?.forEach(c => {
                 switch (c) {
                 case "§k":
@@ -38,6 +38,7 @@ const BossbarPreview = ({
                     break;
                 case "§r":
                     style = {};
+                    obfuscated = false;
                     break;
                 default:
                     style = { ...style, ...FormattingMap.get(c)?.style };
