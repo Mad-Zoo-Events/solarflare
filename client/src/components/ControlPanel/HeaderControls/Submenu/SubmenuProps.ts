@@ -1,10 +1,5 @@
-import { FontAwesomeIconProps } from "@fortawesome/react-fontawesome";
-
 export interface SubmenuProps {
-    label: string
-    iconProps?: FontAwesomeIconProps
     multiselect?: boolean
-
     options: Option[]
     onChange: (changed: Option, allSelected?: Option[]) => void
 }
