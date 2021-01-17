@@ -1,8 +1,44 @@
-div.control-panel__bossbar-control {
+.control-panel__bossbar-control {
     display              : grid;
-    grid-template-columns: min-content 1fr 1fr max-content max-content min-content;
+    grid-template-columns: min-content auto max-content max-content min-content;
     gap                  : 0 1em;
-    color                : var(--accent);
+
+    & svg {
+        color: var(--accent);
+    }
+
+    & .popup-label {
+        width : 100%;
+        height: 100%;
+        color : var(--accent);
+    }
+
+    & .bossbar-popup-content {
+        display              : grid;
+        grid-template-columns: 1fr 1fr;
+        gap                  : 1em;
+
+        width     : 100%;
+        box-sizing: border-box;
+
+        & .bossbar-preview {
+            grid-column: 1 /span 2;
+        }
+
+        & .formatting-group {
+            display: grid;
+            gap    : 0.5em;
+            height : min-content;
+
+            &>div {
+                display              : grid;
+                grid-template-columns: 2em max-content;
+                gap                  : 0.5em;
+                width                : max-content;
+                color                : var(--gray);
+            }
+        }
+    }
 
     & .bossbar-preview {
         height : 100%;
