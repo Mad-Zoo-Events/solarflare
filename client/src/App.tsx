@@ -5,6 +5,7 @@ import { handleSocketMessage, initializeApp } from "./AppActions";
 import { AppProps } from "./AppProps";
 import { selectIsInitialized, selectMessageQueue, selectPresets } from "./AppSelectors";
 import ControlPanel from "./components/ControlPanel/ControlPanel";
+import { selectIgnoreKeystrokes } from "./components/ControlPanel/ControlPanelSelectors";
 import PresetManager from "./components/PresetManager/PresetManager";
 import { RootState } from "./RootState";
 import Routes from "./routes";
@@ -13,6 +14,7 @@ function App ({
     isInitialized,
     messageQueue,
     presets,
+    ignoreKeystrokes,
     handleSocketMessage,
     initializeApp
 }: AppProps): ReactElement {
@@ -23,7 +25,7 @@ function App ({
     }, []);
 
     messageQueue.forEach(m => {
-        handleSocketMessage(m, presets);
+        handleSocketMessage(m, presets, ignoreKeystrokes);
         messageQueue.shift();
     });
 
@@ -47,11 +49,13 @@ function mapStateToProps (state: RootState) {
     const presets = selectPresets(state);
     const isInitialized = selectIsInitialized(state);
     const messageQueue = selectMessageQueue(state);
+    const ignoreKeystrokes = selectIgnoreKeystrokes(state);
 
     return {
         isInitialized,
         messageQueue,
-        presets
+        presets,
+        ignoreKeystrokes
     };
 }
 

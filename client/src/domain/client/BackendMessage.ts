@@ -1,5 +1,6 @@
 import { BossbarAction } from "../BossbarAction";
 import { ClockAction } from "../ClockAction";
+import BossbarColor from "../controlpanel/BossbarColor";
 import { EffectAction } from "../EffectAction";
 import { EffectType } from "../EffectType";
 import { Server } from "./Server";
@@ -28,7 +29,7 @@ export interface EffectMessage {
 
 export interface BossbarMessage {
     text: string
-    color: string
+    color: BossbarColor
     action: BossbarAction
 }
 
