@@ -55,7 +55,7 @@ interface DidToggleCapsLock {
 }
 interface DidStartEffect {
     type: typeof DID_START_EFFECT
-    payload: RunningEffect
+    payload: {effect: RunningEffect, getTimer:(id: string) => number}
 }
 interface DidStopEffect {
     type: typeof DID_STOP_EFFECT
@@ -100,7 +100,7 @@ export type ControlPanelAction =
 const shouldChangeDisplayMode = createAction(SHOULD_CHANGE_DISPLAY_MODE);
 const shouldIgnoreKeystrokes = createAction<boolean>(SHOULD_IGNORE_KEYSTROKES);
 const didToggleCapsLock = createAction<boolean>(DID_TOGGLE_CAPS_LOCK);
-export const didStartEffect = createAction<RunningEffect>(DID_START_EFFECT);
+export const didStartEffect = createAction<{effect: RunningEffect, getTimer:(id: string) => number}>(DID_START_EFFECT);
 export const didStopEffect = createAction<string>(DID_STOP_EFFECT);
 export const didStopAll = createAction<StopAllOptions>(DID_STOP_ALL);
 export const shouldWriteLog = createAction<LogEntry>(SHOULD_WRITE_LOG);

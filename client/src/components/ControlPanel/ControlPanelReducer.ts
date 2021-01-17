@@ -34,10 +34,14 @@ const initialState: ControlPanelState = {
 };
 
 const addToRunning = (
-    effect: RunningEffect,
+    { effect, getTimer }: {effect: RunningEffect, getTimer:(id: string) => number},
     { runningEffects }: ControlPanelState
 ): Map<string, RunningEffect> => {
-    return new Map(runningEffects).set(effect.preset.id, effect);
+    const { id } = effect.preset;
+    const runningEffect = runningEffects.get(id);
+    effect.interval = runningEffect?.interval || getTimer(id);
+    effect.secondsRunning = runningEffect?.secondsRunning || effect.secondsRunning;
+    return new Map(runningEffects).set(id, effect);
 };
 
 const removeFromRunning = (
@@ -51,21 +55,25 @@ const removeFromRunning = (
 };
 
 const stopAllRunning = (
-    { stopEffects, specificTypeOnly }: StopAllOptions,
+    { stopEffects, detachClocks, specificTypeOnly }: StopAllOptions,
     { runningEffects }: ControlPanelState
 ): Map<string, RunningEffect> => {
     const running = Array.from(runningEffects.values());
     const toStop = specificTypeOnly
         ? running.filter(e => e.preset.effectType === specificTypeOnly)
         : running;
+    const idsToStop: string[] = [];
     toStop.forEach(e => {
-        if (stopEffects) {
-            clearTimeout(e.interval);
+        const runsOnClock = e.offBeatClock || e.onBeatClock;
+        if (
+            (detachClocks && runsOnClock) ||
+            (stopEffects && !runsOnClock)
+        ) {
+            clearInterval(e.interval);
+            idsToStop.push(e.preset.id);
         }
     });
-    return specificTypeOnly
-        ? new Map(running.filter(e => e.preset.effectType !== specificTypeOnly).map(e => [e.preset.id, e]))
-        : new Map();
+    return new Map(running.filter(e => !idsToStop.includes(e.preset.id)).map(e => [e.preset.id, e]));
 };
 
 const incrementCounter = (
