@@ -9,6 +9,7 @@ export interface PresetControlButtonProps {
     color: string
 
     isRunning?: boolean
+    denyClick?: boolean
     displayKeyBinding?: boolean
     secondsRunning?: number
 

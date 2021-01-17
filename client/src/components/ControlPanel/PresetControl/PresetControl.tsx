@@ -60,8 +60,21 @@ const PresetControl = ({
             </>}
 
             {renderStartStop && <>
-                <PresetControlButton preset={preset} action={ea.Start} color="green" displayKeyBinding isRunning={isRunningButNotOnClock}/>
-                <PresetControlButton preset={preset} action={ea.Stop} color="red" secondsRunning={secondsRunning}/>
+                <PresetControlButton
+                    preset={preset}
+                    action={ea.Start}
+                    color="green"
+                    displayKeyBinding
+                    isRunning={isRunningButNotOnClock}
+                    denyClick={isRunningButNotOnClock}
+                />
+                <PresetControlButton
+                    preset={preset}
+                    action={ea.Stop}
+                    color="red"
+                    secondsRunning={secondsRunning}
+                    denyClick={onBeatAttached || offBeatAttached}
+                />
             </>}
 
             <ClockControls

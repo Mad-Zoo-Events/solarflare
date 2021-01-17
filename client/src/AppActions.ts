@@ -119,6 +119,8 @@ export const chooseStage = (stage: string): ThunkAction<void, RootState, null, A
     doSelectStage(stage);
 };
 export const handleSocketMessage = (message: BackendMessage, presets: PresetCollection, isTyping: boolean): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {
+    const getTimer = (id: string) => window.setInterval(() => dispatch(shouldIncrementCounter(id)), 1000);
+
     const {
         effectUpdate,
         clockUpdate,
@@ -152,8 +154,7 @@ export const handleSocketMessage = (message: BackendMessage, presets: PresetColl
                 if (action === ea.Start || action === ea.Restart) {
                     const preset = getPreset(id, effectType, presets);
                     if (preset) {
-                        const interval = window.setInterval(() => dispatch(shouldIncrementCounter(id)), 1000);
-                        dispatch(didStartEffect({ preset, interval, secondsRunning: 0 }));
+                        dispatch(didStartEffect({ effect: { preset, interval: -1, secondsRunning: 0 }, getTimer }));
                     }
                 }
             }
@@ -167,13 +168,15 @@ export const handleSocketMessage = (message: BackendMessage, presets: PresetColl
         if (action === Subscribe) {
             const preset = getPreset(id, effectType, presets);
             if (preset) {
-                const interval = window.setInterval(() => dispatch(shouldIncrementCounter(id)), 1000);
                 dispatch(didStartEffect({
-                    preset,
-                    interval,
-                    secondsRunning: 0,
-                    offBeatClock: isOffBeat,
-                    onBeatClock: !isOffBeat
+                    effect: {
+                        preset,
+                        interval: -1,
+                        secondsRunning: 0,
+                        offBeatClock: isOffBeat,
+                        onBeatClock: !isOffBeat
+                    },
+                    getTimer
                 }));
             }
         } else {

@@ -14,6 +14,7 @@ const PresetControlButton = ({
     color,
 
     isRunning,
+    denyClick,
     displayKeyBinding,
     secondsRunning,
 
@@ -31,7 +32,7 @@ const PresetControlButton = ({
                 : `var(--${color})`,
         backgroundColor: isRunning ? `var(--${color})` : "var(--darker-gray)"
     };
-    const className = `button control-panel-button code${isRunning ? " running" : ""}`;
+    const className = `button control-panel-button code${isRunning ? " running" : ""}${denyClick ? " forbidden" : ""}`;
 
     switch (action) {
     case ea.Trigger:
@@ -55,7 +56,7 @@ const PresetControlButton = ({
         break;
     }
 
-    const handleClick = () => !isRunning && runEffect(preset, action);
+    const handleClick = () => !denyClick && runEffect(preset, action);
 
     return (
         <button

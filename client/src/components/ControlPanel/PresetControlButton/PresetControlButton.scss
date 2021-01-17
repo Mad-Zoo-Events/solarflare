@@ -16,3 +16,7 @@ button.running {
     border-radius: 1em;
     transition   : border-radius 0.2s ease-out !important;
 }
+
+button.forbidden {
+    cursor: not-allowed;
+}
