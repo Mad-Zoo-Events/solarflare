@@ -9,6 +9,7 @@ export interface HeaderControlsProps {
     stages: string[]
     selectedStage: string
     displayMode: DisplayMode
+    capsLockOn?: boolean
 
     chooseDisplayMode: HandleThunkActionCreator<typeof chooseDisplayMode>
     toggleServer: HandleThunkActionCreator<typeof toggleServer>

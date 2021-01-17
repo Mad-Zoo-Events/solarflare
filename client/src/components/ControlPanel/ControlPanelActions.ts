@@ -29,6 +29,7 @@ import { RootState } from "../../RootState";
 // ACTION TYPES
 export const SHOULD_CHANGE_DISPLAY_MODE = "controlpanel/SHOULD_CHANGE_DISPLAY_MODE";
 export const SHOULD_IGNORE_KEYSTROKES = "controlpanel/SHOULD_IGNORE_KEYSTROKES";
+export const DID_TOGGLE_CAPS_LOCK = "controlpanel/DID_TOGGLE_CAPS_LOCK";
 export const DID_SELECT_SERVERS = "controlpanel/DID_SELECT_SERVERS";
 export const DID_START_EFFECT = "controlpanel/DID_START_EFFECT";
 export const DID_STOP_EFFECT = "controlpanel/DID_STOP_EFFECT";
@@ -46,6 +47,10 @@ interface ShouldChangeDisplayMode {
 }
 interface ShouldIgnoreKeystrokes {
     type: typeof SHOULD_IGNORE_KEYSTROKES
+    payload: boolean
+}
+interface DidToggleCapsLock {
+    type: typeof DID_TOGGLE_CAPS_LOCK
     payload: boolean
 }
 interface DidStartEffect {
@@ -84,7 +89,7 @@ interface ShouldUpdateBossbar {
 }
 
 export type ControlPanelAction =
-    ShouldChangeDisplayMode | ShouldIgnoreKeystrokes |
+    ShouldChangeDisplayMode | ShouldIgnoreKeystrokes | DidToggleCapsLock |
     DidStartEffect | DidStopEffect | DidStopAll |
     ShouldWriteLog | ShouldClearLogs |
     ShouldIncrementCounter |
@@ -94,6 +99,7 @@ export type ControlPanelAction =
 // ACTION CREATORS
 const shouldChangeDisplayMode = createAction(SHOULD_CHANGE_DISPLAY_MODE);
 const shouldIgnoreKeystrokes = createAction<boolean>(SHOULD_IGNORE_KEYSTROKES);
+const didToggleCapsLock = createAction<boolean>(DID_TOGGLE_CAPS_LOCK);
 export const didStartEffect = createAction<RunningEffect>(DID_START_EFFECT);
 export const didStopEffect = createAction<string>(DID_STOP_EFFECT);
 export const didStopAll = createAction<StopAllOptions>(DID_STOP_ALL);
@@ -147,13 +153,13 @@ export const clearBossbar = (): ThunkAction<void, RootState, null, AnyAction> =>
     dispatch(shouldUpdateBossbar(null));
 };
 
-export const handleKeyPress = (event: KeyboardEvent, presets: Preset[], runningEffects: Map<string, RunningEffect>): ThunkAction<void, RootState, null, AnyAction> => () => {
+export const handleKeyPress = (event: KeyboardEvent, presets: Preset[], runningEffects: Map<string, RunningEffect>): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     const { key } = event;
 
     if (event.getModifierState("CapsLock")) {
-        // Caps Lock on
+        dispatch(didToggleCapsLock(true));
     } else {
-        // Caps Lock off
+        dispatch(didToggleCapsLock(false));
     }
 
     switch (key) {
