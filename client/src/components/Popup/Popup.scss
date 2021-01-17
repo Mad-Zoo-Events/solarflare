@@ -1,0 +1,35 @@
+.popup-label {
+    color  : var(--accent);
+    display: inline-flex;
+
+    & div {
+        margin: auto;
+    }
+
+    & svg {
+        margin-right: 0.3em;
+    }
+}
+
+.popup-holder {
+    position: relative;
+    display : block;
+
+    & .popup-content {
+        visibility: hidden;
+
+        position: absolute;
+        top     : 0.2em;
+        z-index : 1;
+
+        padding         : 1em;
+        background-color: var(--background-alpha3);
+        backdrop-filter : blur(1em);
+        box-shadow      : 0 0 2em 1em var(--background);
+        border-radius   : 0.5em;
+    }
+
+    & .show-popup {
+        visibility: visible;
+    }
+}

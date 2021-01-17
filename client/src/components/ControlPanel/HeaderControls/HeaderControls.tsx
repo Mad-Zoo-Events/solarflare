@@ -13,6 +13,7 @@ import BossbarControl from "./BossbarControl/BossbarControl";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import Routes from "../../../routes";
+import Popup from "../../Popup/Popup";
 
 const HeaderControls = ({
     servers,
@@ -46,27 +47,27 @@ const HeaderControls = ({
         <div className="control-panel__header-controls">
             <BossbarControl/>
             <div className="separator"/>
-            <Submenu
-                label="Display Mode"
-                iconProps={{ icon: ["fas", "eye"], size: "2x" }}
-                options={displayModeOptions}
-                onChange={(changed) => chooseDisplayMode(changed.value as DisplayMode)}
-            />
+            <Popup label="Display Mode" iconProps={{ icon: ["fas", "eye"], size: "2x" }}>
+                <Submenu
+                    options={displayModeOptions}
+                    onChange={(changed) => chooseDisplayMode(changed.value as DisplayMode)}
+                />
+            </Popup>
             <div className="separator"/>
-            <Submenu
-                label="Server Selection"
-                iconProps={{ icon: ["fas", "satellite-dish"], size: "2x" }}
-                options={serverOptions}
-                multiselect
-                onChange={(changed) => toggleServer({ id: changed.value, isActive: changed.selected, name: changed.text })}
-            />
+            <Popup label="Server Selection" iconProps={{ icon: ["fas", "satellite-dish"], size: "2x" }}>
+                <Submenu
+                    options={serverOptions}
+                    multiselect
+                    onChange={(changed) => toggleServer({ id: changed.value, isActive: changed.selected, name: changed.text })}
+                />
+            </Popup>
             <div className="separator"/>
-            <Submenu
-                label="Stage Selection"
-                iconProps={{ icon: ["fas", "globe-asia"], size: "2x" }}
-                options={stageOptions}
-                onChange={(changed) => chooseStage(changed.value)}
-            />
+            <Popup label="Stage Selection" iconProps={{ icon: ["fas", "globe-asia"], size: "2x" }}>
+                <Submenu
+                    options={stageOptions}
+                    onChange={(changed) => chooseStage(changed.value)}
+                />
+            </Popup>
             <div className="separator"/>
             <Link className="button header-button" to={Routes.presetManager}>
                 <FontAwesomeIcon icon={["fas", "cogs"]} size="2x" />
