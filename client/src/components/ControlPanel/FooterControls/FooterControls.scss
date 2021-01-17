@@ -1,11 +1,11 @@
 div.control-panel__footer-controls {
     display              : grid;
     grid-template-columns: auto repeat(4, min-content);
-    gap                  : 0.5em;
-    padding              : 0.5em 0.5em 0 0.5em;
+    gap                  : 0 1em;
+    padding              : 0.5em 1em 0 0.5em;
 
     & .separator {
-        border-left: 2px solid;
+        border-left: 2px solid var(--gray);
     }
 
     & .log-console {
