@@ -10,6 +10,9 @@ import "./HeaderControls.scss";
 import { HeaderControlsProps } from "./HeaderControlsProps";
 import Submenu from "./Submenu/Submenu";
 import BossbarControl from "./BossbarControl/BossbarControl";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
+import Routes from "../../../routes";
 
 const HeaderControls = ({
     servers,
@@ -40,7 +43,6 @@ const HeaderControls = ({
 
     return (
         <div className="control-panel__header-controls">
-            <div className="separator"/>
             <BossbarControl/>
             <div className="separator"/>
             <Submenu
@@ -64,6 +66,11 @@ const HeaderControls = ({
                 options={stageOptions}
                 onChange={(changed) => chooseStage(changed.value)}
             />
+            <div className="separator"/>
+            <Link className="button header-button" to={Routes.presetManager}>
+                <FontAwesomeIcon icon={["fas", "cogs"]} size="2x" />
+                <div>Preset Manager</div>
+            </Link>
         </div>
     );
 };

@@ -20,14 +20,8 @@ const Page = ({
         <ToastContainer />
         <div className="page">
             {isControlPanel
-                ? <div className="page-header controlpanel-header">
-                    <div className="text">Visual Effect Control Panel</div>
-
+                ? <div className="page-header">
                     <div className="additional-header-elements">{headerElements}</div>
-
-                    <Link className="button nav-button" to={Routes.presetManager} title="Manage Presets">
-                        <FontAwesomeIcon icon={["fas", "cogs"]} size="lg" />
-                    </Link>
                 </div>
                 : <div className="page-header presetmanager-header">
                     <Link className="button nav-button" to={Routes.controlPanel} title="Back To Control Panel">
