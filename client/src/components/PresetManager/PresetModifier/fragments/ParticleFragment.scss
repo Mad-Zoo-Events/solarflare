@@ -1,5 +1,5 @@
 .preset-modifier__particle-item {
-    grid-template-columns: min-content min-content 1fr 2fr max-content min-content;
+    grid-template-columns: min-content max-content 1fr 2fr max-content min-content;
     grid-template-areas  :
         'delete effect-label         effect-label        regiontype-label    regiontype-label   color-label'
         'delete effect-input         effect-input        regiontype-input    regiontype-input   color-input'
