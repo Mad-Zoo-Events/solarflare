@@ -135,10 +135,11 @@ export const handleClockSubscription = (options: ClockSubscriptionOptions, actio
 export const toggleClock = (): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(shouldToggleClock());
 };
-export const updateBossbar = (options: BossbarOptions, sendUpdate: boolean): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
+const debouncedBossbarUpdate = debounce((options: BossbarOptions) => doUpdateBossbar(SetBossbar, options), 10);
+export const updateBossbar = (options: BossbarOptions, sendUpdate: boolean): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {
     dispatch(shouldUpdateBossbar(options));
     if (sendUpdate) {
-        doUpdateBossbar(SetBossbar, options);
+        debouncedBossbarUpdate(options);
     }
 };
 export const clearBossbar = (): ThunkAction<void, RootState, null, AnyAction> => dispatch => {

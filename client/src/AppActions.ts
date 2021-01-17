@@ -19,9 +19,11 @@ import {
     shouldChangeClockSpeed,
     shouldClearLogs,
     shouldIncrementCounter,
+    shouldUpdateBossbar,
     shouldWriteLog,
     stopAll
 } from "./components/ControlPanel/ControlPanelActions";
+import { ClearBossbar } from "./domain/BossbarAction";
 import { BackendMessage } from "./domain/client/BackendMessage";
 import { Server } from "./domain/client/Server";
 import { Subscribe } from "./domain/ClockAction";
@@ -31,7 +33,7 @@ import { LogEntry, LogLevel } from "./domain/LogEntry";
 import { PresetCollection } from "./domain/PresetCollection";
 import { Preset } from "./domain/presets/Preset";
 import { RootState } from "./RootState";
-import { getPreset, decoratePresets } from "./utils/utils";
+import { decoratePresets, getPreset } from "./utils/utils";
 
 // ACTION TYPES
 export const DID_INITIALIZE_APP = "app/DID_INITIALIZE_APP";
@@ -116,13 +118,14 @@ export const chooseStage = (stage: string): ThunkAction<void, RootState, null, A
     dispatch(stopAll({ stopEffects: true, detachClocks: true }));
     doSelectStage(stage);
 };
-export const handleSocketMessage = (message: BackendMessage, presets: PresetCollection): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {
+export const handleSocketMessage = (message: BackendMessage, presets: PresetCollection, isTyping: boolean): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {
     const {
         effectUpdate,
-        stageUpdate,
-        serverUpdate,
+        clockUpdate,
         clockSpeedUpdate,
-        clockUpdate
+        bossbarUpdate,
+        serverUpdate,
+        stageUpdate
     } = message;
 
     if (effectUpdate) {
@@ -133,9 +136,9 @@ export const handleSocketMessage = (message: BackendMessage, presets: PresetColl
             message: (stopAll
                 ? stopAll.specificTypeOnly || ""
                 : displayName) +
-                 (errorMessage
-                     ? ` | ${errorMessage}`
-                     : "")
+                (errorMessage
+                    ? ` | ${errorMessage}`
+                    : "")
         };
 
         if (!errorMessage) {
@@ -159,37 +162,6 @@ export const handleSocketMessage = (message: BackendMessage, presets: PresetColl
         dispatch(shouldWriteLog(log));
     }
 
-    if (stageUpdate) {
-        dispatch(didGetStages(stageUpdate));
-
-        const presetCollection = await doFetchAllPresets();
-        decoratePresets(presetCollection);
-        dispatch(didGetAllPresets(presetCollection));
-
-        dispatch(shouldWriteLog({
-            level: LogLevel.Info,
-            category: "STAGE",
-            message: `Switched to ${stageUpdate.selectedStage} stage`
-        }));
-    }
-
-    if (serverUpdate) {
-        const { servers } = serverUpdate;
-        dispatch(didGetServers(servers));
-
-        const serverCount = servers.filter(s => s.isActive).length;
-
-        dispatch(shouldWriteLog({
-            level: LogLevel.Info,
-            category: "SERVERS",
-            message: `${serverCount === 1 ? "One server is" : `${serverCount} servers are`} now listening`
-        }));
-    }
-
-    if (clockSpeedUpdate) {
-        dispatch(shouldChangeClockSpeed(clockSpeedUpdate));
-    }
-
     if (clockUpdate) {
         const { id, effectType, action, isOffBeat } = clockUpdate;
         if (action === Subscribe) {
@@ -207,5 +179,42 @@ export const handleSocketMessage = (message: BackendMessage, presets: PresetColl
         } else {
             dispatch(didStopEffect(id));
         }
+    }
+
+    if (clockSpeedUpdate) {
+        dispatch(shouldChangeClockSpeed(clockSpeedUpdate));
+    }
+
+    if (bossbarUpdate) {
+        const { color, text: title, action } = bossbarUpdate;
+        const update = action === ClearBossbar ? null : { color, title };
+        if (!isTyping) dispatch(shouldUpdateBossbar(update));
+    }
+
+    if (serverUpdate) {
+        const { servers } = serverUpdate;
+        dispatch(didGetServers(servers));
+
+        const serverCount = servers.filter(s => s.isActive).length;
+
+        dispatch(shouldWriteLog({
+            level: LogLevel.Info,
+            category: "SERVERS",
+            message: `${serverCount === 1 ? "One server is" : `${serverCount} servers are`} now listening`
+        }));
+    }
+
+    if (stageUpdate) {
+        dispatch(didGetStages(stageUpdate));
+
+        const presetCollection = await doFetchAllPresets();
+        decoratePresets(presetCollection);
+        dispatch(didGetAllPresets(presetCollection));
+
+        dispatch(shouldWriteLog({
+            level: LogLevel.Info,
+            category: "STAGE",
+            message: `Switched to ${stageUpdate.selectedStage} stage`
+        }));
     }
 };

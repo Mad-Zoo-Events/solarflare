@@ -7,6 +7,7 @@ export interface AppProps {
     isInitialized: boolean
     messageQueue: BackendMessage[]
     presets: PresetCollection
+    ignoreKeystrokes: boolean
 
     handleSocketMessage: HandleThunkActionCreator<typeof handleSocketMessage>
     initializeApp: HandleThunkActionCreator<typeof initializeApp>
