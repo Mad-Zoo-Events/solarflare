@@ -55,18 +55,20 @@ const BossbarControls = ({
                     <option key={key} value={key}>{key as BossbarColor}</option>
                 )}
             </select>
-            {!autoUpdate && <FontAwesomeIcon
-                className="button"
-                icon={["fas", "paper-plane"]} size="2x"
-                onClick={() => updateBossbar({ color, title }, true)}
-                title="Set Boss Bar"
-            />}
-            <FontAwesomeIcon
-                className="button"
-                icon={["far", "eye-slash"]} size="2x"
-                onClick={clearBossbar}
-                title="Hide Boss Bar"
-            />
+            <div>
+                {!autoUpdate && <FontAwesomeIcon
+                    className="button update-button"
+                    icon={["fas", "paper-plane"]} size="2x"
+                    onClick={() => updateBossbar({ color, title }, true)}
+                    title="Set Boss Bar"
+                />}
+                <FontAwesomeIcon
+                    className="button"
+                    icon={["far", "eye-slash"]} size="2x"
+                    onClick={clearBossbar}
+                    title="Hide Boss Bar"
+                />
+            </div>
             <label className="checkbox-container">
                 Update Live
                 <input

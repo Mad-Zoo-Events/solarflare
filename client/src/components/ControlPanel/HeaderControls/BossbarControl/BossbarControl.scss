@@ -1,12 +1,16 @@
 div.control-panel__bossbar-control {
     display              : grid;
-    grid-template-columns: min-content 1fr 1fr max-content min-content min-content min-content;
-    gap                  : 0 0.5em;
+    grid-template-columns: min-content 1fr 1fr max-content max-content min-content;
+    gap                  : 0 1em;
     color                : var(--accent);
 
     & .bossbar-preview {
         height : 100%;
         display: flex;
         margin : auto;
+    }
+
+    & .update-button {
+        margin-right: 0.5em;
     }
 }

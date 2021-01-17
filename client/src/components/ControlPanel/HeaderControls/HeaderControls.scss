@@ -1,13 +1,18 @@
 div.control-panel__header-controls {
     display              : grid;
-    grid-template-columns: min-content auto repeat(6, min-content);
+    grid-template-columns: auto repeat(8, min-content);
     gap                  : 0 1em;
 
     & .separator {
-        border-left: 2px solid;
+        border-left: 2px solid var(--gray);
     }
 
     & .header-button {
-        color: var(--accent);
+        color  : var(--accent);
+        display: inline-flex;
+
+        & svg {
+            margin-right: 0.3em;
+        }
     }
 }
