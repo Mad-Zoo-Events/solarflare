@@ -6,6 +6,7 @@ import { RootState } from "../../RootState";
 export const selectRunningEffects = createSelector(selectControlPanelState, ({ runningEffects }) => runningEffects);
 
 export const selectDisplayMode = createSelector(selectControlPanelState, ({ displayMode }) => displayMode);
+export const selectCapsLockOn = createSelector(selectControlPanelState, ({ capsLockOn }) => capsLockOn);
 export const selectIgnoreKeystrokes = createSelector(selectControlPanelState, ({ ignoreKeystrokes }) => ignoreKeystrokes);
 export const selectLogEntries = createSelector(selectControlPanelState, ({ logEntries }) => logEntries);
 

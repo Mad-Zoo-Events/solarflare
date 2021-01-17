@@ -15,4 +15,11 @@ div.control-panel__header-controls {
             margin-right: 0.3em;
         }
     }
+
+    & .capslock-warning {
+        grid-column: 1 /span 9;
+        margin     : 0.2em auto 0 auto;
+        color      : var(--red);
+        font-size  : x-large;
+    }
 }

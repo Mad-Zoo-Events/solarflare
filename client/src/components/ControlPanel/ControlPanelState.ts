@@ -6,6 +6,8 @@ import { RunningEffect } from "../../domain/RunningEffect";
 export interface ControlPanelState {
     displayMode: DisplayMode
     ignoreKeystrokes: boolean
+    capsLockOn?: boolean
+
     runningEffects: Map<string, RunningEffect>
 
     logEntries: LogEntry[]

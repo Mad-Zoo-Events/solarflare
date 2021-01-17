@@ -5,7 +5,7 @@ import { selectSelectedStage, selectServers, selectStages } from "../../../AppSe
 import DisplayMode from "../../../domain/controlpanel/DisplayMode";
 import { RootState } from "../../../RootState";
 import { chooseDisplayMode } from "../ControlPanelActions";
-import { selectDisplayMode } from "../ControlPanelSelectors";
+import { selectCapsLockOn, selectDisplayMode } from "../ControlPanelSelectors";
 import "./HeaderControls.scss";
 import { HeaderControlsProps } from "./HeaderControlsProps";
 import Submenu from "./Submenu/Submenu";
@@ -19,6 +19,7 @@ const HeaderControls = ({
     stages,
     selectedStage,
     displayMode,
+    capsLockOn,
     chooseDisplayMode,
     toggleServer,
     chooseStage
@@ -71,6 +72,11 @@ const HeaderControls = ({
                 <FontAwesomeIcon icon={["fas", "cogs"]} size="2x" />
                 <div>Preset Manager</div>
             </Link>
+            {capsLockOn &&
+                <div className="capslock-warning">
+                    Warning: CAPS lock is on!
+                </div>
+            }
         </div>
     );
 };
@@ -81,12 +87,14 @@ function mapStateToProps (state: RootState) {
     const selectedStage = selectSelectedStage(state);
 
     const displayMode = selectDisplayMode(state);
+    const capsLockOn = selectCapsLockOn(state);
 
     return {
         servers,
         stages,
         selectedStage,
-        displayMode
+        displayMode,
+        capsLockOn
     };
 }
 

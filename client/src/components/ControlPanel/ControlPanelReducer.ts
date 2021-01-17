@@ -9,6 +9,7 @@ import {
     DID_START_EFFECT,
     DID_STOP_ALL,
     DID_STOP_EFFECT,
+    DID_TOGGLE_CAPS_LOCK,
     SHOULD_CHANGE_CLOCK_SPEED,
     SHOULD_CHANGE_DISPLAY_MODE,
     SHOULD_CLEAR_LOGS,
@@ -103,6 +104,11 @@ function controlPanelReducer (
         return {
             ...state,
             ignoreKeystrokes: action.payload
+        };
+    case DID_TOGGLE_CAPS_LOCK:
+        return {
+            ...state,
+            capsLockOn: action.payload
         };
     case DID_START_EFFECT:
         return {
