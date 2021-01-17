@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { ReactElement, useState } from "react";
-import "./Popup.scss";
 import { PopupProps } from "./PopupProps";
 
 const Popup = ({
