@@ -9,7 +9,7 @@ import CategorySection from "./CategorySection/CategorySection";
 import "./ControlPanel.scss";
 import { handleKeyPress } from "./ControlPanelActions";
 import { ControlPanelProps } from "./ControlPanelProps";
-import { selectDisplayMode, selectIgnoreKeystrokes, selectRunningEffects } from "./ControlPanelSelectors";
+import { selectClockTapButtonRef, selectDisplayMode, selectIgnoreKeystrokes, selectRunningEffects } from "./ControlPanelSelectors";
 import FooterControls from "./FooterControls/FooterControls";
 import HeaderControls from "./HeaderControls/HeaderControls";
 import PresetControl from "./PresetControl/PresetControl";
@@ -21,10 +21,22 @@ const ControlPanel = ({
     combinedPresets,
     combinedPresetsWithoutCommands,
     runningEffects,
+    clockTapButtonRef,
     handleKeyPress
 }: ControlPanelProps) => {
+    const doClockTap = (b: HTMLDivElement | null) => {
+        if (!b) return;
+        b.click();
+        b.classList.add("clock-tap-active");
+        setTimeout(() => b.classList.remove("clock-tap-active"), 100);
+    };
+
     document.onkeydown = e => {
-        if (!ignoreKeystrokes) handleKeyPress(e, combinedPresets, runningEffects);
+        if (!ignoreKeystrokes) {
+            e.key === "+"
+                ? doClockTap(clockTapButtonRef.current)
+                : handleKeyPress(e, combinedPresets, runningEffects);
+        }
     };
 
     const getChildren = () => {
@@ -95,6 +107,7 @@ function mapStateToProps (state: RootState) {
     const runningEffects = selectRunningEffects(state);
     const displayMode = selectDisplayMode(state);
     const ignoreKeystrokes = selectIgnoreKeystrokes(state);
+    const clockTapButtonRef = selectClockTapButtonRef(state);
 
     return {
         presets,
@@ -102,7 +115,8 @@ function mapStateToProps (state: RootState) {
         combinedPresetsWithoutCommands,
         runningEffects,
         displayMode,
-        ignoreKeystrokes
+        ignoreKeystrokes,
+        clockTapButtonRef
     };
 }
 

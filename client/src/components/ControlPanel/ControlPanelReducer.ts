@@ -1,3 +1,4 @@
+import { createRef } from "react";
 import { StopAllOptions } from "../../domain/client/StopAllOptions";
 import BossbarColor from "../../domain/controlpanel/BossbarColor";
 import DisplayMode from "../../domain/controlpanel/DisplayMode";
@@ -29,6 +30,7 @@ const initialState: ControlPanelState = {
     clockBpm: 128.0,
     clockNoteLength: 1.0,
     clockOnBeat: true,
+    clockTapButtonRef: createRef<HTMLDivElement>(),
     bossbarText: "",
     bossbarColor: BossbarColor.ColorBlue
 };

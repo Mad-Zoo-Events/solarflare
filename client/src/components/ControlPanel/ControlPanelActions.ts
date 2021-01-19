@@ -172,9 +172,6 @@ export const handleKeyPress = (event: KeyboardEvent, presets: Preset[], runningE
     case "-":
         doStopAll({ detachClocks: false, stopEffects: true });
         return;
-    case "+":
-        // TAP
-        return;
     }
 
     const toStop = Array.from(runningEffects.values()).filter(e => e.preset.keyBindingStr === key);

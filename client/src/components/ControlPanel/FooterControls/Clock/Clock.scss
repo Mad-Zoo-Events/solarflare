@@ -46,10 +46,13 @@
         margin     : auto;
         text-align : center;
         user-select: none;
+        transition : color 0.3s ease-out !important;
+    }
 
-        &:active {
-            color: var(--accent) !important;
-        }
+    & .tap-button:active,
+    .clock-tap-active {
+        color     : var(--accent) !important;
+        transition: none !important;
     }
 
     & .tap-stats {

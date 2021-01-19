@@ -1,3 +1,4 @@
+import { RefObject } from "react";
 import BossbarColor from "../../domain/controlpanel/BossbarColor";
 import DisplayMode from "../../domain/controlpanel/DisplayMode";
 import { LogEntry } from "../../domain/LogEntry";
@@ -15,6 +16,7 @@ export interface ControlPanelState {
     clockBpm: number
     clockNoteLength: number
     clockOnBeat: boolean
+    clockTapButtonRef: RefObject<HTMLDivElement>
 
     bossbarText: string
     bossbarColor: BossbarColor
