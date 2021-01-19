@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { ReactElement, useEffect, useState } from "react";
 import { getRandomString } from "../../../../utils/utils";
 

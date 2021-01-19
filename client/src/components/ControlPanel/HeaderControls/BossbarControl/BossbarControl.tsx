@@ -26,6 +26,8 @@ const BossbarControls = ({
     const handleFocus = () => setIgnoreKeystrokes(true);
     const handleBlur = () => { setIgnoreKeystrokes(false); if (!mouseOver) setIsOpen(false); };
 
+    const endsWithFormattingCode = (s: string) => s.match(/^(§.{1}|§)+$/g);
+
     const handleColorChange = (e: ChangeEvent<HTMLSelectElement>) => updateBossbar({
         color: e.currentTarget.value as BossbarColor,
         title
@@ -34,9 +36,9 @@ const BossbarControls = ({
     const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => updateBossbar({
         color,
         title: e.currentTarget.value
-    }, autoUpdate && !e.currentTarget.value.endsWith("§"));
+    }, autoUpdate && !endsWithFormattingCode(e.currentTarget.value));
 
-    const preview = (title.length === 0 || title.match(/^(§.{1}|§)+$/g))
+    const preview = title.length === 0 || endsWithFormattingCode(title)
         ? <input className="bossbar-preview" type="text" placeholder="Now Playing: Bob Ross"/>
         : <div className="code bossbar-preview fake-input">
             <BossbarPreview rawText={title} />

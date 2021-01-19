@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { CSSProperties, ReactElement } from "react";
 import { FormattingMap } from "../../../../domain/controlpanel/BossbarFormatting";
 import ObfuscatedSpan from "./ObfuscatedSpan";
@@ -41,7 +40,7 @@ const BossbarPreview = ({
                     obfuscated = false;
                     break;
                 default:
-                    style = { ...style, ...FormattingMap.get(c)?.style };
+                    style = { ...style, ...FormattingMap.get(c.toLowerCase())?.style };
                 }
             });
 
