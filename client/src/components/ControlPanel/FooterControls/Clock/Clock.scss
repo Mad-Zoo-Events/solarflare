@@ -1,13 +1,14 @@
 .clock {
     display              : grid;
-    grid-template-columns: 5em auto max-content;
-    grid-template-rows   : 3em auto;
+    grid-template-columns: 5em auto 5em;
+    grid-template-rows   : 3em auto max-content;
     gap                  : 0.5em;
 
     & .indicator {
-        grid-row   : 1;
-        grid-column: 1 / span 3;
-        display    : inline-flex;
+        grid-row     : 1;
+        grid-column  : 1 / span 3;
+        display      : inline-flex;
+        border-radius: 0.2em;
 
         &-active {
             background-color: var(--font);
@@ -37,5 +38,39 @@
     & .note-length-input {
         grid-row   : 2;
         grid-column: 3;
+    }
+
+    & .tap-button {
+        grid-row   : 3;
+        grid-column: 1;
+        margin     : auto;
+        text-align : center;
+        user-select: none;
+
+        &:active {
+            color: var(--accent) !important;
+        }
+    }
+
+    & .tap-stats {
+        grid-row   : 3;
+        grid-column: 2 /span 2;
+
+        display              : grid;
+        grid-template-columns: max-content auto;
+        gap                  : 0 1em;
+
+        height: min-content;
+
+        & .tap-title {
+            grid-column  : 1 /span 2;
+            font-weight  : bold;
+            margin-bottom: 0.3em;
+            color        : var(--font);
+        }
+
+        & .sample-size-too-small {
+            color: var(--orange);
+        }
     }
 }

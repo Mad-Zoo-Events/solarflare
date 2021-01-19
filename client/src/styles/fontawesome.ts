@@ -23,7 +23,8 @@ import {
     faGlobeAsia,
     faCircle as fasFaCircle,
     faSkull,
-    faPaperPlane
+    faPaperPlane,
+    faTachometerAlt
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -61,6 +62,7 @@ library.add(
     fasFaCircle,
     faSkull,
     faPaperPlane,
+    faTachometerAlt,
 
     faEdit,
     faClone,

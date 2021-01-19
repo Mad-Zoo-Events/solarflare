@@ -1,4 +1,6 @@
-import React, { ChangeEvent, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { debounce } from "lodash";
+import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { RootState } from "../../../../RootState";
 import { changeClockSpeed, setIgnoreKeystrokes, toggleClock } from "../../ControlPanelActions";
@@ -15,6 +17,34 @@ const Clock = ({
     toggleClock,
     changeClockSpeed
 }: ClockProps) => {
+    const [tapBpm, setTapBpm] = useState(0);
+    const [count, setCount] = useState(0);
+    const [millisFirst, setMillisFirst] = useState(0);
+
+    const tapUpdateBpm = useCallback(debounce((newBpm: number, noteLength: number, count: number) => {
+        setTapBpm(0);
+        setCount(0);
+        if (count >= 5) changeClockSpeed({ bpm: newBpm, noteLength });
+    }, 2000), []);
+
+    const tap = () => {
+        const millisNow = new Date().getTime();
+
+        let newBpm = 0;
+        if (count === 0) {
+            setMillisFirst(millisNow);
+            setCount(1);
+        } else {
+            newBpm = Math.round((
+                60000 * count / (millisNow - millisFirst) * noteLength
+            ) * 10) / 10;
+            setTapBpm(newBpm);
+            setCount(count + 1);
+        }
+
+        tapUpdateBpm(newBpm, noteLength, count + 1);
+    };
+
     let interval: number;
     const restartInterval = (newMillis: number) => {
         if (interval) {
@@ -54,6 +84,7 @@ const Clock = ({
             <input
                 className="bpm-number-input"
                 type="number"
+                step={0.1}
                 value={bpm}
                 onFocus={() => setIgnoreKeystrokes(true)}
                 onBlur={() => setIgnoreKeystrokes(false)}
@@ -62,6 +93,7 @@ const Clock = ({
             <input
                 className="bpm-range-input"
                 type="range"
+                step={0.1}
                 min={40}
                 max={240}
                 value={bpm}
@@ -85,6 +117,26 @@ const Clock = ({
                 <option value="0.25">1/16</option>
                 <option value="0.125">1/32</option>
             </select>
+            <div className="button tap-button {indicatorClass}" onClick={tap}>
+                <FontAwesomeIcon
+                    icon={["fas", "tachometer-alt"]}
+                    size="3x"
+                    title="'+' Tap"
+                />
+                <br/>
+                <span>+</span>
+            </div>
+            <div className="tap-stats">
+                <span className="tap-title">TAP</span>
+                <span>BPM: </span>
+                <span>
+                    {tapBpm === 0 ? "-" : tapBpm}
+                </span>
+                <span>Sample Size: </span>
+                <span className={count > 0 && count < 5 ? "sample-size-too-small" : ""}>
+                    {count === 0 ? "-" : count}
+                </span>
+            </div>
         </div>
     );
 };
