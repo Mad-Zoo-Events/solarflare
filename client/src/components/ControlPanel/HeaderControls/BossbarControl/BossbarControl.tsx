@@ -19,6 +19,12 @@ const BossbarControls = ({
 }: BossbarControlProps): ReactElement => {
     const [autoUpdate, setAutoUpdate] = useState(true);
     const [isOpen, setIsOpen] = useState(false);
+    const [mouseOver, setMouseOver] = useState(false);
+
+    const handleMouseOver = () => setMouseOver(true);
+    const handleMouseOut = () => setMouseOver(false);
+    const handleFocus = () => setIgnoreKeystrokes(true);
+    const handleBlur = () => { setIgnoreKeystrokes(false); if (!mouseOver) setIsOpen(false); };
 
     const handleColorChange = (e: ChangeEvent<HTMLSelectElement>) => updateBossbar({
         color: e.currentTarget.value as BossbarColor,
@@ -41,8 +47,12 @@ const BossbarControls = ({
         spellCheck={false}
         placeholder="Now Playing: Bob Ross"
         defaultValue={title}
-        onFocus={() => setIgnoreKeystrokes(true)}
-        onBlur={() => { setIgnoreKeystrokes(false); setIsOpen(false); }}
+
+        onMouseOver={handleMouseOver}
+        onMouseOut={handleMouseOut}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+
         onChange={handleTitleChange}
         autoFocus
     />;
@@ -52,10 +62,22 @@ const BossbarControls = ({
             <FontAwesomeIcon icon={["fas", "skull"]} size="2x"/>
 
             <div>
-                <div className="button popup-label" onClick={() => { setIgnoreKeystrokes(true); setIsOpen(true); }}>
+                <div
+                    className="button popup-label"
+                    tabIndex={1}
+                    onClick={() => { setIgnoreKeystrokes(true); setIsOpen(true); }}
+                >
                     {isOpen ? input : preview}
                 </div>
-                <div className="popup-holder">
+                <div
+                    className="popup-holder"
+                    tabIndex={1}
+
+                    onMouseOver={handleMouseOver}
+                    onMouseOut={handleMouseOut}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                >
                     <div className={`popup-content bossbar-popup-content ${isOpen ? "show-popup" : ""}`}>
                         {preview}
                         <div className="formatting-group">
