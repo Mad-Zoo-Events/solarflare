@@ -45,6 +45,7 @@ func init() {
 // RestartClock resets the ticker to start running again after one full cycle
 func RestartClock() {
 	tickTock.stop()
+	tickTock.setSpeed(tickTock.bpm, tickTock.multiplier)
 	tickTock.start()
 }
 
