@@ -1,16 +1,19 @@
 .control-panel__header-controls {
+    $button-count: 5;
+    $column-count: $button-count * 2;
+
     display              : grid;
-    grid-template-columns: auto repeat(8, min-content);
+    grid-template-columns: auto repeat($column-count, min-content);
     gap                  : 0 1em;
 
     @media (max-width: 65rem) {
         display              : grid;
-        grid-template-columns: auto repeat(7, min-content);
+        grid-template-columns: auto repeat($column-count - 1, min-content);
         grid-template-rows   : repeat(2, min-content);
         gap                  : 0.5em 1em;
 
         & .bossbar-control {
-            grid-column: 1 /span 8;
+            grid-column: 1 /span $column-count;
             grid-row   : 2;
             width      : 100%;
         }
@@ -34,7 +37,7 @@
     }
 
     & .capslock-warning {
-        grid-column: 1 /span 8;
+        grid-column: 1 /span $column-count;
         margin     : 0.2em auto 0 auto;
         color      : var(--red);
         font-size  : x-large;
