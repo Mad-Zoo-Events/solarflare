@@ -45,8 +45,10 @@ const HeaderControls = ({
 
     return (
         <div className="control-panel__header-controls">
-            <BossbarControl/>
-            <div className="separator"/>
+            <div className="bossbar-control">
+                <BossbarControl/>
+            </div>
+            <div className="separator first-separator"/>
             <Popup label="Display Mode" iconProps={{ icon: ["fas", "eye"], size: "2x" }}>
                 <Submenu
                     options={displayModeOptions}

@@ -19,7 +19,7 @@
         visibility: hidden;
 
         position: absolute;
-        top     : 0.2em;
+        top     : 1em;
         z-index : 1;
 
         padding         : 1em;
@@ -27,6 +27,21 @@
         backdrop-filter : blur(1.5em);
         box-shadow      : 0 1em 2em 0.5em var(--background);
         border-radius   : 0.5em;
+
+        border: 1px solid var(--gray);
+
+        &::before {
+            content     : '';
+            position    : relative;
+            margin-top  : -1em;
+            top         : -1em;
+            left        : 0.3em;
+            border-width: 0em 1em 1em 1em;
+            border-style: solid;
+            border-color: var(--gray) transparent;
+            display     : block;
+            width       : 0;
+        }
     }
 
     & .show-popup {

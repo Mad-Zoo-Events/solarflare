@@ -1,7 +1,24 @@
-div.control-panel__header-controls {
+.control-panel__header-controls {
     display              : grid;
     grid-template-columns: auto repeat(8, min-content);
     gap                  : 0 1em;
+
+    @media (max-width: 65rem) {
+        display              : grid;
+        grid-template-columns: auto repeat(7, min-content);
+        grid-template-rows   : repeat(2, min-content);
+        gap                  : 0.5em 1em;
+
+        & .bossbar-control {
+            grid-column: 1 /span 8;
+            grid-row   : 2;
+            width      : 100%;
+        }
+
+        & .separator.first-separator {
+            border: none;
+        }
+    }
 
     & .separator {
         border-left: 2px solid var(--gray);
