@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"net/url"
+	"encoding/json"
 	"strings"
 
 	"github.com/eynorey/solarflare/src/manager"
@@ -9,11 +9,11 @@ import (
 )
 
 // RunSingleCommand runs a console command
-func RunSingleCommand(values url.Values) error {
+func RunSingleCommand(body []byte) error {
 	commandRequest := &struct {
-		Command string `json:"command" form:"command"`
+		Command string `json:"command"`
 	}{}
-	if err := decoder.Decode(&commandRequest, values); err != nil {
+	if err := json.Unmarshal(body, &commandRequest); err != nil {
 		return sferror.New(sferror.Encoding, "Error parsing data from the command request", err)
 	}
 

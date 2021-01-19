@@ -1,6 +1,7 @@
 package main
 
 import (
+	"io/ioutil"
 	"net/http"
 
 	"github.com/eynorey/solarflare/src/controller"
@@ -10,14 +11,9 @@ import (
 
 // CommandHandler handles requests to run a console command
 func CommandHandler(c *gin.Context) {
-	err := c.Request.ParseForm()
-	if err != nil {
-		err = sferror.New(sferror.Encoding, "Error parsing the command request", err)
-		c.JSON(http.StatusBadRequest, sferror.Get(err))
-		return
-	}
+	body, err := ioutil.ReadAll(c.Request.Body)
 
-	err = controller.RunSingleCommand(c.Request.PostForm)
+	err = controller.RunSingleCommand(body)
 	if err != nil {
 		switch sferror.GetErrorType(err) {
 		case sferror.Encoding:
