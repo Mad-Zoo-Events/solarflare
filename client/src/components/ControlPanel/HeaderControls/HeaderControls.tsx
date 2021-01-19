@@ -1,19 +1,20 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { ReactElement } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { chooseStage, toggleServer } from "../../../AppActions";
 import { selectSelectedStage, selectServers, selectStages } from "../../../AppSelectors";
 import DisplayMode from "../../../domain/controlpanel/DisplayMode";
 import { RootState } from "../../../RootState";
+import Routes from "../../../routes";
+import Popup from "../../Popup/Popup";
 import { chooseDisplayMode } from "../ControlPanelActions";
 import { selectCapsLockOn, selectDisplayMode } from "../ControlPanelSelectors";
+import BossbarControl from "./BossbarControl/BossbarControl";
+import CommandControl from "./CommandControl";
 import "./HeaderControls.scss";
 import { HeaderControlsProps } from "./HeaderControlsProps";
 import Submenu from "./Submenu/Submenu";
-import BossbarControl from "./BossbarControl/BossbarControl";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
-import Routes from "../../../routes";
-import Popup from "../../Popup/Popup";
 
 const HeaderControls = ({
     servers,
@@ -49,6 +50,10 @@ const HeaderControls = ({
                 <BossbarControl/>
             </div>
             <div className="separator first-separator"/>
+            <Popup label="Run Command" iconProps={{ icon: ["fas", "terminal"], size: "2x" }}>
+                <CommandControl/>
+            </Popup>
+            <div className="separator"/>
             <Popup label="Display Mode" iconProps={{ icon: ["fas", "eye"], size: "2x" }}>
                 <Submenu
                     options={displayModeOptions}

@@ -61,6 +61,9 @@ export async function stopAll (options: StopAllOptions): Promise<void> {
 export async function updateBossbar (action: BossbarAction, options?: BossbarOptions): Promise<void> {
     return await axios.post(`/bossbar/${action}`, options);
 }
+export async function runComand (command: string): Promise<void> {
+    return await axios.post("/command", { command });
+}
 
 // Clock
 export async function changeClockSpeed (options: ClockSpeedOptions): Promise<void> {
