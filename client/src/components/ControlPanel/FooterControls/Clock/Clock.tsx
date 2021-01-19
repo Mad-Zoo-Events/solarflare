@@ -4,7 +4,7 @@ import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { RootState } from "../../../../RootState";
 import { changeClockSpeed, setIgnoreKeystrokes, toggleClock } from "../../ControlPanelActions";
-import { selectClockBpm, selectClockMillis, selectClockNoteLength, selectClockOnBeat } from "../../ControlPanelSelectors";
+import { selectClockBpm, selectClockMillis, selectClockNoteLength, selectClockOnBeat, selectClockTapButtonRef } from "../../ControlPanelSelectors";
 import "./Clock.scss";
 import { ClockProps } from "./ClockProps";
 
@@ -13,6 +13,7 @@ const Clock = ({
     noteLength,
     millis,
     onBeat,
+    tapButtonRef,
     setIgnoreKeystrokes,
     toggleClock,
     changeClockSpeed
@@ -117,7 +118,7 @@ const Clock = ({
                 <option value="0.25">1/16</option>
                 <option value="0.125">1/32</option>
             </select>
-            <div className="button tap-button {indicatorClass}" onClick={tap}>
+            <div className="button tap-button" onClick={tap} ref={tapButtonRef}>
                 <FontAwesomeIcon
                     icon={["fas", "tachometer-alt"]}
                     size="3x"
@@ -146,12 +147,14 @@ function mapStateToProps (state: RootState) {
     const noteLength = selectClockNoteLength(state);
     const millis = selectClockMillis(state);
     const onBeat = selectClockOnBeat(state);
+    const tapButtonRef = selectClockTapButtonRef(state);
 
     return {
         bpm,
         noteLength,
         millis,
-        onBeat
+        onBeat,
+        tapButtonRef
     };
 }
 

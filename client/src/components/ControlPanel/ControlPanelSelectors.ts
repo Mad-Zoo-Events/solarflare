@@ -14,6 +14,7 @@ export const selectClockOnBeat = createSelector(selectControlPanelState, ({ cloc
 export const selectClockBpm = createSelector(selectControlPanelState, ({ clockBpm }) => clockBpm);
 export const selectClockNoteLength = createSelector(selectControlPanelState, ({ clockNoteLength }) => clockNoteLength);
 export const selectClockMillis = createSelector(selectControlPanelState, ({ clockNoteLength, clockBpm }) => 60000 / clockBpm * clockNoteLength);
+export const selectClockTapButtonRef = createSelector(selectControlPanelState, ({ clockTapButtonRef }) => clockTapButtonRef);
 
 export const selectBossbarText = createSelector(selectControlPanelState, ({ bossbarText }) => bossbarText);
 export const selectBossbarColor = createSelector(selectControlPanelState, ({ bossbarColor }) => bossbarColor);
