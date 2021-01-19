@@ -9,6 +9,7 @@ import { EffectAction } from "../domain/EffectAction";
 import { EffectType } from "../domain/EffectType";
 import { PresetCollection } from "../domain/PresetCollection";
 import { Preset } from "../domain/presets/Preset";
+import { decoratePresets, decoratePresetsOfType } from "../utils/utils";
 
 // Status
 export async function getVersion (): Promise<string> {
@@ -26,10 +27,14 @@ export async function selectStage (stage: string): Promise<void> {
 
 // Preset Retrieval
 export async function fetchAllPresets (): Promise<PresetCollection> {
-    return (await axios.get<PresetCollection>("/presets/all")).data;
+    const { data } = await axios.get<PresetCollection>("/presets/all");
+    decoratePresets(data);
+    return data;
 }
 export async function fetchPresetsOfType (effectType: EffectType): Promise<Preset[]> {
-    return (await axios.get<Preset[]>(`/presets/${effectType}`)).data;
+    const { data } = await axios.get<Preset[]>(`/presets/${effectType}`);
+    decoratePresetsOfType(data, effectType);
+    return data;
 }
 
 // Preset Management
