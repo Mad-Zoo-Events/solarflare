@@ -37,9 +37,7 @@ const Clock = ({
             setMillisFirst(millisNow);
             setCount(1);
         } else {
-            newBpm = Math.round((
-                60000 * count / (millisNow - millisFirst) * noteLength
-            ) * 10) / 10;
+            newBpm = Math.round(60000 * count / (millisNow - millisFirst) * noteLength);
             setTapBpm(newBpm);
             setCount(count + 1);
         }
