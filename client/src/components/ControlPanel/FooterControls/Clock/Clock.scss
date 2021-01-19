@@ -25,40 +25,20 @@
         }
     }
 
-    & .bpm-number-input {
-        grid-row   : 2;
-        grid-column: 1;
-    }
-
-    & .bpm-range-input {
-        grid-row   : 2;
-        grid-column: 2;
-    }
-
-    & .note-length-input {
-        grid-row   : 2;
-        grid-column: 3;
-    }
-
-    & .tap-button {
-        grid-row   : 3;
-        grid-column: 1;
-        margin     : auto;
+    & .clock-button {
+        margin     : 0 auto;
         text-align : center;
         user-select: none;
         transition : color 0.3s ease-out !important;
     }
 
-    & .tap-button:active,
+    & .clock-button:active,
     .clock-tap-active {
         color     : var(--accent) !important;
         transition: none !important;
     }
 
     & .tap-stats {
-        grid-row   : 3;
-        grid-column: 2 /span 2;
-
         display              : grid;
         grid-template-columns: max-content auto;
         gap                  : 0 1em;

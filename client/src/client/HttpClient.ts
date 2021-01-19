@@ -66,6 +66,9 @@ export async function updateBossbar (action: BossbarAction, options?: BossbarOpt
 export async function changeClockSpeed (options: ClockSpeedOptions): Promise<void> {
     return await axios.post("/clock/speed", options);
 }
+export async function restartClock (): Promise<void> {
+    return await axios.post("/clock/restart");
+}
 export async function subscribeToClock (options: ClockSubscriptionOptions): Promise<void> {
     return await axios.put("/clock/subscribe", options);
 }

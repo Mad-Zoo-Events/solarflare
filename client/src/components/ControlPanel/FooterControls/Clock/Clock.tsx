@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { debounce } from "lodash";
 import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { restartClock } from "../../../../client/HttpClient";
 import { RootState } from "../../../../RootState";
 import { changeClockSpeed, setIgnoreKeystrokes, toggleClock } from "../../ControlPanelActions";
 import { selectClockBpm, selectClockMillis, selectClockNoteLength, selectClockOnBeat, selectClockTapButtonRef } from "../../ControlPanelSelectors";
@@ -83,7 +84,6 @@ const Clock = ({
                 <span>{millis.toFixed(3)} ms</span>
             </div>
             <input
-                className="bpm-number-input"
                 type="number"
                 step={0.1}
                 value={bpm}
@@ -92,7 +92,6 @@ const Clock = ({
                 onChange={handleBpmChange}
             />
             <input
-                className="bpm-range-input"
                 type="range"
                 step={0.1}
                 min={40}
@@ -101,7 +100,6 @@ const Clock = ({
                 onChange={handleBpmChange}
             />
             <select
-                className="note-length-input"
                 value={noteLength}
                 onChange={handleNoteLengthChange}
             >
@@ -118,7 +116,7 @@ const Clock = ({
                 <option value="0.25">1/16</option>
                 <option value="0.125">1/32</option>
             </select>
-            <div className="button tap-button" onClick={tap} ref={tapButtonRef}>
+            <div className="button clock-button" onClick={tap} ref={tapButtonRef}>
                 <FontAwesomeIcon
                     icon={["fas", "tachometer-alt"]}
                     size="3x"
@@ -137,6 +135,13 @@ const Clock = ({
                 <span className={count > 0 && count < 5 ? "sample-size-too-small" : ""}>
                     {count === 0 ? "-" : count}
                 </span>
+            </div>
+            <div className="button clock-button" onClick={restartClock}>
+                <FontAwesomeIcon
+                    icon={["fas", "sync"]}
+                    size="3x"
+                    title="Restart"
+                />
             </div>
         </div>
     );
