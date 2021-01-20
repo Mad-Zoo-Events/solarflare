@@ -191,32 +191,32 @@ func TestPresetAPI(effectType string, body []byte) {
 	case model.ParticleEffectType:
 		preset := model.ParticleEffectPresetAPI{}
 		json.Unmarshal(body, &preset)
-
+		preset.ID = id
 		manager.RunParticleEffect(preset.FromAPI(), model.StartEffectAction, false)
 	case model.DragonEffectType:
 		preset := model.DragonEffectPreset{}
 		json.Unmarshal(body, &preset)
-
+		preset.ID = id
 		manager.RunDragonEffect(preset, model.StartEffectAction, false)
 	case model.TimeshiftEffectType:
 		preset := model.TimeshiftEffectPreset{}
 		json.Unmarshal(body, &preset)
-
+		preset.ID = id
 		manager.RunTimeshiftEffect(preset, model.StartEffectAction, false)
 	case model.PotionEffectType:
 		preset := model.PotionEffectPreset{}
 		json.Unmarshal(body, &preset)
-
+		preset.ID = id
 		manager.RunPotionEffect(preset, model.StartEffectAction, false)
 	case model.LaserEffectType:
 		preset := model.LaserEffectPreset{}
 		json.Unmarshal(body, &preset)
-
+		preset.ID = id
 		manager.RunLaserEffect(preset, model.StartEffectAction, false)
 	case model.CommandEffectType:
 		preset := model.CommandEffectPresetAPI{}
 		json.Unmarshal(body, &preset)
-
+		preset.ID = id
 		manager.RunCommandEffect(preset.FromAPI(), false)
 	}
 
