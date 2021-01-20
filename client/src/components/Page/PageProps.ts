@@ -5,5 +5,6 @@ export interface PageProps {
     headerElements?: ReactNode | ReactNodeArray
     children: ReactNode | ReactNodeArray
     footerElements?: ReactNode | ReactNodeArray
+    isInitialized: boolean
     version: string
 }
