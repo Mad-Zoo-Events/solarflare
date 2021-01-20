@@ -12,37 +12,19 @@ phases:
       nodejs: latest
     commands:
       - npm install -g yarn
-      - npm install terser -g
-      - npm install clean-css-cli -g
   build:
     commands:
       - echo "Building Go..."
       - cd $CODEBUILD_SRC_DIR/src
       - go build -mod vendor -ldflags "-X github.com/eynorey/solarflare/src/config.appVersion=$(date -u '+%Y-%m-%d-%H:%M')" -o ../bin/application -i github.com/eynorey/solarflare/src
       - chmod 755 ../bin/application
-      - mv static ../
       - echo "Building React..."
       - cd $CODEBUILD_SRC_DIR/client
       - yarn
       - yarn build
       - mv build ../public
-  post_build:
-    commands:
-      - cd $CODEBUILD_SRC_DIR/static/js
-      - terser --compress --mangle -- httpClient.js > httpClient_min.js
-      - terser --compress --mangle -- uiManager.js > uiManager_min.js
-      - terser --compress --mangle -- websocketClient.js > websocketClient_min.js
-      - mv httpClient_min.js httpClient.js
-      - mv uiManager_min.js uiManager.js
-      - mv websocketClient_min.js websocketClient.js
-      - cd ../css
-      - cleancss -o common_min.css common.css
-      - cleancss -o controlpanel_min.css controlpanel.css
-      - mv common_min.css common.css
-      - mv controlpanel_min.css controlpanel.css
 artifacts:
   files:
     - .ebextensions/*
     - bin/application
-    - static/**/*
     - public/**/*
