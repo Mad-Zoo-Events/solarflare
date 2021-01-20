@@ -3,9 +3,10 @@ import React, { ReactElement } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { selectVersion } from "../../AppSelectors";
+import { selectIsInitialized, selectVersion } from "../../AppSelectors";
 import { RootState } from "../../RootState";
 import Routes from "../../routes";
+import Spinner from "../Spinner/Spinner";
 import "./Page.scss";
 import { PageProps } from "./PageProps";
 
@@ -14,10 +15,12 @@ const Page = ({
     headerElements,
     children,
     footerElements,
+    isInitialized,
     version
 }: PageProps): ReactElement => (
     <>
         <ToastContainer />
+        {!isInitialized && <Spinner fullScreen/>}
         <div className="page">
             {isControlPanel
                 ? <div className="page-header">
@@ -47,9 +50,11 @@ const Page = ({
 );
 
 function mapStateToProps (state: RootState) {
+    const isInitialized = selectIsInitialized(state);
     const version = selectVersion(state);
 
     return {
+        isInitialized,
         version
     };
 }
