@@ -12,8 +12,6 @@ These presets can be executed through a web request (to allow for time-coded vis
 
 ### Effects
 
-There are currently two types of effects supported: **Particle Effects** and the infamous **Dying Dragon Effect**. Lasers are on the road map.
-
 #### Particle Effects
 
 Particle effects can be displayed in the Minecraft world in three different ways:
@@ -45,67 +43,155 @@ This can be used to turn the lights off with blindness, give players night visio
 
 #### Laser Effect
 
-There are two tyes of lasers: **Guardian Beam** and **End Crystal Healing Beam**.
+There are two types of lasers: **Guardian Beam** and **End Crystal Healing Beam**.
 
 Both can be set up to connect two specified points. The Guardian Beams can also be configured to be player-tracking, which means it will track a random player originating from the point specified.
 
-Guardian Beams slowly change colors once while they're active, going from a dark purple to a light green. You can restart the color change with the dedicated *COLOR* button on the Guardian laser controls.
-
-#### Bossbar
-
-The control panel has an input field for text to be displayed on an in-game boss bar. Next to a color selection of the bar itself, there are also formatting options which you can use to change the appearance of the text.
-
-#### Command Execution
-
-You can excute a one-shot command on all servers currently enabled using the command input field in the header bar of the control panel.
-
-The command should not contain a leading slash, but Solarflare will be stripping it off in case you forget about that ;)
+Guardian Beams slowly change colors once while they're active, going from a dark purple to a light green. You can restart the color cycle with the dedicated color-palette button on the guardian laser controls.
 
 ### Presets
 
 Presets represent a compilation of effects of the same type to be controlled at the same time. For instance you could display hearts in a specific location and shape while also turning on the rain in a different shape.
 
-Each interaction with the system requires a preset to be created upfront. Upon creation, the service generates a UUID to identify the preset. The presets can then be controlled from the control panel or through web request.
+Each preset is identified by a UUID which gets generated upon its creation, and it can then be controlled from the control panel or through web request.
 
-Effects in a preset have to be of the same type (either particle effect, dragon effect, or laser in the future) and the same action (start, stop, trigger, restart) is executed on all effects at the same time.
+In addition to the effect-specific options, you can define a keyboard shortcut to start/stop it on the control panel, and a set of MIDI options which let you map MIDI keys and channels to certain actions which are to be performed on the preset.
+This information can then be used in a client which accepts MIDI input and sends corresponding web requests to the backend, allowing you to map presets to a MIDI keyboard or even time-code a show.
 
 ### Control Panel
 
 The control panel is the browser-based user interface which interacts with the Go service.
 
-Here you can execute, create, update and delete presets for the effects described above, monitor the network status and view your click-to-execution delay on the effects.
+Here you can execute effects, manage presets, run one-off commands, set the in-game boss bar, and more. It also logs a message indicating if the effect you just triggered successfully ran on all servers, or at least on how many of them.
 
-It also logs a message indicating if the effect you just triggered successfully ran on all servers, or at least on how many of them.
+#### Boss Bar Control
+
+The control panel has an input field for text to be displayed on an in-game boss bar.
+
+Next to a color selection of the bar itself, there are also formatting options which you can use to change the appearance of the text. As you start typing, you will see a preview of how the text will look like in-game.
+
+By default, every input you make in the field is applied in the game in real-time. You can choose to uncheck the "Update Live" checkbox, in which case you have to click the "Send" button each time you wish to update it.
+
+#### Run Command
+
+This feature lets you run a single command on all servers currently enabled in the "Server Selection" options (see below)
+
+The command should not contain a leading slash, but Solarflare will be stripping it off in case you forget about that ;)
+
+#### Display Mode
+
+This feature lets you choose another mode for how presets are arranged on the control panel. Presets are always sorted alphabetically by their display name.
+
+There are currently three modes:
+
+- **Categorized**: groups presets of the same effect type
+- **Uncategorized**: all presets together, ungrouped
+- **Separate Commands**: same as Uncategorized, except command presets are grouped together and displayed below the others
+
+#### Server Selection
+
+Solarflare can be used to cater a large number of Minecraft server instances at the same time. Thus, each instance needs to have the Aurora plugin installed and Solarflare must know the address of each instance.
+
+Server information is maintained on a dedicated DynamoDB table, and you can enable and disable servers which Solarflare will then send requests to on-thy-fly. Individual Servers can be enabled or disabled on the control panel.
+
+#### Stage Selection
+
+Solarflare allows for multiple stages (different Minecraft worlds) to be set up at the same time and lets you select the stage you are going to work on (new stages currently need to be set up manually in the source code)
+
+Selecting a different stage is a server-side - the backend will stop all running effects and reload all presets of that stage from the databases.
+
+This feature can be useful when you already want to work on a new/different stage while another event with another stage is yet to take place.
+
+#### Preset Manager
+
+This button takes you to the preset manager, where you can - well - manage all your presets.
 
 ### Clock
 
-The clock is a ticker that always runs in the backend of the service. You can attach effects to the clock so that they are triggered in a specific rhythm.
+The clock is a ticker that runs at a set speed in the backend (e.g. at 128 BPM each 1/4 note). It can be used to run specific presets at the set interval.
 
-On the control panel you have the option to either manually set BPM and note length (e.g. 128 BPM 1/4 note) or use the TAP button to set BPM based on hearing the music.
+On the control panel You can either manually set the speed and note length or use the TAP button (or the `+` key) to set BPM based on hearing the music.
 
-For each effect preset, there are two buttons beneath the other controls: The button on the left subscribes (or unsubscribes) the effect to the clock's ON-beat cycle; the button on the right to the OFF-beat cycle. The attached effect presets will then be toggled following the clock's rhythm.
+For each preset, there are two buttons beneath the other controls: The button on the left subscribes (or unsubscribes) the effect to the clock's ON-beat cycle; the button on the right to the OFF-beat cycle. The attached effect presets will then be toggled following the clock's interval.
 
 ## System Architecture
 
 The system consists of three components:
 
-- This Go service (preset management, orchestration and request distribution)
-- Control Panel (website hosted by the Go service)
-- The Aurora Plugin (running on Minecraft servers)
+- Go backend (preset management, effect orchestration and request distribution)
+- React frontend (user interface for controlling effects and managing presets)
+- Aurora Minecraft plugin (running on each instance, executing effects)
 
 The basic workflow is as follows:
-1. User creates presets in the Control Panel
+1. User creates presets in the control panel
 2. User triggers action on a preset by ID
-3. Go service then loads the corresponding information
-4. Go service compiles request and concurrently sends it to all registered Aurora instances
-
-### Registration of Servers
-
-This system can be used to cater a large number of Minecraft server instances at the same time. Thus, each instance needs to have the Aurora plugin installed and Solarflare must know the address of each instance.
-
-Server information is maintained on a dedicated DynamoDB table, and you can enable and disable servers which Solarflare will then send requests to on-thy-fly. There is a 📡 Satellite Antenna icon in the top-right corner of the main control panel for that purpose.
+3. Go service loads the corresponding effect instructions
+4. Go service compiles request and concurrently sends it to all registered instances
+5. Aurora plugins execute instructions on each server
+6. Go service sends feedback to all users on the control panel through websocket
 
 ## API Endpoints
+
+### Technical
+`GET https://visuals.madzoo.events/health`
+
+Gets the service health (to be implemented)
+
+---
+
+`GET https://visuals.madzoo.events/version`
+
+Gets a the service version formatted as the latest build timestamp
+
+---
+
+`POST https://visuals.madzoo.events/selectstage/{stage}`
+
+Selects a certain stage (see explanation above)
+
+**Parameters:**
+
+| Parameter | Description                               |
+| --------- | ----------------------------------------- |
+| `stage`   | Internal name of the stage to be selected |
+
+---
+
+`PATCH https://visuals.madzoo.events/servers/{id}/{action}`
+
+Turns a certain server on or off for receiving effects (see explanation above)
+
+**Parameters:**
+
+| Parameter | Description                       |
+| --------- | --------------------------------- |
+| `id`      | Internal identifier of the server |
+| `action`  | `enable|disable`                  |
+
+### Retrieve presets
+
+You can retrieve all presets of a specific type or all presets of all types:
+
+`GET https://visuals.madzoo.events/presets/{effectType}`
+
+---
+
+Returns an array of all presets of the specified type
+
+`GET https://visuals.madzoo.events/presets/all`
+
+Returns an object containing an array for each preset type
+
+```
+{
+	"particlePresets": []
+	"dragonPresets": []
+	"timeshiftPresets": []
+	"potionPresets": []
+	"laserPresets": []
+	"commandPresets": []
+}
+```
 
 ### Trigger an action on a preset
 `POST https://visuals.madzoo.events/effects/run/{effectType}/{id}/{action}`
@@ -147,7 +233,7 @@ There is no payload.
 - `stop`
 
 **Actions allowed on *laser effect* presets:**
-- `color` *(only for Guardian Lasers)*
+- `restart` *(only for Guardian Lasers)*
 - `start`
 - `stop`
 
@@ -169,31 +255,95 @@ There is no payload.
 
 where `EffectType` has to be one of the types listed above.
 
-### Manage Presets
+
+### Manage presets
 
 It is *highly* recommended to manage presets through the UI only, as there is some conversion happening before they are saved in the database.
 
 If you still wish to do it manually via POST requests, you should know what you are doing and can find the request schemes in the code by yourself.
 
-### Retrieve presets
+### Clock actions
 
-You can retrieve all presets of a specific type or all presets of all types:
+`PUT https://visuals.madzoo.events/clock/{action}`
 
-`GET https://visuals.madzoo.events/presets/{effectType}`
+Subscribes an effect to the clock or unsubscribes it.
 
-Returns an array of all presets of the specified type
+**Parameters:**
 
-`GET https://visuals.madzoo.events/presets/all`
+| Parameter | Description             |
+| --------- | ----------------------- |
+| `action`  | `subscribe|unsubscribe` |
 
-Returns an object containing an array for each preset type
+**Payload:**
 
 ```
 {
-	"particlePresets": []
-	"dragonPresets": []
-	"timeshiftPresets": []
-	"potionPresets": []
-	"laserPresets": []
-	"commandPresets": []
+	presetId: string,
+	effectType: EffectType,
+	isRunning: bool,
+	offBeat: bool
 }
 ```
+
+where `EffectType` has to be one of the types listed above, `isRunning` indicates whether the effect is currently running or not, and `offBeat` specifies whether the effect should be attached to the offBeat (or onBeat) cycle of the clock.
+
+---
+
+`POST https://visuals.madzoo.events/clock/restart`
+
+Restarts the clock, use this to sync up visuals on the clock with the music.
+
+---
+
+`POST https://visuals.madzoo.events/clock/speed`
+
+Set the clock speed.
+
+**Payload:**
+
+```
+{
+	bpm: float,
+	noteLength: float
+}
+```
+
+where a `noteLength` of 1 equals a quarter note (so e.g. 0.5 = eight note, 4 = whole note, and so on)
+
+### Other
+
+`POST https://visuals.madzoo.events/command`
+
+Runs a single command on all connected instances
+
+**Payload:**
+
+```
+{
+	command: string
+}
+```
+
+---
+
+`POST https://visuals.madzoo.events/bossbar/{action}`
+
+Sets the in-game boss bar or clears (and hides) it
+
+**Parameters:**
+
+| Parameter | Description |
+| --------- | ----------- |
+| `action`  | `set|clear` |
+
+
+**Payload:**
+
+```
+{
+	title: string,
+	color: MinecraftColor
+}
+```
+
+where `MinecraftColor` has to be one of `[BLUE|GREEN|PINK|PURPLE|RED|WHITE|YELLOW]`
