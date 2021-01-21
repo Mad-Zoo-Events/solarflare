@@ -2,9 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import App from "./App";
-import "./index.scss";
 import store from "./store";
 import "./styles/fontawesome";
+import "./styles/index.scss";
 
 ReactDOM.render(
     <Provider store={store}>

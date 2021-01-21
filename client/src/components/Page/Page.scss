@@ -12,8 +12,8 @@
     }
 
     & .page-header {
-        background-color: var(--background);
-        padding         : 0.5em 1em 0.5em 0.5em;
+        background-color: var(--background0);
+        padding         : 0.5em;
 
         & a,
         a:visited {
@@ -33,18 +33,19 @@
 
     & .page-content {
         grid-row  : 2;
-        overflow-y: scroll;
+        overflow-y: auto;
     }
 
     & .page-footer {
         grid-row        : 3;
         width           : 100%;
-        background-color: var(--background);
+        background-color: var(--background-accent);
 
         & .status-bar {
-            padding   : 0.3em;
-            font-size : smaller;
-            text-align: center;
+            padding         : 0.3em;
+            font-size       : smaller;
+            text-align      : center;
+            background-color: var(--background0);
         }
     }
 }

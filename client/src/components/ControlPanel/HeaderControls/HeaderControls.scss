@@ -7,7 +7,6 @@
     gap                  : 0 1em;
 
     @media (max-width: 65rem) {
-        display              : grid;
         grid-template-columns: auto repeat($column-count - 1, min-content);
         grid-template-rows   : repeat(2, min-content);
         gap                  : 0.5em 1em;
