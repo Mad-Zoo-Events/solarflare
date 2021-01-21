@@ -1,8 +1,7 @@
 .delete-button {
-    cursor : pointer;
-    color  : var(--red);
-    padding: 0.3em 0.5em 0 0;
-    margin : 0 auto;
+    cursor: pointer;
+    color : var(--red);
+    margin: 0 auto;
 
     &:hover {
         ~label {

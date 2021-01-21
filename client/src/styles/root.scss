@@ -1,5 +1,43 @@
-@import "./variables.scss";
-@import "./popup.scss";
+body {
+    padding                : 0;
+    margin                 : 0;
+    background-color       : var(--background);
+    color                  : var(--font);
+    font-size              : 0.9em;
+    font-family            : -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing : antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    background-image:
+        linear-gradient(30deg, var(--background2) 12%, transparent 12.5%, transparent 87%, var(--background2) 87.5%, var(--background2)),
+        linear-gradient(150deg, var(--background2) 12%, transparent 12.5%, transparent 87%, var(--background2) 87.5%, var(--background2)),
+        linear-gradient(30deg, var(--background2) 12%, transparent 12.5%, transparent 87%, var(--background2) 87.5%, var(--background2)),
+        linear-gradient(150deg, var(--background2) 12%, transparent 12.5%, transparent 87%, var(--background2) 87.5%, var(--background2)),
+        linear-gradient(60deg, var(--background3) 25%, transparent 25.5%, transparent 75%, var(--background3) 75%, var(--background3)),
+        linear-gradient(60deg, var(--background3) 25%, transparent 25.5%, transparent 75%, var(--background3) 75%, var(--background3));
+    background-size    : 80px 140px;
+    background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) transparent;
+}
+
+*::-webkit-scrollbar {
+    width : 11px;
+    height: 11px;
+}
+
+*::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--accent);
+    border-radius   : 6px;
+    border          : 3px solid transparent;
+}
 
 code,
 .code {
@@ -21,145 +59,5 @@ a {
     &:hover {
         color     : var(--font) !important;
         transition: none;
-    }
-}
-
-input[type=text],
-input[type=number],
-textarea,
-.fake-input,
-select {
-    color           : var(--font);
-    background-color: var(--darker-accent-alpha);
-    width           : 100%;
-    padding         : 7px;
-    box-sizing      : border-box;
-    border          : none;
-    border-radius   : 0.2em;
-}
-
-.color-input {
-    background-color: transparent !important;
-    padding         : 0 !important;
-    border-radius   : none !important;
-    box-shadow      : none !important;
-
-    label {
-        font-size: inherit !important;
-        color    : var(--font) !important;
-    }
-
-    input {
-        width           : 100% !important;
-        box-sizing      : border-box;
-        padding         : 0.5em !important;
-        box-shadow      : none !important;
-        font-size       : 0.9em !important;
-        color           : var(--font);
-        background-color: var(--darker-accent-alpha);
-    }
-}
-
-* {
-    scrollbar-width: thin;
-    scrollbar-color: var(--accent) var(--background);
-}
-
-*::-webkit-scrollbar {
-    width: 11px;
-}
-
-*::-webkit-scrollbar-track {
-    background: var(--background);
-}
-
-*::-webkit-scrollbar-thumb {
-    background-color: var(--accent);
-    border-radius   : 6px;
-    border          : 3px solid var(--background);
-}
-
-@mixin checkbox-radio-container {
-    display            : block;
-    position           : relative;
-    padding-left       : 2.2em;
-    cursor             : pointer;
-    -webkit-user-select: none;
-    -moz-user-select   : none;
-    -ms-user-select    : none;
-    user-select        : none;
-
-    & input {
-        position: absolute;
-        opacity : 0;
-        cursor  : pointer;
-        height  : 0;
-        width   : 0;
-    }
-
-    & span {
-        position        : absolute;
-        top             : 0;
-        bottom          : 0;
-        left            : 0;
-        margin          : auto;
-        height          : 1.5em;
-        width           : 1.5em;
-        background-color: var(--gray);
-    }
-
-    &:hover input~span {
-        background-color: var(--lighter-gray);
-    }
-
-    input:checked~span {
-        background-color: var(--accent);
-    }
-
-    input:checked~span:after {
-        display: block;
-    }
-
-    span:after {
-        content : "";
-        position: absolute;
-        display : none;
-    }
-}
-
-.checkbox-container {
-    @include checkbox-radio-container;
-
-    & span {
-        border-radius: 0.2em;
-    }
-
-    & span:after {
-        top              : 0.1em;
-        left             : 0.5em;
-        width            : 0.3em;
-        height           : 0.9em;
-        border           : solid var(--font);
-        border-width     : 0 0.2em 0.2em 0;
-        -webkit-transform: rotate(45deg);
-        -ms-transform    : rotate(45deg);
-        transform        : rotate(45deg);
-    }
-}
-
-.radio-container {
-    @include checkbox-radio-container;
-
-    & span {
-        border-radius: 2em;
-    }
-
-    & span:after {
-        background-color: var(--font);
-        top             : 0.3em;
-        right           : 0.3em;
-        bottom          : 0.3em;
-        left            : 0.3em;
-        border-radius   : 2em;
     }
 }

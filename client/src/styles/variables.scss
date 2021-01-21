@@ -1,4 +1,5 @@
 :root {
+    --background0      : hsl(0, 0%, 3%);
     --background       : hsl(0, 0%, 7%);
     --background2      : hsl(0, 0%, 8%);
     --background3      : hsl(0, 0%, 9%);
@@ -6,6 +7,7 @@
     --background-alpha2: #000000ad;
     --background-alpha3: #00000040;
     --background-alpha4: #00000018;
+    --background-accent: hsl(195, 40%, 6%);
     --darker-gray      : #222;
     --dark-gray        : #444;
     --gray             : #888;
@@ -22,28 +24,28 @@
     --lighter-red        : hsl(0, 90%, 80%);
     --darker-red         : hsl(0, 90%, 30%);
 
-    --green          : hsl(131, 85%, 37%);
-    --lighter-green  : hsl(131, 85%, 70%);
-    --darker-green   : hsl(131, 85%, 20%);
-    --green-alpha    : hsla(131, 85%, 37%, 0.125);
-    --orange         : hsl(24, 100%, 48%);
-    --lighter-orange : hsl(24, 100%, 70%);
-    --darker-orange  : hsl(24, 100%, 20%);
-    --orange-alpha   : hsla(24, 100%, 48%, 0.125);
-    --indigo         : hsl(255, 90%, 60%);
-    --lighter-indigo : hsl(255, 90%, 70%);
-    --darker-indigo  : hsl(255, 90%, 30%);
-    --indigo-alpha   : hsla(255, 90%, 60%, 0.125);
-    --cyan           : hsl(197, 100%, 40%);
-    --lighter-cyan   : hsl(197, 100%, 80%);
-    --darker-cyan    : hsl(197, 100%, 20%);
-    --cyan-alpha     : hsla(200, 79%, 50%, 0.125);
-    --magenta        : hsl(318, 97%, 37%);
-    --lighter-magenta: hsl(318, 97%, 80%);
-    --darker-magenta : hsl(328, 100%, 16%);
-    --magenta-alpha  : hsla(318, 97%, 37%, 0.125);
-    --steel          : hsl(209, 26%, 47%);
-    --lighter-steel  : hsl(209, 26%, 70%);
-    --darker-steel   : hsl(209, 26%, 20%);
-    --steel-alpha    : hsla(209, 26%, 47%, 0.125);
+    --green          : hsl(120, 100%, 37%);
+    --lighter-green  : hsl(120, 100%, 70%);
+    --darker-green   : hsl(120, 100%, 20%);
+    --green-alpha    : hsla(120, 100%, 37%, 0.19);
+    --orange         : hsl(25, 100%, 48%);
+    --lighter-orange : hsl(25, 100%, 70%);
+    --darker-orange  : hsl(25, 100%, 20%);
+    --orange-alpha   : hsla(25, 100%, 48%, 0.19);
+    --indigo         : hsl(255, 100%, 60%);
+    --lighter-indigo : hsl(255, 100%, 70%);
+    --darker-indigo  : hsl(255, 100%, 30%);
+    --indigo-alpha   : hsla(255, 100%, 60%, 0.19);
+    --cyan           : hsl(195, 100%, 45%);
+    --lighter-cyan   : hsl(195, 100%, 80%);
+    --darker-cyan    : hsl(195, 100%, 20%);
+    --cyan-alpha     : hsla(195, 100%, 50%, 0.19);
+    --magenta        : hsl(325, 100%, 37%);
+    --lighter-magenta: hsl(325, 100%, 80%);
+    --darker-magenta : hsl(325, 100%, 16%);
+    --magenta-alpha  : hsla(325, 100%, 37%, 0.19);
+    --steel          : hsl(205, 30%, 47%);
+    --lighter-steel  : hsl(205, 30%, 70%);
+    --darker-steel   : hsl(205, 30%, 20%);
+    --steel-alpha    : hsla(205, 30%, 47%, 0.19);
 }
