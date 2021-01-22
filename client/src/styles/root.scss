@@ -52,12 +52,20 @@ a:visited {
 
 .button,
 a {
-    transition: all 0.2s ease-out;
+    transition: all 0.3s ease-out, filter 0.8s ease-out;
     outline   : none;
     cursor    : pointer;
 
     &:hover {
-        color     : var(--font) !important;
-        transition: none;
+        color     : var(--lighter-accent) !important;
+        transition: color 0s, filter 0.8s ease-out;
     }
+}
+
+.button:active,
+a:active,
+.button-active {
+    filter    : drop-shadow(0 0 0.5em var(--font));
+    transition: none;
+    color     : var(--lighter-accent) !important;
 }

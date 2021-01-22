@@ -21,10 +21,10 @@ const ClockControls = ({
     const { isRunning } = subscriptionOptions;
 
     return (
-        <div className="clock-controls">
+        <div className="preset-control__clock-controls">
             <FontAwesomeIcon
                 className={`button ${isRunning && onBeatAttached && "active"}`}
-                icon={[onBeatIcon, "circle"]}
+                icon={[onBeatIcon, "square"]}
                 size="2x"
                 onClick={() => handleClockSubscription({
                     ...subscriptionOptions,
@@ -33,7 +33,7 @@ const ClockControls = ({
             />
             <FontAwesomeIcon
                 className={`button ${isRunning && offBeatAttached && "active"}`}
-                icon={[offBeatIcon, "circle"]}
+                icon={[offBeatIcon, "square"]}
                 size="2x"
                 onClick={() => handleClockSubscription({
                     ...subscriptionOptions,
