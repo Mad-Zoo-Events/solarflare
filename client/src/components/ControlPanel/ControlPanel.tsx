@@ -27,8 +27,8 @@ const ControlPanel = ({
     const doClockTap = (b: HTMLDivElement | null) => {
         if (!b) return;
         b.click();
-        b.classList.add("clock-tap-active");
-        setTimeout(() => b.classList.remove("clock-tap-active"), 100);
+        b.classList.add("button-active");
+        setTimeout(() => b.classList.remove("button-active"), 100);
     };
 
     document.onkeydown = e => {
