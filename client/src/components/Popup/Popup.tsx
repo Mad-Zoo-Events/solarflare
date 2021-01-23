@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { ReactElement, useState } from "react";
+import React, { FocusEvent, ReactElement, useState } from "react";
 import { PopupProps } from "./PopupProps";
 
 const Popup = ({
@@ -8,19 +8,23 @@ const Popup = ({
     children
 }: PopupProps): ReactElement => {
     const [isOpen, setIsOpen] = useState(false);
-    const [mouseOver, setMouseOver] = useState(false);
 
-    const handleMouseOver = () => setMouseOver(true);
-    const handleMouseOut = () => setMouseOver(false);
-    const handleBlur = () => { if (!mouseOver) setIsOpen(false); };
+    const handleClick = () => { setIsOpen(!isOpen); };
+    const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
+        const currentTarget = event.currentTarget;
+        setTimeout(() => {
+            if (!currentTarget.contains(document.activeElement)) {
+                setIsOpen(false);
+            }
+        }, 0);
+    };
 
     return (
-        <div>
+        <div onBlur={handleBlur}>
             <div
                 className="button popup-label"
                 tabIndex={1}
-                onClick={() => setIsOpen(!isOpen)}
-                onBlur={handleBlur}
+                onClick={handleClick}
             >
                 {iconProps && <div><FontAwesomeIcon {...iconProps}/></div>}
                 <div>{label}</div>
@@ -28,13 +32,10 @@ const Popup = ({
             <div
                 className="popup-holder"
                 tabIndex={1}
-                onMouseOver={handleMouseOver}
-                onMouseOut={handleMouseOut}
-                onBlur={handleBlur}
             >
-                <div className={`popup-content ${isOpen ? "show-popup" : ""}`}>
+                {isOpen && <div className="popup-content">
                     {children}
-                </div>
+                </div>}
             </div>
         </div>
     );

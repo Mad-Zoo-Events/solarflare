@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { ChangeEvent, ReactElement, useState } from "react";
+import React, { ChangeEvent, FocusEvent, ReactElement, useState } from "react";
 import { connect } from "react-redux";
 import BossbarColor from "../../../../domain/controlpanel/BossbarColor";
 import { FormattingMap } from "../../../../domain/controlpanel/BossbarFormatting";
@@ -19,12 +19,17 @@ const BossbarControls = ({
 }: BossbarControlProps): ReactElement => {
     const [autoUpdate, setAutoUpdate] = useState(true);
     const [isOpen, setIsOpen] = useState(false);
-    const [mouseOver, setMouseOver] = useState(false);
 
-    const handleMouseOver = () => setMouseOver(true);
-    const handleMouseOut = () => setMouseOver(false);
     const handleFocus = () => setIgnoreKeystrokes(true);
-    const handleBlur = () => { setIgnoreKeystrokes(false); if (!mouseOver) setIsOpen(false); };
+    const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
+        const currentTarget = event.currentTarget;
+        setTimeout(() => {
+            if (!currentTarget.contains(document.activeElement)) {
+                setIgnoreKeystrokes(false);
+                setIsOpen(false);
+            }
+        }, 0);
+    };
 
     const endsWithFormattingCode = (s: string) => s.match(/^(§.{1}|§)+$/g);
 
@@ -50,17 +55,13 @@ const BossbarControls = ({
         placeholder="Now Playing: Bob Ross"
         defaultValue={title}
 
-        onMouseOver={handleMouseOver}
-        onMouseOut={handleMouseOut}
         onFocus={handleFocus}
-        onBlur={handleBlur}
-
         onChange={handleTitleChange}
         autoFocus
     />;
 
     return (
-        <div className="control-panel__bossbar-control">
+        <div className="control-panel__bossbar-control" onBlur={handleBlur}>
             <FontAwesomeIcon icon={["fas", "skull"]} size="2x"/>
 
             <div>
@@ -75,12 +76,9 @@ const BossbarControls = ({
                     className="popup-holder"
                     tabIndex={1}
 
-                    onMouseOver={handleMouseOver}
-                    onMouseOut={handleMouseOut}
                     onFocus={handleFocus}
-                    onBlur={handleBlur}
                 >
-                    <div className={`popup-content bossbar-popup-content ${isOpen ? "show-popup" : ""}`}>
+                    {isOpen && <div className="popup-content bossbar-popup-content">
                         {preview}
                         <div className="formatting-group">
                             <div><div>▼</div><div>Choose color</div></div>
@@ -102,7 +100,7 @@ const BossbarControls = ({
                                 </div>;
                             })}
                         </div>
-                    </div>
+                    </div>}
                 </div>
             </div>
 
