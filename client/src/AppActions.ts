@@ -134,12 +134,9 @@ export const handleSocketMessage = (message: BackendMessage, presets: PresetColl
         const log: LogEntry = {
             level: errorMessage ? LogLevel.Error : LogLevel.Success,
             category: stopAll ? "STOP_ALL" : action,
-            message: (stopAll
-                ? stopAll.specificTypeOnly || ""
-                : displayName) +
-                (errorMessage
-                    ? ` | ${errorMessage}`
-                    : "")
+            message:
+            (stopAll ? stopAll.specificTypeOnly || "" : displayName) +
+            (errorMessage ? ` | ${errorMessage}` : "")
         };
 
         if (!errorMessage) {
@@ -197,12 +194,12 @@ export const handleSocketMessage = (message: BackendMessage, presets: PresetColl
         const { servers } = serverUpdate;
         dispatch(didGetServers(servers));
 
-        const serverCount = servers.filter(s => s.isActive).length;
+        const sc = servers.filter(s => s.isActive).length;
 
         dispatch(shouldWriteLog({
-            level: LogLevel.Info,
+            level: sc === 0 ? LogLevel.Warn : LogLevel.Info,
             category: "SERVERS",
-            message: `${serverCount === 1 ? "One server is" : `${serverCount} servers are`} now listening`
+            message: `${sc === 1 ? "One server is" : `${sc === 0 ? "No" : sc} servers are`} currently listening`
         }));
     }
 
@@ -215,7 +212,7 @@ export const handleSocketMessage = (message: BackendMessage, presets: PresetColl
         dispatch(shouldWriteLog({
             level: LogLevel.Info,
             category: "STAGE",
-            message: `Switched to ${stageUpdate.selectedStage} stage`
+            message: `Selected stage: ${stageUpdate.selectedStage.toUpperCase()}`
         }));
     }
 };

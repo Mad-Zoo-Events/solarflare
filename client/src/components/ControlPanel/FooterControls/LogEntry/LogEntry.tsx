@@ -11,8 +11,8 @@ const LogEntry = ({
     const style = { color: `var(--${getColor(logEntry)})` };
     return (
         <div className="control-panel__log-entry">
-            <span>{timestamp}</span>
-            <span style={style}>{category.toUpperCase()}</span>
+            <span className="log-timestamp">{timestamp}</span>
+            <span className="log-category">{category.toUpperCase()}</span>
             <span style={style}>{message}</span>
         </div>
     );

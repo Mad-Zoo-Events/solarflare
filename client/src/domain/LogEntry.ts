@@ -1,6 +1,7 @@
 export enum LogLevel {
     Info,
     Success,
+    Warn,
     Error
 }
 
@@ -16,6 +17,8 @@ export const getColor = ({ level }: LogEntry): string => {
         return "green";
     case LogLevel.Error:
         return "red";
+    case LogLevel.Warn:
+        return "orange";
     default:
         return "accent";
     }
