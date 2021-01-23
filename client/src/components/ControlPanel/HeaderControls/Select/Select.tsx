@@ -1,12 +1,12 @@
 import React, { ReactElement } from "react";
-import "./Submenu.scss";
-import { Option, SubmenuProps } from "./SubmenuProps";
+import "./Select.scss";
+import { Option, SelectProps } from "./SelectProps";
 
-const Submenu = ({
+const Select = ({
     options,
     multiselect,
     onChange
-}: SubmenuProps): ReactElement => {
+}: SelectProps): ReactElement => {
     const getSelected = () => {
         const selected: Option[] = [];
         options.forEach(o => { o.selected && selected.push(o); });
@@ -19,7 +19,7 @@ const Submenu = ({
                 const { value, text, selected } = option;
                 if (multiselect) {
                     return (
-                        <div key={value} className="button submenu-option">
+                        <div key={value} className="button select-option">
                             <label className="checkbox-container">{text}
                                 <input
                                     type="checkbox"
@@ -36,7 +36,7 @@ const Submenu = ({
                 }
 
                 return (
-                    <div key={value} className="button submenu-option">
+                    <div key={value} className="button select-option">
                         <label className="radio-container">{text}
                             <input
                                 type="radio"
@@ -52,4 +52,4 @@ const Submenu = ({
     );
 };
 
-export default Submenu;
+export default Select;

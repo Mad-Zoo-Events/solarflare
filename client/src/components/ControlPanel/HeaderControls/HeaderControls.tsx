@@ -14,7 +14,7 @@ import BossbarControl from "./BossbarControl/BossbarControl";
 import CommandControl from "./CommandControl";
 import "./HeaderControls.scss";
 import { HeaderControlsProps } from "./HeaderControlsProps";
-import Submenu from "./Submenu/Submenu";
+import Select from "./Select/Select";
 
 const HeaderControls = ({
     servers,
@@ -55,14 +55,14 @@ const HeaderControls = ({
             </Popup>
             <div className="separator"/>
             <Popup label="Display Mode" iconProps={{ icon: ["fas", "eye"], size: "2x" }}>
-                <Submenu
+                <Select
                     options={displayModeOptions}
                     onChange={(changed) => chooseDisplayMode(changed.value as DisplayMode)}
                 />
             </Popup>
             <div className="separator"/>
             <Popup label="Server Selection" iconProps={{ icon: ["fas", "satellite-dish"], size: "2x" }}>
-                <Submenu
+                <Select
                     options={serverOptions}
                     multiselect
                     onChange={(changed) => toggleServer({ id: changed.value, isActive: changed.selected, name: changed.text })}
@@ -70,7 +70,7 @@ const HeaderControls = ({
             </Popup>
             <div className="separator"/>
             <Popup label="Stage Selection" iconProps={{ icon: ["fas", "globe-asia"], size: "2x" }}>
-                <Submenu
+                <Select
                     options={stageOptions}
                     onChange={(changed) => chooseStage(changed.value)}
                 />
