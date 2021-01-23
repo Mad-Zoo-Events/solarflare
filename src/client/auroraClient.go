@@ -21,7 +21,7 @@ func init() {
 		MaxIdleConnsPerHost: 20,
 	}
 	client = &http.Client{
-		Timeout:   time.Duration(5 * time.Second),
+		Timeout:   time.Duration(2 * time.Second),
 		Transport: tr,
 	}
 }
