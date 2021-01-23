@@ -19,7 +19,7 @@ const Submenu = ({
                 const { value, text, selected } = option;
                 if (multiselect) {
                     return (
-                        <div key={value} className="button option">
+                        <div key={value} className="button submenu-option">
                             <label className="checkbox-container">{text}
                                 <input
                                     type="checkbox"
@@ -36,7 +36,7 @@ const Submenu = ({
                 }
 
                 return (
-                    <div key={value} className="button option">
+                    <div key={value} className="button submenu-option">
                         <label className="radio-container">{text}
                             <input
                                 type="radio"
