@@ -121,7 +121,7 @@ const Clock = ({
                     title="'+' Tap"
                 />
                 <br/>
-                <span>+</span>
+                <span><code>►&nbsp;+&nbsp;◄</code></span>
             </div>
             <div className="tap-stats">
                 <span className="tap-title">TAP</span>

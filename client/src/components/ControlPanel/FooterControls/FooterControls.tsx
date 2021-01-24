@@ -26,32 +26,36 @@ const FooterControls = ({
 
             <div className="separator"/>
             <div className="stop-buttons">
-                <div className="button stop-effects" onClick={() => stopAll({ stopEffects: true, detachClocks: false })}>
+                <div className="button clock-button stop-effects" onClick={() => stopAll({ stopEffects: true, detachClocks: false })}>
                     <FontAwesomeIcon
                         icon={["far", "stop-circle"]}
                         size="3x"
                         title="'-' Stop Effects"
                     />
-                    <br/>
-                    <span>-</span>
+                    <span>Stop Effects <code>►&nbsp;-&nbsp;◄</code></span>
                 </div>
-                <div className="button detach-clocks" onClick={() => stopAll({ stopEffects: false, detachClocks: true })}>
+                <div className="separator"/>
+                <div className="button clock-button detach-clocks" onClick={() => stopAll({ stopEffects: false, detachClocks: true })}>
                     <FontAwesomeIcon
                         icon={["fas", "stopwatch"]}
                         size="3x"
                         title="'ESC' Detach Clocks"
                     />
-                    <br/>
-                    <span>ESC</span>
+                    <span>Detach Clocks <code>►&nbsp;ESC&nbsp;◄</code></span>
                 </div>
-                <div className="button stop-everything" onClick={() => stopAll({ stopEffects: true, detachClocks: true })}>
+                <div className="button clock-button stop-everything" onClick={() => stopAll({ stopEffects: true, detachClocks: true })}>
                     <FontAwesomeIcon
                         icon={["fas", "stop-circle"]}
                         size="3x"
                         title="'0' Stop Effects + Detach Clocks"
                     />
-                    <br/>
-                    <span>0</span>
+                    <span>
+                        Stop Effects
+                        <br/>
+                        &amp; Detach Clocks
+                        <br/>
+                        <code>►&nbsp;0&nbsp;◄</code>
+                    </span>
                 </div>
             </div>
         </div>
