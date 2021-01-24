@@ -2,10 +2,10 @@
     display              : grid;
     grid-template-columns: auto auto;
     gap                  : 0.2em;
+    width                : min-content;
 
-    justify-items: center;
-    margin-top   : 0.2em;
-    font-size    : 1.2em;
+    margin   : 0.2em auto 0 auto;
+    font-size: 1.2em;
 
     & .clock-control {
         height: 1.9em;

@@ -42,9 +42,10 @@ a:visited {
 
 .button,
 a {
-    transition: all 0.3s ease-out, filter 0.8s ease-out;
-    outline   : none;
-    cursor    : pointer;
+    transition   : all 0.3s ease-out, filter 0.8s ease-out;
+    outline      : none;
+    cursor       : pointer;
+    border-radius: 0;
 
     &:hover {
         color     : var(--lighter-accent) !important;
