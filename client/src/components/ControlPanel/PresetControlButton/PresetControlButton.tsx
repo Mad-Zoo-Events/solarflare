@@ -30,7 +30,7 @@ const PresetControlButton = ({
             : secondsRunning !== undefined
                 ? "var(--lighter-accent)"
                 : `var(--${color})`,
-        backgroundColor: isRunning ? `var(--${color})` : "var(--darker-gray)"
+        backgroundColor: isRunning ? `var(--${color})` : "var(--darkest-gray)"
     };
     const className = `button control-panel-button code${isRunning ? " running" : ""}${denyClick ? " forbidden" : ""}`;
 
