@@ -9,15 +9,14 @@
         grid-column  : 1 / span 3;
         display      : inline-flex;
         border-radius: 0.2em;
+        color        : var(--font);
 
         &-active {
-            background-color: var(--gray);
-            color           : var(--darker-gray);
+            background-color: var(--accent);
         }
 
         &-inactive {
-            background-color: var(--darker-gray);
-            color           : var(--gray);
+            background-color: var(--darker-accent);
         }
 
         & span {
@@ -29,7 +28,7 @@
         margin     : 0 auto;
         text-align : center;
         user-select: none;
-        color      : var(--gray);
+        color      : var(--accent);
     }
 
     & .tap-stats {

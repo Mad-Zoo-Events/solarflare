@@ -48,7 +48,7 @@ const PresetControl = ({
             </>}
 
             {effectType === et.Dragon && <>
-                <PresetControlButton preset={preset} action={ea.Restart} color="orange"/>
+                <PresetControlButton preset={preset} action={ea.Restart} color="dragon"/>
             </>}
 
             {effectType === et.Laser && isGuardianLaser && <>
@@ -56,7 +56,7 @@ const PresetControl = ({
             </>}
 
             {effectType === et.Particle && <>
-                <PresetControlButton preset={preset} action={ea.Trigger} color="orange"/>
+                <PresetControlButton preset={preset} action={ea.Trigger} color="particle"/>
             </>}
 
             {renderStartStop && <>

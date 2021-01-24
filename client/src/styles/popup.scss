@@ -26,7 +26,7 @@
         box-shadow      : 0 1em 2em 0.5em var(--background);
         border-radius   : 0.5em;
 
-        border: 1px solid var(--gray);
+        border: 1px solid var(--accent);
 
         &::before {
             content     : '';
@@ -36,7 +36,7 @@
             left        : 0.3em;
             border-width: 0em 1em 1em 1em;
             border-style: solid;
-            border-color: var(--gray) transparent;
+            border-color: var(--accent) transparent;
             display     : block;
             width       : 0;
         }
