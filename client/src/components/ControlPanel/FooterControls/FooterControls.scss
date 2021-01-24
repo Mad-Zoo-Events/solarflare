@@ -18,15 +18,22 @@
 
     & .stop-buttons {
         display              : grid;
-        grid-template-columns: 50% 50%;
+        grid-template-columns: 1fr min-content 1fr;
         grid-template-areas  :
-            'effects    clocks'
-            'everything everything';
-        gap       : 0.3em;
-        height    : min-content;
-        text-align: center;
+            'effects    .          clocks'
+            'everything everything everything';
+        gap   : 1em;
+        height: min-content;
 
         color: var(--red);
+
+        & .clock-button {
+            display: inline-flex;
+
+            & svg {
+                margin-right: 0.3em;
+            }
+        }
 
         & .stop-effects {
             grid-area: effects;
@@ -38,7 +45,6 @@
 
         & .stop-everything {
             grid-area: everything;
-            margin   : auto;
         }
     }
 }
