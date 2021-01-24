@@ -44,7 +44,7 @@ const PresetControl = ({
             <span style={coloredText}>{displayName}</span>
 
             {effectType === et.Command && <>
-                <PresetControlButton preset={preset} action={ea.Trigger} color="steel" displayKeyBinding/>
+                <PresetControlButton preset={preset} action={ea.Trigger} color="command" displayKeyBinding/>
             </>}
 
             {effectType === et.Dragon && <>
@@ -52,7 +52,7 @@ const PresetControl = ({
             </>}
 
             {effectType === et.Laser && isGuardianLaser && <>
-                <PresetControlButton preset={preset} action={ea.Trigger} color="indigo"/>
+                <PresetControlButton preset={preset} action={ea.Trigger} color="laser"/>
             </>}
 
             {effectType === et.Particle && <>

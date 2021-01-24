@@ -36,17 +36,17 @@ export function getEffectName (name: string): string {
 export function getAccentColor (effectType: EffectType): string {
     switch (effectType) {
     case et.Particle:
-        return "cyan";
+        return "particle";
     case et.Dragon:
-        return "magenta";
+        return "dragon";
     case et.Laser:
-        return "indigo";
+        return "laser";
     case et.Potion:
-        return "green";
+        return "potion";
     case et.Timeshift:
-        return "orange";
+        return "timeshift";
     case et.Command:
-        return "steel";
+        return "command";
     }
 
     return "teal";

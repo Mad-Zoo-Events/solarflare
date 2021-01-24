@@ -39,7 +39,7 @@
     }
 
     .spinner-item:nth-child(1) {
-        --clr-spinner: var(--cyan);
+        --clr-spinner: var(--particle);
         top          : 0;
         left         : 0;
         animation    : spinner3A var(--animation-duration) linear infinite;
@@ -74,7 +74,7 @@
     }
 
     .spinner-item:nth-child(2) {
-        --clr-spinner: var(--magenta);
+        --clr-spinner: var(--dragon);
         top          : 0;
         left         : var(--item-size);
         animation    : spinner3B var(--animation-duration) linear infinite;
@@ -109,7 +109,7 @@
     }
 
     .spinner-item:nth-child(3) {
-        --clr-spinner: var(--green);
+        --clr-spinner: var(--potion);
         top          : var(--item-size);
         left         : var(--item-size);
         animation    : spinner3C var(--animation-duration) linear infinite;
