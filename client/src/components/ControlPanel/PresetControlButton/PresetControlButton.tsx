@@ -13,7 +13,7 @@ const PresetControlButton = ({
     action,
     color,
 
-    isRunning,
+    isRunning: isRunningStartButton,
     denyClick,
     displayKeyBinding,
     secondsRunning,
@@ -22,17 +22,17 @@ const PresetControlButton = ({
 }: PresetControlButtonProps): ReactElement => {
     const { effectType, keyBindingStr } = preset;
 
+    const isRunningStopButton = secondsRunning !== undefined && !denyClick;
+
     let icon: IconProp;
     const style = {
         borderColor: `var(--${color})`,
-        color: isRunning
+        color: isRunningStartButton || isRunningStopButton
             ? "var(--background)"
-            : secondsRunning !== undefined
-                ? "var(--lighter-accent)"
-                : `var(--${color})`,
-        backgroundColor: isRunning ? `var(--${color})` : "var(--darkest-gray)"
+            : `var(--${color})`,
+        backgroundColor: isRunningStartButton || isRunningStopButton ? `var(--${color})` : "var(--darkest-gray)"
     };
-    const className = `button control-panel-button code${isRunning ? " running" : ""}${denyClick ? " forbidden" : ""}`;
+    const className = `button control-panel-button code ${isRunningStartButton ? "running-start" : isRunningStopButton ? "running-stop" : ""} ${denyClick ? "forbidden" : ""}`;
 
     switch (action) {
     case ea.Trigger:

@@ -1,19 +1,23 @@
 button.control-panel-button {
-    margin-top: 0.2em;
-    padding   : 0.3em;
-    width     : 4em;
+    margin-top : 0.2em;
+    padding    : 0.3em;
+    width      : 4em;
+    font-weight: 900;
 
     border: 0.05em solid;
 
     &:hover {
-        border-color    : var(--font) !important;
-        background-color: var(--darker-gray) !important;
+        border-color: var(--font) !important;
     }
 }
 
-button.running {
-    cursor       : not-allowed;
-    border-radius: 1em;
+button.running-start {
+    border-radius: 2em 2em 0 0;
+    transition   : border-radius 0.2s ease-out !important;
+}
+
+button.running-stop {
+    border-radius: 0 0 2em 2em;
     transition   : border-radius 0.2s ease-out !important;
 }
 
