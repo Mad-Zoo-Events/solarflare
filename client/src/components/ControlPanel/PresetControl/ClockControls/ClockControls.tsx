@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { ReactElement } from "react";
 import { connect } from "react-redux";
 import { Subscribe, Unsubscribe } from "../../../../domain/ClockAction";
@@ -13,28 +12,38 @@ const ClockControls = ({
     offBeatAttached,
     clockOnBeat,
     subscriptionOptions,
+    color,
     handleClockSubscription
 }: ClockControlsProps): ReactElement => {
-    const onBeatIcon = onBeatAttached && clockOnBeat ? "fas" : "far";
-    const offBeatIcon = offBeatAttached && clockOnBeat ? "far" : "fas";
-    const notAttached = !onBeatAttached && !offBeatAttached;
     const { isRunning } = subscriptionOptions;
+
+    const onBeatClass = isRunning && onBeatAttached
+        ? clockOnBeat
+            ? "attached"
+            : "attached negative"
+        : "negative";
+    const offBeatClass = isRunning && offBeatAttached
+        ? clockOnBeat
+            ? "attached negative"
+            : "attached"
+        : "";
+    const notAttached = !onBeatAttached && !offBeatAttached;
+
+    const style = { borderColor: `var(--${color})`, backgroundColor: `var(--${color}-alpha)` };
 
     return (
         <div className="preset-control__clock-controls">
-            <FontAwesomeIcon
-                className={`button ${isRunning && onBeatAttached && "active"}`}
-                icon={[onBeatIcon, "square"]}
-                size="2x"
+            <button
+                className={`button clock-control ${onBeatClass}`}
+                style={style}
                 onClick={() => handleClockSubscription({
                     ...subscriptionOptions,
                     offBeat: false
                 }, (notAttached || offBeatAttached) ? Subscribe : Unsubscribe)}
             />
-            <FontAwesomeIcon
-                className={`button ${isRunning && offBeatAttached && "active"}`}
-                icon={[offBeatIcon, "square"]}
-                size="2x"
+            <button
+                className={`button clock-control ${offBeatClass}`}
+                style={style}
                 onClick={() => handleClockSubscription({
                     ...subscriptionOptions,
                     offBeat: true

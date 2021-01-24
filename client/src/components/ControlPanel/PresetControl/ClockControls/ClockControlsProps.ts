@@ -7,6 +7,7 @@ export interface ClockControlsProps {
     offBeatAttached?: boolean
     clockOnBeat: boolean
     subscriptionOptions: ClockSubscriptionOptions
+    color: string
 
     handleClockSubscription: HandleThunkActionCreator<typeof handleClockSubscription>
 }

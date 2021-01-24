@@ -7,9 +7,27 @@
     margin-top   : 0.2em;
     font-size    : 1.2em;
 
-    color: var(--gray);
+    & .clock-control {
+        height: 1.9em;
+        width : 1.9em;
 
-    & .active {
-        color: var(--font)
+        border: 0.05em solid;
+
+        &.negative {
+            background-color: transparent !important;
+        }
+
+        &:hover {
+            border-width: 0.3em;
+        }
+
+        &.attached {
+            border-color    : var(--font) !important;
+            background-color: var(--font) !important;
+
+            &.negative {
+                background-color: transparent !important;
+            }
+        }
     }
 }

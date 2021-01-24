@@ -81,6 +81,7 @@ const PresetControl = ({
                 onBeatAttached={onBeatAttached}
                 offBeatAttached={offBeatAttached}
                 subscriptionOptions={subscriptionOptions}
+                color={color}
             />
         </div>
     );
