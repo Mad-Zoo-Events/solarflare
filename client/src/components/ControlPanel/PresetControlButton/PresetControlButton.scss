@@ -6,21 +6,15 @@ button.control-panel-button {
 
     border: 0.05em solid;
 
-    &:hover {
+    &:hover:not(.forbidden) {
         border-color: var(--font) !important;
     }
 }
 
 button.running-start {
     border-radius: 2em 2em 0 0;
-    transition   : border-radius 0.2s ease-out !important;
 }
 
 button.running-stop {
     border-radius: 0 0 2em 2em;
-    transition   : border-radius 0.2s ease-out !important;
-}
-
-button.forbidden {
-    cursor: not-allowed;
 }
