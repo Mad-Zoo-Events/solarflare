@@ -47,15 +47,19 @@ a {
     cursor       : pointer;
     border-radius: 0;
 
-    &:hover {
+    &:hover:not(.forbidden) {
         color     : var(--lighter-accent) !important;
         transition: all 0s, filter 0.8s ease-out;
     }
 
-    &:active,
-    &-active {
+    &:active:not(.forbidden),
+    &-active:not(.forbidden) {
         filter    : drop-shadow(0 0 0.5em var(--lighter-accent));
         transition: none;
         color     : var(--lighter-accent) !important;
     }
+}
+
+.forbidden {
+    cursor: not-allowed;
 }
