@@ -10,14 +10,16 @@ export const selectCapsLockOn = createSelector(selectControlPanelState, ({ capsL
 export const selectIgnoreKeystrokes = createSelector(selectControlPanelState, ({ ignoreKeystrokes }) => ignoreKeystrokes);
 export const selectLogEntries = createSelector(selectControlPanelState, ({ logEntries }) => logEntries);
 
-export const selectClockOnBeat = createSelector(selectControlPanelState, ({ clockOnBeat }) => clockOnBeat);
-export const selectClockBpm = createSelector(selectControlPanelState, ({ clockBpm }) => clockBpm);
-export const selectClockNoteLength = createSelector(selectControlPanelState, ({ clockNoteLength }) => clockNoteLength);
-export const selectClockMillis = createSelector(selectControlPanelState, ({ clockNoteLength, clockBpm }) => 60000 / clockBpm * clockNoteLength);
-export const selectClockTapButtonRef = createSelector(selectControlPanelState, ({ clockTapButtonRef }) => clockTapButtonRef);
+export const selectClock = createSelector(selectControlPanelState, ({ clock }) => clock);
+export const selectClockOnBeat = createSelector(selectClock, ({ onBeat }) => onBeat);
+export const selectClockBpm = createSelector(selectClock, ({ bpm }) => bpm);
+export const selectClockNoteLength = createSelector(selectClock, ({ noteLength }) => noteLength);
+export const selectClockMillis = createSelector(selectClock, ({ noteLength, bpm }) => 60000 / bpm * noteLength);
+export const selectClockTapButtonRef = createSelector(selectClock, ({ tapButtonRef }) => tapButtonRef);
 
-export const selectBossbarText = createSelector(selectControlPanelState, ({ bossbarText }) => bossbarText);
-export const selectBossbarColor = createSelector(selectControlPanelState, ({ bossbarColor }) => bossbarColor);
+export const selectBossbar = createSelector(selectControlPanelState, ({ bossbar }) => bossbar);
+export const selectBossbarText = createSelector(selectBossbar, ({ text }) => text);
+export const selectBossbarColor = createSelector(selectBossbar, ({ color }) => color);
 
 export function selectRunningEffect (state: RootState, id: string): RunningEffect | undefined {
     return selectRunningEffects(state)?.get(id);
