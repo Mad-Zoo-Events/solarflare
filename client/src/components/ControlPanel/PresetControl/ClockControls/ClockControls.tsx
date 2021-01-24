@@ -29,7 +29,7 @@ const ClockControls = ({
         : "";
     const notAttached = !onBeatAttached && !offBeatAttached;
 
-    const style = { borderColor: `var(--${color})`, backgroundColor: `var(--${color}-alpha)` };
+    const style = { borderColor: `var(--lighter-${color})`, backgroundColor: `var(--${color}-alpha)` };
 
     return (
         <div className="preset-control__clock-controls">
