@@ -11,7 +11,7 @@ import Popup from "../../Popup/Popup";
 import { chooseDisplayMode } from "../ControlPanelActions";
 import { selectCapsLockOn, selectDisplayMode } from "../ControlPanelSelectors";
 import BossbarControl from "./BossbarControl/BossbarControl";
-import CommandControl from "./CommandControl";
+import CommandControl from "./CommandControl/CommandControl";
 import "./HeaderControls.scss";
 import { HeaderControlsProps } from "./HeaderControlsProps";
 import Select from "./Select/Select";
