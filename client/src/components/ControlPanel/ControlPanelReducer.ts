@@ -27,12 +27,16 @@ const initialState: ControlPanelState = {
     ignoreKeystrokes: false,
     runningEffects: new Map(),
     logEntries: [],
-    clockBpm: 128.0,
-    clockNoteLength: 1.0,
-    clockOnBeat: true,
-    clockTapButtonRef: createRef<HTMLDivElement>(),
-    bossbarText: "",
-    bossbarColor: BossbarColor.ColorBlue
+    clock: {
+        bpm: 128.0,
+        noteLength: 1.0,
+        onBeat: true,
+        tapButtonRef: createRef<HTMLDivElement>()
+    },
+    bossbar: {
+        text: "",
+        color: BossbarColor.ColorBlue
+    }
 };
 
 const addToRunning = (
@@ -143,19 +147,27 @@ function controlPanelReducer (
     case SHOULD_CHANGE_CLOCK_SPEED:
         return {
             ...state,
-            clockBpm: action.payload.clockSpeedBpm,
-            clockNoteLength: action.payload.clockSpeedMultiplier
+            clock: {
+                ...state.clock,
+                bpm: action.payload.clockSpeedBpm,
+                noteLength: action.payload.clockSpeedMultiplier
+            }
         };
     case SHOULD_TOGGLE_CLOCK:
         return {
             ...state,
-            clockOnBeat: !state.clockOnBeat
+            clock: {
+                ...state.clock,
+                onBeat: !state.clock.onBeat
+            }
         };
     case SHOULD_UPDATE_BOSSBAR:
         return {
             ...state,
-            bossbarText: action.payload?.title || "",
-            bossbarColor: action.payload?.color || state.bossbarColor
+            bossbar: {
+                text: action.payload?.title || "",
+                color: action.payload?.color || state.bossbar.color
+            }
         };
     case SHOULD_WRITE_LOG:
         return {

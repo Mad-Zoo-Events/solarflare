@@ -13,11 +13,15 @@ export interface ControlPanelState {
 
     logEntries: LogEntry[]
 
-    clockBpm: number
-    clockNoteLength: number
-    clockOnBeat: boolean
-    clockTapButtonRef: RefObject<HTMLDivElement>
+    clock: {
+        bpm: number
+        noteLength: number
+        onBeat: boolean
+        tapButtonRef: RefObject<HTMLDivElement>
+    }
 
-    bossbarText: string
-    bossbarColor: BossbarColor
+    bossbar: {
+        text: string
+        color: BossbarColor
+    }
 }
