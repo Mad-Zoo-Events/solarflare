@@ -6,7 +6,6 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"
-	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
 
@@ -35,29 +34,13 @@ const (
 	SettingsTable = "settings"
 )
 
-var (
-	sess *session.Session
-	db   *dynamodb.DynamoDB
-)
-
-func init() {
-	sess = session.Must(session.NewSessionWithOptions(session.Options{
-		SharedConfigState: session.SharedConfigEnable,
-		Config: aws.Config{
-			Region: aws.String("us-east-2"),
-		},
-	}))
-
-	db = dynamodb.New(sess)
-}
-
 // GetParticleEffectPresets retrieves all particle effect presets from the database
 func GetParticleEffectPresets() (presets []model.ParticleEffectPreset) {
 	cfg := config.Get()
 	tableName := fmt.Sprintf(ParticleEffectPresetsTable, cfg.SelectedStage)
 	presets = []model.ParticleEffectPreset{}
 
-	result, err := db.Scan(&dynamodb.ScanInput{
+	result, err := dbClient.Scan(&dynamodb.ScanInput{
 		TableName: &tableName,
 	})
 	if err != nil {
@@ -86,7 +69,7 @@ func GetDragonEffectPresets() (presets []model.DragonEffectPreset) {
 	tableName := fmt.Sprintf(DragonEffectPresetsTable, cfg.SelectedStage)
 	presets = []model.DragonEffectPreset{}
 
-	result, err := db.Scan(&dynamodb.ScanInput{
+	result, err := dbClient.Scan(&dynamodb.ScanInput{
 		TableName: &tableName,
 	})
 	if err != nil {
@@ -115,7 +98,7 @@ func GetTimeshiftEffectPresets() (presets []model.TimeshiftEffectPreset) {
 	tableName := fmt.Sprintf(TimeshiftEffectPresetsTable, cfg.SelectedStage)
 	presets = []model.TimeshiftEffectPreset{}
 
-	result, err := db.Scan(&dynamodb.ScanInput{
+	result, err := dbClient.Scan(&dynamodb.ScanInput{
 		TableName: &tableName,
 	})
 	if err != nil {
@@ -144,7 +127,7 @@ func GetPotionEffectPresets() (presets []model.PotionEffectPreset) {
 	tableName := fmt.Sprintf(PotionEffectPresetsTable, cfg.SelectedStage)
 	presets = []model.PotionEffectPreset{}
 
-	result, err := db.Scan(&dynamodb.ScanInput{
+	result, err := dbClient.Scan(&dynamodb.ScanInput{
 		TableName: &tableName,
 	})
 	if err != nil {
@@ -173,7 +156,7 @@ func GetLaserEffectPresets() (presets []model.LaserEffectPreset) {
 	tableName := fmt.Sprintf(LaserEffectPresetsTable, cfg.SelectedStage)
 	presets = []model.LaserEffectPreset{}
 
-	result, err := db.Scan(&dynamodb.ScanInput{
+	result, err := dbClient.Scan(&dynamodb.ScanInput{
 		TableName: &tableName,
 	})
 	if err != nil {
@@ -202,7 +185,7 @@ func GetCommandEffectPresets() (presets []model.CommandEffectPreset) {
 	tableName := fmt.Sprintf(CommandEffectPresetsTable, cfg.SelectedStage)
 	presets = []model.CommandEffectPreset{}
 
-	result, err := db.Scan(&dynamodb.ScanInput{
+	result, err := dbClient.Scan(&dynamodb.ScanInput{
 		TableName: &tableName,
 	})
 	if err != nil {
@@ -229,7 +212,7 @@ func GetCommandEffectPresets() (presets []model.CommandEffectPreset) {
 func GetServers() (servers []model.Server) {
 	tableName := ServerTable
 
-	result, err := db.Scan(&dynamodb.ScanInput{
+	result, err := dbClient.Scan(&dynamodb.ScanInput{
 		TableName: &tableName,
 	})
 	if err != nil {
@@ -256,7 +239,7 @@ func GetServers() (servers []model.Server) {
 func GetSetting(key string) (*model.Setting, error) {
 	tableName := SettingsTable
 
-	result, err := db.GetItem(&dynamodb.GetItemInput{
+	result, err := dbClient.GetItem(&dynamodb.GetItemInput{
 		TableName: &tableName,
 		Key: map[string]*dynamodb.AttributeValue{
 			"key": {
@@ -296,7 +279,7 @@ func UpsertItem(tableName string, payload interface{}) error {
 		return sferror.New(sferror.DatabaseMarshal, "Failed to marshal item", err)
 	}
 
-	_, err = db.PutItem(&dynamodb.PutItemInput{
+	_, err = dbClient.PutItem(&dynamodb.PutItemInput{
 		Item:      item,
 		TableName: aws.String(table),
 	})
@@ -312,7 +295,7 @@ func DeleteItem(tableName, id string) error {
 	cfg := config.Get()
 	table := fmt.Sprintf(tableName, cfg.SelectedStage)
 
-	_, err := db.DeleteItem(&dynamodb.DeleteItemInput{
+	_, err := dbClient.DeleteItem(&dynamodb.DeleteItemInput{
 		Key: map[string]*dynamodb.AttributeValue{
 			"id": {
 				S: aws.String(id),
