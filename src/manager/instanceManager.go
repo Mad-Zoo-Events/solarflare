@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	pollingTimeout  = 3 * time.Minute
+	pollingTimeout  = 5 * time.Minute
 	pollingInterval = 3 * time.Second
 )
 
@@ -44,7 +44,12 @@ func StopBuildInstance() error {
 
 func pollForUpdates() {
 	startTime := time.Now()
-	for time.Now().Sub(startTime) < pollingTimeout {
+	for {
+		if time.Now().Sub(startTime) > pollingTimeout {
+			sendInstanceUpdate(model.InstanceStatusUnknown)
+			return
+		}
+
 		time.Sleep(pollingInterval)
 
 		status, _ := client.GetStatus(BuildInstanceID)
