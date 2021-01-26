@@ -49,7 +49,6 @@ const ControlPanel = ({
 
     return (
         <Page
-            isControlPanel={true}
             headerElements={<HeaderControls/>}
             footerElements={<FooterControls/>}
         >

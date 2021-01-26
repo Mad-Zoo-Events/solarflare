@@ -12,7 +12,7 @@ const SystemSettings = ({
     stopInstance
 }: SystemSettingsProps) => {
     return (
-        <Page isControlPanel={false}>
+        <Page title="System Settings" renderBackButton>
             <div>{instanceStatus.toString()}</div>
             <button onClick={startInstance}>
                 START
