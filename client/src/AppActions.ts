@@ -18,6 +18,7 @@ import {
     didStopAll,
     didStopEffect,
     shouldChangeClockSpeed,
+    shouldChooseDisplayCategories,
     shouldClearLogs,
     shouldIncrementCounter,
     shouldUpdateBossbar,
@@ -109,6 +110,13 @@ export const initializeApp = (): ThunkAction<void, RootState, null, AnyAction> =
         dispatch(didChangeLayout(storedLayout));
     } catch (error) {
         console.log("failed to read layout setting: ", error);
+    }
+
+    try {
+        const storedDisplayCategories = await doGetSetting<EffectType[]>("displayCategories");
+        dispatch(shouldChooseDisplayCategories(storedDisplayCategories));
+    } catch (error) {
+        console.log("failed to read display category setting: ", error);
     }
 
     dispatch(didInitializeApp());
