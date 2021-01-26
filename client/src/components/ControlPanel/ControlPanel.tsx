@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
-import ReactGridLayout, { Layout, WidthProvider } from "react-grid-layout";
+import ReactGridLayout, { ItemCallback, Layout, WidthProvider } from "react-grid-layout";
 import { connect } from "react-redux";
 import { selectCombinedPresets, selectPresets } from "../../AppSelectors";
 import { allEffectTypes } from "../../domain/EffectType";
@@ -11,7 +10,7 @@ import CategorySection from "./CategorySection/CategorySection";
 import "./ControlPanel.scss";
 import { handleKeyPress } from "./ControlPanelActions";
 import { ControlPanelProps } from "./ControlPanelProps";
-import { selectClockTapButtonRef, selectDisplayCategories, selectIgnoreKeystrokes, selectRunningEffects } from "./ControlPanelSelectors";
+import { selectClockTapButtonRef, selectDisplayCategories, selectIgnoreKeystrokes, selectLayout, selectRunningEffects } from "./ControlPanelSelectors";
 import FooterControls from "./FooterControls/FooterControls";
 import HeaderControls from "./HeaderControls/HeaderControls";
 import PresetControl from "./PresetControl/PresetControl";
@@ -21,6 +20,7 @@ const GridLayout = WidthProvider(ReactGridLayout);
 const ControlPanel = ({
     displayCategories,
     ignoreKeystrokes,
+    layout,
     presets,
     combinedPresets,
     runningEffects,
@@ -42,14 +42,9 @@ const ControlPanel = ({
         }
     };
 
-    const layout: Layout[] = [
-        { i: "cat-particle", x: 0, y: 0, w: 5, h: 4 },
-        { i: "cat-potion", x: 6, y: 0, w: 3, h: 2 },
-        { i: "cat-timeshift", x: 6, y: 2, w: 3, h: 2 },
-        { i: "cat-dragon", x: 0, y: 4, w: 4, h: 2 },
-        { i: "cat-laser", x: 4, y: 4, w: 4, h: 2 },
-        { i: "cat-command", x: 0, y: 6, w: 8, h: 2 }
-    ];
+    const handleLayoutChange: ItemCallback = (layout: Layout[]) => {
+        console.log(layout);
+    };
 
     return (
         <Page
@@ -85,9 +80,10 @@ const ControlPanel = ({
                         rowHeight={90}
                         margin={[0, 0]}
                         autoSize
-                        isResizable
                         isBounded
                         compactType="vertical"
+                        onResizeStop={handleLayoutChange}
+                        onDragStop={handleLayoutChange}
                     >
                         {allEffectTypes.filter(et => displayCategories.includes(et)).map(effectType => (
                             <div key={`cat-${effectType}`}>
@@ -105,6 +101,7 @@ const ControlPanel = ({
 function mapStateToProps (state: RootState) {
     const presets = selectPresets(state);
     const displayCategories = selectDisplayCategories(state);
+    const layout = selectLayout(state);
     const combinedPresets = selectCombinedPresets(state, displayCategories);
     const runningEffects = selectRunningEffects(state);
     const ignoreKeystrokes = selectIgnoreKeystrokes(state);
@@ -113,6 +110,7 @@ function mapStateToProps (state: RootState) {
     return {
         presets,
         combinedPresets,
+        layout,
         runningEffects,
         displayCategories,
         ignoreKeystrokes,
