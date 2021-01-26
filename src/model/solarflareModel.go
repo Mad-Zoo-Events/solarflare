@@ -125,6 +125,8 @@ const (
 	InstanceStatusRunning = InstanceStatus("running")
 	// InstanceStatusPending instance is pending
 	InstanceStatusPending = InstanceStatus("pending")
+	// InstanceStatusInitializing instance is initializing
+	InstanceStatusInitializing = InstanceStatus("initializing")
 	// InstanceStatusStopped instance is stopped
 	InstanceStatusStopped = InstanceStatus("stopped")
 	// InstanceStatusStopping instance is stopping

@@ -19,10 +19,10 @@ const SystemSettings = ({
     case is.Running:
         color = "green";
         break;
-    case is.Pending:
+    case is.Pending: case is.Initializing:
         color = "orange";
         break;
-    case is.Stopped || is.Stopping || is.Unknown:
+    case is.Stopped: case is.Stopping: case is.Unknown:
         color = "red";
         break;
     default:
