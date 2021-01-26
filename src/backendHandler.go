@@ -29,6 +29,13 @@ func ToggleServerHandler(c *gin.Context) {
 	c.Status(http.StatusNoContent)
 }
 
+// StartStopInstanceHandler handles requests to enable or disable a server
+func StartStopInstanceHandler(c *gin.Context) {
+	controller.StartStopInstance(model.InstanceAction(c.Param("action")))
+
+	c.Status(http.StatusNoContent)
+}
+
 // SelectStageHandler handles requests to select a different data source for presets
 func SelectStageHandler(c *gin.Context) {
 	controller.SelectStage(c.Param("stage"))

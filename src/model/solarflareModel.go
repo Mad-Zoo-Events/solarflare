@@ -87,10 +87,20 @@ const (
 type ServerAction string
 
 const (
-	// EnableServerAction snables a server
+	// EnableServerAction enables a server
 	EnableServerAction = ServerAction("enable")
 	// DisableServerAction disables a server
 	DisableServerAction = ServerAction("disable")
+)
+
+// InstanceAction represents an action to be performed on an instance
+type InstanceAction string
+
+const (
+	// StartInstanceAction starts an instance
+	StartInstanceAction = InstanceAction("start")
+	// StopInstanceAction stops an instance
+	StopInstanceAction = InstanceAction("stop")
 )
 
 // MinecraftColor represents a Minecraft color
@@ -106,6 +116,22 @@ var MinecraftColors = []MinecraftColor{
 	MinecraftColor("WHITE"),
 	MinecraftColor("YELLOW"),
 }
+
+// InstanceStatus represents the status of an instance
+type InstanceStatus string
+
+const (
+	// InstanceStatusRunning instance is running
+	InstanceStatusRunning = InstanceStatus("running")
+	// InstanceStatusPending instance is pending
+	InstanceStatusPending = InstanceStatus("pending")
+	// InstanceStatusStopped instance is stopped
+	InstanceStatusStopped = InstanceStatus("stopped")
+	// InstanceStatusStopping instance is stopping
+	InstanceStatusStopping = InstanceStatus("stopping")
+	// InstanceStatusUnknown the instance status is unknown
+	InstanceStatusUnknown = InstanceStatus("unknown")
+)
 
 // ================ RESPONSE MODELS ================ //
 
