@@ -24,6 +24,12 @@ export async function toggleServer ({ id, isActive }: Server): Promise<void> {
 export async function selectStage (stage: string): Promise<void> {
     return await axios.post(`/selectstage/${stage}`);
 }
+export async function setSetting (key: string, value: string): Promise<void> {
+    return await axios.post(`/settings/${key}`, value);
+}
+export async function getSetting<T> (key: string): Promise<T> {
+    return (await axios.get<T>(`/settings/${key}`)).data;
+}
 
 // Preset Retrieval
 export async function fetchAllPresets (): Promise<PresetCollection> {

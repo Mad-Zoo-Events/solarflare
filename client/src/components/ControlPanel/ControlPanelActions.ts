@@ -6,6 +6,7 @@ import { ThunkAction } from "redux-thunk";
 import {
     changeClockSpeed as doChangeClockSpeed,
     runEffect as doRunEffect,
+    setSetting as doSetSetting,
     stopAll as doStopAll,
     subscribeToClock as doSubscribeToClock,
     unsubscribeFromClock as doUnsubscribeFromClock,
@@ -122,6 +123,7 @@ export const chooseDisplayCategories = (displayCategories: et.EffectType[]): Thu
 };
 export const changeLayout = (layout: Layout[]): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(didChangeLayout(layout));
+    doSetSetting("layout", JSON.stringify(layout));
 };
 export const setIgnoreKeystrokes = (ignore: boolean): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(shouldIgnoreKeystrokes(ignore));
