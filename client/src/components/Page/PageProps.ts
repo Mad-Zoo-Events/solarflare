@@ -1,7 +1,8 @@
 import { ReactNode, ReactNodeArray } from "react";
 
 export interface PageProps {
-    isControlPanel: boolean
+    title?: string
+    renderBackButton?: boolean
     headerElements?: ReactNode | ReactNodeArray
     children: ReactNode | ReactNodeArray
     footerElements?: ReactNode | ReactNodeArray

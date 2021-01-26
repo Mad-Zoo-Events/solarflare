@@ -11,7 +11,8 @@ import "./Page.scss";
 import { PageProps } from "./PageProps";
 
 const Page = ({
-    isControlPanel,
+    title,
+    renderBackButton,
     headerElements,
     children,
     footerElements,
@@ -22,20 +23,15 @@ const Page = ({
         <ToastContainer />
         {!isInitialized && <Spinner fullScreen/>}
         <div className="page">
-            {isControlPanel
-                ? <div className="page-header">
-                    <div className="additional-header-elements">{headerElements}</div>
-                </div>
-                : <div className="page-header presetmanager-header">
-                    <Link className="button nav-button" to={Routes.controlPanel} title="Back To Control Panel">
-                        <FontAwesomeIcon icon={["fas", "arrow-left"]} size="lg" />
-                    </Link>
+            <div className={`page-header ${headerElements ? "" : "default-header"}`}>
+                {renderBackButton && <Link className="button nav-button" to={Routes.controlPanel} title="Back To Control Panel">
+                    <FontAwesomeIcon icon={["fas", "arrow-left"]} size="lg" />
+                </Link>}
 
-                    <div className="text">Preset Management System</div>
+                {title && <div className="text">{title}</div>}
 
-                    <div className="additional-header-elements">{headerElements}</div>
-                </div>
-            }
+                <div className="additional-header-elements">{headerElements}</div>
+            </div>
 
             <div className="page-content">
                 {children}

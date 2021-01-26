@@ -29,7 +29,7 @@ const PresetManager = ({
     }
 
     return (
-        <Page isControlPanel={false}>
+        <Page title="Preset Management System" renderBackButton>
             <PresetManagerList />
             {presetToEdit && <PresetModifier />}
         </Page>
