@@ -1,4 +1,5 @@
 import { debounce } from "lodash";
+import { Layout } from "react-grid-layout";
 import { AnyAction } from "redux";
 import { createAction } from "redux-actions";
 import { ThunkAction } from "redux-thunk";
@@ -27,6 +28,7 @@ import { RootState } from "../../RootState";
 
 // ACTION TYPES
 export const SHOULD_CHOOSE_DISPLAY_CATEGORIES = "controlpanel/SHOULD_CHOOSE_DISPLAY_CATEGORIES";
+export const DID_CHANGE_LAYOUT = "controlpanel/DID_CHANGE_LAYOUT";
 export const SHOULD_IGNORE_KEYSTROKES = "controlpanel/SHOULD_IGNORE_KEYSTROKES";
 export const DID_TOGGLE_CAPS_LOCK = "controlpanel/DID_TOGGLE_CAPS_LOCK";
 export const DID_SELECT_SERVERS = "controlpanel/DID_SELECT_SERVERS";
@@ -43,6 +45,10 @@ export const SHOULD_UPDATE_BOSSBAR = "controlpanel/SHOULD_UPDATE_BOSSBAR";
 interface ShouldChooseDisplayCategories {
     type: typeof SHOULD_CHOOSE_DISPLAY_CATEGORIES
     payload: et.EffectType[]
+}
+interface DidChangeLayout {
+    type: typeof DID_CHANGE_LAYOUT
+    payload: Layout[]
 }
 interface ShouldIgnoreKeystrokes {
     type: typeof SHOULD_IGNORE_KEYSTROKES
@@ -88,7 +94,7 @@ interface ShouldUpdateBossbar {
 }
 
 export type ControlPanelAction =
-    ShouldChooseDisplayCategories | ShouldIgnoreKeystrokes | DidToggleCapsLock |
+    ShouldChooseDisplayCategories | DidChangeLayout | ShouldIgnoreKeystrokes | DidToggleCapsLock |
     DidStartEffect | DidStopEffect | DidStopAll |
     ShouldWriteLog | ShouldClearLogs |
     ShouldIncrementCounter |
@@ -97,6 +103,7 @@ export type ControlPanelAction =
 
 // ACTION CREATORS
 const shouldChooseDisplayCategories = createAction<et.EffectType[]>(SHOULD_CHOOSE_DISPLAY_CATEGORIES);
+export const didChangeLayout = createAction<Layout[]>(DID_CHANGE_LAYOUT);
 const shouldIgnoreKeystrokes = createAction<boolean>(SHOULD_IGNORE_KEYSTROKES);
 const didToggleCapsLock = createAction<boolean>(DID_TOGGLE_CAPS_LOCK);
 export const didStartEffect = createAction<{effect: RunningEffect, getTimer:(id: string) => number}>(DID_START_EFFECT);
@@ -112,6 +119,9 @@ export const shouldUpdateBossbar = createAction<BossbarOptions | null>(SHOULD_UP
 // ACTIONS
 export const chooseDisplayCategories = (displayCategories: et.EffectType[]): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(shouldChooseDisplayCategories(displayCategories));
+};
+export const changeLayout = (layout: Layout[]): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
+    dispatch(didChangeLayout(layout));
 };
 export const setIgnoreKeystrokes = (ignore: boolean): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(shouldIgnoreKeystrokes(ignore));

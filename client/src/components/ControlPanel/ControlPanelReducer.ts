@@ -7,6 +7,8 @@ import { RunningEffect } from "../../domain/RunningEffect";
 import {
     ControlPanelAction,
 
+    DID_CHANGE_LAYOUT,
+
     DID_START_EFFECT,
     DID_STOP_ALL,
     DID_STOP_EFFECT,
@@ -121,6 +123,11 @@ function controlPanelReducer (
         return {
             ...state,
             displayCategories: action.payload
+        };
+    case DID_CHANGE_LAYOUT:
+        return {
+            ...state,
+            layout: action.payload
         };
     case SHOULD_IGNORE_KEYSTROKES:
         return {
