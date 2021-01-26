@@ -1,16 +1,17 @@
 :root {
-    --background0      : hsl(0, 0%, 3%);
-    --background       : hsl(0, 0%, 7%);
-    --background-alpha : #000000e0;
-    --background-alpha2: #000000ad;
-    --background-alpha3: #00000071;
-    --background-alpha4: #00000023;
-    --darkest-gray     : hsl(184, 6%, 15%);
-    --darker-gray      : hsl(184, 6%, 33%);
-    --dark-gray        : hsl(184, 6%, 53%);
-    --gray             : hsl(184, 9%, 62%);
-    --lighter-gray     : hsl(204, 8%, 76%);
-    --font             : hsl(192, 15%, 94%);
+    --background0       : hsl(0, 0%, 3%);
+    --background        : hsl(0, 0%, 7%);
+    --background-alpha  : #000000e0;
+    --background-alpha2 : #000000ad;
+    --background-alpha3 : #00000071;
+    --background-alpha4 : #00000023;
+    --darkest-gray      : hsl(184, 6%, 15%);
+    --darker-gray       : hsl(184, 6%, 33%);
+    --dark-gray         : hsl(184, 6%, 53%);
+    --gray              : hsl(184, 9%, 62%);
+    --lighter-gray      : hsl(204, 8%, 76%);
+    --lighter-gray-alpha: hsla(204, 8%, 76%, 0.5);
+    --font              : hsl(192, 15%, 94%);
 
     --accent             : hsl(210, 29%, 54%);
     --accent-alpha       : hsla(210, 29%, 54%, 0.125);

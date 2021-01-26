@@ -2,11 +2,14 @@
     text-align: center;
     padding   : 0.8em;
     overflow  : auto;
+    height    : 100%;
 
     & .header {
         float       : left;
         writing-mode: vertical-lr;
         margin-right: 0.8em;
+        text-align  : left;
+        white-space : nowrap;
 
         &>span {
             font-size     : large;

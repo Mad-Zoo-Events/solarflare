@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
+import ReactGridLayout, { Layout, WidthProvider } from "react-grid-layout";
 import { connect } from "react-redux";
 import { selectCombinedPresets, selectPresets } from "../../AppSelectors";
 import { allEffectTypes } from "../../domain/EffectType";
@@ -13,6 +15,8 @@ import { selectClockTapButtonRef, selectDisplayCategories, selectIgnoreKeystroke
 import FooterControls from "./FooterControls/FooterControls";
 import HeaderControls from "./HeaderControls/HeaderControls";
 import PresetControl from "./PresetControl/PresetControl";
+
+const GridLayout = WidthProvider(ReactGridLayout);
 
 const ControlPanel = ({
     displayCategories,
@@ -38,6 +42,15 @@ const ControlPanel = ({
         }
     };
 
+    const layout: Layout[] = [
+        { i: "cat-particle", x: 0, y: 0, w: 5, h: 4 },
+        { i: "cat-potion", x: 6, y: 0, w: 3, h: 2 },
+        { i: "cat-timeshift", x: 6, y: 2, w: 3, h: 2 },
+        { i: "cat-dragon", x: 0, y: 4, w: 4, h: 2 },
+        { i: "cat-laser", x: 4, y: 4, w: 4, h: 2 },
+        { i: "cat-command", x: 0, y: 6, w: 8, h: 2 }
+    ];
+
     return (
         <Page
             isControlPanel={true}
@@ -49,7 +62,7 @@ const ControlPanel = ({
                 {displayCategories.length < allEffectTypes.length
                     ? (<div className="control-panel__placeholder-category-holder">
                         {allEffectTypes.filter(et => !displayCategories.includes(et)).map(effectType => (
-                            <CategorySection key="effectType" effectType={effectType}/>
+                            <CategorySection key={`placeholder-${effectType}`} effectType={effectType}/>
                         ))}
                     </div>)
                     : null
@@ -65,11 +78,23 @@ const ControlPanel = ({
 
                 {/* Category sections with corresponding presets */}
                 {displayCategories.length > 0
-                    ? (<div className="control-panel__categorized-holder">
-                        {displayCategories.map(effectType => (
-                            <CategorySection key="effectType" effectType={effectType} presets={getPresetsOfType(effectType, presets)} />
+                    ? (<GridLayout
+                        className="layout"
+                        layout={layout}
+                        cols={8}
+                        rowHeight={90}
+                        margin={[0, 0]}
+                        autoSize
+                        isResizable
+                        isBounded
+                        compactType="vertical"
+                    >
+                        {allEffectTypes.filter(et => displayCategories.includes(et)).map(effectType => (
+                            <div key={`cat-${effectType}`}>
+                                <CategorySection key={`cat-${effectType}`} effectType={effectType} presets={getPresetsOfType(effectType, presets)}/>
+                            </div>
                         ))}
-                    </div>)
+                    </GridLayout >)
                     : null
                 }
             </>
