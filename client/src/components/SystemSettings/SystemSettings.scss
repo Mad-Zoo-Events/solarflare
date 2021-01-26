@@ -1,0 +1,45 @@
+.system-settings__instance-status {
+    display              : grid;
+    grid-template-columns: 1fr 1fr;
+    gap                  : 1em;
+    width                : 20em;
+    margin               : 2em auto;
+    padding              : 2em;
+
+    background-color: var(--darkest-gray);
+    border-radius   : 1em;
+
+    & .title {
+        grid-column: 1 /span 2;
+        font-size  : x-large;
+        color      : var(--accent);
+    }
+
+    & .instance-status {
+        grid-column: 1 /span 2;
+        font-size  : larger;
+
+        & span {
+            margin-right: 1em;
+        }
+    }
+
+    & button {
+        padding: 1em;
+        color  : var(--font);
+
+        border: none;
+
+        &.forbidden {
+            background-color: var(--darker-gray) !important;
+        }
+
+        &.start-button {
+            background-color: var(--green);
+        }
+
+        &.stop-button {
+            background-color: var(--red);
+        }
+    }
+}
