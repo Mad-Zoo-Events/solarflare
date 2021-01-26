@@ -1,7 +1,7 @@
+import reduxWebsocket from "@giantmachines/redux-websocket";
 import { applyMiddleware, createStore } from "redux";
 import thunk from "redux-thunk";
 import rootReducer from "./rootReducer";
-import reduxWebsocket from "@giantmachines/redux-websocket";
 
 const reduxWebsocketMiddleware = reduxWebsocket({
     reconnectOnClose: true

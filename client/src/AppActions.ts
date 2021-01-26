@@ -1,4 +1,5 @@
 import { connect } from "@giantmachines/redux-websocket";
+import { Layout } from "react-grid-layout";
 import "react-toastify/dist/ReactToastify.css";
 import { AnyAction } from "redux";
 import { createAction } from "redux-actions";
@@ -6,13 +7,13 @@ import { ThunkAction } from "redux-thunk";
 import {
     fetchAllPresets as doFetchAllPresets,
     fetchPresetsOfType as doFetchPresetsOfType,
-
+    getSetting as doGetSetting,
     getVersion as doGetVersion,
-
     selectStage as doSelectStage,
     toggleServer as doToggleServer
 } from "./client/HttpClient";
 import {
+    didChangeLayout,
     didStartEffect,
     didStopAll,
     didStopEffect,
@@ -101,8 +102,14 @@ export const initializeApp = (): ThunkAction<void, RootState, null, AnyAction> =
     dispatch(didGetVersion(version));
 
     const presetCollection = await doFetchAllPresets();
-
     dispatch(didGetAllPresets(presetCollection));
+
+    try {
+        const storedLayout = await doGetSetting<Layout[]>("layout");
+        dispatch(didChangeLayout(storedLayout));
+    } catch (error) {
+        console.log("failed to read layout setting: ", error);
+    }
 
     dispatch(didInitializeApp());
 };
