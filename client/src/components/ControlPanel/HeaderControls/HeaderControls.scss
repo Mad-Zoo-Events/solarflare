@@ -5,6 +5,7 @@
     display              : grid;
     grid-template-columns: auto repeat($column-count, min-content);
     gap                  : 0 1em;
+    font-size            : small;
 
     @media (max-width: 65rem) {
         grid-template-columns: auto repeat($column-count - 1, min-content);
