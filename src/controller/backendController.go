@@ -57,3 +57,22 @@ func SelectStage(stage string) {
 
 	manager.SendUIUpdate(update)
 }
+
+// SetSetting sets a specific user setting on the database
+func SetSetting(key string, value string) error {
+	setting := model.Setting{
+		Key:   key,
+		Value: value,
+	}
+
+	return client.UpsertItem(client.SettingsTable, setting)
+}
+
+// GetSetting gets a specific user setting from the database
+func GetSetting(key string) (string, error) {
+	setting, err := client.GetSetting(key)
+	if err != nil {
+		return "", err
+	}
+	return (*setting).Value, nil
+}

@@ -51,6 +51,8 @@ func main() {
 	router.GET("/version", VersionHandler)
 	router.PATCH("/servers/:id/:action", ToggleServerHandler)
 	router.POST("/selectstage/:stage", SelectStageHandler)
+	router.POST("/settings/:setting", SetSettingsHandler)
+	router.GET("/settings/:setting", GetSettingsHandler)
 
 	// effect execution
 	effects := router.Group("/effects")
