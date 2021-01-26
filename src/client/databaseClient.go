@@ -31,6 +31,8 @@ const (
 
 	// ServerTable table where server addresses to be called are stored
 	ServerTable = "servers"
+	// SettingsTable table where settings are stored
+	SettingsTable = "settings"
 )
 
 var (
@@ -248,6 +250,36 @@ func GetServers() (servers []model.Server) {
 	}
 
 	return
+}
+
+// GetSetting retrieves all server addresses from the database
+func GetSetting(key string) (*model.Setting, error) {
+	tableName := SettingsTable
+
+	result, err := db.GetItem(&dynamodb.GetItemInput{
+		TableName: &tableName,
+		Key: map[string]*dynamodb.AttributeValue{
+			"key": {
+				S: aws.String(key),
+			},
+		},
+	})
+	if err != nil {
+		return nil, sferror.New(sferror.DatabaseCRUD, "Failed to read setting", err)
+	}
+
+	if result.Item == nil {
+		return nil, sferror.New(sferror.DatabaseNotFound, fmt.Sprintf("Setting %s could not be found", key), nil)
+	}
+
+	setting := &model.Setting{}
+
+	err = dynamodbattribute.UnmarshalMap(result.Item, setting)
+	if err != nil {
+		return nil, sferror.New(sferror.DatabaseUnmarshal, "Failed to unmarshal setting", err)
+	}
+
+	return setting, nil
 }
 
 // UpsertItem updates or inserts an item on the database

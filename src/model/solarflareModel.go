@@ -29,6 +29,12 @@ type Server struct {
 	PublicAddress  string `json:"publicAddress"`
 }
 
+// Setting is the model used to communicate settings stored on the database
+type Setting struct {
+	Key   string `json:"key"`
+	Value string `json:"value"`
+}
+
 // EffectType represents the type of visual effect
 type EffectType string
 
