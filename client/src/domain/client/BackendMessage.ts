@@ -3,6 +3,7 @@ import { ClockAction } from "../ClockAction";
 import BossbarColor from "../controlpanel/BossbarColor";
 import { EffectAction } from "../EffectAction";
 import { EffectType } from "../EffectType";
+import { InstanceStatus } from "../InstanceStatus";
 import { Server } from "./Server";
 import { StopAllOptions } from "./StopAllOptions";
 
@@ -14,6 +15,7 @@ export interface BackendMessage {
     serverUpdate?: ServerMessage
     stageUpdate?: StageMessage
     commandUpdate?: CommandMessage
+    instanceUpdate?: InstanceMessage
 }
 
 export interface EffectMessage {
@@ -58,4 +60,8 @@ export interface CommandMessage {
     command: string
 
     errorMessage: string
+}
+
+export interface InstanceMessage {
+    status: InstanceStatus
 }

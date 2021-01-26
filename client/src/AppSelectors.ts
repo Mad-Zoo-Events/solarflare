@@ -1,5 +1,5 @@
 import { createSelector } from "reselect";
-import { EffectType, allEffectTypes } from "./domain/EffectType";
+import { allEffectTypes, EffectType } from "./domain/EffectType";
 import { Preset } from "./domain/presets/Preset";
 import { selectAppState } from "./rootSelectors";
 import { RootState } from "./RootState";

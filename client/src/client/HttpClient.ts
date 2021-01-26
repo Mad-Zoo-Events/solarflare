@@ -7,6 +7,7 @@ import { Server } from "../domain/client/Server";
 import { StopAllOptions } from "../domain/client/StopAllOptions";
 import { EffectAction } from "../domain/EffectAction";
 import { EffectType } from "../domain/EffectType";
+import { InstanceAction } from "../domain/InstanceAction";
 import { PresetCollection } from "../domain/PresetCollection";
 import { Preset } from "../domain/presets/Preset";
 import { decoratePresets, decoratePresetsOfType } from "../utils/utils";
@@ -23,6 +24,9 @@ export async function toggleServer ({ id, isActive }: Server): Promise<void> {
 }
 export async function selectStage (stage: string): Promise<void> {
     return await axios.post(`/selectstage/${stage}`);
+}
+export async function startStopInstance (action: InstanceAction): Promise<void> {
+    return await axios.post(`/buildinstance/${action}`);
 }
 export async function setSetting (key: string, value: string): Promise<void> {
     return await axios.post(`/settings/${key}`, value);

@@ -25,6 +25,9 @@ import {
     shouldWriteLog,
     stopAll
 } from "./components/ControlPanel/ControlPanelActions";
+import {
+    didReceiveInstanceStatus
+} from "./components/SystemSettings/SystemSettingsActions";
 import { ClearBossbar } from "./domain/BossbarAction";
 import { BackendMessage } from "./domain/client/BackendMessage";
 import { Server } from "./domain/client/Server";
@@ -141,7 +144,8 @@ export const handleSocketMessage = (message: BackendMessage, presets: PresetColl
         clockSpeedUpdate,
         bossbarUpdate,
         serverUpdate,
-        stageUpdate
+        stageUpdate,
+        instanceUpdate
     } = message;
 
     if (effectUpdate) {
@@ -229,5 +233,10 @@ export const handleSocketMessage = (message: BackendMessage, presets: PresetColl
             category: "STAGE",
             message: `Selected stage: ${stageUpdate.selectedStage.toUpperCase()}`
         }));
+    }
+
+    if (instanceUpdate) {
+        const { status } = instanceUpdate;
+        dispatch(didReceiveInstanceStatus(status));
     }
 };
