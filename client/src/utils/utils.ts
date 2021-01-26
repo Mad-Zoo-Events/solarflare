@@ -81,18 +81,6 @@ export function presetSorter (p1: Preset, p2: Preset): number {
     return 0;
 }
 
-export function combinePresets (presets: PresetCollection): Preset[] {
-    const { commandPresets, dragonPresets, laserPresets, particlePresets, potionPresets, timeshiftPresets } = presets;
-
-    return ([] as Preset[]).concat(commandPresets, dragonPresets, laserPresets, particlePresets, potionPresets, timeshiftPresets).sort(presetSorter);
-}
-
-export function combinePresetsWithoutCommands (presets: PresetCollection): Preset[] {
-    const { dragonPresets, laserPresets, particlePresets, potionPresets, timeshiftPresets } = presets;
-
-    return ([] as Preset[]).concat(dragonPresets, laserPresets, particlePresets, potionPresets, timeshiftPresets).sort(presetSorter);
-}
-
 export function decoratePresetsOfType (presets: Preset[], effectType: EffectType): void {
     presets.forEach(p => { p.effectType = effectType; p.keyBindingStr = getShortcutString(p.keyBinding); });
 }
@@ -108,7 +96,7 @@ export function decoratePresets (presets: PresetCollection): void {
     decoratePresetsOfType(timeshiftPresets, et.Timeshift);
 }
 
-export function getPreset (id: string, effectType: EffectType, presets: PresetCollection): Preset | undefined {
+export function getPresetsOfType (effectType: EffectType, presets: PresetCollection): Preset[] {
     const {
         commandPresets,
         dragonPresets,
@@ -120,18 +108,32 @@ export function getPreset (id: string, effectType: EffectType, presets: PresetCo
 
     switch (effectType) {
     case et.Command:
-        return commandPresets.find(p => p.id === id);
+        return commandPresets;
     case et.Dragon:
-        return dragonPresets.find(p => p.id === id);
+        return dragonPresets;
     case et.Laser:
-        return laserPresets.find(p => p.id === id);
+        return laserPresets;
     case et.Particle:
-        return particlePresets.find(p => p.id === id);
+        return particlePresets;
     case et.Timeshift:
-        return timeshiftPresets.find(p => p.id === id);
+        return timeshiftPresets;
     case et.Potion:
-        return potionPresets.find(p => p.id === id);
+        return potionPresets;
     }
+}
+
+export function getPreset (id: string, effectType: EffectType, presets: PresetCollection): Preset | undefined {
+    return getPresetsOfType(effectType, presets).find(p => p.id === id);
+}
+
+export function combinePresets (presets: PresetCollection, effectTypes: EffectType[]): Preset[] {
+    const combined: Preset[] = [];
+
+    effectTypes.forEach(effectType => {
+        combined.push(...getPresetsOfType(effectType, presets));
+    });
+
+    return combined.sort(presetSorter);
 }
 
 const printableChars = ["!", "\"", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ":", ";", "=", "?", "@", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "[", "\\", "]", "^", "_", "`", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "{", "|", "}", "~"];

@@ -12,3 +12,12 @@ export type EffectType =
     typeof Potion |
     typeof Timeshift |
     typeof Command;
+
+export const allEffectTypes: EffectType[] = [
+    Particle,
+    Dragon,
+    Laser,
+    Potion,
+    Timeshift,
+    Command
+];

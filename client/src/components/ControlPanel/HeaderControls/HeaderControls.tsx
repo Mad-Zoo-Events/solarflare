@@ -1,35 +1,36 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { ReactElement } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { chooseStage, toggleServer } from "../../../AppActions";
 import { selectSelectedStage, selectServers, selectStages } from "../../../AppSelectors";
-import DisplayMode from "../../../domain/controlpanel/DisplayMode";
+import { allEffectTypes, EffectType } from "../../../domain/EffectType";
 import { RootState } from "../../../RootState";
 import Routes from "../../../routes";
 import Popup from "../../Popup/Popup";
-import { chooseDisplayMode } from "../ControlPanelActions";
-import { selectCapsLockOn, selectDisplayMode } from "../ControlPanelSelectors";
+import { chooseDisplayCategories } from "../ControlPanelActions";
+import { selectCapsLockOn, selectDisplayCategories } from "../ControlPanelSelectors";
 import BossbarControl from "./BossbarControl/BossbarControl";
 import CommandControl from "./CommandControl/CommandControl";
 import "./HeaderControls.scss";
 import { HeaderControlsProps } from "./HeaderControlsProps";
 import Select from "./Select/Select";
+import { Option } from "./Select/SelectProps";
 
 const HeaderControls = ({
     servers,
     stages,
     selectedStage,
-    displayMode,
+    displayCategories,
     capsLockOn,
-    chooseDisplayMode,
+    chooseDisplayCategories,
     toggleServer,
     chooseStage
-}: HeaderControlsProps): ReactElement => {
-    const displayModeOptions = Object.values(DisplayMode).map(key => ({
-        value: key,
-        text: key as DisplayMode,
-        selected: displayMode === key
+}: HeaderControlsProps) => {
+    const displayModeOptions = allEffectTypes.map(effectType => ({
+        value: effectType,
+        text: effectType,
+        selected: displayCategories.includes(effectType)
     }));
 
     const serverOptions = servers.map(({ id, name, isActive }) => ({
@@ -44,6 +45,13 @@ const HeaderControls = ({
         selected: stage === selectedStage
     }));
 
+    const handleDisplayModeChange = (changed: Option, allSelected?: Option[]) => {
+        if (!allSelected) {
+            return;
+        }
+        chooseDisplayCategories(allSelected.map(option => option.value as EffectType));
+    };
+
     return (
         <div className="control-panel__header-controls">
             <div className="bossbar-control">
@@ -57,7 +65,8 @@ const HeaderControls = ({
             <Popup label="Display Mode" iconProps={{ icon: ["fas", "eye"], size: "2x" }}>
                 <Select
                     options={displayModeOptions}
-                    onChange={(changed) => chooseDisplayMode(changed.value as DisplayMode)}
+                    multiselect
+                    onChange={handleDisplayModeChange}
                 />
             </Popup>
             <div className="separator"/>
@@ -94,20 +103,20 @@ function mapStateToProps (state: RootState) {
     const stages = selectStages(state);
     const selectedStage = selectSelectedStage(state);
 
-    const displayMode = selectDisplayMode(state);
+    const displayCategories = selectDisplayCategories(state);
     const capsLockOn = selectCapsLockOn(state);
 
     return {
         servers,
         stages,
         selectedStage,
-        displayMode,
+        displayCategories,
         capsLockOn
     };
 }
 
 const mapDispatchToProps = {
-    chooseDisplayMode: chooseDisplayMode,
+    chooseDisplayCategories: chooseDisplayCategories,
     toggleServer: toggleServer,
     chooseStage: chooseStage
 };

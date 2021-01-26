@@ -1,17 +1,16 @@
 import { RefObject } from "react";
 import { HandleThunkActionCreator } from "react-redux";
-import DisplayMode from "../../domain/controlpanel/DisplayMode";
+import { EffectType } from "../../domain/EffectType";
 import { PresetCollection } from "../../domain/PresetCollection";
 import { Preset } from "../../domain/presets/Preset";
 import { RunningEffect } from "../../domain/RunningEffect";
 import { handleKeyPress } from "./ControlPanelActions";
 
 export interface ControlPanelProps {
-    displayMode: DisplayMode
+    displayCategories: EffectType[]
     ignoreKeystrokes: boolean
     presets: PresetCollection
     combinedPresets: Preset[]
-    combinedPresetsWithoutCommands: Preset[]
     runningEffects: Map<string, RunningEffect>
     clockTapButtonRef: RefObject<HTMLDivElement>
 

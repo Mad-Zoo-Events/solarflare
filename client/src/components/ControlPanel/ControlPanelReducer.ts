@@ -1,7 +1,7 @@
 import { createRef } from "react";
 import { StopAllOptions } from "../../domain/client/StopAllOptions";
 import BossbarColor from "../../domain/controlpanel/BossbarColor";
-import DisplayMode from "../../domain/controlpanel/DisplayMode";
+import * as EffectType from "../../domain/EffectType";
 import { LogEntry } from "../../domain/LogEntry";
 import { RunningEffect } from "../../domain/RunningEffect";
 import {
@@ -12,7 +12,7 @@ import {
     DID_STOP_EFFECT,
     DID_TOGGLE_CAPS_LOCK,
     SHOULD_CHANGE_CLOCK_SPEED,
-    SHOULD_CHANGE_DISPLAY_MODE,
+    SHOULD_CHOOSE_DISPLAY_CATEGORIES,
     SHOULD_CLEAR_LOGS,
     SHOULD_IGNORE_KEYSTROKES,
     SHOULD_INCREMENT_COUNTER,
@@ -23,7 +23,7 @@ import {
 import { ControlPanelState } from "./ControlPanelState";
 
 const initialState: ControlPanelState = {
-    displayMode: DisplayMode.Categorized,
+    displayCategories: EffectType.allEffectTypes,
     ignoreKeystrokes: false,
     runningEffects: new Map(),
     logEntries: [],
@@ -109,10 +109,10 @@ function controlPanelReducer (
     action: ControlPanelAction
 ): ControlPanelState {
     switch (action.type) {
-    case SHOULD_CHANGE_DISPLAY_MODE:
+    case SHOULD_CHOOSE_DISPLAY_CATEGORIES:
         return {
             ...state,
-            displayMode: action.payload
+            displayCategories: action.payload
         };
     case SHOULD_IGNORE_KEYSTROKES:
         return {

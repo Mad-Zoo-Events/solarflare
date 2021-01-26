@@ -1,6 +1,9 @@
 import { createSelector } from "reselect";
+import { EffectType, allEffectTypes } from "./domain/EffectType";
+import { Preset } from "./domain/presets/Preset";
 import { selectAppState } from "./rootSelectors";
-import { combinePresets, combinePresetsWithoutCommands } from "./utils/utils";
+import { RootState } from "./RootState";
+import { combinePresets } from "./utils/utils";
 
 export const selectVersion = createSelector(selectAppState, ({ version }) => version);
 export const selectIsInitialized = createSelector(selectAppState, ({ isInitialized }) => isInitialized);
@@ -11,5 +14,8 @@ export const selectStages = createSelector(selectAppState, ({ stages }) => stage
 export const selectSelectedStage = createSelector(selectAppState, ({ selectedStage }) => selectedStage);
 
 export const selectPresets = createSelector(selectAppState, ({ presets }) => presets);
-export const selectCombinedPresets = createSelector(selectAppState, ({ presets }) => combinePresets(presets));
-export const selectCombinedPresetsWithoutCommands = createSelector(selectAppState, ({ presets }) => combinePresetsWithoutCommands(presets));
+
+export function selectCombinedPresets (state: RootState, excludedEffectTypes: EffectType[]): Preset[] {
+    const effectTypes = allEffectTypes.filter(et => !excludedEffectTypes.includes(et));
+    return combinePresets(selectPresets(state), effectTypes);
+}
