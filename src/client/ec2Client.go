@@ -65,7 +65,7 @@ func GetStatus(instanceID string) (model.InstanceStatus, error) {
 			output.InstanceStatuses[0].InstanceStatus.Status != nil &&
 			*output.InstanceStatuses[0].InstanceStatus.Status == statusInitializing {
 
-			return model.InstanceStatusPending, nil
+			return model.InstanceStatusInitializing, nil
 		}
 		return model.InstanceStatusRunning, nil
 	case stateStopped:
