@@ -17,7 +17,6 @@ import { ClockSpeedOptions } from "../../domain/client/ClockSpeedOptions";
 import { ClockSubscriptionOptions } from "../../domain/client/ClockSubscriptionOptions";
 import { StopAllOptions } from "../../domain/client/StopAllOptions";
 import { ClockAction, Subscribe } from "../../domain/ClockAction";
-import DisplayMode from "../../domain/controlpanel/DisplayMode";
 import * as ea from "../../domain/EffectAction";
 import { EffectAction } from "../../domain/EffectAction";
 import * as et from "../../domain/EffectType";
@@ -27,7 +26,7 @@ import { RunningEffect } from "../../domain/RunningEffect";
 import { RootState } from "../../RootState";
 
 // ACTION TYPES
-export const SHOULD_CHANGE_DISPLAY_MODE = "controlpanel/SHOULD_CHANGE_DISPLAY_MODE";
+export const SHOULD_CHOOSE_DISPLAY_CATEGORIES = "controlpanel/SHOULD_CHOOSE_DISPLAY_CATEGORIES";
 export const SHOULD_IGNORE_KEYSTROKES = "controlpanel/SHOULD_IGNORE_KEYSTROKES";
 export const DID_TOGGLE_CAPS_LOCK = "controlpanel/DID_TOGGLE_CAPS_LOCK";
 export const DID_SELECT_SERVERS = "controlpanel/DID_SELECT_SERVERS";
@@ -41,9 +40,9 @@ export const SHOULD_CHANGE_CLOCK_SPEED = "controlpanel/SHOULD_CHANGE_CLOCK_SPEED
 export const SHOULD_TOGGLE_CLOCK = "controlpanel/SHOULD_TOGGLE_CLOCK";
 export const SHOULD_UPDATE_BOSSBAR = "controlpanel/SHOULD_UPDATE_BOSSBAR";
 
-interface ShouldChangeDisplayMode {
-    type: typeof SHOULD_CHANGE_DISPLAY_MODE
-    payload: DisplayMode
+interface ShouldChooseDisplayCategories {
+    type: typeof SHOULD_CHOOSE_DISPLAY_CATEGORIES
+    payload: et.EffectType[]
 }
 interface ShouldIgnoreKeystrokes {
     type: typeof SHOULD_IGNORE_KEYSTROKES
@@ -89,7 +88,7 @@ interface ShouldUpdateBossbar {
 }
 
 export type ControlPanelAction =
-    ShouldChangeDisplayMode | ShouldIgnoreKeystrokes | DidToggleCapsLock |
+    ShouldChooseDisplayCategories | ShouldIgnoreKeystrokes | DidToggleCapsLock |
     DidStartEffect | DidStopEffect | DidStopAll |
     ShouldWriteLog | ShouldClearLogs |
     ShouldIncrementCounter |
@@ -97,7 +96,7 @@ export type ControlPanelAction =
     ShouldUpdateBossbar;
 
 // ACTION CREATORS
-const shouldChangeDisplayMode = createAction(SHOULD_CHANGE_DISPLAY_MODE);
+const shouldChooseDisplayCategories = createAction<et.EffectType[]>(SHOULD_CHOOSE_DISPLAY_CATEGORIES);
 const shouldIgnoreKeystrokes = createAction<boolean>(SHOULD_IGNORE_KEYSTROKES);
 const didToggleCapsLock = createAction<boolean>(DID_TOGGLE_CAPS_LOCK);
 export const didStartEffect = createAction<{effect: RunningEffect, getTimer:(id: string) => number}>(DID_START_EFFECT);
@@ -111,8 +110,8 @@ export const shouldToggleClock = createAction(SHOULD_TOGGLE_CLOCK);
 export const shouldUpdateBossbar = createAction<BossbarOptions | null>(SHOULD_UPDATE_BOSSBAR);
 
 // ACTIONS
-export const chooseDisplayMode = (displayMode: DisplayMode): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
-    dispatch(shouldChangeDisplayMode(displayMode));
+export const chooseDisplayCategories = (displayCategories: et.EffectType[]): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
+    dispatch(shouldChooseDisplayCategories(displayCategories));
 };
 export const setIgnoreKeystrokes = (ignore: boolean): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(shouldIgnoreKeystrokes(ignore));

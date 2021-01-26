@@ -1,11 +1,11 @@
 import { RefObject } from "react";
 import BossbarColor from "../../domain/controlpanel/BossbarColor";
-import DisplayMode from "../../domain/controlpanel/DisplayMode";
+import { EffectType } from "../../domain/EffectType";
 import { LogEntry } from "../../domain/LogEntry";
 import { RunningEffect } from "../../domain/RunningEffect";
 
 export interface ControlPanelState {
-    displayMode: DisplayMode
+    displayCategories: EffectType[]
     ignoreKeystrokes: boolean
     capsLockOn?: boolean
 
