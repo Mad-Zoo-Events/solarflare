@@ -54,6 +54,9 @@ var (
 	// SocketSendUpdate | error when sending a UI update through a websocket
 	SocketSendUpdate = ErrorType{"SocketSendUpdate", 51}
 
+	// InstanceManagementError | error when appempting to perform an action on an instance
+	InstanceManagementError = ErrorType{"InstanceManagementError", 60}
+
 	// Internal | unknown internal error
 	Internal = ErrorType{"Internal", 90}
 	// Encoding | encoding error

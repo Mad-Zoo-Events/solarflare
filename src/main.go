@@ -50,6 +50,7 @@ func main() {
 	router.GET("/health", HealthHandler)
 	router.GET("/version", VersionHandler)
 	router.PATCH("/servers/:id/:action", ToggleServerHandler)
+	router.POST("/buildinstance/:action", StartStopInstanceHandler)
 	router.POST("/selectstage/:stage", SelectStageHandler)
 	router.POST("/settings/:setting", SetSettingsHandler)
 	router.GET("/settings/:setting", GetSettingsHandler)
