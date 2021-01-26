@@ -140,6 +140,8 @@ const Clock = ({
                     size="3x"
                     title="Restart"
                 />
+                <br/>
+                <span><code>restart</code></span>
             </div>
         </div>
     );

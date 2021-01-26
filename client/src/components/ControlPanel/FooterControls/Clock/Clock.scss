@@ -1,8 +1,9 @@
 .clock {
     display              : grid;
     grid-template-columns: 5em auto 5em;
-    grid-template-rows   : 3em auto max-content;
+    grid-template-rows   : 2em auto max-content;
     gap                  : 0.5em;
+    font-size            : small;
 
     & .indicator {
         grid-row     : 1;
