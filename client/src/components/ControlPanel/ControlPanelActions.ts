@@ -103,7 +103,7 @@ export type ControlPanelAction =
     ShouldUpdateBossbar;
 
 // ACTION CREATORS
-const shouldChooseDisplayCategories = createAction<et.EffectType[]>(SHOULD_CHOOSE_DISPLAY_CATEGORIES);
+export const shouldChooseDisplayCategories = createAction<et.EffectType[]>(SHOULD_CHOOSE_DISPLAY_CATEGORIES);
 export const didChangeLayout = createAction<Layout[]>(DID_CHANGE_LAYOUT);
 const shouldIgnoreKeystrokes = createAction<boolean>(SHOULD_IGNORE_KEYSTROKES);
 const didToggleCapsLock = createAction<boolean>(DID_TOGGLE_CAPS_LOCK);
@@ -120,6 +120,7 @@ export const shouldUpdateBossbar = createAction<BossbarOptions | null>(SHOULD_UP
 // ACTIONS
 export const chooseDisplayCategories = (displayCategories: et.EffectType[]): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(shouldChooseDisplayCategories(displayCategories));
+    doSetSetting("displayCategories", JSON.stringify(displayCategories));
 };
 export const changeLayout = (layout: Layout[]): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(didChangeLayout(layout));
