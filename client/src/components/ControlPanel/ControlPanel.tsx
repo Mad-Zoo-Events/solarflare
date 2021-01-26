@@ -8,7 +8,7 @@ import { getPresetsOfType } from "../../utils/utils";
 import Page from "../Page/Page";
 import CategorySection from "./CategorySection/CategorySection";
 import "./ControlPanel.scss";
-import { handleKeyPress } from "./ControlPanelActions";
+import { changeLayout, handleKeyPress } from "./ControlPanelActions";
 import { ControlPanelProps } from "./ControlPanelProps";
 import { selectClockTapButtonRef, selectDisplayCategories, selectIgnoreKeystrokes, selectLayout, selectRunningEffects } from "./ControlPanelSelectors";
 import FooterControls from "./FooterControls/FooterControls";
@@ -25,7 +25,8 @@ const ControlPanel = ({
     combinedPresets,
     runningEffects,
     clockTapButtonRef,
-    handleKeyPress
+    handleKeyPress,
+    changeLayout
 }: ControlPanelProps) => {
     const doClockTap = (b: HTMLDivElement | null) => {
         if (!b) return;
@@ -43,7 +44,7 @@ const ControlPanel = ({
     };
 
     const handleLayoutChange: ItemCallback = (layout: Layout[]) => {
-        console.log(layout);
+        changeLayout(layout);
     };
 
     return (
@@ -119,7 +120,8 @@ function mapStateToProps (state: RootState) {
 }
 
 const mapDispatchToProps = {
-    handleKeyPress: handleKeyPress
+    handleKeyPress: handleKeyPress,
+    changeLayout: changeLayout
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ControlPanel);

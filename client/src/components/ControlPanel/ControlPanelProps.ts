@@ -5,7 +5,7 @@ import { EffectType } from "../../domain/EffectType";
 import { PresetCollection } from "../../domain/PresetCollection";
 import { Preset } from "../../domain/presets/Preset";
 import { RunningEffect } from "../../domain/RunningEffect";
-import { handleKeyPress } from "./ControlPanelActions";
+import { changeLayout, handleKeyPress } from "./ControlPanelActions";
 
 export interface ControlPanelProps {
     displayCategories: EffectType[]
@@ -19,4 +19,5 @@ export interface ControlPanelProps {
     clockTapButtonRef: RefObject<HTMLDivElement>
 
     handleKeyPress: HandleThunkActionCreator<typeof handleKeyPress>
+    changeLayout: HandleThunkActionCreator<typeof changeLayout>
 }
