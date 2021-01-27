@@ -1,45 +1,42 @@
 .instance-settings__instance-status {
     display              : grid;
     grid-template-columns: 1fr 1fr;
-    gap                  : 1em;
-    width                : 20em;
-    margin               : 2em auto;
-    padding              : 2em;
+    gap                  : 0.5em;
 
-    background-color: var(--darkest-gray);
-    border-radius   : 1em;
-
-    & .title {
+    & .instance-name {
         grid-column: 1 /span 2;
-        font-size  : x-large;
-        color      : var(--accent);
+        font-weight: bold;
+        font-size  : 1.2em;
     }
 
     & .instance-status {
         grid-column: 1 /span 2;
-        font-size  : larger;
-
-        & span {
-            margin-right: 1em;
-        }
+        padding    : 0.5em 0;
+        font-weight: bold;
     }
 
     & button {
-        padding: 1em;
-        color  : var(--font);
+        padding         : 0.5em 1em;
+        border          : 0.1em solid;
+        background-color: var(--darkest-gray);
 
-        border: none;
+        &:hover:not(.forbidden) {
+            border-color: var(--font) !important;
+        }
 
         &.forbidden {
-            background-color: var(--darker-gray) !important;
+            border-color: var(--darkest-gray) !important;
+            color       : var(--gray) !important;
         }
 
         &.start-button {
-            background-color: var(--green);
+            color       : var(--green);
+            border-color: var(--green);
         }
 
         &.stop-button {
-            background-color: var(--red);
+            color       : var(--red);
+            border-color: var(--red);
         }
     }
 }

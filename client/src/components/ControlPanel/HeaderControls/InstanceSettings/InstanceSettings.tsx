@@ -4,7 +4,6 @@ import * as is from "../../../../domain/InstanceStatus";
 import { RootState } from "../../../../RootState";
 import { startInstance, stopInstance } from "../../ControlPanelActions";
 import { selectInstanceStatus } from "../../ControlPanelSelectors";
-import Page from "../../../Page/Page";
 import "./InstanceSettings.scss";
 import { InstanceSettingsProps } from "./InstanceSettingsProps";
 
@@ -35,31 +34,25 @@ const InstanceSettings = ({
     const disableStop = instanceStatus !== is.Running;
 
     return (
-        <Page title="Instance Settings" renderBackButton>
-            <div className="instance-settings__instance-status">
-                <div className="title">Build Instance</div>
+        <div className="instance-settings__instance-status">
+            <span className="instance-name">Build Instance</span>
+            <span className="instance-status" style={colorStyle}>{instanceStatus.toUpperCase()}</span>
 
-                <div className="instance-status">
-                    <span>Status:</span>
-                    <span style={colorStyle}>{instanceStatus.toString()}</span>
-                </div>
-
-                <button
-                    className={`button start-button ${disableStart ? "forbidden" : ""}`}
-                    onClick={startInstance}
-                    disabled={disableStart}
-                >
+            <button
+                className={`button start-button ${disableStart ? "forbidden" : ""}`}
+                onClick={startInstance}
+                disabled={disableStart}
+            >
                     START
-                </button>
-                <button
-                    className={`button stop-button ${disableStop ? "forbidden" : ""}`}
-                    onClick={stopInstance}
-                    disabled={disableStop}
-                >
+            </button>
+            <button
+                className={`button stop-button ${disableStop ? "forbidden" : ""}`}
+                onClick={stopInstance}
+                disabled={disableStop}
+            >
                     STOP
-                </button>
-            </div>
-        </Page>
+            </button>
+        </div>
     );
 };
 

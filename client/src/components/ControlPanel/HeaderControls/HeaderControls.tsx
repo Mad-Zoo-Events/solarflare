@@ -14,6 +14,7 @@ import BossbarControl from "./BossbarControl/BossbarControl";
 import CommandControl from "./CommandControl/CommandControl";
 import "./HeaderControls.scss";
 import { HeaderControlsProps } from "./HeaderControlsProps";
+import InstanceSettings from "./InstanceSettings/InstanceSettings";
 import Select from "./Select/Select";
 import { Option } from "./Select/SelectProps";
 
@@ -62,7 +63,7 @@ const HeaderControls = ({
                 <CommandControl/>
             </Popup>
             <div className="separator"/>
-            <Popup label="Display Mode" iconProps={{ icon: ["fas", "eye"], size: "2x" }}>
+            <Popup label="Display Options" iconProps={{ icon: ["fas", "eye"], size: "2x" }}>
                 <Select
                     options={displayModeOptions}
                     multiselect
@@ -70,7 +71,7 @@ const HeaderControls = ({
                 />
             </Popup>
             <div className="separator"/>
-            <Popup label="Server Selection" iconProps={{ icon: ["fas", "satellite-dish"], size: "2x" }}>
+            <Popup label="Select Servers" iconProps={{ icon: ["fas", "satellite-dish"], size: "2x" }}>
                 <Select
                     options={serverOptions}
                     multiselect
@@ -78,16 +79,20 @@ const HeaderControls = ({
                 />
             </Popup>
             <div className="separator"/>
-            <Popup label="Stage Selection" iconProps={{ icon: ["fas", "globe-asia"], size: "2x" }}>
+            <Popup label="Switch Stage" iconProps={{ icon: ["fas", "globe-asia"], size: "2x" }}>
                 <Select
                     options={stageOptions}
                     onChange={(changed) => chooseStage(changed.value)}
                 />
             </Popup>
             <div className="separator"/>
+            <Popup label="Manage Instances" iconProps={{ icon: ["fas", "tools"], size: "2x" }}>
+                <InstanceSettings />
+            </Popup>
+            <div className="separator"/>
             <Link className="button header-button" to={Routes.presetManager}>
                 <FontAwesomeIcon icon={["fas", "cogs"]} size="2x" />
-                <div>Preset Manager</div>
+                <div>Manage Presets</div>
             </Link>
             {capsLockOn &&
                 <div className="capslock-warning">
