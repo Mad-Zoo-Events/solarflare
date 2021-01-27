@@ -4,11 +4,12 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { chooseStage, toggleServer } from "../../../AppActions";
 import { selectSelectedStage, selectServers, selectStages } from "../../../AppSelectors";
+import { DefaultLayout } from "../../../domain/controlpanel/DefaultLayout";
 import { allEffectTypes, EffectType } from "../../../domain/EffectType";
 import { RootState } from "../../../RootState";
 import Routes from "../../../routes";
 import Popup from "../../Popup/Popup";
-import { chooseDisplayCategories } from "../ControlPanelActions";
+import { changeLayout, chooseDisplayCategories } from "../ControlPanelActions";
 import { selectCapsLockOn, selectDisplayCategories } from "../ControlPanelSelectors";
 import BossbarControl from "./BossbarControl/BossbarControl";
 import CommandControl from "./CommandControl/CommandControl";
@@ -26,7 +27,8 @@ const HeaderControls = ({
     capsLockOn,
     chooseDisplayCategories,
     toggleServer,
-    chooseStage
+    chooseStage,
+    changeLayout
 }: HeaderControlsProps) => {
     const displayModeOptions = allEffectTypes.map(effectType => ({
         value: effectType,
@@ -53,6 +55,8 @@ const HeaderControls = ({
         chooseDisplayCategories(allSelected.map(option => option.value as EffectType));
     };
 
+    const handleDefaultLayout = () => changeLayout(DefaultLayout);
+
     return (
         <div className="control-panel__header-controls">
             <div className="bossbar-control">
@@ -69,6 +73,9 @@ const HeaderControls = ({
                     multiselect
                     onChange={handleDisplayModeChange}
                 />
+                <div className="button default-layout-button" onClick={handleDefaultLayout}>
+                    Restore Default Layout
+                </div>
             </Popup>
             <div className="separator"/>
             <Popup label="Select Servers" iconProps={{ icon: ["fas", "satellite-dish"], size: "2x" }}>
@@ -123,7 +130,8 @@ function mapStateToProps (state: RootState) {
 const mapDispatchToProps = {
     chooseDisplayCategories: chooseDisplayCategories,
     toggleServer: toggleServer,
-    chooseStage: chooseStage
+    chooseStage: chooseStage,
+    changeLayout: changeLayout
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderControls);

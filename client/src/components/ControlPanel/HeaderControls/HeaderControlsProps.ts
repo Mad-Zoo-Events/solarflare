@@ -2,7 +2,7 @@ import { HandleThunkActionCreator } from "react-redux";
 import { chooseStage, toggleServer } from "../../../AppActions";
 import { Server } from "../../../domain/client/Server";
 import { EffectType } from "../../../domain/EffectType";
-import { chooseDisplayCategories } from "../ControlPanelActions";
+import { changeLayout, chooseDisplayCategories } from "../ControlPanelActions";
 
 export interface HeaderControlsProps {
     servers: Server[]
@@ -14,4 +14,5 @@ export interface HeaderControlsProps {
     chooseDisplayCategories: HandleThunkActionCreator<typeof chooseDisplayCategories>
     toggleServer: HandleThunkActionCreator<typeof toggleServer>
     chooseStage: HandleThunkActionCreator<typeof chooseStage>
+    changeLayout: HandleThunkActionCreator<typeof changeLayout>
 }

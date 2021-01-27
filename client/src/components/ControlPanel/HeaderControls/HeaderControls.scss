@@ -42,4 +42,14 @@
         color      : var(--red);
         font-size  : x-large;
     }
+
+    & .default-layout-button {
+        margin-top: 1em;
+        padding   : 0.5em;
+        width     : max-content;
+
+        background-color: var(--darkest-gray);
+        border          : 0.1em solid var(--accent);
+        color           : var(--accent);
+    }
 }
