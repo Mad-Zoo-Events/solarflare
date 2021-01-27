@@ -2,6 +2,7 @@ import { RefObject } from "react";
 import { Layout } from "react-grid-layout";
 import BossbarColor from "../../domain/controlpanel/BossbarColor";
 import { EffectType } from "../../domain/EffectType";
+import { InstanceStatus } from "../../domain/InstanceStatus";
 import { LogEntry } from "../../domain/LogEntry";
 import { RunningEffect } from "../../domain/RunningEffect";
 
@@ -26,4 +27,6 @@ export interface ControlPanelState {
         text: string
         color: BossbarColor
     }
+
+    instanceStatus: InstanceStatus
 }

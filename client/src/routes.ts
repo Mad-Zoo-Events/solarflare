@@ -1,7 +1,6 @@
 const Routes = {
     controlPanel: "/cp/controlpanel",
-    presetManager: "/cp/presetmanager",
-    settings: "/cp/settings"
+    presetManager: "/cp/presetmanager"
 };
 
 export default Routes;

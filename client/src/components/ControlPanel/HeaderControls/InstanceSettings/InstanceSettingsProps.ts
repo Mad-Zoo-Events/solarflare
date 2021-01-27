@@ -1,8 +1,8 @@
 import { HandleThunkActionCreator } from "react-redux";
-import { InstanceStatus } from "../../domain/InstanceStatus";
-import { startInstance, stopInstance } from "./SystemSettingsActions";
+import { InstanceStatus } from "../../../../domain/InstanceStatus";
+import { startInstance, stopInstance } from "../../ControlPanelActions";
 
-export interface SystemSettingsProps {
+export interface InstanceSettingsProps {
     instanceStatus: InstanceStatus,
 
     startInstance: HandleThunkActionCreator<typeof startInstance>

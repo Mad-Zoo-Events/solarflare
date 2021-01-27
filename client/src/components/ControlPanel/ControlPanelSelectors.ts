@@ -22,6 +22,8 @@ export const selectBossbar = createSelector(selectControlPanelState, ({ bossbar 
 export const selectBossbarText = createSelector(selectBossbar, ({ text }) => text);
 export const selectBossbarColor = createSelector(selectBossbar, ({ color }) => color);
 
+export const selectInstanceStatus = createSelector(selectControlPanelState, ({ instanceStatus }) => instanceStatus);
+
 export function selectRunningEffect (state: RootState, id: string): RunningEffect | undefined {
     return selectRunningEffects(state)?.get(id);
 }
