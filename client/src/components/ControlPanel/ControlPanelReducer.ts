@@ -1,6 +1,7 @@
 import { createRef } from "react";
 import { StopAllOptions } from "../../domain/client/StopAllOptions";
 import BossbarColor from "../../domain/controlpanel/BossbarColor";
+import { DefaultLayout } from "../../domain/controlpanel/DefaultLayout";
 import * as EffectType from "../../domain/EffectType";
 import { Unknown } from "../../domain/InstanceStatus";
 import { LogEntry } from "../../domain/LogEntry";
@@ -30,14 +31,7 @@ import { ControlPanelState } from "./ControlPanelState";
 const initialState: ControlPanelState = {
     displayCategories: EffectType.allEffectTypes,
     ignoreKeystrokes: false,
-    layout: [
-        { i: "cat-particle", x: 0, y: 0, w: 5, h: 4, minH: 2 },
-        { i: "cat-potion", x: 6, y: 0, w: 3, h: 2, minH: 2 },
-        { i: "cat-timeshift", x: 6, y: 2, w: 3, h: 2, minH: 2 },
-        { i: "cat-dragon", x: 0, y: 4, w: 4, h: 2, minH: 2 },
-        { i: "cat-laser", x: 4, y: 4, w: 4, h: 2, minH: 2 },
-        { i: "cat-command", x: 0, y: 6, w: 8, h: 2, minH: 2 }
-    ],
+    layout: DefaultLayout,
     runningEffects: new Map(),
     logEntries: [],
     clock: {
