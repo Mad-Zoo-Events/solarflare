@@ -44,21 +44,27 @@ func StopBuildInstance() error {
 
 func pollForUpdates() {
 	startTime := time.Now()
+	var prevStatus model.InstanceStatus
+
 	for {
+		time.Sleep(pollingInterval)
+
 		if time.Now().Sub(startTime) > pollingTimeout {
 			sendInstanceUpdate(model.InstanceStatusUnknown)
 			return
 		}
 
-		time.Sleep(pollingInterval)
-
 		status, _ := client.GetStatus(BuildInstanceID)
-		if status != model.InstanceStatusPending &&
-			status != model.InstanceStatusStopping {
-
+		if status != prevStatus {
 			sendInstanceUpdate(status)
-			return
+
+			if status == model.InstanceStatusStopped ||
+				status == model.InstanceStatusRunning {
+				return
+			}
 		}
+
+		prevStatus = status
 	}
 }
 
