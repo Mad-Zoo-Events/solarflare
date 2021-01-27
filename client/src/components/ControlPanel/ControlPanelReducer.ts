@@ -2,12 +2,15 @@ import { createRef } from "react";
 import { StopAllOptions } from "../../domain/client/StopAllOptions";
 import BossbarColor from "../../domain/controlpanel/BossbarColor";
 import * as EffectType from "../../domain/EffectType";
+import { Unknown } from "../../domain/InstanceStatus";
 import { LogEntry } from "../../domain/LogEntry";
 import { RunningEffect } from "../../domain/RunningEffect";
 import {
     ControlPanelAction,
 
     DID_CHANGE_LAYOUT,
+
+    DID_RECEIVE_INSTANCE_STATUS,
 
     DID_START_EFFECT,
     DID_STOP_ALL,
@@ -46,7 +49,8 @@ const initialState: ControlPanelState = {
     bossbar: {
         text: "",
         color: BossbarColor.ColorBlue
-    }
+    },
+    instanceStatus: Unknown
 };
 
 const addToRunning = (
@@ -193,6 +197,11 @@ function controlPanelReducer (
         return {
             ...state,
             logEntries: []
+        };
+    case DID_RECEIVE_INSTANCE_STATUS:
+        return {
+            ...state,
+            instanceStatus: action.payload
         };
     default:
         return state;

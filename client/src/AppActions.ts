@@ -1,6 +1,5 @@
 import { connect } from "@giantmachines/redux-websocket";
 import { Layout } from "react-grid-layout";
-import "react-toastify/dist/ReactToastify.css";
 import { AnyAction } from "redux";
 import { createAction } from "redux-actions";
 import { ThunkAction } from "redux-thunk";
@@ -14,6 +13,7 @@ import {
 } from "./client/HttpClient";
 import {
     didChangeLayout,
+    didReceiveInstanceStatus,
     didStartEffect,
     didStopAll,
     didStopEffect,
@@ -25,9 +25,6 @@ import {
     shouldWriteLog,
     stopAll
 } from "./components/ControlPanel/ControlPanelActions";
-import {
-    didReceiveInstanceStatus
-} from "./components/SystemSettings/SystemSettingsActions";
 import { ClearBossbar } from "./domain/BossbarAction";
 import { BackendMessage } from "./domain/client/BackendMessage";
 import { Server } from "./domain/client/Server";

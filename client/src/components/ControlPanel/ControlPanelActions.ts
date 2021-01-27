@@ -7,6 +7,7 @@ import {
     changeClockSpeed as doChangeClockSpeed,
     runEffect as doRunEffect,
     setSetting as doSetSetting,
+    startStopInstance as doStartStopInstance,
     stopAll as doStopAll,
     subscribeToClock as doSubscribeToClock,
     unsubscribeFromClock as doUnsubscribeFromClock,
@@ -22,6 +23,8 @@ import { ClockAction, Subscribe } from "../../domain/ClockAction";
 import * as ea from "../../domain/EffectAction";
 import { EffectAction } from "../../domain/EffectAction";
 import * as et from "../../domain/EffectType";
+import * as ia from "../../domain/InstanceAction";
+import { InstanceStatus } from "../../domain/InstanceStatus";
 import { LogEntry } from "../../domain/LogEntry";
 import { Preset } from "../../domain/presets/Preset";
 import { RunningEffect } from "../../domain/RunningEffect";
@@ -42,6 +45,7 @@ export const SHOULD_INCREMENT_COUNTER = "controlpanel/INCREMENT_COUNTER";
 export const SHOULD_CHANGE_CLOCK_SPEED = "controlpanel/SHOULD_CHANGE_CLOCK_SPEED";
 export const SHOULD_TOGGLE_CLOCK = "controlpanel/SHOULD_TOGGLE_CLOCK";
 export const SHOULD_UPDATE_BOSSBAR = "controlpanel/SHOULD_UPDATE_BOSSBAR";
+export const DID_RECEIVE_INSTANCE_STATUS = "controlpanel/DID_RECEIVE_INSTANCE_STATUS";
 
 interface ShouldChooseDisplayCategories {
     type: typeof SHOULD_CHOOSE_DISPLAY_CATEGORIES
@@ -93,6 +97,10 @@ interface ShouldUpdateBossbar {
     type: typeof SHOULD_UPDATE_BOSSBAR
     payload: BossbarOptions | null
 }
+interface DidReceiveInstanceStatus {
+    type: typeof DID_RECEIVE_INSTANCE_STATUS
+    payload: InstanceStatus
+}
 
 export type ControlPanelAction =
     ShouldChooseDisplayCategories | DidChangeLayout | ShouldIgnoreKeystrokes | DidToggleCapsLock |
@@ -100,7 +108,8 @@ export type ControlPanelAction =
     ShouldWriteLog | ShouldClearLogs |
     ShouldIncrementCounter |
     ShouldChangeClockSpeed | ShouldToggleClock |
-    ShouldUpdateBossbar;
+    ShouldUpdateBossbar |
+    DidReceiveInstanceStatus;
 
 // ACTION CREATORS
 export const shouldChooseDisplayCategories = createAction<et.EffectType[]>(SHOULD_CHOOSE_DISPLAY_CATEGORIES);
@@ -116,6 +125,7 @@ export const shouldIncrementCounter = createAction<string>(SHOULD_INCREMENT_COUN
 export const shouldChangeClockSpeed = createAction<ClockSpeedMessage>(SHOULD_CHANGE_CLOCK_SPEED);
 export const shouldToggleClock = createAction(SHOULD_TOGGLE_CLOCK);
 export const shouldUpdateBossbar = createAction<BossbarOptions | null>(SHOULD_UPDATE_BOSSBAR);
+export const didReceiveInstanceStatus = createAction<InstanceStatus>(DID_RECEIVE_INSTANCE_STATUS);
 
 // ACTIONS
 export const chooseDisplayCategories = (displayCategories: et.EffectType[]): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
@@ -163,6 +173,12 @@ export const updateBossbar = (options: BossbarOptions, sendUpdate: boolean): Thu
 export const clearBossbar = (): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     doUpdateBossbar(ClearBossbar);
     dispatch(shouldUpdateBossbar(null));
+};
+export const startInstance = (): ThunkAction<void, RootState, null, AnyAction> => () => {
+    doStartStopInstance(ia.StartInstance);
+};
+export const stopInstance = (): ThunkAction<void, RootState, null, AnyAction> => () => {
+    doStartStopInstance(ia.StopInstance);
 };
 
 export const handleKeyPress = (event: KeyboardEvent, presets: Preset[], runningEffects: Map<string, RunningEffect>): ThunkAction<void, RootState, null, AnyAction> => dispatch => {

@@ -1,18 +1,18 @@
 import React from "react";
 import { connect } from "react-redux";
-import * as is from "../../domain/InstanceStatus";
-import { RootState } from "../../RootState";
-import Page from "../Page/Page";
-import { startInstance, stopInstance } from "./SystemSettingsActions";
-import { SystemSettingsProps } from "./SystemSettingsProps";
-import "./SystemSettings.scss";
-import { selectInstanceStatus } from "./SystemsSettingsSelectors";
+import * as is from "../../../../domain/InstanceStatus";
+import { RootState } from "../../../../RootState";
+import { startInstance, stopInstance } from "../../ControlPanelActions";
+import { selectInstanceStatus } from "../../ControlPanelSelectors";
+import Page from "../../../Page/Page";
+import "./InstanceSettings.scss";
+import { InstanceSettingsProps } from "./InstanceSettingsProps";
 
-const SystemSettings = ({
+const InstanceSettings = ({
     instanceStatus,
     startInstance,
     stopInstance
-}: SystemSettingsProps) => {
+}: InstanceSettingsProps) => {
     let color = "gray";
 
     switch (instanceStatus) {
@@ -35,8 +35,8 @@ const SystemSettings = ({
     const disableStop = instanceStatus !== is.Running;
 
     return (
-        <Page title="System Settings" renderBackButton>
-            <div className="system-settings__instance-status">
+        <Page title="Instance Settings" renderBackButton>
+            <div className="instance-settings__instance-status">
                 <div className="title">Build Instance</div>
 
                 <div className="instance-status">
@@ -76,4 +76,4 @@ const mapDispatchToProps = {
     stopInstance: stopInstance
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SystemSettings);
+export default connect(mapStateToProps, mapDispatchToProps)(InstanceSettings);

@@ -7,7 +7,6 @@ import { selectIsInitialized, selectMessageQueue, selectPresets } from "./AppSel
 import ControlPanel from "./components/ControlPanel/ControlPanel";
 import { selectIgnoreKeystrokes } from "./components/ControlPanel/ControlPanelSelectors";
 import PresetManager from "./components/PresetManager/PresetManager";
-import SystemSettings from "./components/SystemSettings/SystemSettings";
 import { RootState } from "./RootState";
 import Routes from "./routes";
 
@@ -36,7 +35,6 @@ function App ({
                 <Redirect exact from="/cp" to={Routes.controlPanel}/>
                 <Route exact path={Routes.controlPanel}><ControlPanel /></Route>
                 <Route exact path={Routes.presetManager}><PresetManager /></Route>
-                <Route exact path={Routes.settings}><SystemSettings /></Route>
             </Switch>
         </Router>
     );
