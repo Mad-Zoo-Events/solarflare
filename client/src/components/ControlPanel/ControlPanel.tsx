@@ -1,32 +1,26 @@
 import React from "react";
-import ReactGridLayout, { ItemCallback, Layout, WidthProvider } from "react-grid-layout";
 import { connect } from "react-redux";
-import { selectCombinedPresets, selectPresets } from "../../AppSelectors";
+import { selectCombinedPresets } from "../../AppSelectors";
 import { allEffectTypes } from "../../domain/EffectType";
 import { RootState } from "../../RootState";
-import { getPresetsOfType } from "../../utils/utils";
 import Page from "../Page/Page";
+import CategoryGrid from "./CategoryGrid/CategoryGrid";
 import CategorySection from "./CategorySection/CategorySection";
 import "./ControlPanel.scss";
-import { changeLayout, handleKeyPress } from "./ControlPanelActions";
+import { handleKeyPress } from "./ControlPanelActions";
 import { ControlPanelProps } from "./ControlPanelProps";
-import { selectClockTapButtonRef, selectDisplayCategories, selectIgnoreKeystrokes, selectLayout, selectRunningEffects } from "./ControlPanelSelectors";
+import { selectClockTapButtonRef, selectDisplayCategories, selectIgnoreKeystrokes, selectRunningEffects } from "./ControlPanelSelectors";
 import FooterControls from "./FooterControls/FooterControls";
 import HeaderControls from "./HeaderControls/HeaderControls";
 import PresetControl from "./PresetControl/PresetControl";
 
-const GridLayout = WidthProvider(ReactGridLayout);
-
 const ControlPanel = ({
-    displayCategories,
-    ignoreKeystrokes,
-    layout,
-    presets,
     combinedPresets,
     runningEffects,
+    displayCategories,
+    ignoreKeystrokes,
     clockTapButtonRef,
-    handleKeyPress,
-    changeLayout
+    handleKeyPress
 }: ControlPanelProps) => {
     const doClockTap = (b: HTMLDivElement | null) => {
         if (!b) return;
@@ -43,74 +37,43 @@ const ControlPanel = ({
         }
     };
 
-    const handleLayoutChange: ItemCallback = (layout: Layout[]) => {
-        changeLayout(layout);
-    };
-
     return (
         <Page
             headerElements={<HeaderControls/>}
             footerElements={<FooterControls/>}
         >
-            <>
-                {/* Category placeholders with per-effect-type controls */}
-                {displayCategories.length < allEffectTypes.length
-                    ? (<div className="control-panel__placeholder-category-holder">
+            {/* Category placeholders with per-effect-type controls */}
+            {displayCategories.length < allEffectTypes.length &&
+                    <div className="control-panel__placeholder-category-holder">
                         {allEffectTypes.filter(et => !displayCategories.includes(et)).map(effectType => (
                             <CategorySection key={`placeholder-${effectType}`} effectType={effectType}/>
                         ))}
-                    </div>)
-                    : null
-                }
+                    </div>
+            }
 
-                {/* "loose" presets */}
-                {combinedPresets.map(preset =>
-                    <PresetControl
-                        key={preset.id}
-                        preset={preset}
-                    />
-                )}
+            {/* "loose" presets */}
+            {combinedPresets.map(preset =>
+                <PresetControl
+                    key={preset.id}
+                    preset={preset}
+                />
+            )}
 
-                {/* Category sections with corresponding presets */}
-                {displayCategories.length > 0
-                    ? (<GridLayout
-                        className="layout"
-                        layout={layout}
-                        cols={8}
-                        rowHeight={90}
-                        margin={[0, 0]}
-                        autoSize
-                        isBounded
-                        compactType="vertical"
-                        onResizeStop={handleLayoutChange}
-                        onDragStop={handleLayoutChange}
-                    >
-                        {allEffectTypes.filter(et => displayCategories.includes(et)).map(effectType => (
-                            <div key={`cat-${effectType}`}>
-                                <CategorySection key={`cat-${effectType}`} effectType={effectType} presets={getPresetsOfType(effectType, presets)}/>
-                            </div>
-                        ))}
-                    </GridLayout >)
-                    : null
-                }
-            </>
+            {/* Category sections with corresponding presets */}
+            <CategoryGrid/>
         </Page>
     );
 };
 
 function mapStateToProps (state: RootState) {
-    const presets = selectPresets(state);
     const displayCategories = selectDisplayCategories(state);
-    const layout = selectLayout(state);
     const combinedPresets = selectCombinedPresets(state, displayCategories);
     const runningEffects = selectRunningEffects(state);
     const ignoreKeystrokes = selectIgnoreKeystrokes(state);
     const clockTapButtonRef = selectClockTapButtonRef(state);
 
     return {
-        presets,
         combinedPresets,
-        layout,
         runningEffects,
         displayCategories,
         ignoreKeystrokes,
@@ -119,8 +82,7 @@ function mapStateToProps (state: RootState) {
 }
 
 const mapDispatchToProps = {
-    handleKeyPress: handleKeyPress,
-    changeLayout: changeLayout
+    handleKeyPress: handleKeyPress
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ControlPanel);
