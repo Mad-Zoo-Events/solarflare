@@ -4,11 +4,12 @@ package model
 
 // Server contains information about an Aurora plugin server
 type Server struct {
-	ID             string `json:"id"`
-	Name           string `json:"name"`
-	IsActive       bool   `json:"isActive"`
-	PrivateAddress string `json:"privateAddress"`
-	PublicAddress  string `json:"publicAddress"`
+	ID             string         `json:"id"` //EC2 instance ID
+	Name           string         `json:"name"`
+	IsActive       bool           `json:"isActive"`
+	InstanceStatus InstanceStatus `json:"instanceStatus"`
+	PrivateAddress string         `json:"privateAddress"`
+	PublicAddress  string         `json:"publicAddress"`
 }
 
 // Setting is the model used to communicate settings stored on the database
