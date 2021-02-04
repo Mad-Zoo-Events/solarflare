@@ -2,24 +2,6 @@ package model
 
 // ================ INTERNAL MODELS ================ //
 
-// ControlPanel holds all data to be rendered on the control panel website
-type ControlPanel struct {
-	ParticleEffectPresets  []ParticleEffectPreset
-	DragonEffectPresets    []DragonEffectPreset
-	TimeshiftEffectPresets []TimeshiftEffectPreset
-	PotionEffectPresets    []PotionEffectPreset
-	LaserEffectPresets     []LaserEffectPreset
-	CommandEffectPresets   []CommandEffectPreset
-	MinecraftColors        []MinecraftColor
-
-	RegisteredServers []Server
-
-	Stages        []string
-	SelectedStage string
-
-	AppVersion string
-}
-
 // Server contains information about an Aurora plugin server
 type Server struct {
 	ID             string `json:"id"`
