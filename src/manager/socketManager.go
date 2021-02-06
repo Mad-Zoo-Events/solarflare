@@ -37,6 +37,7 @@ func RegisterSocket(conn *websocket.Conn) {
 
 	update := model.UIUpdate{
 		ServerUpdate: &model.ServerUpdate{
+			Action:  model.EnableServerAction,
 			Servers: cfg.Servers,
 		},
 		StageUpdate: &model.StageUpdate{
