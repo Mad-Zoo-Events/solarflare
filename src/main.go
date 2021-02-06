@@ -19,7 +19,7 @@ func load() {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
-	cfg.Servers = client.GetServers()
+	cfg.Servers = client.GetServers(true)
 
 	cfg.Stages = []string{"mzitv", "stratos", "iod", "hotg"}
 	cfg.SelectedStage = cfg.Stages[3]

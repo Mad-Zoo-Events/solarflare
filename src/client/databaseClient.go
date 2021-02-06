@@ -209,7 +209,7 @@ func GetCommandEffectPresets() (presets []model.CommandEffectPreset) {
 }
 
 // GetServers retrieves all server addresses from the database
-func GetServers() (servers []model.Server) {
+func GetServers(getStatus bool) (servers []model.Server) {
 	tableName := ServerTable
 
 	result, err := dbClient.Scan(&dynamodb.ScanInput{
@@ -227,6 +227,10 @@ func GetServers() (servers []model.Server) {
 		if err != nil {
 			sferror.New(sferror.DatabaseUnmarshal, "Failed to unmarshal server address", err)
 			continue
+		}
+
+		if getStatus {
+			server.InstanceStatus, _ = GetStatus(server.ID)
 		}
 
 		servers = append(servers, server)
