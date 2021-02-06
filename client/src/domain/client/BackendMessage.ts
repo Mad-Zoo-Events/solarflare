@@ -3,6 +3,7 @@ import { ClockAction } from "../ClockAction";
 import BossbarColor from "../controlpanel/BossbarColor";
 import { EffectAction } from "../EffectAction";
 import { EffectType } from "../EffectType";
+import { ServerAction } from "../ServerAction";
 import { Server } from "./Server";
 import { StopAllOptions } from "./StopAllOptions";
 

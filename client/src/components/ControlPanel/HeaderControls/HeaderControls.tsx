@@ -15,6 +15,7 @@ import BossbarControl from "./BossbarControl/BossbarControl";
 import CommandControl from "./CommandControl/CommandControl";
 import "./HeaderControls.scss";
 import { HeaderControlsProps } from "./HeaderControlsProps";
+import InstanceSettings from "./InstanceSettings/InstanceSettings";
 import Select from "./Select/Select";
 import { Option } from "./Select/SelectProps";
 
@@ -100,9 +101,9 @@ const HeaderControls = ({
                     onChange={(changed) => chooseStage(changed.value)}
                 />
             </Popup>
+            <div className="separator"/>
             <Popup label="Manage Instances" iconProps={{ icon: ["fas", "tools"], size: "2x" }}>
-                {/* <InstanceSettings /> */}
-                <div>TODO</div>
+                <InstanceSettings />
             </Popup>
             <div className="separator"/>
             <Link className="button header-button" to={Routes.presetManager}>
