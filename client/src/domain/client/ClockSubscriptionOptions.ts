@@ -1,4 +1,3 @@
-import { ClockAction } from "../ClockAction";
 import { EffectType } from "../EffectType";
 
 export interface ClockSubscriptionOptions {
