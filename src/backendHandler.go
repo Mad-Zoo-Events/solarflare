@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io/ioutil"
 	"net/http"
 
@@ -22,16 +23,32 @@ func VersionHandler(c *gin.Context) {
 	c.String(http.StatusOK, config.Get().AppVersion)
 }
 
-// ToggleServerHandler handles requests to enable or disable a server
-func ToggleServerHandler(c *gin.Context) {
-	controller.ToggleServer(c.Param("id"), model.ServerAction(c.Param("action")))
+// ServerHandler handles requests to enable or disable a server
+func ServerHandler(c *gin.Context) {
+	var (
+		action = model.ServerAction(c.Param("action"))
+		id     = c.Param("id")
+		err    error
+	)
 
-	c.Status(http.StatusNoContent)
-}
+	switch action {
+	case model.EnableServerAction, model.DisableServerAction:
+		err = controller.EnableDisableServer(id, action)
+	case model.StartServerAction, model.StopServerAction:
+		err = controller.StartStopInstance(id, action)
+	default:
+		err = sferror.New(sferror.ActionNotAllowed, fmt.Sprintf("Action %s is not allowed on an instance", action), nil)
+	}
 
-// StartStopInstanceHandler handles requests to enable or disable a server
-func StartStopInstanceHandler(c *gin.Context) {
-	controller.StartStopInstance(model.InstanceAction(c.Param("action")))
+	if err != nil {
+		switch sferror.GetErrorType(err) {
+		case sferror.ActionNotAllowed, sferror.DatabaseNotFound:
+			c.JSON(http.StatusBadRequest, sferror.Get(err))
+		default:
+			c.JSON(http.StatusInternalServerError, sferror.Get(err))
+		}
+		return
+	}
 
 	c.Status(http.StatusNoContent)
 }
