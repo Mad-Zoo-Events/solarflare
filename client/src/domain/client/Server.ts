@@ -4,5 +4,5 @@ export interface Server {
     id: string
     name: string
     isActive: boolean
-    status: InstanceStatus
+    instanceStatus: InstanceStatus
 }
