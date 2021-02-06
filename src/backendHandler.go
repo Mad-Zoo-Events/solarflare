@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"io/ioutil"
 	"net/http"
 
@@ -28,18 +27,9 @@ func ServerHandler(c *gin.Context) {
 	var (
 		action = model.ServerAction(c.Param("action"))
 		id     = c.Param("id")
-		err    error
 	)
 
-	switch action {
-	case model.EnableServerAction, model.DisableServerAction:
-		err = controller.EnableDisableServer(id, action)
-	case model.StartServerAction, model.StopServerAction:
-		err = controller.StartStopInstance(id, action)
-	default:
-		err = sferror.New(sferror.ActionNotAllowed, fmt.Sprintf("Action %s is not allowed on an instance", action), nil)
-	}
-
+	err := controller.ManageServer(id, action)
 	if err != nil {
 		switch sferror.GetErrorType(err) {
 		case sferror.ActionNotAllowed, sferror.DatabaseNotFound:
