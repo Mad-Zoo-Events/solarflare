@@ -11,17 +11,18 @@ const InstanceSettings = ({
     startInstance,
     stopInstance
 }: InstanceSettingProps) => {
-    const { id, name, instanceStatus } = server;
+    const { id, name } = server;
+    const instanceStatus = server.instanceStatus || is.Unknown;
     let color = "gray";
 
     switch (instanceStatus) {
     case is.Running:
         color = "green";
         break;
-    case is.Pending: case is.Initializing:
+    case is.Pending: case is.Initializing: case is.Stopping:
         color = "orange";
         break;
-    case is.Stopped: case is.Stopping: case is.Unknown:
+    case is.Stopped: case is.Unknown:
         color = "red";
         break;
     default:
@@ -36,7 +37,7 @@ const InstanceSettings = ({
     return (
         <>
             <div className="instance-name">{name}</div>
-            <div className="instance-status" style={colorStyle}>{instanceStatus?.toUpperCase() || is.Unknown}</div>
+            <div className="instance-status" style={colorStyle}>{instanceStatus.toUpperCase()}</div>
 
             <button
                 className={`button start-button ${disableStart ? "forbidden" : ""}`}
