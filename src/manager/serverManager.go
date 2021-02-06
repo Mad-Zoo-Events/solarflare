@@ -90,7 +90,7 @@ func UpsertServer(server model.Server) (*string, error) {
 	}
 
 	cfg := config.Get()
-	cfg.Servers = client.GetServers()
+	cfg.Servers = client.GetServers(false)
 
 	return &server.ID, nil
 }
