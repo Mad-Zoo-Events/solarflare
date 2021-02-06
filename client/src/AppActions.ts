@@ -8,12 +8,10 @@ import {
     fetchPresetsOfType as doFetchPresetsOfType,
     getSetting as doGetSetting,
     getVersion as doGetVersion,
-    selectStage as doSelectStage,
-    toggleServer as doToggleServer
+    selectStage as doSelectStage
 } from "./client/HttpClient";
 import {
     didChangeLayout,
-    didReceiveInstanceStatus,
     didStartEffect,
     didStopAll,
     didStopEffect,
@@ -125,9 +123,6 @@ export const fetchPresetsOfType = (effectType: EffectType): ThunkAction<void, Ro
     const presets = await doFetchPresetsOfType(effectType);
     dispatch(didGetPresetsOfType({ effectType, presets }));
 };
-export const toggleServer = (server: Server): ThunkAction<void, RootState, null, AnyAction> => () => {
-    doToggleServer(server);
-};
 export const chooseStage = (stage: string): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(stopAll({ stopEffects: true, detachClocks: true }));
     doSelectStage(stage);
@@ -141,8 +136,7 @@ export const handleSocketMessage = (message: BackendMessage, presets: PresetColl
         clockSpeedUpdate,
         bossbarUpdate,
         serverUpdate,
-        stageUpdate,
-        instanceUpdate
+        stageUpdate
     } = message;
 
     if (effectUpdate) {
@@ -230,10 +224,5 @@ export const handleSocketMessage = (message: BackendMessage, presets: PresetColl
             category: "STAGE",
             message: `Selected stage: ${stageUpdate.selectedStage.toUpperCase()}`
         }));
-    }
-
-    if (instanceUpdate) {
-        const { status } = instanceUpdate;
-        dispatch(didReceiveInstanceStatus(status));
     }
 };

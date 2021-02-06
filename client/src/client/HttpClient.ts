@@ -3,7 +3,6 @@ import { BossbarAction } from "../domain/BossbarAction";
 import { BossbarOptions } from "../domain/client/BossbarOptions";
 import { ClockSpeedOptions } from "../domain/client/ClockSpeedOptions";
 import { ClockSubscriptionOptions } from "../domain/client/ClockSubscriptionOptions";
-import { Server } from "../domain/client/Server";
 import { StopAllOptions } from "../domain/client/StopAllOptions";
 import { EffectAction } from "../domain/EffectAction";
 import { EffectType } from "../domain/EffectType";
@@ -18,15 +17,11 @@ export async function getVersion (): Promise<string> {
 }
 
 // Backend
-export async function toggleServer ({ id, isActive }: Server): Promise<void> {
-    const action = isActive ? "enable" : "disable";
+export async function manageServer (id: string, action: ServerAction): Promise<void> {
     return await axios.patch(`/servers/${id}/${action}`);
 }
 export async function selectStage (stage: string): Promise<void> {
     return await axios.post(`/selectstage/${stage}`);
-}
-export async function startStopInstance (action: ServerAction): Promise<void> {
-    return await axios.post(`/buildinstance/${action}`);
 }
 export async function setSetting (key: string, value: string): Promise<void> {
     return await axios.post(`/settings/${key}`, value);
