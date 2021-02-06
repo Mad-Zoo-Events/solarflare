@@ -1,8 +1,8 @@
 import { HandleThunkActionCreator } from "react-redux";
-import { chooseStage, toggleServer } from "../../../AppActions";
+import { chooseStage } from "../../../AppActions";
 import { Server } from "../../../domain/client/Server";
 import { EffectType } from "../../../domain/EffectType";
-import { changeLayout, chooseDisplayCategories } from "../ControlPanelActions";
+import { changeLayout, chooseDisplayCategories, disableServer, enableServer } from "../ControlPanelActions";
 
 export interface HeaderControlsProps {
     servers: Server[]
@@ -12,7 +12,8 @@ export interface HeaderControlsProps {
     capsLockOn?: boolean
 
     chooseDisplayCategories: HandleThunkActionCreator<typeof chooseDisplayCategories>
-    toggleServer: HandleThunkActionCreator<typeof toggleServer>
-    chooseStage: HandleThunkActionCreator<typeof chooseStage>
     changeLayout: HandleThunkActionCreator<typeof changeLayout>
+    chooseStage: HandleThunkActionCreator<typeof chooseStage>
+    enableServer: HandleThunkActionCreator<typeof enableServer>
+    disableServer: HandleThunkActionCreator<typeof disableServer>
 }

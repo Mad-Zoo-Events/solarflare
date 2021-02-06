@@ -5,9 +5,9 @@ import { createAction } from "redux-actions";
 import { ThunkAction } from "redux-thunk";
 import {
     changeClockSpeed as doChangeClockSpeed,
+    manageServer as doManageServer,
     runEffect as doRunEffect,
     setSetting as doSetSetting,
-    startStopInstance as doStartStopInstance,
     stopAll as doStopAll,
     subscribeToClock as doSubscribeToClock,
     unsubscribeFromClock as doUnsubscribeFromClock,
@@ -23,7 +23,6 @@ import { ClockAction, Subscribe } from "../../domain/ClockAction";
 import * as ea from "../../domain/EffectAction";
 import { EffectAction } from "../../domain/EffectAction";
 import * as et from "../../domain/EffectType";
-import { InstanceStatus } from "../../domain/InstanceStatus";
 import { LogEntry } from "../../domain/LogEntry";
 import { Preset } from "../../domain/presets/Preset";
 import { RunningEffect } from "../../domain/RunningEffect";
@@ -45,7 +44,6 @@ export const SHOULD_INCREMENT_COUNTER = "controlpanel/INCREMENT_COUNTER";
 export const SHOULD_CHANGE_CLOCK_SPEED = "controlpanel/SHOULD_CHANGE_CLOCK_SPEED";
 export const SHOULD_TOGGLE_CLOCK = "controlpanel/SHOULD_TOGGLE_CLOCK";
 export const SHOULD_UPDATE_BOSSBAR = "controlpanel/SHOULD_UPDATE_BOSSBAR";
-export const DID_RECEIVE_INSTANCE_STATUS = "controlpanel/DID_RECEIVE_INSTANCE_STATUS";
 
 interface ShouldChooseDisplayCategories {
     type: typeof SHOULD_CHOOSE_DISPLAY_CATEGORIES
@@ -97,10 +95,6 @@ interface ShouldUpdateBossbar {
     type: typeof SHOULD_UPDATE_BOSSBAR
     payload: BossbarOptions | null
 }
-interface DidReceiveInstanceStatus {
-    type: typeof DID_RECEIVE_INSTANCE_STATUS
-    payload: InstanceStatus
-}
 
 export type ControlPanelAction =
     ShouldChooseDisplayCategories | DidChangeLayout | ShouldIgnoreKeystrokes | DidToggleCapsLock |
@@ -108,8 +102,7 @@ export type ControlPanelAction =
     ShouldWriteLog | ShouldClearLogs |
     ShouldIncrementCounter |
     ShouldChangeClockSpeed | ShouldToggleClock |
-    ShouldUpdateBossbar |
-    DidReceiveInstanceStatus;
+    ShouldUpdateBossbar;
 
 // ACTION CREATORS
 export const shouldChooseDisplayCategories = createAction<et.EffectType[]>(SHOULD_CHOOSE_DISPLAY_CATEGORIES);
@@ -125,9 +118,10 @@ export const shouldIncrementCounter = createAction<string>(SHOULD_INCREMENT_COUN
 export const shouldChangeClockSpeed = createAction<ClockSpeedMessage>(SHOULD_CHANGE_CLOCK_SPEED);
 export const shouldToggleClock = createAction(SHOULD_TOGGLE_CLOCK);
 export const shouldUpdateBossbar = createAction<BossbarOptions | null>(SHOULD_UPDATE_BOSSBAR);
-export const didReceiveInstanceStatus = createAction<InstanceStatus>(DID_RECEIVE_INSTANCE_STATUS);
 
 // ACTIONS
+
+// Control Panel
 export const chooseDisplayCategories = (displayCategories: et.EffectType[]): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(shouldChooseDisplayCategories(displayCategories));
     doSetSetting("displayCategories", JSON.stringify(displayCategories));
@@ -139,6 +133,11 @@ export const changeLayout = (layout: Layout[]): ThunkAction<void, RootState, nul
 export const setIgnoreKeystrokes = (ignore: boolean): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(shouldIgnoreKeystrokes(ignore));
 };
+export const clearLogs = (): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
+    dispatch(shouldClearLogs());
+};
+
+// Effects
 export const runEffect = (preset: Preset, action: EffectAction): ThunkAction<void, RootState, null, AnyAction> => () => {
     const { id, effectType } = preset;
     doRunEffect(effectType, id, action);
@@ -146,9 +145,8 @@ export const runEffect = (preset: Preset, action: EffectAction): ThunkAction<voi
 export const stopAll = (options: StopAllOptions): ThunkAction<void, RootState, null, AnyAction> => () => {
     doStopAll(options);
 };
-export const clearLogs = (): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
-    dispatch(shouldClearLogs());
-};
+
+// Clock
 const debouncedClockSpeedUpdate = debounce((options: ClockSpeedOptions) => doChangeClockSpeed(options), 1000);
 export const changeClockSpeed = (options: ClockSpeedOptions): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     const { bpm: clockSpeedBpm, noteLength: clockSpeedMultiplier } = options;
@@ -163,6 +161,8 @@ export const handleClockSubscription = (options: ClockSubscriptionOptions, actio
 export const toggleClock = (): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(shouldToggleClock());
 };
+
+// Bossbar
 const debouncedBossbarUpdate = debounce((options: BossbarOptions) => doUpdateBossbar(SetBossbar, options), 10);
 export const updateBossbar = (options: BossbarOptions, sendUpdate: boolean): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {
     dispatch(shouldUpdateBossbar(options));
@@ -174,11 +174,19 @@ export const clearBossbar = (): ThunkAction<void, RootState, null, AnyAction> =>
     doUpdateBossbar(ClearBossbar);
     dispatch(shouldUpdateBossbar(null));
 };
-export const startServer = (): ThunkAction<void, RootState, null, AnyAction> => () => {
-    doStartStopInstance(sa.StartServer);
+
+// Servers
+export const enableServer = (id: string): ThunkAction<void, RootState, null, AnyAction> => () => {
+    doManageServer(id, sa.EnableServer);
 };
-export const stopServer = (): ThunkAction<void, RootState, null, AnyAction> => () => {
-    doStartStopInstance(sa.StopServer);
+export const disableServer = (id: string): ThunkAction<void, RootState, null, AnyAction> => () => {
+    doManageServer(id, sa.DisableServer);
+};
+export const startServer = (id: string): ThunkAction<void, RootState, null, AnyAction> => () => {
+    doManageServer(id, sa.StartServer);
+};
+export const stopServer = (id: string): ThunkAction<void, RootState, null, AnyAction> => () => {
+    doManageServer(id, sa.StopServer);
 };
 
 export const handleKeyPress = (event: KeyboardEvent, presets: Preset[], runningEffects: Map<string, RunningEffect>): ThunkAction<void, RootState, null, AnyAction> => dispatch => {

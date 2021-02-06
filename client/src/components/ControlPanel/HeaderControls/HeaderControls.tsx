@@ -2,20 +2,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { chooseStage, toggleServer } from "../../../AppActions";
+import { chooseStage } from "../../../AppActions";
 import { selectSelectedStage, selectServers, selectStages } from "../../../AppSelectors";
 import { DefaultLayout } from "../../../domain/controlpanel/DefaultLayout";
 import { allEffectTypes, EffectType } from "../../../domain/EffectType";
 import { RootState } from "../../../RootState";
 import Routes from "../../../routes";
 import Popup from "../../Popup/Popup";
-import { changeLayout, chooseDisplayCategories } from "../ControlPanelActions";
+import { changeLayout, chooseDisplayCategories, disableServer, enableServer } from "../ControlPanelActions";
 import { selectCapsLockOn, selectDisplayCategories } from "../ControlPanelSelectors";
 import BossbarControl from "./BossbarControl/BossbarControl";
 import CommandControl from "./CommandControl/CommandControl";
 import "./HeaderControls.scss";
 import { HeaderControlsProps } from "./HeaderControlsProps";
-import InstanceSettings from "./InstanceSettings/InstanceSettings";
 import Select from "./Select/Select";
 import { Option } from "./Select/SelectProps";
 
@@ -26,9 +25,10 @@ const HeaderControls = ({
     displayCategories,
     capsLockOn,
     chooseDisplayCategories,
-    toggleServer,
+    changeLayout,
     chooseStage,
-    changeLayout
+    enableServer,
+    disableServer
 }: HeaderControlsProps) => {
     const displayModeOptions = allEffectTypes.map(effectType => ({
         value: effectType,
@@ -48,11 +48,19 @@ const HeaderControls = ({
         selected: stage === selectedStage
     }));
 
-    const handleDisplayModeChange = (changed: Option, allSelected?: Option[]) => {
+    const handleDisplayModeChange = (_changed: Option, allSelected?: Option[]) => {
         if (!allSelected) {
             return;
         }
         chooseDisplayCategories(allSelected.map(option => option.value as EffectType));
+    };
+
+    const handleServerToggled = ({ value: id, selected }: Option) => {
+        if (selected) {
+            enableServer(id);
+        } else {
+            disableServer(id);
+        }
     };
 
     const handleDefaultLayout = () => changeLayout(DefaultLayout);
@@ -82,7 +90,7 @@ const HeaderControls = ({
                 <Select
                     options={serverOptions}
                     multiselect
-                    onChange={(changed) => toggleServer({ id: changed.value, isActive: changed.selected, name: changed.text })}
+                    onChange={handleServerToggled}
                 />
             </Popup>
             <div className="separator"/>
@@ -92,9 +100,9 @@ const HeaderControls = ({
                     onChange={(changed) => chooseStage(changed.value)}
                 />
             </Popup>
-            <div className="separator"/>
             <Popup label="Manage Instances" iconProps={{ icon: ["fas", "tools"], size: "2x" }}>
-                <InstanceSettings />
+                {/* <InstanceSettings /> */}
+                <div>TODO</div>
             </Popup>
             <div className="separator"/>
             <Link className="button header-button" to={Routes.presetManager}>
@@ -129,7 +137,8 @@ function mapStateToProps (state: RootState) {
 
 const mapDispatchToProps = {
     chooseDisplayCategories: chooseDisplayCategories,
-    toggleServer: toggleServer,
+    enableServer: enableServer,
+    disableServer: disableServer,
     chooseStage: chooseStage,
     changeLayout: changeLayout
 };
