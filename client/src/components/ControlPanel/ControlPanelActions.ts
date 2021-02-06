@@ -23,11 +23,11 @@ import { ClockAction, Subscribe } from "../../domain/ClockAction";
 import * as ea from "../../domain/EffectAction";
 import { EffectAction } from "../../domain/EffectAction";
 import * as et from "../../domain/EffectType";
-import * as ia from "../../domain/InstanceAction";
 import { InstanceStatus } from "../../domain/InstanceStatus";
 import { LogEntry } from "../../domain/LogEntry";
 import { Preset } from "../../domain/presets/Preset";
 import { RunningEffect } from "../../domain/RunningEffect";
+import * as sa from "../../domain/ServerAction";
 import { RootState } from "../../RootState";
 
 // ACTION TYPES
@@ -174,11 +174,11 @@ export const clearBossbar = (): ThunkAction<void, RootState, null, AnyAction> =>
     doUpdateBossbar(ClearBossbar);
     dispatch(shouldUpdateBossbar(null));
 };
-export const startInstance = (): ThunkAction<void, RootState, null, AnyAction> => () => {
-    doStartStopInstance(ia.StartInstance);
+export const startServer = (): ThunkAction<void, RootState, null, AnyAction> => () => {
+    doStartStopInstance(sa.StartServer);
 };
-export const stopInstance = (): ThunkAction<void, RootState, null, AnyAction> => () => {
-    doStartStopInstance(ia.StopInstance);
+export const stopServer = (): ThunkAction<void, RootState, null, AnyAction> => () => {
+    doStartStopInstance(sa.StopServer);
 };
 
 export const handleKeyPress = (event: KeyboardEvent, presets: Preset[], runningEffects: Map<string, RunningEffect>): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
