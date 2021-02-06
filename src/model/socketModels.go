@@ -46,7 +46,8 @@ type ClockSpeedUpdate struct {
 
 // ServerUpdate is the model used to send an update for when a server selection has been made
 type ServerUpdate struct {
-	Servers []Server `json:"servers"`
+	Action  ServerAction `json:"action"`
+	Servers []Server     `json:"servers"`
 }
 
 // StageUpdate is the model used to send the update for when a different stage has been selected

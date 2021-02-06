@@ -1,48 +1,25 @@
 package controller
 
 import (
+	"fmt"
+
 	"github.com/eynorey/solarflare/src/client"
 	"github.com/eynorey/solarflare/src/config"
 	"github.com/eynorey/solarflare/src/manager"
 	"github.com/eynorey/solarflare/src/model"
+	"github.com/eynorey/solarflare/src/utils/sferror"
 )
 
-// EnableDisableServer turns a server on or off
-func EnableDisableServer(id string, action model.ServerAction) error {
-	cfg := config.Get()
-	for _, server := range cfg.Servers {
-		if server.ID == id {
-			if action == model.EnableServerAction {
-				server.IsActive = true
-			} else {
-				server.IsActive = false
-			}
-
-			_, err := manager.UpsertServer(server)
-			if err != nil {
-				return err
-			}
-		}
+// ManageServer handles actions to be performed on an instance
+func ManageServer(id string, action model.ServerAction) error {
+	switch action {
+	case model.EnableServerAction, model.DisableServerAction:
+		return manager.EnableDisableServer(id, action)
+	case model.StartServerAction, model.StopServerAction:
+		return manager.StartStopServer(id, action)
+	default:
+		return sferror.New(sferror.ActionNotAllowed, fmt.Sprintf("Action %s is not allowed on an instance", action), nil)
 	}
-
-	update := model.UIUpdate{
-		ServerUpdate: &model.ServerUpdate{
-			Servers: cfg.Servers,
-		},
-	}
-
-	manager.SendUIUpdate(update)
-
-	return nil
-}
-
-// StartStopInstance handles starting or stopping an instance
-func StartStopInstance(id string, action model.ServerAction) error {
-	if action == model.StartServerAction {
-		return manager.StartInstance(id)
-	}
-
-	return manager.StopInstance(id)
 }
 
 // SelectStage selects a different data source for presets and reloads
