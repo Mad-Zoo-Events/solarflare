@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import * as is from "../../../../domain/InstanceStatus";
 import { RootState } from "../../../../RootState";
-import { startInstance, stopInstance } from "../../ControlPanelActions";
+import { startServer, stopServer } from "../../ControlPanelActions";
 import { selectInstanceStatus } from "../../ControlPanelSelectors";
 import "./InstanceSettings.scss";
 import { InstanceSettingsProps } from "./InstanceSettingsProps";
@@ -65,8 +65,8 @@ function mapStateToProps (state: RootState) {
 }
 
 const mapDispatchToProps = {
-    startInstance: startInstance,
-    stopInstance: stopInstance
+    startInstance: startServer,
+    stopInstance: stopServer
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(InstanceSettings);
