@@ -74,16 +74,10 @@ const (
 	EnableServerAction = ServerAction("enable")
 	// DisableServerAction disables a server
 	DisableServerAction = ServerAction("disable")
-)
-
-// InstanceAction represents an action to be performed on an instance
-type InstanceAction string
-
-const (
-	// StartInstanceAction starts an instance
-	StartInstanceAction = InstanceAction("start")
-	// StopInstanceAction stops an instance
-	StopInstanceAction = InstanceAction("stop")
+	// StartServerAction starts an instance
+	StartServerAction = ServerAction("start")
+	// StopServerAction stops an instance
+	StopServerAction = ServerAction("stop")
 )
 
 // MinecraftColor represents a Minecraft color

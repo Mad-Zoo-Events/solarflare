@@ -7,8 +7,8 @@ import (
 	"github.com/eynorey/solarflare/src/model"
 )
 
-// ToggleServer turns a server on or off
-func ToggleServer(id string, action model.ServerAction) error {
+// EnableDisableServer turns a server on or off
+func EnableDisableServer(id string, action model.ServerAction) error {
 	cfg := config.Get()
 	for _, server := range cfg.Servers {
 		if server.ID == id {
@@ -34,6 +34,15 @@ func ToggleServer(id string, action model.ServerAction) error {
 	manager.SendUIUpdate(update)
 
 	return nil
+}
+
+// StartStopInstance handles starting or stopping an instance
+func StartStopInstance(id string, action model.ServerAction) error {
+	if action == model.StartServerAction {
+		return manager.StartInstance(id)
+	}
+
+	return manager.StopInstance(id)
 }
 
 // SelectStage selects a different data source for presets and reloads

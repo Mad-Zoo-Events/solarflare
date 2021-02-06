@@ -9,7 +9,6 @@ type UIUpdate struct {
 	ServerUpdate     *ServerUpdate     `json:"serverUpdate,omitempty"`
 	StageUpdate      *StageUpdate      `json:"stageUpdate,omitempty"`
 	CommandUpdate    *CommandUpdate    `json:"commandUpdate,omitempty"`
-	InstanceUpdate   *InstanceUpdate   `json:"instanceUpdate,omitempty"`
 }
 
 // EffectUpdate is the model used to send updates on effect actions to the UI
@@ -61,9 +60,4 @@ type CommandUpdate struct {
 	Command string `json:"command"`
 
 	ErrorMessage string `json:"errorMessage"`
-}
-
-// InstanceUpdate is the model used to send an update about changes to an instance's status
-type InstanceUpdate struct {
-	Status InstanceStatus `json:"status"`
 }
