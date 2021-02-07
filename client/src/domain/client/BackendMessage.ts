@@ -47,7 +47,8 @@ export interface ClockSpeedMessage {
 }
 
 export interface ServerMessage {
-    action: ServerAction
+    actionPerformed: ServerAction
+    performedOnId: string
     servers: Server[]
 }
 
