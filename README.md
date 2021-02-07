@@ -64,6 +64,8 @@ The control panel is the browser-based user interface which interacts with the G
 
 Here you can execute effects, manage presets, run one-off commands, set the in-game boss bar, and more. It also logs a message indicating if the effect you just triggered successfully ran on all servers, or at least on how many of them.
 
+By default, all presets of the same type are grouped together in areas you can freely resize and rearrange on the control panel.
+
 #### Boss Bar Control
 
 The control panel has an input field for text to be displayed on an in-game boss bar.
@@ -78,23 +80,20 @@ This feature lets you run a single command on all servers currently enabled in t
 
 The command should not contain a leading slash, but Solarflare will be stripping it off in case you forget about that ;)
 
-#### Display Mode
+#### Display Options
 
-This feature lets you choose another mode for how presets are arranged on the control panel. Presets are always sorted alphabetically by their display name.
+In this menu you can select which types of presets you want to be displayed grouped together.
 
-There are currently three modes:
+**Enabling** a certain effect type groups all presets of that type together. All remaining presets are "loosely" displayed above the groups and sorted alphabetically by their name.
 
-- **Categorized**: groups presets of the same effect type
-- **Uncategorized**: all presets together, ungrouped
-- **Separate Commands**: same as Uncategorized, except command presets are grouped together and displayed below the others
-
-#### Server Selection
+#### Manage Servers
 
 Solarflare can be used to cater a large number of Minecraft server instances at the same time. Thus, each instance needs to have the Aurora plugin installed and Solarflare must know the address of each instance.
+This information is maintained on a dedicated DynamoDB table.
 
-Server information is maintained on a dedicated DynamoDB table, and you can enable and disable servers which Solarflare will then send requests to on-thy-fly. Individual Servers can be enabled or disabled on the control panel.
+This menu lets you enable and disable servers which Solarflare will then send the effects to, and even start and shut down instances.
 
-#### Stage Selection
+#### Switch Stage
 
 Solarflare allows for multiple stages (different Minecraft worlds) to be set up at the same time and lets you select the stage you are going to work on (new stages currently need to be set up manually in the source code)
 
