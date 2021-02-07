@@ -1,20 +1,24 @@
 .instance-settings {
     display              : grid;
     grid-template-columns: 1fr 1fr;
-    gap                  : 0.5em;
+    gap                  : 1em;
 
     & .instance-name {
         font-weight: bold;
-        font-size  : 1.2em;
     }
 
-    & .instance-status {
-        font-weight: bold;
+    & .instance-separator {
+        grid-column  : 1 /span 2;
+        border-bottom: 2px solid var(--gray);
+
+        &:last-child {
+            display: none;
+        }
     }
 
     & button {
-        padding         : 0.5em 1em;
-        border          : 0.1em solid;
+        padding         : 0.5em;
+        border          : 0.01em solid;
         background-color: var(--darkest-gray);
 
         &:hover:not(.forbidden) {
