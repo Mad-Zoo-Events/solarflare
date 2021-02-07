@@ -24,8 +24,7 @@ import {
     faSkull,
     faPaperPlane,
     faTachometerAlt,
-    faTerminal,
-    faTools
+    faTerminal
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -63,7 +62,6 @@ library.add(
     faPaperPlane,
     faTachometerAlt,
     faTerminal,
-    faTools,
 
     faEdit,
     faClone,

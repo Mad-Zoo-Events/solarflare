@@ -2,8 +2,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { chooseStage, disableServer, enableServer } from "../../../AppActions";
-import { selectSelectedStage, selectServers, selectStages } from "../../../AppSelectors";
+import { chooseStage } from "../../../AppActions";
+import { selectSelectedStage, selectStages } from "../../../AppSelectors";
 import { DefaultLayout } from "../../../domain/controlpanel/DefaultLayout";
 import { allEffectTypes, EffectType } from "../../../domain/EffectType";
 import { RootState } from "../../../RootState";
@@ -20,27 +20,18 @@ import Select from "./Select/Select";
 import { Option } from "./Select/SelectProps";
 
 const HeaderControls = ({
-    servers,
     stages,
     selectedStage,
     displayCategories,
     capsLockOn,
     chooseDisplayCategories,
     changeLayout,
-    chooseStage,
-    enableServer,
-    disableServer
+    chooseStage
 }: HeaderControlsProps) => {
     const displayModeOptions = allEffectTypes.map(effectType => ({
         value: effectType,
         text: effectType,
         selected: displayCategories.includes(effectType)
-    }));
-
-    const serverOptions = servers.map(({ id, name, isActive }) => ({
-        value: id,
-        text: name,
-        selected: isActive
     }));
 
     const stageOptions = stages.map(stage => ({
@@ -54,14 +45,6 @@ const HeaderControls = ({
             return;
         }
         chooseDisplayCategories(allSelected.map(option => option.value as EffectType));
-    };
-
-    const handleServerToggled = ({ value: id, selected }: Option) => {
-        if (selected) {
-            enableServer(id);
-        } else {
-            disableServer(id);
-        }
     };
 
     const handleDefaultLayout = () => changeLayout(DefaultLayout);
@@ -87,12 +70,8 @@ const HeaderControls = ({
                 </div>
             </Popup>
             <div className="separator"/>
-            <Popup label="Select Servers" iconProps={{ icon: ["fas", "satellite-dish"], size: "2x" }}>
-                <Select
-                    options={serverOptions}
-                    multiselect
-                    onChange={handleServerToggled}
-                />
+            <Popup label="Manage Servers" iconProps={{ icon: ["fas", "satellite-dish"], size: "2x" }}>
+                <InstanceSettings />
             </Popup>
             <div className="separator"/>
             <Popup label="Switch Stage" iconProps={{ icon: ["fas", "globe-asia"], size: "2x" }}>
@@ -100,10 +79,6 @@ const HeaderControls = ({
                     options={stageOptions}
                     onChange={(changed) => chooseStage(changed.value)}
                 />
-            </Popup>
-            <div className="separator"/>
-            <Popup label="Manage Instances" iconProps={{ icon: ["fas", "tools"], size: "2x" }}>
-                <InstanceSettings />
             </Popup>
             <div className="separator"/>
             <Link className="button header-button" to={Routes.presetManager}>
@@ -120,7 +95,6 @@ const HeaderControls = ({
 };
 
 function mapStateToProps (state: RootState) {
-    const servers = selectServers(state);
     const stages = selectStages(state);
     const selectedStage = selectSelectedStage(state);
 
@@ -128,7 +102,6 @@ function mapStateToProps (state: RootState) {
     const capsLockOn = selectCapsLockOn(state);
 
     return {
-        servers,
         stages,
         selectedStage,
         displayCategories,
@@ -138,8 +111,6 @@ function mapStateToProps (state: RootState) {
 
 const mapDispatchToProps = {
     chooseDisplayCategories: chooseDisplayCategories,
-    enableServer: enableServer,
-    disableServer: disableServer,
     chooseStage: chooseStage,
     changeLayout: changeLayout
 };
