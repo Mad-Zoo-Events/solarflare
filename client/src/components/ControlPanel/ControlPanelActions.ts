@@ -5,7 +5,6 @@ import { createAction } from "redux-actions";
 import { ThunkAction } from "redux-thunk";
 import {
     changeClockSpeed as doChangeClockSpeed,
-    manageServer as doManageServer,
     runEffect as doRunEffect,
     setSetting as doSetSetting,
     stopAll as doStopAll,
@@ -26,7 +25,6 @@ import * as et from "../../domain/EffectType";
 import { LogEntry } from "../../domain/LogEntry";
 import { Preset } from "../../domain/presets/Preset";
 import { RunningEffect } from "../../domain/RunningEffect";
-import * as sa from "../../domain/ServerAction";
 import { RootState } from "../../RootState";
 
 // ACTION TYPES
@@ -173,20 +171,6 @@ export const updateBossbar = (options: BossbarOptions, sendUpdate: boolean): Thu
 export const clearBossbar = (): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     doUpdateBossbar(ClearBossbar);
     dispatch(shouldUpdateBossbar(null));
-};
-
-// Servers
-export const enableServer = (id: string): ThunkAction<void, RootState, null, AnyAction> => () => {
-    doManageServer(id, sa.EnableServer);
-};
-export const disableServer = (id: string): ThunkAction<void, RootState, null, AnyAction> => () => {
-    doManageServer(id, sa.DisableServer);
-};
-export const startServer = (id: string): ThunkAction<void, RootState, null, AnyAction> => () => {
-    doManageServer(id, sa.StartServer);
-};
-export const stopServer = (id: string): ThunkAction<void, RootState, null, AnyAction> => () => {
-    doManageServer(id, sa.StopServer);
 };
 
 export const handleKeyPress = (event: KeyboardEvent, presets: Preset[], runningEffects: Map<string, RunningEffect>): ThunkAction<void, RootState, null, AnyAction> => dispatch => {

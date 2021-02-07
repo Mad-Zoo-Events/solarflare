@@ -1,8 +1,8 @@
 import { HandleThunkActionCreator } from "react-redux";
-import { chooseStage } from "../../../AppActions";
+import { chooseStage, disableServer, enableServer } from "../../../AppActions";
 import { Server } from "../../../domain/client/Server";
 import { EffectType } from "../../../domain/EffectType";
-import { changeLayout, chooseDisplayCategories, disableServer, enableServer } from "../ControlPanelActions";
+import { changeLayout, chooseDisplayCategories } from "../ControlPanelActions";
 
 export interface HeaderControlsProps {
     servers: Server[]

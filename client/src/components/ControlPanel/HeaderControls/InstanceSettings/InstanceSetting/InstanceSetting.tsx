@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
+import { startServer, stopServer } from "../../../../../AppActions";
 import { selectServers } from "../../../../../AppSelectors";
 import * as is from "../../../../../domain/InstanceStatus";
 import { RootState } from "../../../../../RootState";
-import { startServer, stopServer } from "../../../ControlPanelActions";
 import { InstanceSettingProps } from "./InstanceSettingProps";
 
 const InstanceSettings = ({
