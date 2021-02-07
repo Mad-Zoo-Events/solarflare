@@ -1,6 +1,6 @@
 import { HandleThunkActionCreator } from "react-redux";
+import { startServer, stopServer } from "../../../../../AppActions";
 import { Server } from "../../../../../domain/client/Server";
-import { startServer, stopServer } from "../../../ControlPanelActions";
 
 export interface InstanceSettingProps {
     server: Server,

@@ -8,6 +8,7 @@ import {
     fetchPresetsOfType as doFetchPresetsOfType,
     getSetting as doGetSetting,
     getVersion as doGetVersion,
+    manageServer as doManageServer,
     selectStage as doSelectStage
 } from "./client/HttpClient";
 import {
@@ -29,11 +30,11 @@ import { Server } from "./domain/client/Server";
 import { Subscribe } from "./domain/ClockAction";
 import * as ea from "./domain/EffectAction";
 import { EffectType } from "./domain/EffectType";
+import * as is from "./domain/InstanceStatus";
 import { LogEntry, LogLevel } from "./domain/LogEntry";
 import { PresetCollection } from "./domain/PresetCollection";
 import { Preset } from "./domain/presets/Preset";
 import * as sa from "./domain/ServerAction";
-import * as is from "./domain/InstanceStatus";
 import { RootState } from "./RootState";
 import { getPreset } from "./utils/utils";
 
@@ -128,6 +129,19 @@ export const fetchPresetsOfType = (effectType: EffectType): ThunkAction<void, Ro
 export const chooseStage = (stage: string): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(stopAll({ stopEffects: true, detachClocks: true }));
     doSelectStage(stage);
+};
+// Servers
+export const enableServer = (id: string): ThunkAction<void, RootState, null, AnyAction> => () => {
+    doManageServer(id, sa.EnableServer);
+};
+export const disableServer = (id: string): ThunkAction<void, RootState, null, AnyAction> => () => {
+    doManageServer(id, sa.DisableServer);
+};
+export const startServer = (id: string): ThunkAction<void, RootState, null, AnyAction> => () => {
+    doManageServer(id, sa.StartServer);
+};
+export const stopServer = (id: string): ThunkAction<void, RootState, null, AnyAction> => () => {
+    doManageServer(id, sa.StopServer);
 };
 export const handleSocketMessage = (message: BackendMessage, presets: PresetCollection, isTyping: boolean): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {
     const getTimer = (id: string) => window.setInterval(() => dispatch(shouldIncrementCounter(id)), 1000);
