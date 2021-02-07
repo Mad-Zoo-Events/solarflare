@@ -32,6 +32,8 @@ import { EffectType } from "./domain/EffectType";
 import { LogEntry, LogLevel } from "./domain/LogEntry";
 import { PresetCollection } from "./domain/PresetCollection";
 import { Preset } from "./domain/presets/Preset";
+import * as sa from "./domain/ServerAction";
+import * as is from "./domain/InstanceStatus";
 import { RootState } from "./RootState";
 import { getPreset } from "./utils/utils";
 
@@ -201,15 +203,34 @@ export const handleSocketMessage = (message: BackendMessage, presets: PresetColl
     }
 
     if (serverUpdate) {
-        const { servers } = serverUpdate;
+        const { actionPerformed, performedOnId, servers } = serverUpdate;
+
         dispatch(didGetServers(servers));
 
-        const sc = servers.filter(s => s.isActive).length;
+        const updatedServer = servers.find(s => s.id === performedOnId);
+
+        let level = LogLevel.Info;
+        let message = "";
+
+        if (actionPerformed === sa.EnableServer || actionPerformed === sa.DisableServer) {
+            const activeCount = servers.filter(s => s.isActive).length;
+
+            if (activeCount === 0) level = LogLevel.Warn;
+
+            message = updatedServer ? `${updatedServer.name} has been ${actionPerformed}d => ` : "";
+            message += `${activeCount === 1 ? "One server is" : `${activeCount === 0 ? "No" : activeCount} servers are`} currently listening`;
+        }
+
+        if (actionPerformed === sa.StartServer || actionPerformed === sa.StopServer) {
+            if (updatedServer?.instanceStatus === is.Running) level = LogLevel.Success;
+            if (updatedServer?.instanceStatus === is.Stopped) level = LogLevel.Warn;
+            message = `${updatedServer?.name} is ${updatedServer?.instanceStatus}`;
+        }
 
         dispatch(shouldWriteLog({
-            level: sc === 0 ? LogLevel.Warn : LogLevel.Info,
+            level,
             category: "SERVERS",
-            message: `${sc === 1 ? "One server is" : `${sc === 0 ? "No" : sc} servers are`} currently listening`
+            message
         }));
     }
 

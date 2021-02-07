@@ -31,30 +31,32 @@ func EnableDisableServer(id string, action model.ServerAction) error {
 		}
 	}
 
-	sendServerUpdate(action)
+	sendServerUpdate(id, action)
 
 	return nil
 }
 
 // StartStopServer starts or stops the instance and sends status updates to the UI until it's running/stopped
 func StartStopServer(id string, action model.ServerAction) error {
+	var initialStatus model.InstanceStatus
 	if action == model.StartServerAction {
 		if err := client.StartInstance(id); err != nil {
 			return err
 		}
 
-		updateInstanceStatus(id, model.InstanceStatusPending)
-		sendServerUpdate(action)
+		initialStatus = model.InstanceStatusPending
 	} else {
 		if err := client.StopInstance(id); err != nil {
 			return err
 		}
 
-		updateInstanceStatus(id, model.InstanceStatusStopping)
-		sendServerUpdate(action)
+		initialStatus = model.InstanceStatusStopping
 	}
 
-	go pollForUpdates(id, action)
+	updateInstanceStatus(id, initialStatus)
+	sendServerUpdate(id, action)
+
+	go pollForUpdates(id, action, initialStatus)
 
 	return nil
 }
@@ -72,23 +74,22 @@ func UpsertServer(server model.Server) (*string, error) {
 	return &server.ID, nil
 }
 
-func pollForUpdates(id string, action model.ServerAction) {
+func pollForUpdates(id string, action model.ServerAction, prevStatus model.InstanceStatus) {
 	startTime := time.Now()
-	var prevStatus model.InstanceStatus
 
 	for {
 		time.Sleep(pollingInterval)
 
 		if time.Now().Sub(startTime) > pollingTimeout {
 			updateInstanceStatus(id, model.InstanceStatusUnknown)
-			sendServerUpdate(action)
+			sendServerUpdate(id, action)
 			return
 		}
 
 		status, _ := client.GetStatus(id)
 		if status != prevStatus {
 			updateInstanceStatus(id, status)
-			sendServerUpdate(action)
+			sendServerUpdate(id, action)
 
 			if status == model.InstanceStatusStopped ||
 				status == model.InstanceStatusRunning {
@@ -110,12 +111,13 @@ func updateInstanceStatus(id string, status model.InstanceStatus) {
 	}
 }
 
-func sendServerUpdate(action model.ServerAction) {
+func sendServerUpdate(id string, action model.ServerAction) {
 	cfg := config.Get()
 	update := model.UIUpdate{
 		ServerUpdate: &model.ServerUpdate{
-			Action:  action,
-			Servers: cfg.Servers,
+			ActionPerformed: action,
+			PerformedOnID:   id,
+			Servers:         cfg.Servers,
 		},
 	}
 
