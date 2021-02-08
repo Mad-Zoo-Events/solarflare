@@ -9,7 +9,7 @@ import {
     getSetting as doGetSetting,
     getVersion as doGetVersion,
     manageServer as doManageServer,
-    selectStage as doSelectStage
+    setSetting as doSetSetting
 } from "./client/HttpClient";
 import {
     didChangeLayout,
@@ -128,7 +128,7 @@ export const fetchPresetsOfType = (effectType: EffectType): ThunkAction<void, Ro
 };
 export const chooseStage = (stage: string): ThunkAction<void, RootState, null, AnyAction> => dispatch => {
     dispatch(stopAll({ stopEffects: true, detachClocks: true }));
-    doSelectStage(stage);
+    doSetSetting("stage", stage);
 };
 // Servers
 export const enableServer = (id: string): ThunkAction<void, RootState, null, AnyAction> => () => {

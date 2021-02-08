@@ -43,13 +43,6 @@ func ServerHandler(c *gin.Context) {
 	c.Status(http.StatusNoContent)
 }
 
-// SelectStageHandler handles requests to select a different data source for presets
-func SelectStageHandler(c *gin.Context) {
-	controller.SelectStage(c.Param("stage"))
-
-	c.Status(http.StatusNoContent)
-}
-
 // SetSettingsHandler handles requests to set user settings
 func SetSettingsHandler(c *gin.Context) {
 	body, err := ioutil.ReadAll(c.Request.Body)

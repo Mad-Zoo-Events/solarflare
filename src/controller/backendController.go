@@ -10,6 +10,9 @@ import (
 	"github.com/eynorey/solarflare/src/utils/sferror"
 )
 
+// StageSettingKey is the key used for setting the stage
+const StageSettingKey = "stage"
+
 // ManageServer handles actions to be performed on an instance
 func ManageServer(id string, action model.ServerAction) error {
 	switch action {
@@ -22,30 +25,14 @@ func ManageServer(id string, action model.ServerAction) error {
 	}
 }
 
-// SelectStage selects a different data source for presets and reloads
-func SelectStage(stage string) {
-	cfg := config.Get()
-
-	if !contains(cfg.Stages, stage) {
-		return
-	}
-
-	cfg.SelectedStage = stage
-
-	client.ReloadAllPresets()
-
-	update := model.UIUpdate{
-		StageUpdate: &model.StageUpdate{
-			Stages:        cfg.Stages,
-			SelectedStage: stage,
-		},
-	}
-
-	manager.SendUIUpdate(update)
-}
-
 // SetSetting sets a specific user setting on the database
 func SetSetting(key string, value string) error {
+	if key == StageSettingKey {
+		if err := selectStage(value); err != nil {
+			return err
+		}
+	}
+
 	setting := model.Setting{
 		Key:   key,
 		Value: value,
@@ -61,4 +48,28 @@ func GetSetting(key string) (string, error) {
 		return "", err
 	}
 	return (*setting).Value, nil
+}
+
+// selects a different data source for presets and reloads
+func selectStage(stage string) error {
+	cfg := config.Get()
+
+	if !contains(cfg.Stages, stage) {
+		return sferror.New(sferror.StageNotFound, fmt.Sprintf("Stage %s does not exist", stage), nil)
+	}
+
+	cfg.SelectedStage = stage
+
+	client.ReloadAllPresets()
+
+	update := model.UIUpdate{
+		StageUpdate: &model.StageUpdate{
+			Stages:        cfg.Stages,
+			SelectedStage: stage,
+		},
+	}
+
+	manager.SendUIUpdate(update)
+
+	return nil
 }

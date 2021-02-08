@@ -23,6 +23,8 @@ var (
 	ActionNotAllowed = ErrorType{"ActionNotAllowed", 12}
 	// InvalidEffectType | effect type does not exist
 	InvalidEffectType = ErrorType{"InvalidEffectType", 13}
+	// StageNotFound | the stage to be selected does not exist
+	StageNotFound = ErrorType{"StageNotFound", 14}
 
 	// Aurora | received error response from Aurora
 	Aurora = ErrorType{"Aurora", 20}

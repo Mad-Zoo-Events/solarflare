@@ -9,6 +9,7 @@ import (
 
 	"github.com/eynorey/solarflare/src/client"
 	"github.com/eynorey/solarflare/src/config"
+	"github.com/eynorey/solarflare/src/controller"
 )
 
 // loads data from the database into the config
@@ -20,9 +21,13 @@ func load() {
 	}
 
 	cfg.Servers = client.GetServers(true)
-
 	cfg.Stages = []string{"mzitv", "stratos", "iod", "hotg"}
-	cfg.SelectedStage = cfg.Stages[3]
+
+	cfg.SelectedStage = cfg.Stages[len(cfg.Stages)-1]
+	stageSetting, err := client.GetSetting(controller.StageSettingKey)
+	if err == nil {
+		cfg.SelectedStage = stageSetting.Value
+	}
 
 	client.ReloadAllPresets()
 }
@@ -46,13 +51,15 @@ func main() {
 	// router := mux.NewRouter()
 	router := gin.Default()
 
-	// network / service
+	// service
 	router.GET("/health", HealthHandler)
 	router.GET("/version", VersionHandler)
+
+	// settings
+	settings := router.Group("/settings")
+	settings.GET("/:setting", GetSettingsHandler)
+	settings.POST("/:setting", SetSettingsHandler)
 	router.PATCH("/servers/:id/:action", ServerHandler)
-	router.POST("/selectstage/:stage", SelectStageHandler)
-	router.POST("/settings/:setting", SetSettingsHandler)
-	router.GET("/settings/:setting", GetSettingsHandler)
 
 	// effect execution
 	effects := router.Group("/effects")
