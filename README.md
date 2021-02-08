@@ -2,11 +2,52 @@
 Your Friendly Neighborhood Visual Effect Distribution System&trade;
 
 ## What is this?
-Solarflare is a Minecraft visual effect management system that works in combination with [the Aurora plugin](https://github.com/SorenNeedsCoffee/aurora).
+Solarflare is a hopelessly over-engineered Minecraft visual effect management system that works in combination with [the Aurora plugin](https://github.com/SorenNeedsCoffee/aurora).
 
 It allows you to create **presets** which can be used to control a range of awesome Minecraft effects in a certain region and shape.
 
 These presets can be executed through a web request (to allow for time-coded visuals through a VST plugin for instance) or on the web UI which is also hosted by this service.
+
+---
+
+- [Solarflare](#solarflare)
+	- [What is this?](#what-is-this)
+	- [Core Concepts](#core-concepts)
+		- [Effects](#effects)
+			- [Particle Effects](#particle-effects)
+			- [Dying Dragon Effect](#dying-dragon-effect)
+			- [Timeshift Effect](#timeshift-effect)
+			- [Potion Effect](#potion-effect)
+			- [Laser Effect](#laser-effect)
+		- [Presets](#presets)
+		- [Control Panel](#control-panel)
+			- [Boss Bar Control](#boss-bar-control)
+			- [Run Command](#run-command)
+			- [Display Options](#display-options)
+			- [Manage Servers](#manage-servers)
+			- [Switch Stage](#switch-stage)
+			- [Preset Manager](#preset-manager)
+		- [Clock](#clock)
+	- [System Architecture](#system-architecture)
+	- [API Endpoints](#api-endpoints)
+		- [Technical](#technical)
+			- [Service Health](#service-health)
+			- [Application Version](#application-version)
+			- [Settings](#settings)
+			- [Server Management](#server-management)
+		- [Retrieve Presets](#retrieve-presets)
+		- [Trigger Actions On Presets](#trigger-actions-on-presets)
+		- [Stop All Effects and/or Detach All From The Clock](#stop-all-effects-andor-detach-all-from-the-clock)
+		- [Manage Presets](#manage-presets)
+		- [Clock Controls](#clock-controls)
+			- [Subscribe and Unsubscribe](#subscribe-and-unsubscribe)
+			- [Restart](#restart)
+			- [Set Speed](#set-speed)
+		- [Other](#other)
+			- [Execute Command in Minecraft](#execute-command-in-minecraft)
+			- [Set The Bossbar (Title)](#set-the-bossbar-title)
+
+---
 
 ## Core Concepts
 
@@ -188,7 +229,7 @@ You can start or stop servers, and enable or disable them to receive effects (se
 | `action`  | `start\|stop\|enable\|disable`    |
 
 
-### Retrieve presets
+### Retrieve Presets
 
 You can retrieve all presets of a specific type or all presets of all types:
 
@@ -213,7 +254,7 @@ Returns an object containing an array for each preset type
 }
 ```
 
-### Trigger an action on a preset
+### Trigger Actions On Presets
 
 `POST https://visuals.madzoo.events/effects/run/{effectType}/{id}/{action}`
 
@@ -261,7 +302,7 @@ There is no payload.
 **Actions allowed on *command* presets:**
 - `trigger`
 
-### Stop all effects and/or detach all from the clock
+### Stop All Effects and/or Detach All From The Clock
 
 `POST https://visuals.madzoo.events/effects/stopall`
 
@@ -277,13 +318,13 @@ There is no payload.
 
 where `EffectType` has to be one of the types listed above.
 
-### Manage presets
+### Manage Presets
 
 It is *highly* recommended to manage presets through the UI only, as there is some conversion happening before they are saved in the database.
 
 If you still wish to do it manually via POST requests, you should know what you are doing and can find the request schemes in the code by yourself.
 
-### Clock actions
+### Clock Controls
 
 #### Subscribe and Unsubscribe 
 
@@ -349,7 +390,7 @@ Runs a single command on all connected instances
 }
 ```
 
-#### Set The Bossbar (title)
+#### Set The Bossbar (Title)
 
 `POST https://visuals.madzoo.events/bossbar/{action}`
 
