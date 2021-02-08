@@ -165,7 +165,7 @@ Turns a certain server on or off for receiving effects (see explanation above)
 | Parameter | Description                       |
 | --------- | --------------------------------- |
 | `id`      | Internal identifier of the server |
-| `action`  | `enable|disable`                  |
+| `action`  | `enable\|disable`                 |
 
 ### Retrieve presets
 
@@ -269,9 +269,9 @@ Subscribes an effect to the clock or unsubscribes it.
 
 **Parameters:**
 
-| Parameter | Description             |
-| --------- | ----------------------- |
-| `action`  | `subscribe|unsubscribe` |
+| Parameter | Description              |
+| --------- | ------------------------ |
+| `action`  | `subscribe\|unsubscribe` |
 
 **Payload:**
 
@@ -331,9 +331,9 @@ Sets the in-game boss bar or clears (and hides) it
 
 **Parameters:**
 
-| Parameter | Description |
-| --------- | ----------- |
-| `action`  | `set|clear` |
+| Parameter | Description  |
+| --------- | ------------ |
+| `action`  | `set\|clear` |
 
 
 **Payload:**
