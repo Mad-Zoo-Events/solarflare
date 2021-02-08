@@ -9,6 +9,8 @@ import (
 )
 
 func init() {
+	cfg.Stages = []string{"mzitv", "stratos", "iod", "hotg"}
+
 	cfg.AppVersion = appVersion
 
 	env := os.Getenv("ENVIRONMENT")

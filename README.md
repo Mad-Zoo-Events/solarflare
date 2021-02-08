@@ -132,40 +132,61 @@ The basic workflow is as follows:
 ## API Endpoints
 
 ### Technical
+
+#### Service Health
+
 `GET https://visuals.madzoo.events/health`
 
 Gets the service health (to be implemented)
 
----
+#### Application Version
 
 `GET https://visuals.madzoo.events/version`
 
 Gets a the service version formatted as the latest build timestamp
 
----
+#### Settings
 
-`POST https://visuals.madzoo.events/selectstage/{stage}`
+`GET https://visuals.madzoo.events/settings/{setting}`
 
-Selects a certain stage (see explanation above)
+`POST https://visuals.madzoo.events/settings/{setting}`
+
+Retrieve or store settings on the database
 
 **Parameters:**
 
 | Parameter | Description                               |
 | --------- | ----------------------------------------- |
-| `stage`   | Internal name of the stage to be selected |
+| `setting` | name/key of the setting to store/retrieve |
 
----
+The payload will be returned as it was stored
+
+**Settings**
+
+- `stage`
+  - select a different stage (see [Switch Stage](#switch-stage))
+  - available options are currently hardcoded in [the service config](src/config/config.go#L12)
+- `layout`
+  - better not mess with this
+  - seriously, don't try to change this manually
+  - layout of the effect categories on the UI
+- `displayCategories`
+  - another thing you won't need to touch
+  - controls which presets types should be grouped based on their effect type
+
+#### Server Management
+
+You can start or stop servers, and enable or disable them to receive effects (see [Manage Servers](#manage-servers))
 
 `PATCH https://visuals.madzoo.events/servers/{id}/{action}`
-
-Turns a certain server on or off for receiving effects (see explanation above)
 
 **Parameters:**
 
 | Parameter | Description                       |
 | --------- | --------------------------------- |
 | `id`      | Internal identifier of the server |
-| `action`  | `enable\|disable`                 |
+| `action`  | `start\|stop\|enable\|disable`    |
+
 
 ### Retrieve presets
 
@@ -173,9 +194,9 @@ You can retrieve all presets of a specific type or all presets of all types:
 
 `GET https://visuals.madzoo.events/presets/{effectType}`
 
----
-
 Returns an array of all presets of the specified type
+
+---
 
 `GET https://visuals.madzoo.events/presets/all`
 
@@ -183,16 +204,17 @@ Returns an object containing an array for each preset type
 
 ```
 {
-	"particlePresets": []
-	"dragonPresets": []
-	"timeshiftPresets": []
-	"potionPresets": []
-	"laserPresets": []
+	"particlePresets": [],
+	"dragonPresets": [],
+	"timeshiftPresets": [],
+	"potionPresets": [],
+	"laserPresets": [],
 	"commandPresets": []
 }
 ```
 
 ### Trigger an action on a preset
+
 `POST https://visuals.madzoo.events/effects/run/{effectType}/{id}/{action}`
 
 There is no payload.
@@ -240,6 +262,7 @@ There is no payload.
 - `trigger`
 
 ### Stop all effects and/or detach all from the clock
+
 `POST https://visuals.madzoo.events/effects/stopall`
 
 **Payload:**
@@ -254,7 +277,6 @@ There is no payload.
 
 where `EffectType` has to be one of the types listed above.
 
-
 ### Manage presets
 
 It is *highly* recommended to manage presets through the UI only, as there is some conversion happening before they are saved in the database.
@@ -262,6 +284,8 @@ It is *highly* recommended to manage presets through the UI only, as there is so
 If you still wish to do it manually via POST requests, you should know what you are doing and can find the request schemes in the code by yourself.
 
 ### Clock actions
+
+#### Subscribe and Unsubscribe 
 
 `PUT https://visuals.madzoo.events/clock/{action}`
 
@@ -286,13 +310,13 @@ Subscribes an effect to the clock or unsubscribes it.
 
 where `EffectType` has to be one of the types listed above, `isRunning` indicates whether the effect is currently running or not, and `offBeat` specifies whether the effect should be attached to the offBeat (or onBeat) cycle of the clock.
 
----
+#### Restart
 
 `POST https://visuals.madzoo.events/clock/restart`
 
 Restarts the clock, use this to sync up visuals on the clock with the music.
 
----
+#### Set Speed
 
 `POST https://visuals.madzoo.events/clock/speed`
 
@@ -311,6 +335,8 @@ where a `noteLength` of 1 equals a quarter note (so e.g. 0.5 = eight note, 4 = w
 
 ### Other
 
+#### Execute Command in Minecraft
+
 `POST https://visuals.madzoo.events/command`
 
 Runs a single command on all connected instances
@@ -323,7 +349,7 @@ Runs a single command on all connected instances
 }
 ```
 
----
+#### Set The Bossbar (title)
 
 `POST https://visuals.madzoo.events/bossbar/{action}`
 

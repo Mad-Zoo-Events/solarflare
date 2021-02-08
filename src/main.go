@@ -21,7 +21,6 @@ func load() {
 	}
 
 	cfg.Servers = client.GetServers(true)
-	cfg.Stages = []string{"mzitv", "stratos", "iod", "hotg"}
 
 	cfg.SelectedStage = cfg.Stages[len(cfg.Stages)-1]
 	stageSetting, err := client.GetSetting(controller.StageSettingKey)
