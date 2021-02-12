@@ -5,5 +5,5 @@ export interface LightningPreset extends IPreset {
 }
 
 export const getLightningSummary = ({ pointIDList }: LightningPreset): string => {
-    return `${pointIDList.length} lightnings at ${pointIDList}`;
+    return `${pointIDList.split(",").length} lightnings: at ${pointIDList}`;
 };
