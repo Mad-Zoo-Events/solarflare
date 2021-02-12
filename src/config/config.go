@@ -30,6 +30,7 @@ type Config struct {
 	PotionEffectPresets    []model.PotionEffectPreset
 	LaserEffectPresets     []model.LaserEffectPreset
 	CommandEffectPresets   []model.CommandEffectPreset
+	LightningEffectPresets []model.LightningEffectPreset
 
 	Servers []model.Server
 
@@ -93,4 +94,12 @@ func (c *Config) SetCommandEffectPresets(presets []model.CommandEffectPreset) {
 		return strings.ToLower(presets[i].DisplayName) < strings.ToLower(presets[j].DisplayName)
 	})
 	c.CommandEffectPresets = presets
+}
+
+// SetLightningEffectPresets sorts and sets the effect presets passed
+func (c *Config) SetLightningEffectPresets(presets []model.LightningEffectPreset) {
+	sort.Slice(presets, func(i, j int) bool {
+		return strings.ToLower(presets[i].DisplayName) < strings.ToLower(presets[j].DisplayName)
+	})
+	c.LightningEffectPresets = presets
 }

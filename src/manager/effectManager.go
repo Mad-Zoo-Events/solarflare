@@ -18,6 +18,7 @@ const (
 	laserEffectEndpoint         = "/effects/laser"
 	endlaserEffectEndpoint      = "/effects/endlaser"
 	commandEffectEndpoint       = "/commands"
+	lightningEffectEndpoint     = "/effects/lightning"
 	effectsEndpoint             = "/effects"
 )
 
@@ -132,6 +133,29 @@ func RunCommandEffect(preset model.CommandEffectPreset, sendUpdate bool) error {
 
 	if sendUpdate {
 		sendEffectUpdate(preset.ID, model.CommandEffectType, preset.DisplayName, model.TriggerEffectAction, err)
+	}
+
+	return err
+}
+
+// RunLightningEffect compiles a lightning effect request and executes it on all servers
+func RunLightningEffect(preset model.LightningEffectPreset, action model.EffectAction, sendUpdate bool) error {
+	type effect struct {
+		PointIDs []int `json:"pointIds"`
+	}
+
+	request := []effect{{PointIDs: preset.PointIDs}}
+	body, err := json.Marshal(request)
+	if err != nil {
+		return sferror.New(sferror.Encoding, "Failed to marshal request", err)
+	}
+
+	endpoint := fmt.Sprintf("%s/%s/%s", lightningEffectEndpoint, preset.ID, string(action))
+
+	err = client.ExecuteEffect(endpoint, body)
+
+	if sendUpdate {
+		sendEffectUpdate(preset.ID, model.LightningEffectType, preset.DisplayName, action, err)
 	}
 
 	return err

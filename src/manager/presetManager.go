@@ -120,6 +120,24 @@ func UpsertCommandEffectPreset(preset model.CommandEffectPreset) (*string, error
 	return &preset.ID, nil
 }
 
+// UpsertLightningEffectPreset creates or updates a lightning effect preset in the database
+func UpsertLightningEffectPreset(preset model.LightningEffectPreset) (*string, error) {
+	cfg := config.Get()
+
+	if preset.ID == "" {
+		preset.ID = uuid.New().String()
+	}
+
+	err := client.UpsertItem(client.LightningEffectPresetsTable, preset)
+	if err != nil {
+		return nil, err
+	}
+
+	cfg.SetLightningEffectPresets(client.GetLightningEffectPresets())
+
+	return &preset.ID, nil
+}
+
 // DeletePreset deletes a preset from the database
 func DeletePreset(tableName, id string) error {
 	return client.DeleteItem(tableName, id)
