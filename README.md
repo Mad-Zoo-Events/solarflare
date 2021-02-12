@@ -19,6 +19,7 @@ These presets can be executed through a web request (to allow for time-coded vis
 			- [Timeshift Effect](#timeshift-effect)
 			- [Potion Effect](#potion-effect)
 			- [Laser Effect](#laser-effect)
+			- [Lightning Effect](#lightning-effect)
 		- [Presets](#presets)
 		- [Control Panel](#control-panel)
 			- [Boss Bar Control](#boss-bar-control)
@@ -89,6 +90,12 @@ There are two types of lasers: **Guardian Beam** and **End Crystal Healing Beam*
 Both can be set up to connect two specified points. The Guardian Beams can also be configured to be player-tracking, which means it will track a random player originating from the point specified.
 
 Guardian Beams slowly change colors once while they're active, going from a dark purple to a light green. You can restart the color cycle with the dedicated color-palette button on the guardian laser controls.
+
+#### Lightning Effect
+
+You can create presets to summon lightnings at all points specified. This effect can be triggered once, or toggled on and off.
+
+**Warning:** This effect can quickly become **very** loud in-game, so make sure you warn users to turn off in-game audio ;)
 
 ### Presets
 
