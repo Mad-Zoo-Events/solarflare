@@ -7,6 +7,7 @@ import { CommandPreset, LaserPreset, PotionPreset, TimeshiftPreset } from "../do
 import { getCommandSummary } from "../domain/presets/CommandPreset";
 import { DragonPreset, getDragonSummary } from "../domain/presets/DragonPreset";
 import { getLaserSummary } from "../domain/presets/LaserPreset";
+import { getLightningSummary, LightningPreset } from "../domain/presets/LightningPreset";
 import { getParticleSummary, ParticlePreset } from "../domain/presets/ParticlePreset";
 import { getPotionSummary } from "../domain/presets/PotionPreset";
 import { Preset } from "../domain/presets/Preset";
@@ -41,6 +42,8 @@ export function getAccentColor (effectType: EffectType): string {
         return "dragon";
     case et.Laser:
         return "laser";
+    case et.Lightning:
+        return "lightning";
     case et.Potion:
         return "potion";
     case et.Timeshift:
@@ -48,8 +51,6 @@ export function getAccentColor (effectType: EffectType): string {
     case et.Command:
         return "command";
     }
-
-    return "teal";
 }
 
 export function getSummary (preset: Preset, effectType: EffectType): string {
@@ -60,6 +61,8 @@ export function getSummary (preset: Preset, effectType: EffectType): string {
         return getDragonSummary(preset as DragonPreset);
     case et.Laser:
         return getLaserSummary(preset as LaserPreset);
+    case et.Lightning:
+        return getLightningSummary(preset as LightningPreset);
     case et.Potion:
         return getPotionSummary(preset as PotionPreset);
     case et.Timeshift:
@@ -67,8 +70,6 @@ export function getSummary (preset: Preset, effectType: EffectType): string {
     case et.Command:
         return getCommandSummary(preset as CommandPreset);
     }
-
-    return "";
 }
 
 export function presetSorter (p1: Preset, p2: Preset): number {
@@ -86,11 +87,12 @@ export function decoratePresetsOfType (presets: Preset[], effectType: EffectType
 }
 
 export function decoratePresets (presets: PresetCollection): void {
-    const { commandPresets, dragonPresets, laserPresets, particlePresets, potionPresets, timeshiftPresets } = presets;
+    const { commandPresets, dragonPresets, laserPresets, lightningPresets, particlePresets, potionPresets, timeshiftPresets } = presets;
 
     decoratePresetsOfType(commandPresets, et.Command);
     decoratePresetsOfType(dragonPresets, et.Dragon);
     decoratePresetsOfType(laserPresets, et.Laser);
+    decoratePresetsOfType(lightningPresets, et.Lightning);
     decoratePresetsOfType(particlePresets, et.Particle);
     decoratePresetsOfType(potionPresets, et.Potion);
     decoratePresetsOfType(timeshiftPresets, et.Timeshift);
@@ -101,6 +103,7 @@ export function getPresetsOfType (effectType: EffectType, presets: PresetCollect
         commandPresets,
         dragonPresets,
         laserPresets,
+        lightningPresets,
         particlePresets,
         timeshiftPresets,
         potionPresets
@@ -113,6 +116,8 @@ export function getPresetsOfType (effectType: EffectType, presets: PresetCollect
         return dragonPresets;
     case et.Laser:
         return laserPresets;
+    case et.Lightning:
+        return lightningPresets;
     case et.Particle:
         return particlePresets;
     case et.Timeshift:
