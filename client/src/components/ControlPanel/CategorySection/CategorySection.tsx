@@ -24,6 +24,9 @@ const CategorySection = ({
     case et.Laser:
         header = "LZR";
         break;
+    case et.Lightning:
+        header = "LTNG";
+        break;
     case et.Particle:
         header = "PTCL";
         break;

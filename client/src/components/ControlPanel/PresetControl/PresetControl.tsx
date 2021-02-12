@@ -59,6 +59,10 @@ const PresetControl = ({
                 <PresetControlButton preset={preset} action={ea.Trigger} color="particle"/>
             </>}
 
+            {effectType === et.Lightning && <>
+                <PresetControlButton preset={preset} action={ea.Trigger} color="lightning"/>
+            </>}
+
             {renderStartStop && <>
                 <PresetControlButton
                     preset={preset}
