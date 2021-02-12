@@ -65,6 +65,14 @@ func UpsertPresetAPI(effectType string, body []byte) (*string, error) {
 		}
 
 		return manager.UpsertCommandEffectPreset(preset.FromAPI())
+	case model.LightningEffectType:
+		preset := model.LightningEffectPresetAPI{}
+
+		if err := json.Unmarshal(body, &preset); err != nil {
+			return nil, sferror.New(sferror.Encoding, "Error unmarshalling lightning effect preset request", err)
+		}
+
+		return manager.UpsertLightningEffectPreset(preset.FromAPI())
 	}
 
 	return nil, sferror.New(sferror.InvalidEffectType, effectType, nil)
@@ -106,6 +114,11 @@ func DeletePreset(effectType, id string) error {
 		if err == nil {
 			cfg.SetCommandEffectPresets(client.GetCommandEffectPresets())
 		}
+	case model.LightningEffectType:
+		err = client.DeleteItem(client.LightningEffectPresetsTable, id)
+		if err == nil {
+			cfg.SetLightningEffectPresets(client.GetLightningEffectPresets())
+		}
 	default:
 		err = sferror.New(sferror.InvalidEffectType, effectType, nil)
 	}
@@ -145,6 +158,10 @@ func DuplicatePreset(effectType, id string) (newID *string, err error) {
 		p := preset.(model.CommandEffectPreset)
 		p.ID = ""
 		return manager.UpsertCommandEffectPreset(p)
+	case model.LightningEffectType:
+		p := preset.(model.LightningEffectPreset)
+		p.ID = ""
+		return manager.UpsertLightningEffectPreset(p)
 	}
 
 	return nil, sferror.New(sferror.InvalidEffectType, effectType, nil)
@@ -162,6 +179,7 @@ func RetrievePresets(effectType string) (interface{}, error) {
 			PotionEffectPresets:    cfg.PotionEffectPresets,
 			LaserEffectPresets:     cfg.LaserEffectPresets,
 			CommandEffectPresets:   commandPresetsToAPI(cfg.CommandEffectPresets),
+			LightningEffectPresets: lightningPresetsToAPI(cfg.LightningEffectPresets),
 		}, nil
 	}
 
@@ -178,6 +196,8 @@ func RetrievePresets(effectType string) (interface{}, error) {
 		return cfg.LaserEffectPresets, nil
 	case model.CommandEffectType:
 		return commandPresetsToAPI(cfg.CommandEffectPresets), nil
+	case model.LightningEffectType:
+		return lightningPresetsToAPI(cfg.LightningEffectPresets), nil
 	default:
 		return nil, sferror.New(sferror.InvalidEffectType, effectType, nil)
 	}
@@ -218,6 +238,11 @@ func TestPresetAPI(effectType string, body []byte) {
 		json.Unmarshal(body, &preset)
 		preset.ID = id
 		manager.RunCommandEffect(preset.FromAPI(), false)
+	case model.LightningEffectType:
+		preset := model.LightningEffectPresetAPI{}
+		json.Unmarshal(body, &preset)
+		preset.ID = id
+		manager.RunLightningEffect(preset.FromAPI(), model.StartEffectAction, false)
 	}
 
 	if model.EffectType(effectType) != model.CommandEffectType {
@@ -237,6 +262,14 @@ func particlePresetsToAPI(presets []model.ParticleEffectPreset) (migrated []mode
 // temporary measures until the preset manager has been fully migrated to React
 func commandPresetsToAPI(presets []model.CommandEffectPreset) (migrated []model.CommandEffectPresetAPI) {
 	migrated = []model.CommandEffectPresetAPI{}
+	for _, p := range presets {
+		migrated = append(migrated, p.ToAPI())
+	}
+	return
+}
+
+func lightningPresetsToAPI(presets []model.LightningEffectPreset) (migrated []model.LightningEffectPresetAPI) {
+	migrated = []model.LightningEffectPresetAPI{}
 	for _, p := range presets {
 		migrated = append(migrated, p.ToAPI())
 	}

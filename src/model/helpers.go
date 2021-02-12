@@ -35,6 +35,12 @@ func (action EffectAction) IsAllowedOn(effectType EffectType) bool {
 		if action == TriggerEffectAction {
 			return true
 		}
+	case LightningEffectType:
+		if action == StartEffectAction ||
+			action == StopEffectAction ||
+			action == TriggerEffectAction {
+			return true
+		}
 	case BossbarEffectType:
 		if action == SetBossbarAction ||
 			action == ClearBossbarAction {

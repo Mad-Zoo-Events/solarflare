@@ -34,6 +34,8 @@ const (
 	LaserEffectType = EffectType("laser")
 	// CommandEffectType represents a command effect
 	CommandEffectType = EffectType("command")
+	// LightningEffectType represents a lightning effect
+	LightningEffectType = EffectType("lightning")
 	// BossbarEffectType represents the bossbar effect
 	BossbarEffectType = EffectType("bossbar")
 )
@@ -122,10 +124,11 @@ type Error struct {
 
 // PresetCollection is the response model used to return all presets at once
 type PresetCollection struct {
-	ParticleEffectPresets  []ParticleEffectPresetAPI `json:"particlePresets"`
-	DragonEffectPresets    []DragonEffectPreset      `json:"dragonPresets"`
-	TimeshiftEffectPresets []TimeshiftEffectPreset   `json:"timeshiftPresets"`
-	PotionEffectPresets    []PotionEffectPreset      `json:"potionPresets"`
-	LaserEffectPresets     []LaserEffectPreset       `json:"laserPresets"`
-	CommandEffectPresets   []CommandEffectPresetAPI  `json:"commandPresets"`
+	ParticleEffectPresets  []ParticleEffectPresetAPI  `json:"particlePresets"`
+	DragonEffectPresets    []DragonEffectPreset       `json:"dragonPresets"`
+	TimeshiftEffectPresets []TimeshiftEffectPreset    `json:"timeshiftPresets"`
+	PotionEffectPresets    []PotionEffectPreset       `json:"potionPresets"`
+	LaserEffectPresets     []LaserEffectPreset        `json:"laserPresets"`
+	CommandEffectPresets   []CommandEffectPresetAPI   `json:"commandPresets"`
+	LightningEffectPresets []LightningEffectPresetAPI `json:"lightningPresets"`
 }

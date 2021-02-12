@@ -31,6 +31,12 @@ func FindPreset(id string, effectType model.EffectType) (interface{}, error) {
 				return p, nil
 			}
 		}
+	case model.LightningEffectType:
+		for _, p := range cfg.LightningEffectPresets {
+			if p.ID == id {
+				return p, nil
+			}
+		}
 	case model.PotionEffectType:
 		for _, p := range cfg.PotionEffectPresets {
 			if p.ID == id {
