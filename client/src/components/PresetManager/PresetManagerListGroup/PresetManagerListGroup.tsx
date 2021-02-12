@@ -13,11 +13,12 @@ const PresetManagerListGroup = ({
 }: PresetManagerListGroupProps): ReactElement => {
     const accentColor = getAccentColor(effectType);
     const coloredBackground = { backgroundColor: `var(--${accentColor})` };
+    const coloredTextShadow = { textShadow: `var(--darker-${accentColor}) 0px 0px 5px` };
     const coloredBorder = { borderColor: `var(--${accentColor})` };
     const coloredBackgroundAlpha = { backgroundColor: `var(--${accentColor}-alpha)` };
 
     const header = <>
-        <div className="preset-manager-list-group__header" style={coloredBackground}>{headerText} ({presets.length})</div>
+        <div className="preset-manager-list-group__header" style={{ ...coloredBackground, ...coloredTextShadow }}>{headerText} ({presets.length})</div>
         <div className="preset-manager-list-group__header-chevron">
             <FontAwesomeIcon icon={["fas", "chevron-down"]} size="sm" />
         </div>
