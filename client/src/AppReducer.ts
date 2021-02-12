@@ -14,6 +14,7 @@ import {
     CommandPreset,
     DragonPreset,
     LaserPreset,
+    LightningPreset,
     ParticlePreset,
     PotionPreset,
     TimeshiftPreset
@@ -30,6 +31,7 @@ const initialState: AppState = {
         commandPresets: [],
         dragonPresets: [],
         laserPresets: [],
+        lightningPresets: [],
         particlePresets: [],
         potionPresets: [],
         timeshiftPresets: []
@@ -92,6 +94,14 @@ function appReducer (
                 presets: {
                     ...state.presets,
                     laserPresets: action.payload.presets as LaserPreset[]
+                }
+            };
+        case et.Lightning:
+            return {
+                ...state,
+                presets: {
+                    ...state.presets,
+                    lightningPresets: action.payload.presets as LightningPreset[]
                 }
             };
         case et.Particle:

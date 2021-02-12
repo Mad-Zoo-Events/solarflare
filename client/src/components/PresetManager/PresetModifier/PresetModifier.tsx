@@ -4,16 +4,16 @@ import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import * as et from "../../../domain/EffectType";
-import { CommandPreset, DragonPreset, LaserPreset, ParticlePreset, PotionPreset, TimeshiftPreset } from "../../../domain/presets";
+import { CommandPreset, DragonPreset, LaserPreset, LightningPreset, ParticlePreset, PotionPreset, TimeshiftPreset } from "../../../domain/presets";
 import { MidiBehaviorTypes } from "../../../domain/presets/IPreset";
 import { Preset } from "../../../domain/presets/Preset";
 import { RootState } from "../../../RootState";
 import { getAccentColor, getOnChangeInt, getShortcutCode, getShortcutString } from "../../../utils/utils";
 import { closePresetModifier, testPreset, upsertPreset } from "../PresetManagerActions";
-import { CommandFragment, DragonFragment, LaserFragment, ParticleFragment, PotionFragment, TimeshiftFragment } from "./fragments";
+import { selectPresetToEdit, selectTestIsRunning } from "../PresetManagerSelectors";
+import { CommandFragment, DragonFragment, LaserFragment, LightningFragment, ParticleFragment, PotionFragment, TimeshiftFragment } from "./fragments";
 import "./PresetModifier.scss";
 import { PresetModifierProps } from "./PresetModifierProps";
-import { selectPresetToEdit, selectTestIsRunning } from "../PresetManagerSelectors";
 
 const PresetModifier = ({
     preset,
@@ -60,6 +60,8 @@ const PresetModifier = ({
             return <DragonFragment preset={preset as DragonPreset} formMethods={formMethods} />;
         case et.Laser:
             return <LaserFragment preset={preset as LaserPreset} formMethods={formMethods} />;
+        case et.Lightning:
+            return <LightningFragment preset={preset as LightningPreset} formMethods={formMethods} />;
         case et.Particle:
             return <ParticleFragment preset={preset as ParticlePreset} formMethods={formMethods} />;
         case et.Potion:

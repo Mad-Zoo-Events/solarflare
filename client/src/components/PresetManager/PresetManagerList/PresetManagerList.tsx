@@ -13,6 +13,7 @@ const PresetManagerList = ({
         particlePresets,
         dragonPresets,
         laserPresets,
+        lightningPresets,
         potionPresets,
         timeshiftPresets,
         commandPresets
@@ -34,6 +35,11 @@ const PresetManagerList = ({
                 presets={laserPresets}
                 effectType={et.Laser}
                 headerText={"Laser Effect Presets"}
+            />
+            <PresetManagerListGroup
+                presets={lightningPresets}
+                effectType={et.Lightning}
+                headerText={"Lightning Effect Presets"}
             />
             <PresetManagerListGroup
                 presets={potionPresets}
