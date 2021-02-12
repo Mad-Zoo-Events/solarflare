@@ -4,6 +4,7 @@ export const Laser = "laser";
 export const Potion = "potion";
 export const Timeshift = "timeshift";
 export const Command = "command";
+export const Lightning = "lightning";
 
 export type EffectType =
     typeof Particle |
@@ -11,7 +12,8 @@ export type EffectType =
     typeof Laser |
     typeof Potion |
     typeof Timeshift |
-    typeof Command;
+    typeof Command |
+    typeof Lightning;
 
 export const allEffectTypes: EffectType[] = [
     Particle,
@@ -19,5 +21,6 @@ export const allEffectTypes: EffectType[] = [
     Laser,
     Potion,
     Timeshift,
-    Command
+    Command,
+    Lightning
 ];
