@@ -1,6 +1,6 @@
 package model
 
-// DragonEffectPreset is the request model for particle effects
+// DragonEffectPreset is the domain and request/response model for particle effects
 type DragonEffectPreset struct {
 	ID           string        `json:"id"`
 	DisplayName  string        `json:"displayName"`

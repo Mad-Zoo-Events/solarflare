@@ -1,6 +1,6 @@
 package model
 
-// LaserEffectPreset is the request model for the laser effects
+// LaserEffectPreset is the domain and request/response model for the laser effects
 type LaserEffectPreset struct {
 	ID           string        `json:"id"`
 	DisplayName  string        `json:"displayName"`

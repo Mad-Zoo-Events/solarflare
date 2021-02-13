@@ -5,7 +5,11 @@ import (
 	"strings"
 )
 
-// LightningEffectPreset is the request model for lightnings
+// ************** //
+// INTERNAL MODEL //
+// ************** //
+
+// LightningEffectPreset is the domain model for lightnings
 type LightningEffectPreset struct {
 	ID           string        `json:"id"`
 	DisplayName  string        `json:"displayName"`
@@ -20,7 +24,7 @@ type LightningEffectPreset struct {
 // API MODEL //
 // ********* //
 
-// LightningEffectPresetAPI is the inbound request and response model for lightning effect presets
+// LightningEffectPresetAPI is the request/response model for lightning effect presets
 type LightningEffectPresetAPI struct {
 	ID           string        `json:"id"`
 	DisplayName  string        `json:"displayName"`
