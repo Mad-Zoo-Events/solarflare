@@ -72,6 +72,12 @@
     height       : 1em;
     border-right : 0.3em solid var(--gray-alpha);
     border-bottom: 0.3em solid var(--gray-alpha);
+    transition   : border-color 0.3s;
+}
+
+.react-grid-item>.react-resizable-handle:hover::after {
+    border-color: var(--white);
+    transition  : border-color 0s;
 }
 
 .react-resizable-hide>.react-resizable-handle {
