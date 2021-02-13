@@ -23,7 +23,7 @@ func UpsertParticleEffectPreset(preset model.ParticleEffectPreset) (*string, err
 		return nil, err
 	}
 
-	cfg.SetParticleEffectPresets(client.GetParticleEffectPresets())
+	cfg.ParticleEffectPresets = client.GetParticleEffectPresets()
 
 	return &preset.ID, nil
 }
@@ -41,7 +41,7 @@ func UpsertDragonEffectPreset(preset model.DragonEffectPreset) (*string, error) 
 		return nil, err
 	}
 
-	cfg.SetDragonEffectPresets(client.GetDragonEffectPresets())
+	cfg.DragonEffectPresets = client.GetDragonEffectPresets()
 
 	return &preset.ID, nil
 }
@@ -59,7 +59,7 @@ func UpsertTimeshiftEffectPreset(preset model.TimeshiftEffectPreset) (*string, e
 		return nil, err
 	}
 
-	cfg.SetTimeshiftEffectPresets(client.GetTimeshiftEffectPresets())
+	cfg.TimeshiftEffectPresets = client.GetTimeshiftEffectPresets()
 
 	return &preset.ID, nil
 }
@@ -77,7 +77,7 @@ func UpsertPotionEffectPreset(preset model.PotionEffectPreset) (*string, error) 
 		return nil, err
 	}
 
-	cfg.SetPotionEffectPresets(client.GetPotionEffectPresets())
+	cfg.PotionEffectPresets = client.GetPotionEffectPresets()
 
 	return &preset.ID, nil
 }
@@ -95,7 +95,7 @@ func UpsertLaserEffectPreset(preset model.LaserEffectPreset) (*string, error) {
 		return nil, err
 	}
 
-	cfg.SetLaserEffectPresets(client.GetLaserEffectPresets())
+	cfg.LaserEffectPresets = client.GetLaserEffectPresets()
 
 	return &preset.ID, nil
 }
@@ -113,7 +113,7 @@ func UpsertCommandEffectPreset(preset model.CommandEffectPreset) (*string, error
 		return nil, err
 	}
 
-	cfg.SetCommandEffectPresets(client.GetCommandEffectPresets())
+	cfg.CommandEffectPresets = client.GetCommandEffectPresets()
 
 	return &preset.ID, nil
 }
@@ -131,7 +131,7 @@ func UpsertLightningEffectPreset(preset model.LightningEffectPreset) (*string, e
 		return nil, err
 	}
 
-	cfg.SetLightningEffectPresets(client.GetLightningEffectPresets())
+	cfg.LightningEffectPresets = client.GetLightningEffectPresets()
 
 	return &preset.ID, nil
 }

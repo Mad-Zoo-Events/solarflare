@@ -266,11 +266,11 @@ func DeleteItem(tableName, id string) error {
 func ReloadAllPresets() {
 	cfg := config.Get()
 
-	cfg.SetParticleEffectPresets(GetParticleEffectPresets())
-	cfg.SetDragonEffectPresets(GetDragonEffectPresets())
-	cfg.SetTimeshiftEffectPresets(GetTimeshiftEffectPresets())
-	cfg.SetLightningEffectPresets(GetLightningEffectPresets())
-	cfg.SetPotionEffectPresets(GetPotionEffectPresets())
-	cfg.SetLaserEffectPresets(GetLaserEffectPresets())
-	cfg.SetCommandEffectPresets(GetCommandEffectPresets())
+	cfg.ParticleEffectPresets = GetParticleEffectPresets()
+	cfg.DragonEffectPresets = GetDragonEffectPresets()
+	cfg.TimeshiftEffectPresets = GetTimeshiftEffectPresets()
+	cfg.LightningEffectPresets = GetLightningEffectPresets()
+	cfg.PotionEffectPresets = GetPotionEffectPresets()
+	cfg.LaserEffectPresets = GetLaserEffectPresets()
+	cfg.CommandEffectPresets = GetCommandEffectPresets()
 }
