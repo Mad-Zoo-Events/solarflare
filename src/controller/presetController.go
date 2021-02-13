@@ -15,8 +15,8 @@ import (
 	"github.com/eynorey/solarflare/src/utils/sferror"
 )
 
-// UpsertPresetAPI inserts a new preset or updates an existing one from an API request
-func UpsertPresetAPI(effectType string, body []byte) (*string, error) {
+// UpsertPreset inserts a new preset or updates an existing one from an API request
+func UpsertPreset(effectType string, body []byte) (*string, error) {
 	switch model.EffectType(effectType) {
 	case model.ParticleEffectType:
 		preset := model.ParticleEffectPresetAPI{}

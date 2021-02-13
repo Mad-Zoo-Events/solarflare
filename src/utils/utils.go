@@ -61,3 +61,13 @@ func FindPreset(id string, effectType model.EffectType) (interface{}, error) {
 
 	return nil, sferror.New(sferror.PresetNotFound, fmt.Sprintf("Preset with ID %s not found", id), nil)
 }
+
+// Contains returns true when the given string slice contains the given string
+func Contains(arr []string, str string) bool {
+	for _, e := range arr {
+		if e == str {
+			return true
+		}
+	}
+	return false
+}
