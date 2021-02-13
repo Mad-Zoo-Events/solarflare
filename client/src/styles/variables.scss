@@ -1,6 +1,5 @@
-$accent-alpha         : 0.7;
-$accent-lum-diff      : 20%;
-$accent-lum-diff-more : 35%;
+$accent-alpha    : 0.7;
+$accent-lum-diff : 20%;
 
 $white : #edf1f2;
 $black : #060606;
@@ -34,8 +33,8 @@ $command  : #597da1;
 
     --accent         : #{$accent};
     --accent-alpha   : #{transparentize($accent, 0.85)};
-    --accent-darker  : #{darken($accent, $accent-lum-diff-more)};
-    --accent-darkest : #{darken($accent, 45%)};
+    --accent-darker  : #{darken($accent, 35%)};
+    --accent-darkest : #{darken($accent, 50%)};
 
     --red        : #{$red};
     --red-darker : #{darken($red, $accent-lum-diff)};
