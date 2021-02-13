@@ -1,6 +1,6 @@
 package model
 
-// TimeshiftEffectPreset is the request model for the timeshift effect
+// TimeshiftEffectPreset is the domain and request/response model for the timeshift effect
 type TimeshiftEffectPreset struct {
 	ID           string        `json:"id"`
 	DisplayName  string        `json:"displayName"`

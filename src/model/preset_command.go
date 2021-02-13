@@ -1,6 +1,10 @@
 package model
 
-// CommandEffectPreset is the request model for commands
+// ************** //
+// INTERNAL MODEL //
+// ************** //
+
+// CommandEffectPreset is the domain model for commands
 type CommandEffectPreset struct {
 	ID           string        `json:"id"`
 	DisplayName  string        `json:"displayName"`
@@ -11,7 +15,11 @@ type CommandEffectPreset struct {
 	Commands []string `json:"commands"`
 }
 
-// CommandEffectPresetAPI is the inbount request and response model for command presets
+// ********* //
+// API MODEL //
+// ********* //
+
+// CommandEffectPresetAPI is the request/response model for command presets
 type CommandEffectPresetAPI struct {
 	ID           string        `json:"id"`
 	DisplayName  string        `json:"displayName"`

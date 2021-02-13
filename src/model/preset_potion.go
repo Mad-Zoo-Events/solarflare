@@ -1,6 +1,6 @@
 package model
 
-// PotionEffectPreset is the request model for potion effects
+// PotionEffectPreset is the domain and request/response model for potion effects
 type PotionEffectPreset struct {
 	ID           string        `json:"id"`
 	DisplayName  string        `json:"displayName"`

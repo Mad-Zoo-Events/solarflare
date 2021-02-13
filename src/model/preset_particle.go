@@ -15,7 +15,7 @@ const (
 // INTERNAL MODEL //
 // ************** //
 
-// ParticleEffectPreset describes a particle effect preset
+// ParticleEffectPreset is the domain model for particle effects
 type ParticleEffectPreset struct {
 	ID           string        `json:"id"`
 	DisplayName  string        `json:"displayName"`
