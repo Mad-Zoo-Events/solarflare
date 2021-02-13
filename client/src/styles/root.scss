@@ -1,8 +1,8 @@
 body {
     padding                : 0;
     margin                 : 0;
-    background-color       : var(--background);
-    color                  : var(--font);
+    background-color       : var(--black-lighter);
+    color                  : var(--white);
     font-size              : 0.9em;
     font-family            : -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing : antialiased;
@@ -48,15 +48,15 @@ a {
     border-radius: 0;
 
     &:hover:not(.forbidden) {
-        color     : var(--lighter-accent) !important;
+        color     : var(--white) !important;
         transition: all 0s, filter 0.8s ease-out;
     }
 
     &:active:not(.forbidden),
     &-active:not(.forbidden) {
-        filter    : drop-shadow(0 0 0.5em var(--lighter-accent));
+        filter    : drop-shadow(0 0 0.5em var(--white));
         transition: none;
-        color     : var(--lighter-accent) !important;
+        color     : var(--white) !important;
     }
 }
 

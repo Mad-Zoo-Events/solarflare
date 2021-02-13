@@ -70,8 +70,8 @@
     bottom       : 0.5em;
     width        : 1em;
     height       : 1em;
-    border-right : 0.3em solid var(--lighter-gray-alpha);
-    border-bottom: 0.3em solid var(--lighter-gray-alpha);
+    border-right : 0.3em solid var(--gray-alpha);
+    border-bottom: 0.3em solid var(--gray-alpha);
 }
 
 .react-resizable-hide>.react-resizable-handle {

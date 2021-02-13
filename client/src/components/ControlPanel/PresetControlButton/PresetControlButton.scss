@@ -7,7 +7,7 @@ button.control-panel-button {
     border: 0.05em solid;
 
     &:hover:not(.forbidden) {
-        border-color: var(--font) !important;
+        border-color: var(--white) !important;
     }
 }
 

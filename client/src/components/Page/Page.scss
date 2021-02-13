@@ -12,7 +12,7 @@
     }
 
     & .page-header {
-        background-color: var(--background0);
+        background-color: var(--black);
         padding         : 0.5em;
 
         & a,
@@ -39,13 +39,13 @@
     & .page-footer {
         grid-row        : 3;
         width           : 100%;
-        background-color: var(--background-accent);
+        background-color: var(--darkest-accent);
 
         & .status-bar {
             padding         : 0.3em;
             font-size       : smaller;
             text-align      : center;
-            background-color: var(--background0);
+            background-color: var(--black);
         }
     }
 }

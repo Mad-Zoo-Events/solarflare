@@ -1,6 +1,6 @@
 .preset-manager-list-item__container {
     padding         : 0.5em;
-    background-color: var(--background-alpha2);
+    background-color: var(--black-alpha);
 
     display              : grid;
     gap                  : 0.2em;
@@ -34,8 +34,8 @@
     & .shortcut {
         grid-area       : shortcut;
         font-size       : larger;
-        border          : 1px solid var(--darker-accent-alpha);
-        background-color: var(--background-alpha3);
+        border          : 1px solid var(--darker-accent);
+        background-color: var(--black-alpha);
         border-radius   : 0.5em;
         margin          : auto;
         height          : 2em;
@@ -73,13 +73,13 @@
 }
 
 .preset-manager-list-item__add-new {
-    background-color: var(--background-alpha);
+    background-color: var(--black-alpha);
     display         : flex;
     justify-content : center;
     align-items     : center;
     padding         : 1em;
 
     &:hover {
-        background-color: var(--darker-gray);
+        background-color: var(--darker-gray-alpha);
     }
 }

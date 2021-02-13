@@ -1,55 +1,74 @@
+$accent-alpha         : 0.7;
+$accent-lum-diff      : 20%;
+$accent-lum-diff-more : 35%;
+
+$white : #edf1f2;
+$black : #060606;
+$gray  : #95a6a7;
+
+$accent : #5c88b4;
+
+$green  : #2ecc70;
+$orange : #d15400;
+$red    : #bf3a2b;
+
+$potion   : #16a286;
+$timeshift: #e77e23;
+$laser    : #8d43ad;
+$lightning: #f1c40e;
+$particle : #3398db;
+$dragon   : #e74d3c;
+$command  : #597da1;
+
 :root {
-    --background0       : hsl(0, 0%, 3%);
-    --background        : hsl(0, 0%, 7%);
-    --background-alpha  : #000000e0;
-    --background-alpha2 : #000000ad;
-    --background-alpha3 : #00000071;
-    --background-alpha4 : #00000023;
-    --darkest-gray      : hsl(184, 6%, 15%);
-    --darker-gray       : hsl(184, 6%, 33%);
-    --dark-gray         : hsl(184, 6%, 53%);
-    --gray              : hsl(184, 9%, 62%);
-    --lighter-gray      : hsl(204, 8%, 76%);
-    --lighter-gray-alpha: hsla(204, 8%, 76%, 0.5);
-    --font              : hsl(192, 15%, 94%);
+    --white: #{$white};
 
-    --accent             : hsl(210, 29%, 54%);
-    --accent-alpha       : hsla(210, 29%, 54%, 0.125);
-    --lighter-accent     : hsl(210, 29%, 84%);
-    --darker-accent      : hsl(210, 29%, 24%);
-    --darker-accent-alpha: hsl(210, 29%, 24%, 0.8);
-    --background-accent  : hsl(210, 29%, 6%);
-    --red                : hsl(6, 63%, 46%);
-    --darker-red         : hsl(6, 63%, 26%);
-    --green              : hsl(145, 63%, 49%);
-    --orange             : hsl(24, 100%, 41%);
+    --black        : #{$black};
+    --black-lighter: #{lighten($black, 5%)};
+    --black-alpha  : #{transparentize($black, 0.4)};
 
-    --potion           : hsl(168, 76%, 36%);
-    --potion-alpha     : hsla(168, 76%, 36%, 0.19);
-    --lighter-potion   : hsl(168, 76%, 56%);
-    --darker-potion    : hsl(168, 76%, 16%);
-    --timeshift        : hsl(28, 80%, 52%);
-    --timeshift-alpha  : hsla(28, 80%, 51%, 0.19);
-    --lighter-timeshift: hsl(28, 80%, 71%);
-    --darker-timeshift : hsl(28, 80%, 31%);
-    --laser            : hsl(282, 44%, 47%);
-    --laser-alpha      : hsla(282, 44%, 47%, 0.19);
-    --lighter-laser    : hsl(282, 44%, 67%);
-    --lightning        : hsl(48, 89%, 50%);
-    --lightning-alpha  : hsla(48, 89%, 50%, 0.19);
-    --lighter-lightning: hsl(48, 89%, 70%);
-    --darker-lightning : hsl(48, 89%, 30%);
-    --darker-laser     : hsl(282, 44%, 27%);
-    --particle         : hsl(204, 70%, 53%);
-    --particle-alpha   : hsla(204, 70%, 53%, 0.19);
-    --lighter-particle : hsl(204, 70%, 73%);
-    --darker-particle  : hsl(204, 70%, 33%);
-    --dragon           : hsl(6, 78%, 57%);
-    --dragon-alpha     : hsla(6, 78%, 57%, 0.19);
-    --lighter-dragon   : hsl(6, 78%, 77%);
-    --darker-dragon    : hsl(6, 78%, 37%);
-    --command          : hsl(210, 29%, 49%);
-    --command-alpha    : hsla(210, 29%, 49%, 0.19);
-    --lighter-command  : hsl(210, 29%, 69%);
-    --darker-command   : hsl(210, 29%, 29%);
+    --gray             : #{$gray};
+    --gray-alpha       : #{transparentize($gray, 0.5)};
+    --darker-gray      : #{darken($gray, 50%)};
+    --darker-gray-alpha: #{transparentize(darken($gray, 50%), 0.5)};
+
+    --accent         : #{$accent};
+    --accent-alpha   : #{transparentize($accent, 0.85)};
+    --lighter-accent : #{lighten($accent, $accent-lum-diff)};
+    --darker-accent  : #{darken($accent, $accent-lum-diff-more)};
+    --darkest-accent : #{darken($accent, 45%)};
+
+    --red        : #{$red};
+    --darker-red : #{darken($red, $accent-lum-diff)};
+    --green      : #{$green};
+    --orange     : #{$orange};
+
+    --potion            : #{$potion};
+    --potion-alpha      : #{transparentize($potion, $accent-alpha)};
+    --lighter-potion    : #{lighten($potion, $accent-lum-diff)};
+    --darker-potion     : #{darken($potion, $accent-lum-diff)};
+    --timeshift         : #{$timeshift};
+    --timeshift-alpha   : #{transparentize($timeshift, $accent-alpha)};
+    --lighter-timeshift : #{lighten($timeshift, $accent-lum-diff)};
+    --darker-timeshift  : #{darken($timeshift, $accent-lum-diff)};
+    --laser             : #{$laser};
+    --laser-alpha       : #{transparentize($laser, $accent-alpha)};
+    --lighter-laser     : #{lighten($laser, $accent-lum-diff)};
+    --darker-laser      : #{darken($laser, $accent-lum-diff)};
+    --lightning         : #{$lightning};
+    --lightning-alpha   : #{transparentize($lightning, $accent-alpha)};
+    --lighter-lightning : #{lighten($lightning, $accent-lum-diff)};
+    --darker-lightning  : #{darken($lightning, $accent-lum-diff)};
+    --particle          : #{$particle};
+    --particle-alpha    : #{transparentize($particle, $accent-alpha)};
+    --lighter-particle  : #{lighten($particle, $accent-lum-diff)};
+    --darker-particle   : #{darken($particle, $accent-lum-diff)};
+    --dragon            : #{$dragon};
+    --dragon-alpha      : #{transparentize($dragon, $accent-alpha)};
+    --lighter-dragon    : #{lighten($dragon, $accent-lum-diff)};
+    --darker-dragon     : #{darken($dragon, $accent-lum-diff)};
+    --command           : #{$command};
+    --command-alpha     : #{transparentize($command, $accent-alpha)};
+    --lighter-command   : #{lighten($command, $accent-lum-diff)};
+    --darker-command    : #{darken($command, $accent-lum-diff)};
 }

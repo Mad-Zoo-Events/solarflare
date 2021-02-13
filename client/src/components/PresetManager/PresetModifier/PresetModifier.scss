@@ -8,7 +8,7 @@
     right           : 0;
     bottom          : 0;
     margin          : auto;
-    background-color: var(--background-alpha2);
+    background-color: var(--black-alpha);
     backdrop-filter : blur(1.2em) saturate(40%);
 }
 
@@ -24,7 +24,7 @@
     max-width    : calc(100% - 8em);
     border-radius: 1em;
 
-    background     : var(--background-alpha4);
+    background     : var(--black-alpha);
     backdrop-filter: blur(0.5em);
 
     display           : grid;

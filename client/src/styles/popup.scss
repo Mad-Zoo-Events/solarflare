@@ -21,9 +21,9 @@
         z-index : 1;
 
         padding         : 1em;
-        background-color: var(--background-alpha3);
+        background-color: var(--black-alpha);
         backdrop-filter : blur(1.5em);
-        box-shadow      : 0 1em 2em 0.5em var(--background);
+        box-shadow      : 0 1em 2em 0.5em var(--black);
         border-radius   : 0.5em;
 
         border: 1px solid var(--accent);

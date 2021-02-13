@@ -10,7 +10,7 @@
         grid-column  : 1 / span 3;
         display      : inline-flex;
         border-radius: 0.2em;
-        color        : var(--font);
+        color        : var(--white);
 
         &-active {
             background-color: var(--accent);
@@ -43,7 +43,7 @@
             grid-column  : 1 /span 2;
             font-weight  : bold;
             margin-bottom: 0.3em;
-            color        : var(--font);
+            color        : var(--white);
         }
 
         & .sample-size-too-small {

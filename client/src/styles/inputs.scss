@@ -3,8 +3,8 @@ input[type=number],
 textarea,
 .fake-input,
 select {
-    color           : var(--font);
-    background-color: var(--darker-accent-alpha);
+    color           : var(--white);
+    background-color: var(--darker-accent);
     width           : 100%;
     padding         : 7px;
     box-sizing      : border-box;
@@ -20,7 +20,7 @@ select {
 
     label {
         font-size: inherit !important;
-        color    : var(--font) !important;
+        color    : var(--white) !important;
     }
 
     input {
@@ -29,8 +29,8 @@ select {
         padding         : 0.5em !important;
         box-shadow      : none !important;
         font-size       : 0.9em !important;
-        color           : var(--font);
-        background-color: var(--darker-accent-alpha);
+        color           : var(--white);
+        background-color: var(--darker-accent);
     }
 }
 
@@ -65,7 +65,7 @@ select {
     }
 
     &:hover input~span {
-        background-color: var(--lighter-gray);
+        background-color: var(--white);
     }
 
     input:checked~span {
@@ -95,7 +95,7 @@ select {
         left             : 0.5em;
         width            : 0.5em;
         height           : 0.9em;
-        border           : solid var(--font);
+        border           : solid var(--white);
         border-width     : 0 0.25em 0.25em 0;
         -webkit-transform: rotate(45deg);
         -ms-transform    : rotate(45deg);
@@ -111,7 +111,7 @@ select {
     }
 
     & span:after {
-        background-color: var(--font);
+        background-color: var(--white);
         top             : 0.28em;
         right           : 0.28em;
         bottom          : 0.28em;
