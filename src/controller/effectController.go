@@ -25,20 +25,20 @@ func RunEffect(id string, effectType model.EffectType, action model.EffectAction
 	}
 
 	switch effectType {
-	case model.ParticleEffectType:
-		return manager.RunParticleEffect(preset.(model.ParticleEffectPreset), action, true)
-	case model.DragonEffectType:
-		return manager.RunDragonEffect(preset.(model.DragonEffectPreset), action, true)
-	case model.TimeshiftEffectType:
-		return manager.RunTimeshiftEffect(preset.(model.TimeshiftEffectPreset), action, true)
-	case model.PotionEffectType:
-		return manager.RunPotionEffect(preset.(model.PotionEffectPreset), action, true)
-	case model.LaserEffectType:
-		return manager.RunLaserEffect(preset.(model.LaserEffectPreset), action, true)
 	case model.CommandEffectType:
 		return manager.RunCommandEffect(preset.(model.CommandEffectPreset), true)
+	case model.DragonEffectType:
+		return manager.RunDragonEffect(preset.(model.DragonEffectPreset), action, true)
+	case model.LaserEffectType:
+		return manager.RunLaserEffect(preset.(model.LaserEffectPreset), action, true)
 	case model.LightningEffectType:
 		return manager.RunLightningEffect(preset.(model.LightningEffectPreset), action, true)
+	case model.ParticleEffectType:
+		return manager.RunParticleEffect(preset.(model.ParticleEffectPreset), action, true)
+	case model.PotionEffectType:
+		return manager.RunPotionEffect(preset.(model.PotionEffectPreset), action, true)
+	case model.TimeshiftEffectType:
+		return manager.RunTimeshiftEffect(preset.(model.TimeshiftEffectPreset), action, true)
 	}
 
 	return sferror.New(sferror.InvalidEffectType, string(effectType), nil)

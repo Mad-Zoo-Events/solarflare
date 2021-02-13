@@ -170,18 +170,20 @@ func (c *clock) doEffects(offBeatCycle bool) {
 			}
 
 			switch e.effectType {
-			case model.ParticleEffectType:
-				go RunParticleEffect(e.preset.(model.ParticleEffectPreset), model.StartEffectAction, false)
-			case model.DragonEffectType:
-				go RunDragonEffect(e.preset.(model.DragonEffectPreset), model.StartEffectAction, false)
-			case model.TimeshiftEffectType:
-				go RunTimeshiftEffect(e.preset.(model.TimeshiftEffectPreset), model.StartEffectAction, false)
-			case model.PotionEffectType:
-				go RunPotionEffect(e.preset.(model.PotionEffectPreset), model.StartEffectAction, false)
-			case model.LaserEffectType:
-				go RunLaserEffect(e.preset.(model.LaserEffectPreset), model.StartEffectAction, false)
 			case model.CommandEffectType:
 				go RunCommandEffect(e.preset.(model.CommandEffectPreset), false)
+			case model.DragonEffectType:
+				go RunDragonEffect(e.preset.(model.DragonEffectPreset), model.StartEffectAction, false)
+			case model.LaserEffectType:
+				go RunLaserEffect(e.preset.(model.LaserEffectPreset), model.StartEffectAction, false)
+			case model.LightningEffectType:
+				go RunLightningEffect(e.preset.(model.LightningEffectPreset), model.StartEffectAction, false)
+			case model.ParticleEffectType:
+				go RunParticleEffect(e.preset.(model.ParticleEffectPreset), model.StartEffectAction, false)
+			case model.PotionEffectType:
+				go RunPotionEffect(e.preset.(model.PotionEffectPreset), model.StartEffectAction, false)
+			case model.TimeshiftEffectType:
+				go RunTimeshiftEffect(e.preset.(model.TimeshiftEffectPreset), model.StartEffectAction, false)
 			}
 		} else {
 			if e.firstRun {
