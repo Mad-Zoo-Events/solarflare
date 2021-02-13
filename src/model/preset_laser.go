@@ -2,11 +2,7 @@ package model
 
 // LaserEffectPreset is the domain and request/response model for the laser effects
 type LaserEffectPreset struct {
-	ID           string        `json:"id"`
-	DisplayName  string        `json:"displayName"`
-	Description  string        `json:"description"`
-	KeyBinding   rune          `json:"keyBinding"`
-	MIDIMappings []MIDIMapping `json:"midiMappings"`
+	Preset
 
 	LaserType    LaserType     `json:"laserType"`
 	LaserEffects []LaserEffect `json:"laserEffects"`

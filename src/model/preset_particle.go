@@ -17,11 +17,7 @@ const (
 
 // ParticleEffectPreset is the domain model for particle effects
 type ParticleEffectPreset struct {
-	ID           string        `json:"id"`
-	DisplayName  string        `json:"displayName"`
-	Description  string        `json:"description"`
-	KeyBinding   rune          `json:"keyBinding"`
-	MIDIMappings []MIDIMapping `json:"midiMappings"`
+	Preset
 
 	ParticleEffects []ParticleEffect `json:"particleEffects"`
 }
@@ -66,11 +62,7 @@ type AdditionalOptions struct {
 
 // ParticleEffectPresetAPI is the inbound request and response model for particle effect presets
 type ParticleEffectPresetAPI struct {
-	ID           string        `json:"id"`
-	DisplayName  string        `json:"displayName"`
-	Description  string        `json:"description"`
-	KeyBinding   rune          `json:"keyBinding"`
-	MIDIMappings []MIDIMapping `json:"midiMappings"`
+	Preset
 
 	ParticleEffects []ParticleEffectAPI `json:"particleEffects"`
 }
@@ -137,11 +129,7 @@ func (preset ParticleEffectPreset) ToAPI() ParticleEffectPresetAPI {
 		effects = append(effects, apiEffect)
 	}
 	return ParticleEffectPresetAPI{
-		ID:              preset.ID,
-		DisplayName:     preset.DisplayName,
-		Description:     preset.Description,
-		KeyBinding:      preset.KeyBinding,
-		MIDIMappings:    preset.MIDIMappings,
+		Preset:          preset.Preset,
 		ParticleEffects: effects,
 	}
 }
@@ -191,11 +179,7 @@ func (preset ParticleEffectPresetAPI) FromAPI() ParticleEffectPreset {
 		effects = append(effects, particleEffect)
 	}
 	return ParticleEffectPreset{
-		ID:              preset.ID,
-		DisplayName:     preset.DisplayName,
-		Description:     preset.Description,
-		KeyBinding:      preset.KeyBinding,
-		MIDIMappings:    preset.MIDIMappings,
+		Preset:          preset.Preset,
 		ParticleEffects: effects,
 	}
 }

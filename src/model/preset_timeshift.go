@@ -2,11 +2,7 @@ package model
 
 // TimeshiftEffectPreset is the domain and request/response model for the timeshift effect
 type TimeshiftEffectPreset struct {
-	ID           string        `json:"id"`
-	DisplayName  string        `json:"displayName"`
-	Description  string        `json:"description"`
-	KeyBinding   rune          `json:"keyBinding"`
-	MIDIMappings []MIDIMapping `json:"midiMappings"`
+	Preset
 
 	TimeshiftEffects []TimeshiftEffect `json:"timeshiftEffects"`
 }
