@@ -11,11 +11,7 @@ import (
 
 // LightningEffectPreset is the domain model for lightnings
 type LightningEffectPreset struct {
-	ID           string        `json:"id"`
-	DisplayName  string        `json:"displayName"`
-	Description  string        `json:"description"`
-	KeyBinding   rune          `json:"keyBinding"`
-	MIDIMappings []MIDIMapping `json:"midiMappings"`
+	Preset
 
 	PointIDs []int `json:"pointIDs"`
 }
@@ -26,11 +22,7 @@ type LightningEffectPreset struct {
 
 // LightningEffectPresetAPI is the request/response model for lightning effect presets
 type LightningEffectPresetAPI struct {
-	ID           string        `json:"id"`
-	DisplayName  string        `json:"displayName"`
-	Description  string        `json:"description"`
-	KeyBinding   rune          `json:"keyBinding"`
-	MIDIMappings []MIDIMapping `json:"midiMappings"`
+	Preset
 
 	PointIDList string `json:"pointIDList"` // Comma-separated list of point IDs
 }
@@ -48,12 +40,8 @@ func (preset LightningEffectPreset) ToAPI() LightningEffectPresetAPI {
 	}
 
 	return LightningEffectPresetAPI{
-		ID:           preset.ID,
-		DisplayName:  preset.DisplayName,
-		Description:  preset.Description,
-		KeyBinding:   preset.KeyBinding,
-		MIDIMappings: preset.MIDIMappings,
-		PointIDList:  strings.TrimSuffix(pointIDBuilder.String(), ","),
+		Preset:      preset.Preset,
+		PointIDList: strings.TrimSuffix(pointIDBuilder.String(), ","),
 	}
 }
 
@@ -67,11 +55,7 @@ func (preset LightningEffectPresetAPI) FromAPI() LightningEffectPreset {
 	}
 
 	return LightningEffectPreset{
-		ID:           preset.ID,
-		DisplayName:  preset.DisplayName,
-		Description:  preset.Description,
-		KeyBinding:   preset.KeyBinding,
-		MIDIMappings: preset.MIDIMappings,
-		PointIDs:     pointIDs,
+		Preset:   preset.Preset,
+		PointIDs: pointIDs,
 	}
 }

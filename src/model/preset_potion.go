@@ -2,11 +2,7 @@ package model
 
 // PotionEffectPreset is the domain and request/response model for potion effects
 type PotionEffectPreset struct {
-	ID           string        `json:"id"`
-	DisplayName  string        `json:"displayName"`
-	Description  string        `json:"description"`
-	KeyBinding   rune          `json:"keyBinding"`
-	MIDIMappings []MIDIMapping `json:"midiMappings"`
+	Preset
 
 	PotionEffects []PotionEffect `json:"potionEffects"`
 }
