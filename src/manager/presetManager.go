@@ -15,7 +15,7 @@ func UpsertCommandEffectPreset(preset model.CommandEffectPreset) (*string, error
 	cfg := config.Get()
 
 	if preset.ID == "" {
-		preset.ID = uuid.New().String()
+		preset.ID = uuid.NewString()
 	}
 
 	err := client.UpsertItem(fmt.Sprintf(client.EffectPresetsTable, "%s", model.CommandEffectType), preset)
@@ -33,7 +33,7 @@ func UpsertDragonEffectPreset(preset model.DragonEffectPreset) (*string, error) 
 	cfg := config.Get()
 
 	if preset.ID == "" {
-		preset.ID = uuid.New().String()
+		preset.ID = uuid.NewString()
 	}
 
 	err := client.UpsertItem(fmt.Sprintf(client.EffectPresetsTable, "%s", model.DragonEffectType), preset)
@@ -51,7 +51,7 @@ func UpsertLaserEffectPreset(preset model.LaserEffectPreset) (*string, error) {
 	cfg := config.Get()
 
 	if preset.ID == "" {
-		preset.ID = uuid.New().String()
+		preset.ID = uuid.NewString()
 	}
 
 	err := client.UpsertItem(fmt.Sprintf(client.EffectPresetsTable, "%s", model.LaserEffectType), preset)
@@ -69,7 +69,7 @@ func UpsertLightningEffectPreset(preset model.LightningEffectPreset) (*string, e
 	cfg := config.Get()
 
 	if preset.ID == "" {
-		preset.ID = uuid.New().String()
+		preset.ID = uuid.NewString()
 	}
 
 	err := client.UpsertItem(fmt.Sprintf(client.EffectPresetsTable, "%s", model.LightningEffectType), preset)
@@ -87,7 +87,7 @@ func UpsertParticleEffectPreset(preset model.ParticleEffectPreset) (*string, err
 	cfg := config.Get()
 
 	if preset.ID == "" {
-		preset.ID = uuid.New().String()
+		preset.ID = uuid.NewString()
 	}
 
 	err := client.UpsertItem(fmt.Sprintf(client.EffectPresetsTable, "%s", model.ParticleEffectType), preset)
@@ -105,7 +105,7 @@ func UpsertPotionEffectPreset(preset model.PotionEffectPreset) (*string, error) 
 	cfg := config.Get()
 
 	if preset.ID == "" {
-		preset.ID = uuid.New().String()
+		preset.ID = uuid.NewString()
 	}
 
 	err := client.UpsertItem(fmt.Sprintf(client.EffectPresetsTable, "%s", model.PotionEffectType), preset)
@@ -123,7 +123,7 @@ func UpsertTimeshiftEffectPreset(preset model.TimeshiftEffectPreset) (*string, e
 	cfg := config.Get()
 
 	if preset.ID == "" {
-		preset.ID = uuid.New().String()
+		preset.ID = uuid.NewString()
 	}
 
 	err := client.UpsertItem(fmt.Sprintf(client.EffectPresetsTable, "%s", model.TimeshiftEffectType), preset)

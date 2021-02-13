@@ -5,13 +5,13 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/eynorey/solarflare/src/utils"
 	"github.com/google/uuid"
 
 	"github.com/eynorey/solarflare/src/client"
 	"github.com/eynorey/solarflare/src/config"
 	"github.com/eynorey/solarflare/src/manager"
 	"github.com/eynorey/solarflare/src/model"
+	"github.com/eynorey/solarflare/src/utils"
 	"github.com/eynorey/solarflare/src/utils/sferror"
 )
 
@@ -189,7 +189,7 @@ func RetrievePresets(effectType string) (interface{}, error) {
 
 // TestPresetAPI runs a preset on the server for three seconds
 func TestPresetAPI(effectType string, body []byte) {
-	id := uuid.New().String()
+	id := uuid.NewString()
 
 	switch model.EffectType(effectType) {
 	case model.CommandEffectType:
