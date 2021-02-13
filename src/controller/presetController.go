@@ -18,46 +18,6 @@ import (
 // UpsertPreset inserts a new preset or updates an existing one from an API request
 func UpsertPreset(effectType string, body []byte) (*string, error) {
 	switch model.EffectType(effectType) {
-	case model.ParticleEffectType:
-		preset := model.ParticleEffectPresetAPI{}
-
-		if err := json.Unmarshal(body, &preset); err != nil {
-			return nil, sferror.New(sferror.Encoding, "Error unmarshalling particle effect preset request", err)
-		}
-
-		return manager.UpsertParticleEffectPreset(preset.FromAPI())
-	case model.DragonEffectType:
-		preset := model.DragonEffectPreset{}
-
-		if err := json.Unmarshal(body, &preset); err != nil {
-			return nil, sferror.New(sferror.Encoding, "Error unmarshalling dragon effect preset request", err)
-		}
-
-		return manager.UpsertDragonEffectPreset(preset)
-	case model.TimeshiftEffectType:
-		preset := model.TimeshiftEffectPreset{}
-
-		if err := json.Unmarshal(body, &preset); err != nil {
-			return nil, sferror.New(sferror.Encoding, "Error unmarshalling timeshift effect preset request", err)
-		}
-
-		return manager.UpsertTimeshiftEffectPreset(preset)
-	case model.PotionEffectType:
-		preset := model.PotionEffectPreset{}
-
-		if err := json.Unmarshal(body, &preset); err != nil {
-			return nil, sferror.New(sferror.Encoding, "Error unmarshalling potion effect preset request", err)
-		}
-
-		return manager.UpsertPotionEffectPreset(preset)
-	case model.LaserEffectType:
-		preset := model.LaserEffectPreset{}
-
-		if err := json.Unmarshal(body, &preset); err != nil {
-			return nil, sferror.New(sferror.Encoding, "Error unmarshalling laser effect preset request", err)
-		}
-
-		return manager.UpsertLaserEffectPreset(preset)
 	case model.CommandEffectType:
 		preset := model.CommandEffectPresetAPI{}
 
@@ -66,6 +26,22 @@ func UpsertPreset(effectType string, body []byte) (*string, error) {
 		}
 
 		return manager.UpsertCommandEffectPreset(preset.FromAPI())
+	case model.DragonEffectType:
+		preset := model.DragonEffectPreset{}
+
+		if err := json.Unmarshal(body, &preset); err != nil {
+			return nil, sferror.New(sferror.Encoding, "Error unmarshalling dragon effect preset request", err)
+		}
+
+		return manager.UpsertDragonEffectPreset(preset)
+	case model.LaserEffectType:
+		preset := model.LaserEffectPreset{}
+
+		if err := json.Unmarshal(body, &preset); err != nil {
+			return nil, sferror.New(sferror.Encoding, "Error unmarshalling laser effect preset request", err)
+		}
+
+		return manager.UpsertLaserEffectPreset(preset)
 	case model.LightningEffectType:
 		preset := model.LightningEffectPresetAPI{}
 
@@ -74,6 +50,30 @@ func UpsertPreset(effectType string, body []byte) (*string, error) {
 		}
 
 		return manager.UpsertLightningEffectPreset(preset.FromAPI())
+	case model.ParticleEffectType:
+		preset := model.ParticleEffectPresetAPI{}
+
+		if err := json.Unmarshal(body, &preset); err != nil {
+			return nil, sferror.New(sferror.Encoding, "Error unmarshalling particle effect preset request", err)
+		}
+
+		return manager.UpsertParticleEffectPreset(preset.FromAPI())
+	case model.PotionEffectType:
+		preset := model.PotionEffectPreset{}
+
+		if err := json.Unmarshal(body, &preset); err != nil {
+			return nil, sferror.New(sferror.Encoding, "Error unmarshalling potion effect preset request", err)
+		}
+
+		return manager.UpsertPotionEffectPreset(preset)
+	case model.TimeshiftEffectType:
+		preset := model.TimeshiftEffectPreset{}
+
+		if err := json.Unmarshal(body, &preset); err != nil {
+			return nil, sferror.New(sferror.Encoding, "Error unmarshalling timeshift effect preset request", err)
+		}
+
+		return manager.UpsertTimeshiftEffectPreset(preset)
 	}
 
 	return nil, sferror.New(sferror.InvalidEffectType, effectType, nil)
@@ -89,20 +89,20 @@ func DeletePreset(effectType, id string) error {
 	cfg := config.Get()
 
 	switch model.EffectType(effectType) {
-	case model.ParticleEffectType:
-		cfg.ParticleEffectPresets = client.GetParticleEffectPresets()
-	case model.DragonEffectType:
-		cfg.DragonEffectPresets = client.GetDragonEffectPresets()
-	case model.TimeshiftEffectType:
-		cfg.TimeshiftEffectPresets = client.GetTimeshiftEffectPresets()
-	case model.PotionEffectType:
-		cfg.PotionEffectPresets = client.GetPotionEffectPresets()
-	case model.LaserEffectType:
-		cfg.LaserEffectPresets = client.GetLaserEffectPresets()
 	case model.CommandEffectType:
 		cfg.CommandEffectPresets = client.GetCommandEffectPresets()
+	case model.DragonEffectType:
+		cfg.DragonEffectPresets = client.GetDragonEffectPresets()
+	case model.LaserEffectType:
+		cfg.LaserEffectPresets = client.GetLaserEffectPresets()
 	case model.LightningEffectType:
 		cfg.LightningEffectPresets = client.GetLightningEffectPresets()
+	case model.ParticleEffectType:
+		cfg.ParticleEffectPresets = client.GetParticleEffectPresets()
+	case model.PotionEffectType:
+		cfg.PotionEffectPresets = client.GetPotionEffectPresets()
+	case model.TimeshiftEffectType:
+		cfg.TimeshiftEffectPresets = client.GetTimeshiftEffectPresets()
 	default:
 		err = sferror.New(sferror.InvalidEffectType, effectType, nil)
 	}
@@ -118,34 +118,34 @@ func DuplicatePreset(effectType, id string) (newID *string, err error) {
 	}
 
 	switch model.EffectType(effectType) {
-	case model.ParticleEffectType:
-		p := preset.(model.ParticleEffectPreset)
-		p.ID = ""
-		return manager.UpsertParticleEffectPreset(p)
-	case model.DragonEffectType:
-		p := preset.(model.DragonEffectPreset)
-		p.ID = ""
-		return manager.UpsertDragonEffectPreset(p)
-	case model.TimeshiftEffectType:
-		p := preset.(model.TimeshiftEffectPreset)
-		p.ID = ""
-		return manager.UpsertTimeshiftEffectPreset(p)
-	case model.PotionEffectType:
-		p := preset.(model.PotionEffectPreset)
-		p.ID = ""
-		return manager.UpsertPotionEffectPreset(p)
-	case model.LaserEffectType:
-		p := preset.(model.LaserEffectPreset)
-		p.ID = ""
-		return manager.UpsertLaserEffectPreset(p)
 	case model.CommandEffectType:
 		p := preset.(model.CommandEffectPreset)
 		p.ID = ""
 		return manager.UpsertCommandEffectPreset(p)
+	case model.DragonEffectType:
+		p := preset.(model.DragonEffectPreset)
+		p.ID = ""
+		return manager.UpsertDragonEffectPreset(p)
+	case model.LaserEffectType:
+		p := preset.(model.LaserEffectPreset)
+		p.ID = ""
+		return manager.UpsertLaserEffectPreset(p)
 	case model.LightningEffectType:
 		p := preset.(model.LightningEffectPreset)
 		p.ID = ""
 		return manager.UpsertLightningEffectPreset(p)
+	case model.ParticleEffectType:
+		p := preset.(model.ParticleEffectPreset)
+		p.ID = ""
+		return manager.UpsertParticleEffectPreset(p)
+	case model.PotionEffectType:
+		p := preset.(model.PotionEffectPreset)
+		p.ID = ""
+		return manager.UpsertPotionEffectPreset(p)
+	case model.TimeshiftEffectType:
+		p := preset.(model.TimeshiftEffectPreset)
+		p.ID = ""
+		return manager.UpsertTimeshiftEffectPreset(p)
 	}
 
 	return nil, sferror.New(sferror.InvalidEffectType, effectType, nil)
@@ -157,31 +157,31 @@ func RetrievePresets(effectType string) (interface{}, error) {
 
 	if effectType == "all" {
 		return model.PresetCollection{
-			ParticleEffectPresets:  particlePresetsToAPI(cfg.ParticleEffectPresets),
-			DragonEffectPresets:    cfg.DragonEffectPresets,
-			TimeshiftEffectPresets: cfg.TimeshiftEffectPresets,
-			PotionEffectPresets:    cfg.PotionEffectPresets,
-			LaserEffectPresets:     cfg.LaserEffectPresets,
 			CommandEffectPresets:   commandPresetsToAPI(cfg.CommandEffectPresets),
+			DragonEffectPresets:    cfg.DragonEffectPresets,
+			LaserEffectPresets:     cfg.LaserEffectPresets,
 			LightningEffectPresets: lightningPresetsToAPI(cfg.LightningEffectPresets),
+			ParticleEffectPresets:  particlePresetsToAPI(cfg.ParticleEffectPresets),
+			PotionEffectPresets:    cfg.PotionEffectPresets,
+			TimeshiftEffectPresets: cfg.TimeshiftEffectPresets,
 		}, nil
 	}
 
 	switch model.EffectType(effectType) {
-	case model.ParticleEffectType:
-		return particlePresetsToAPI(cfg.ParticleEffectPresets), nil
-	case model.DragonEffectType:
-		return cfg.DragonEffectPresets, nil
-	case model.TimeshiftEffectType:
-		return cfg.TimeshiftEffectPresets, nil
-	case model.PotionEffectType:
-		return cfg.PotionEffectPresets, nil
-	case model.LaserEffectType:
-		return cfg.LaserEffectPresets, nil
 	case model.CommandEffectType:
 		return commandPresetsToAPI(cfg.CommandEffectPresets), nil
+	case model.DragonEffectType:
+		return cfg.DragonEffectPresets, nil
+	case model.LaserEffectType:
+		return cfg.LaserEffectPresets, nil
 	case model.LightningEffectType:
 		return lightningPresetsToAPI(cfg.LightningEffectPresets), nil
+	case model.ParticleEffectType:
+		return particlePresetsToAPI(cfg.ParticleEffectPresets), nil
+	case model.PotionEffectType:
+		return cfg.PotionEffectPresets, nil
+	case model.TimeshiftEffectType:
+		return cfg.TimeshiftEffectPresets, nil
 	default:
 		return nil, sferror.New(sferror.InvalidEffectType, effectType, nil)
 	}
@@ -192,41 +192,41 @@ func TestPresetAPI(effectType string, body []byte) {
 	id := uuid.New().String()
 
 	switch model.EffectType(effectType) {
-	case model.ParticleEffectType:
-		p := model.ParticleEffectPresetAPI{}
-		json.Unmarshal(body, &p)
-		p.ID = id
-		manager.RunParticleEffect(p.FromAPI(), model.StartEffectAction, false)
-	case model.DragonEffectType:
-		p := model.DragonEffectPreset{}
-		json.Unmarshal(body, &p)
-		p.ID = id
-		manager.RunDragonEffect(p, model.StartEffectAction, false)
-	case model.TimeshiftEffectType:
-		p := model.TimeshiftEffectPreset{}
-		json.Unmarshal(body, &p)
-		p.ID = id
-		manager.RunTimeshiftEffect(p, model.StartEffectAction, false)
-	case model.PotionEffectType:
-		p := model.PotionEffectPreset{}
-		json.Unmarshal(body, &p)
-		p.ID = id
-		manager.RunPotionEffect(p, model.StartEffectAction, false)
-	case model.LaserEffectType:
-		p := model.LaserEffectPreset{}
-		json.Unmarshal(body, &p)
-		p.ID = id
-		manager.RunLaserEffect(p, model.StartEffectAction, false)
 	case model.CommandEffectType:
 		p := model.CommandEffectPresetAPI{}
 		json.Unmarshal(body, &p)
 		p.ID = id
 		manager.RunCommandEffect(p.FromAPI(), false)
+	case model.DragonEffectType:
+		p := model.DragonEffectPreset{}
+		json.Unmarshal(body, &p)
+		p.ID = id
+		manager.RunDragonEffect(p, model.StartEffectAction, false)
+	case model.LaserEffectType:
+		p := model.LaserEffectPreset{}
+		json.Unmarshal(body, &p)
+		p.ID = id
+		manager.RunLaserEffect(p, model.StartEffectAction, false)
 	case model.LightningEffectType:
 		p := model.LightningEffectPresetAPI{}
 		json.Unmarshal(body, &p)
 		p.ID = id
 		manager.RunLightningEffect(p.FromAPI(), model.StartEffectAction, false)
+	case model.ParticleEffectType:
+		p := model.ParticleEffectPresetAPI{}
+		json.Unmarshal(body, &p)
+		p.ID = id
+		manager.RunParticleEffect(p.FromAPI(), model.StartEffectAction, false)
+	case model.PotionEffectType:
+		p := model.PotionEffectPreset{}
+		json.Unmarshal(body, &p)
+		p.ID = id
+		manager.RunPotionEffect(p, model.StartEffectAction, false)
+	case model.TimeshiftEffectType:
+		p := model.TimeshiftEffectPreset{}
+		json.Unmarshal(body, &p)
+		p.ID = id
+		manager.RunTimeshiftEffect(p, model.StartEffectAction, false)
 	}
 
 	if model.EffectType(effectType) != model.CommandEffectType {

@@ -41,14 +41,14 @@ func scanTable(tableName string) *dynamodb.ScanOutput {
 	return result
 }
 
-// GetParticleEffectPresets retrieves all particle effect presets from the database
-func GetParticleEffectPresets() (presets []model.ParticleEffectPreset) {
-	if result := scanTable(fmt.Sprintf(EffectPresetsTable, "%s", model.ParticleEffectType)); result != nil {
+// GetCommandEffectPresets retrieves all command effect presets from the database
+func GetCommandEffectPresets() (presets []model.CommandEffectPreset) {
+	if result := scanTable(fmt.Sprintf(EffectPresetsTable, "%s", model.CommandEffectType)); result != nil {
 		for _, item := range result.Items {
-			preset := model.ParticleEffectPreset{}
+			preset := model.CommandEffectPreset{}
 
 			if err := dynamodbattribute.UnmarshalMap(item, &preset); err != nil {
-				sferror.New(sferror.DatabaseUnmarshal, "Failed to unmarshal particle effect preset", err)
+				sferror.New(sferror.DatabaseUnmarshal, "Failed to unmarshal command effect preset", err)
 				continue
 			}
 
@@ -75,14 +75,48 @@ func GetDragonEffectPresets() (presets []model.DragonEffectPreset) {
 	return
 }
 
-// GetTimeshiftEffectPresets retrieves all timeshift effect presets from the database
-func GetTimeshiftEffectPresets() (presets []model.TimeshiftEffectPreset) {
-	if result := scanTable(fmt.Sprintf(EffectPresetsTable, "%s", model.TimeshiftEffectType)); result != nil {
+// GetLaserEffectPresets retrieves all laser effect presets from the database
+func GetLaserEffectPresets() (presets []model.LaserEffectPreset) {
+	if result := scanTable(fmt.Sprintf(EffectPresetsTable, "%s", model.LaserEffectType)); result != nil {
 		for _, item := range result.Items {
-			preset := model.TimeshiftEffectPreset{}
+			preset := model.LaserEffectPreset{}
 
 			if err := dynamodbattribute.UnmarshalMap(item, &preset); err != nil {
-				sferror.New(sferror.DatabaseUnmarshal, "Failed to unmarshal timeshift effect preset", err)
+				sferror.New(sferror.DatabaseUnmarshal, "Failed to unmarshal laser effect preset", err)
+				continue
+			}
+
+			presets = append(presets, preset)
+		}
+	}
+	return
+}
+
+// GetLightningEffectPresets retrieves all lightning effect presets from the database
+func GetLightningEffectPresets() (presets []model.LightningEffectPreset) {
+	if result := scanTable(fmt.Sprintf(EffectPresetsTable, "%s", model.LightningEffectType)); result != nil {
+		for _, item := range result.Items {
+			preset := model.LightningEffectPreset{}
+
+			if err := dynamodbattribute.UnmarshalMap(item, &preset); err != nil {
+				sferror.New(sferror.DatabaseUnmarshal, "Failed to unmarshal lightning effect preset", err)
+				continue
+			}
+
+			presets = append(presets, preset)
+		}
+	}
+	return
+}
+
+// GetParticleEffectPresets retrieves all particle effect presets from the database
+func GetParticleEffectPresets() (presets []model.ParticleEffectPreset) {
+	if result := scanTable(fmt.Sprintf(EffectPresetsTable, "%s", model.ParticleEffectType)); result != nil {
+		for _, item := range result.Items {
+			preset := model.ParticleEffectPreset{}
+
+			if err := dynamodbattribute.UnmarshalMap(item, &preset); err != nil {
+				sferror.New(sferror.DatabaseUnmarshal, "Failed to unmarshal particle effect preset", err)
 				continue
 			}
 
@@ -109,48 +143,14 @@ func GetPotionEffectPresets() (presets []model.PotionEffectPreset) {
 	return
 }
 
-// GetLaserEffectPresets retrieves all laser effect presets from the database
-func GetLaserEffectPresets() (presets []model.LaserEffectPreset) {
-	if result := scanTable(fmt.Sprintf(EffectPresetsTable, "%s", model.LaserEffectType)); result != nil {
+// GetTimeshiftEffectPresets retrieves all timeshift effect presets from the database
+func GetTimeshiftEffectPresets() (presets []model.TimeshiftEffectPreset) {
+	if result := scanTable(fmt.Sprintf(EffectPresetsTable, "%s", model.TimeshiftEffectType)); result != nil {
 		for _, item := range result.Items {
-			preset := model.LaserEffectPreset{}
+			preset := model.TimeshiftEffectPreset{}
 
 			if err := dynamodbattribute.UnmarshalMap(item, &preset); err != nil {
-				sferror.New(sferror.DatabaseUnmarshal, "Failed to unmarshal laser effect preset", err)
-				continue
-			}
-
-			presets = append(presets, preset)
-		}
-	}
-	return
-}
-
-// GetCommandEffectPresets retrieves all command effect presets from the database
-func GetCommandEffectPresets() (presets []model.CommandEffectPreset) {
-	if result := scanTable(fmt.Sprintf(EffectPresetsTable, "%s", model.CommandEffectType)); result != nil {
-		for _, item := range result.Items {
-			preset := model.CommandEffectPreset{}
-
-			if err := dynamodbattribute.UnmarshalMap(item, &preset); err != nil {
-				sferror.New(sferror.DatabaseUnmarshal, "Failed to unmarshal command effect preset", err)
-				continue
-			}
-
-			presets = append(presets, preset)
-		}
-	}
-	return
-}
-
-// GetLightningEffectPresets retrieves all lightning effect presets from the database
-func GetLightningEffectPresets() (presets []model.LightningEffectPreset) {
-	if result := scanTable(fmt.Sprintf(EffectPresetsTable, "%s", model.LightningEffectType)); result != nil {
-		for _, item := range result.Items {
-			preset := model.LightningEffectPreset{}
-
-			if err := dynamodbattribute.UnmarshalMap(item, &preset); err != nil {
-				sferror.New(sferror.DatabaseUnmarshal, "Failed to unmarshal lightning effect preset", err)
+				sferror.New(sferror.DatabaseUnmarshal, "Failed to unmarshal timeshift effect preset", err)
 				continue
 			}
 
@@ -266,11 +266,11 @@ func DeleteItem(tableName, id string) error {
 func ReloadAllPresets() {
 	cfg := config.Get()
 
-	cfg.ParticleEffectPresets = GetParticleEffectPresets()
-	cfg.DragonEffectPresets = GetDragonEffectPresets()
-	cfg.TimeshiftEffectPresets = GetTimeshiftEffectPresets()
-	cfg.LightningEffectPresets = GetLightningEffectPresets()
-	cfg.PotionEffectPresets = GetPotionEffectPresets()
-	cfg.LaserEffectPresets = GetLaserEffectPresets()
 	cfg.CommandEffectPresets = GetCommandEffectPresets()
+	cfg.DragonEffectPresets = GetDragonEffectPresets()
+	cfg.LaserEffectPresets = GetLaserEffectPresets()
+	cfg.LightningEffectPresets = GetLightningEffectPresets()
+	cfg.ParticleEffectPresets = GetParticleEffectPresets()
+	cfg.PotionEffectPresets = GetPotionEffectPresets()
+	cfg.TimeshiftEffectPresets = GetTimeshiftEffectPresets()
 }

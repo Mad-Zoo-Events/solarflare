@@ -22,19 +22,17 @@ const (
 	effectsEndpoint             = "/effects"
 )
 
-// RunParticleEffect compiles a particle effect request and executes it on all servers
-func RunParticleEffect(preset model.ParticleEffectPreset, action model.EffectAction, sendUpdate bool) error {
-	body, err := json.Marshal(preset.ParticleEffects)
+// RunCommandEffect compiles a command effect request and executes it on all servers
+func RunCommandEffect(preset model.CommandEffectPreset, sendUpdate bool) error {
+	body, err := json.Marshal(preset.Commands)
 	if err != nil {
 		return sferror.New(sferror.Encoding, "Failed to marshal request", err)
 	}
 
-	endpoint := fmt.Sprintf("%s/%s/%s", particleEffectEndpoint, preset.ID, string(action))
-
-	err = client.ExecuteEffect(endpoint, body)
+	err = client.ExecuteEffect(commandEffectEndpoint, body)
 
 	if sendUpdate {
-		sendEffectUpdate(preset.ID, model.ParticleEffectType, preset.DisplayName, action, err)
+		sendEffectUpdate(preset.ID, model.CommandEffectType, preset.DisplayName, model.TriggerEffectAction, err)
 	}
 
 	return err
@@ -53,42 +51,6 @@ func RunDragonEffect(preset model.DragonEffectPreset, action model.EffectAction,
 
 	if sendUpdate {
 		sendEffectUpdate(preset.ID, model.DragonEffectType, preset.DisplayName, action, err)
-	}
-
-	return err
-}
-
-// RunTimeshiftEffect compiles a timeshift effect request and executes it on all servers
-func RunTimeshiftEffect(preset model.TimeshiftEffectPreset, action model.EffectAction, sendUpdate bool) error {
-	body, err := json.Marshal(preset.TimeshiftEffects)
-	if err != nil {
-		return sferror.New(sferror.Encoding, "Failed to marshal request", err)
-	}
-
-	endpoint := fmt.Sprintf("%s/%s/%s", timeshiftEffectEndpoint, preset.ID, string(action))
-
-	err = client.ExecuteEffect(endpoint, body)
-
-	if sendUpdate {
-		sendEffectUpdate(preset.ID, model.TimeshiftEffectType, preset.DisplayName, action, err)
-	}
-
-	return err
-}
-
-// RunPotionEffect compiles a potion effect request and executes it on all servers
-func RunPotionEffect(preset model.PotionEffectPreset, action model.EffectAction, sendUpdate bool) error {
-	body, err := json.Marshal(preset.PotionEffects)
-	if err != nil {
-		return sferror.New(sferror.Encoding, "Failed to marshal request", err)
-	}
-
-	endpoint := fmt.Sprintf("%s/%s/%s", potionEffectEndpoint, preset.ID, string(action))
-
-	err = client.ExecuteEffect(endpoint, body)
-
-	if sendUpdate {
-		sendEffectUpdate(preset.ID, model.PotionEffectType, preset.DisplayName, action, err)
 	}
 
 	return err
@@ -122,22 +84,6 @@ func RunLaserEffect(preset model.LaserEffectPreset, action model.EffectAction, s
 	return err
 }
 
-// RunCommandEffect compiles a command effect request and executes it on all servers
-func RunCommandEffect(preset model.CommandEffectPreset, sendUpdate bool) error {
-	body, err := json.Marshal(preset.Commands)
-	if err != nil {
-		return sferror.New(sferror.Encoding, "Failed to marshal request", err)
-	}
-
-	err = client.ExecuteEffect(commandEffectEndpoint, body)
-
-	if sendUpdate {
-		sendEffectUpdate(preset.ID, model.CommandEffectType, preset.DisplayName, model.TriggerEffectAction, err)
-	}
-
-	return err
-}
-
 // RunLightningEffect compiles a lightning effect request and executes it on all servers
 func RunLightningEffect(preset model.LightningEffectPreset, action model.EffectAction, sendUpdate bool) error {
 	type effect struct {
@@ -156,6 +102,60 @@ func RunLightningEffect(preset model.LightningEffectPreset, action model.EffectA
 
 	if sendUpdate {
 		sendEffectUpdate(preset.ID, model.LightningEffectType, preset.DisplayName, action, err)
+	}
+
+	return err
+}
+
+// RunParticleEffect compiles a particle effect request and executes it on all servers
+func RunParticleEffect(preset model.ParticleEffectPreset, action model.EffectAction, sendUpdate bool) error {
+	body, err := json.Marshal(preset.ParticleEffects)
+	if err != nil {
+		return sferror.New(sferror.Encoding, "Failed to marshal request", err)
+	}
+
+	endpoint := fmt.Sprintf("%s/%s/%s", particleEffectEndpoint, preset.ID, string(action))
+
+	err = client.ExecuteEffect(endpoint, body)
+
+	if sendUpdate {
+		sendEffectUpdate(preset.ID, model.ParticleEffectType, preset.DisplayName, action, err)
+	}
+
+	return err
+}
+
+// RunPotionEffect compiles a potion effect request and executes it on all servers
+func RunPotionEffect(preset model.PotionEffectPreset, action model.EffectAction, sendUpdate bool) error {
+	body, err := json.Marshal(preset.PotionEffects)
+	if err != nil {
+		return sferror.New(sferror.Encoding, "Failed to marshal request", err)
+	}
+
+	endpoint := fmt.Sprintf("%s/%s/%s", potionEffectEndpoint, preset.ID, string(action))
+
+	err = client.ExecuteEffect(endpoint, body)
+
+	if sendUpdate {
+		sendEffectUpdate(preset.ID, model.PotionEffectType, preset.DisplayName, action, err)
+	}
+
+	return err
+}
+
+// RunTimeshiftEffect compiles a timeshift effect request and executes it on all servers
+func RunTimeshiftEffect(preset model.TimeshiftEffectPreset, action model.EffectAction, sendUpdate bool) error {
+	body, err := json.Marshal(preset.TimeshiftEffects)
+	if err != nil {
+		return sferror.New(sferror.Encoding, "Failed to marshal request", err)
+	}
+
+	endpoint := fmt.Sprintf("%s/%s/%s", timeshiftEffectEndpoint, preset.ID, string(action))
+
+	err = client.ExecuteEffect(endpoint, body)
+
+	if sendUpdate {
+		sendEffectUpdate(preset.ID, model.TimeshiftEffectType, preset.DisplayName, action, err)
 	}
 
 	return err
@@ -206,14 +206,8 @@ func runStopAll(effectType *model.EffectType) error {
 	}
 
 	switch *effectType {
-	case model.ParticleEffectType:
-		return client.ExecuteEffect(effectsEndpoint+"/particle/stop", nil)
 	case model.DragonEffectType:
 		return client.ExecuteEffect(effectsEndpoint+"/dragon/stop", nil)
-	case model.TimeshiftEffectType:
-		return client.ExecuteEffect(effectsEndpoint+"/time/stop", nil)
-	case model.PotionEffectType:
-		return client.ExecuteEffect(effectsEndpoint+"/potion/stop", nil)
 	case model.LaserEffectType:
 		err := client.ExecuteEffect(effectsEndpoint+"/laser/stop", nil)
 		err = client.ExecuteEffect(effectsEndpoint+"/endlaser/stop", nil)
@@ -222,6 +216,14 @@ func runStopAll(effectType *model.EffectType) error {
 		if err != nil {
 			return err
 		}
+	case model.LightningEffectType:
+		return client.ExecuteEffect(effectsEndpoint+"/lightning/stop", nil)
+	case model.ParticleEffectType:
+		return client.ExecuteEffect(effectsEndpoint+"/particle/stop", nil)
+	case model.PotionEffectType:
+		return client.ExecuteEffect(effectsEndpoint+"/potion/stop", nil)
+	case model.TimeshiftEffectType:
+		return client.ExecuteEffect(effectsEndpoint+"/time/stop", nil)
 	}
 
 	return nil

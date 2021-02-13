@@ -22,22 +22,22 @@ type Setting struct {
 type EffectType string
 
 const (
-	// ParticleEffectType represents a particle effect
-	ParticleEffectType = EffectType("particle")
-	// DragonEffectType represents the dragon effect
-	DragonEffectType = EffectType("dragon")
-	// TimeshiftEffectType represents the timeshift effect
-	TimeshiftEffectType = EffectType("timeshift")
-	// PotionEffectType represents the potion effect
-	PotionEffectType = EffectType("potion")
-	// LaserEffectType represents both the guardian and end laser effect
-	LaserEffectType = EffectType("laser")
-	// CommandEffectType represents a command effect
-	CommandEffectType = EffectType("command")
-	// LightningEffectType represents a lightning effect
-	LightningEffectType = EffectType("lightning")
 	// BossbarEffectType represents the bossbar effect
 	BossbarEffectType = EffectType("bossbar")
+	// CommandEffectType represents a command effect
+	CommandEffectType = EffectType("command")
+	// DragonEffectType represents the dragon effect
+	DragonEffectType = EffectType("dragon")
+	// LaserEffectType represents both the guardian and end laser effect
+	LaserEffectType = EffectType("laser")
+	// LightningEffectType represents a lightning effect
+	LightningEffectType = EffectType("lightning")
+	// ParticleEffectType represents a particle effect
+	ParticleEffectType = EffectType("particle")
+	// PotionEffectType represents the potion effect
+	PotionEffectType = EffectType("potion")
+	// TimeshiftEffectType represents the timeshift effect
+	TimeshiftEffectType = EffectType("timeshift")
 )
 
 // EffectAction represents the action to be performed on the visual effect (e.g. start, stop, restart...)
@@ -124,11 +124,11 @@ type Error struct {
 
 // PresetCollection is the response model used to return all presets at once
 type PresetCollection struct {
-	ParticleEffectPresets  []ParticleEffectPresetAPI  `json:"particlePresets"`
-	DragonEffectPresets    []DragonEffectPreset       `json:"dragonPresets"`
-	TimeshiftEffectPresets []TimeshiftEffectPreset    `json:"timeshiftPresets"`
-	PotionEffectPresets    []PotionEffectPreset       `json:"potionPresets"`
-	LaserEffectPresets     []LaserEffectPreset        `json:"laserPresets"`
 	CommandEffectPresets   []CommandEffectPresetAPI   `json:"commandPresets"`
+	DragonEffectPresets    []DragonEffectPreset       `json:"dragonPresets"`
+	LaserEffectPresets     []LaserEffectPreset        `json:"laserPresets"`
 	LightningEffectPresets []LightningEffectPresetAPI `json:"lightningPresets"`
+	ParticleEffectPresets  []ParticleEffectPresetAPI  `json:"particlePresets"`
+	PotionEffectPresets    []PotionEffectPreset       `json:"potionPresets"`
+	TimeshiftEffectPresets []TimeshiftEffectPreset    `json:"timeshiftPresets"`
 }

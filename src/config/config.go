@@ -25,13 +25,13 @@ var appVersion = "dev"
 
 // Config contains the server configuration
 type Config struct {
-	ParticleEffectPresets  []model.ParticleEffectPreset
-	DragonEffectPresets    []model.DragonEffectPreset
-	TimeshiftEffectPresets []model.TimeshiftEffectPreset
-	PotionEffectPresets    []model.PotionEffectPreset
-	LaserEffectPresets     []model.LaserEffectPreset
 	CommandEffectPresets   []model.CommandEffectPreset
+	DragonEffectPresets    []model.DragonEffectPreset
+	LaserEffectPresets     []model.LaserEffectPreset
 	LightningEffectPresets []model.LightningEffectPreset
+	ParticleEffectPresets  []model.ParticleEffectPreset
+	PotionEffectPresets    []model.PotionEffectPreset
+	TimeshiftEffectPresets []model.TimeshiftEffectPreset
 
 	Servers []model.Server
 

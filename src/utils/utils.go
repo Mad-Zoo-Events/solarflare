@@ -13,8 +13,8 @@ func FindPreset(id string, effectType model.EffectType) (interface{}, error) {
 	cfg := config.Get()
 
 	switch effectType {
-	case model.ParticleEffectType:
-		for _, p := range cfg.ParticleEffectPresets {
+	case model.CommandEffectType:
+		for _, p := range cfg.CommandEffectPresets {
 			if p.ID == id {
 				return p, nil
 			}
@@ -25,8 +25,8 @@ func FindPreset(id string, effectType model.EffectType) (interface{}, error) {
 				return p, nil
 			}
 		}
-	case model.TimeshiftEffectType:
-		for _, p := range cfg.TimeshiftEffectPresets {
+	case model.LaserEffectType:
+		for _, p := range cfg.LaserEffectPresets {
 			if p.ID == id {
 				return p, nil
 			}
@@ -37,20 +37,20 @@ func FindPreset(id string, effectType model.EffectType) (interface{}, error) {
 				return p, nil
 			}
 		}
+	case model.ParticleEffectType:
+		for _, p := range cfg.ParticleEffectPresets {
+			if p.ID == id {
+				return p, nil
+			}
+		}
 	case model.PotionEffectType:
 		for _, p := range cfg.PotionEffectPresets {
 			if p.ID == id {
 				return p, nil
 			}
 		}
-	case model.LaserEffectType:
-		for _, p := range cfg.LaserEffectPresets {
-			if p.ID == id {
-				return p, nil
-			}
-		}
-	case model.CommandEffectType:
-		for _, p := range cfg.CommandEffectPresets {
+	case model.TimeshiftEffectType:
+		for _, p := range cfg.TimeshiftEffectPresets {
 			if p.ID == id {
 				return p, nil
 			}
