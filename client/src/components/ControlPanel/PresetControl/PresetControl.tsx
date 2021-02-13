@@ -30,7 +30,7 @@ const PresetControl = ({
     const renderStartStop = effectType !== et.Command;
 
     const color = getAccentColor(effectType);
-    const coloredText = { borderColor: `var(--${color})`, color: `var(--lighter-${color})` };
+    const coloredText = { borderColor: `var(--${color})`, color: `var(--${color}-lighter)` };
 
     const subscriptionOptions: ClockSubscriptionOptions = {
         presetId: id,

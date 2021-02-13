@@ -30,7 +30,7 @@ const PresetControlButton = ({
         color: isRunningStartButton || isRunningStopButton
             ? "var(--black)"
             : `var(--${color})`,
-        backgroundColor: isRunningStartButton || isRunningStopButton ? `var(--${color})` : "var(--darker-gray)"
+        backgroundColor: isRunningStartButton || isRunningStopButton ? `var(--${color})` : "var(--gray-darker)"
     };
     const className = `button control-panel-button code ${isRunningStartButton ? "running-start" : isRunningStopButton ? "running-stop" : ""} ${denyClick ? "forbidden" : ""}`;
 

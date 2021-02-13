@@ -34,7 +34,7 @@
     & .shortcut {
         grid-area       : shortcut;
         font-size       : larger;
-        border          : 1px solid var(--darker-accent);
+        border          : 1px solid var(--accent-darker);
         background-color: var(--black-alpha);
         border-radius   : 0.5em;
         margin          : auto;
@@ -80,6 +80,6 @@
     padding         : 1em;
 
     &:hover {
-        background-color: var(--darker-gray-alpha);
+        background-color: var(--gray-darker-alpha);
     }
 }

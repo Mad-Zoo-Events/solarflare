@@ -4,7 +4,7 @@ textarea,
 .fake-input,
 select {
     color           : var(--white);
-    background-color: var(--darker-accent);
+    background-color: var(--accent-darker);
     width           : 100%;
     padding         : 7px;
     box-sizing      : border-box;
@@ -30,7 +30,7 @@ select {
         box-shadow      : none !important;
         font-size       : 0.9em !important;
         color           : var(--white);
-        background-color: var(--darker-accent);
+        background-color: var(--accent-darker);
     }
 }
 

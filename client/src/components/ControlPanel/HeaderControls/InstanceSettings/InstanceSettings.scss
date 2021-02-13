@@ -19,14 +19,14 @@
     & button {
         padding         : 0.5em;
         border          : 0.01em solid;
-        background-color: var(--darker-gray);
+        background-color: var(--gray-darker);
 
         &:hover:not(.forbidden) {
             border-color: var(--white) !important;
         }
 
         &.forbidden {
-            border-color: var(--darker-gray) !important;
+            border-color: var(--gray-darker) !important;
             color       : var(--gray) !important;
         }
 

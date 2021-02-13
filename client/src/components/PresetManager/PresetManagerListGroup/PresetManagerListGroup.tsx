@@ -13,7 +13,7 @@ const PresetManagerListGroup = ({
 }: PresetManagerListGroupProps): ReactElement => {
     const accentColor = getAccentColor(effectType);
     const coloredBackground = { backgroundColor: `var(--${accentColor})` };
-    const coloredTextShadow = { textShadow: `var(--darker-${accentColor}) 0px 0px 5px` };
+    const coloredTextShadow = { textShadow: `var(--${accentColor}-darker) 0px 0px 5px` };
     const coloredBorder = { borderColor: `var(--${accentColor})` };
     const coloredBackgroundAlpha = { backgroundColor: `var(--${accentColor}-alpha)` };
 

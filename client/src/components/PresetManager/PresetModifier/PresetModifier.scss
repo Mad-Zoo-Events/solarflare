@@ -171,10 +171,10 @@
 
         & .disabled {
             cursor: not-allowed;
-            color : var(--darker-accent);
+            color : var(--accent-darker);
 
             &:hover {
-                color: var(--darker-accent) !important;
+                color: var(--accent-darker) !important;
             }
         }
 

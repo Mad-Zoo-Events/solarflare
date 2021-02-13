@@ -15,7 +15,7 @@ const PresetManagerListItem = ({
     onEdit
 }: PresetManagerListItemProps) => {
     const accentColor = getAccentColor(effectType);
-    const coloredText = { color: `var(--lighter-${accentColor})` };
+    const coloredText = { color: `var(--${accentColor}-lighter)` };
 
     if (preset) {
         const { id, displayName, description, keyBindingStr } = preset;
