@@ -19,7 +19,7 @@ func PresetMutationHandler(c *gin.Context) {
 		return
 	}
 
-	id, err := controller.UpsertPresetAPI(c.Param("effectType"), body)
+	id, err := controller.UpsertPreset(c.Param("effectType"), body)
 	if err != nil {
 		switch sferror.GetErrorType(err) {
 		case sferror.InvalidEffectType:

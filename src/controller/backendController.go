@@ -7,6 +7,7 @@ import (
 	"github.com/eynorey/solarflare/src/config"
 	"github.com/eynorey/solarflare/src/manager"
 	"github.com/eynorey/solarflare/src/model"
+	"github.com/eynorey/solarflare/src/utils"
 	"github.com/eynorey/solarflare/src/utils/sferror"
 )
 
@@ -54,7 +55,7 @@ func GetSetting(key string) (string, error) {
 func selectStage(stage string) error {
 	cfg := config.Get()
 
-	if !contains(cfg.Stages, stage) {
+	if !utils.Contains(cfg.Stages, stage) {
 		return sferror.New(sferror.StageNotFound, fmt.Sprintf("Stage %s does not exist", stage), nil)
 	}
 
