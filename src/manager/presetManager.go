@@ -1,6 +1,8 @@
 package manager
 
 import (
+	"fmt"
+
 	"github.com/google/uuid"
 
 	"github.com/eynorey/solarflare/src/client"
@@ -16,7 +18,7 @@ func UpsertParticleEffectPreset(preset model.ParticleEffectPreset) (*string, err
 		preset.ID = uuid.New().String()
 	}
 
-	err := client.UpsertItem(client.ParticleEffectPresetsTable, preset)
+	err := client.UpsertItem(fmt.Sprintf(client.EffectPresetsTable, "%s", model.ParticleEffectType), preset)
 	if err != nil {
 		return nil, err
 	}
@@ -34,7 +36,7 @@ func UpsertDragonEffectPreset(preset model.DragonEffectPreset) (*string, error) 
 		preset.ID = uuid.New().String()
 	}
 
-	err := client.UpsertItem(client.DragonEffectPresetsTable, preset)
+	err := client.UpsertItem(fmt.Sprintf(client.EffectPresetsTable, "%s", model.DragonEffectType), preset)
 	if err != nil {
 		return nil, err
 	}
@@ -52,7 +54,7 @@ func UpsertTimeshiftEffectPreset(preset model.TimeshiftEffectPreset) (*string, e
 		preset.ID = uuid.New().String()
 	}
 
-	err := client.UpsertItem(client.TimeshiftEffectPresetsTable, preset)
+	err := client.UpsertItem(fmt.Sprintf(client.EffectPresetsTable, "%s", model.TimeshiftEffectType), preset)
 	if err != nil {
 		return nil, err
 	}
@@ -70,7 +72,7 @@ func UpsertPotionEffectPreset(preset model.PotionEffectPreset) (*string, error) 
 		preset.ID = uuid.New().String()
 	}
 
-	err := client.UpsertItem(client.PotionEffectPresetsTable, preset)
+	err := client.UpsertItem(fmt.Sprintf(client.EffectPresetsTable, "%s", model.PotionEffectType), preset)
 	if err != nil {
 		return nil, err
 	}
@@ -92,7 +94,7 @@ func UpsertLaserEffectPreset(preset model.LaserEffectPreset) (*string, error) {
 		preset.IsNonPlayerTargeting = true
 	}
 
-	err := client.UpsertItem(client.LaserEffectPresetsTable, preset)
+	err := client.UpsertItem(fmt.Sprintf(client.EffectPresetsTable, "%s", model.LaserEffectType), preset)
 	if err != nil {
 		return nil, err
 	}
@@ -110,7 +112,7 @@ func UpsertCommandEffectPreset(preset model.CommandEffectPreset) (*string, error
 		preset.ID = uuid.New().String()
 	}
 
-	err := client.UpsertItem(client.CommandEffectPresetsTable, preset)
+	err := client.UpsertItem(fmt.Sprintf(client.EffectPresetsTable, "%s", model.CommandEffectType), preset)
 	if err != nil {
 		return nil, err
 	}
@@ -128,7 +130,7 @@ func UpsertLightningEffectPreset(preset model.LightningEffectPreset) (*string, e
 		preset.ID = uuid.New().String()
 	}
 
-	err := client.UpsertItem(client.LightningEffectPresetsTable, preset)
+	err := client.UpsertItem(fmt.Sprintf(client.EffectPresetsTable, "%s", model.LightningEffectType), preset)
 	if err != nil {
 		return nil, err
 	}
