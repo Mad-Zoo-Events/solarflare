@@ -8,16 +8,11 @@ type LaserEffectPreset struct {
 	KeyBinding   rune          `json:"keyBinding"`
 	MIDIMappings []MIDIMapping `json:"midiMappings"`
 
-	IsEndLaser           bool          `json:"isEndLaser"`
-	IsNonPlayerTargeting bool          `json:"isNonPlayerTargeting"`
-	LaserType            LaserType     `json:"laserType"`
-	LaserEffects         []LaserEffect `json:"laserEffects"`
+	LaserType    LaserType     `json:"laserType"`
+	LaserEffects []LaserEffect `json:"laserEffects"`
 }
 
 // LaserEffect contains information on start and potential end point of the laser
-// If only the origin point is specified, the laser will be a player-targeting laser
-// originating from that point.
-// If a destination point is specified as well, the laser will connect the two points.
 type LaserEffect struct {
 	// Predefined point where the laser originates
 	StartPointID int `json:"start"`
