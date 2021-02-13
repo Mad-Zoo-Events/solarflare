@@ -12,17 +12,12 @@ import (
 	"github.com/eynorey/solarflare/src/controller"
 )
 
-// loads data from the database into the config
+// loads initial data from the database into the config
 func load() {
 	cfg := config.Get()
 
-	if !cfg.RunningOnDev {
-		gin.SetMode(gin.ReleaseMode)
-	}
-
 	cfg.Servers = client.GetServers(true)
 
-	cfg.SelectedStage = cfg.Stages[len(cfg.Stages)-1]
 	stageSetting, err := client.GetSetting(controller.StageSettingKey)
 	if err == nil {
 		cfg.SelectedStage = stageSetting.Value
@@ -68,6 +63,7 @@ func main() {
 	router.POST("/bossbar/:action", BossbarHandler)
 	router.POST("/command", CommandHandler)
 
+	// presets
 	presets := router.Group("/presets")
 	presets.POST("/:effectType", PresetMutationHandler)
 	presets.DELETE("/:effectType/:id", PresetDeletionHandler)

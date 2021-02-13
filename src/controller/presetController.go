@@ -90,19 +90,19 @@ func DeletePreset(effectType, id string) error {
 
 	switch model.EffectType(effectType) {
 	case model.ParticleEffectType:
-		cfg.SetParticleEffectPresets(client.GetParticleEffectPresets())
+		cfg.ParticleEffectPresets = client.GetParticleEffectPresets()
 	case model.DragonEffectType:
-		cfg.SetDragonEffectPresets(client.GetDragonEffectPresets())
+		cfg.DragonEffectPresets = client.GetDragonEffectPresets()
 	case model.TimeshiftEffectType:
-		cfg.SetTimeshiftEffectPresets(client.GetTimeshiftEffectPresets())
+		cfg.TimeshiftEffectPresets = client.GetTimeshiftEffectPresets()
 	case model.PotionEffectType:
-		cfg.SetPotionEffectPresets(client.GetPotionEffectPresets())
+		cfg.PotionEffectPresets = client.GetPotionEffectPresets()
 	case model.LaserEffectType:
-		cfg.SetLaserEffectPresets(client.GetLaserEffectPresets())
+		cfg.LaserEffectPresets = client.GetLaserEffectPresets()
 	case model.CommandEffectType:
-		cfg.SetCommandEffectPresets(client.GetCommandEffectPresets())
+		cfg.CommandEffectPresets = client.GetCommandEffectPresets()
 	case model.LightningEffectType:
-		cfg.SetLightningEffectPresets(client.GetLightningEffectPresets())
+		cfg.LightningEffectPresets = client.GetLightningEffectPresets()
 	default:
 		err = sferror.New(sferror.InvalidEffectType, effectType, nil)
 	}
