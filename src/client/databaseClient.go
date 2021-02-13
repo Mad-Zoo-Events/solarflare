@@ -43,6 +43,7 @@ func scanTable(tableName string) *dynamodb.ScanOutput {
 
 // GetCommandEffectPresets retrieves all command effect presets from the database
 func GetCommandEffectPresets() (presets []model.CommandEffectPreset) {
+	presets = []model.CommandEffectPreset{}
 	if result := scanTable(fmt.Sprintf(EffectPresetsTable, "%s", model.CommandEffectType)); result != nil {
 		for _, item := range result.Items {
 			preset := model.CommandEffectPreset{}
@@ -60,6 +61,7 @@ func GetCommandEffectPresets() (presets []model.CommandEffectPreset) {
 
 // GetDragonEffectPresets retrieves all dragon effect presets from the database
 func GetDragonEffectPresets() (presets []model.DragonEffectPreset) {
+	presets = []model.DragonEffectPreset{}
 	if result := scanTable(fmt.Sprintf(EffectPresetsTable, "%s", model.DragonEffectType)); result != nil {
 		for _, item := range result.Items {
 			preset := model.DragonEffectPreset{}
@@ -77,6 +79,7 @@ func GetDragonEffectPresets() (presets []model.DragonEffectPreset) {
 
 // GetLaserEffectPresets retrieves all laser effect presets from the database
 func GetLaserEffectPresets() (presets []model.LaserEffectPreset) {
+	presets = []model.LaserEffectPreset{}
 	if result := scanTable(fmt.Sprintf(EffectPresetsTable, "%s", model.LaserEffectType)); result != nil {
 		for _, item := range result.Items {
 			preset := model.LaserEffectPreset{}
@@ -94,6 +97,7 @@ func GetLaserEffectPresets() (presets []model.LaserEffectPreset) {
 
 // GetLightningEffectPresets retrieves all lightning effect presets from the database
 func GetLightningEffectPresets() (presets []model.LightningEffectPreset) {
+	presets = []model.LightningEffectPreset{}
 	if result := scanTable(fmt.Sprintf(EffectPresetsTable, "%s", model.LightningEffectType)); result != nil {
 		for _, item := range result.Items {
 			preset := model.LightningEffectPreset{}
@@ -111,6 +115,7 @@ func GetLightningEffectPresets() (presets []model.LightningEffectPreset) {
 
 // GetParticleEffectPresets retrieves all particle effect presets from the database
 func GetParticleEffectPresets() (presets []model.ParticleEffectPreset) {
+	presets = []model.ParticleEffectPreset{}
 	if result := scanTable(fmt.Sprintf(EffectPresetsTable, "%s", model.ParticleEffectType)); result != nil {
 		for _, item := range result.Items {
 			preset := model.ParticleEffectPreset{}
@@ -128,6 +133,7 @@ func GetParticleEffectPresets() (presets []model.ParticleEffectPreset) {
 
 // GetPotionEffectPresets retrieves all potion effect presets from the database
 func GetPotionEffectPresets() (presets []model.PotionEffectPreset) {
+	presets = []model.PotionEffectPreset{}
 	if result := scanTable(fmt.Sprintf(EffectPresetsTable, "%s", model.PotionEffectType)); result != nil {
 		for _, item := range result.Items {
 			preset := model.PotionEffectPreset{}
@@ -145,6 +151,7 @@ func GetPotionEffectPresets() (presets []model.PotionEffectPreset) {
 
 // GetTimeshiftEffectPresets retrieves all timeshift effect presets from the database
 func GetTimeshiftEffectPresets() (presets []model.TimeshiftEffectPreset) {
+	presets = []model.TimeshiftEffectPreset{}
 	if result := scanTable(fmt.Sprintf(EffectPresetsTable, "%s", model.TimeshiftEffectType)); result != nil {
 		for _, item := range result.Items {
 			preset := model.TimeshiftEffectPreset{}
