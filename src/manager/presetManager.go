@@ -90,10 +90,6 @@ func UpsertLaserEffectPreset(preset model.LaserEffectPreset) (*string, error) {
 		preset.ID = uuid.New().String()
 	}
 
-	if preset.IsEndLaser {
-		preset.IsNonPlayerTargeting = true
-	}
-
 	err := client.UpsertItem(fmt.Sprintf(client.EffectPresetsTable, "%s", model.LaserEffectType), preset)
 	if err != nil {
 		return nil, err
