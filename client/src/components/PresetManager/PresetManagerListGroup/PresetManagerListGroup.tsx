@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { ReactElement } from "react";
 import Collapsible from "react-collapsible";
-import { getAccentColor } from "../../../utils/utils";
+import { getAccentColor, presetSorter } from "../../../utils/utils";
 import PresetManagerListItem from "../PresetManagerListItem/PresetManagerListItem";
 import "./PresetManagerListGroup.scss";
 import { PresetManagerListGroupProps } from "./PresetManagerListGroupProps";
@@ -30,7 +30,7 @@ const PresetManagerListGroup = ({
                 <PresetManagerListItem
                     key="new"
                     effectType={effectType} />
-                { presets.map(preset =>
+                { presets.sort(presetSorter).map(preset =>
                     <PresetManagerListItem
                         key={preset.id}
                         preset={preset}
