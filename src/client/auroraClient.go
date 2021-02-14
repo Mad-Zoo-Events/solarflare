@@ -19,9 +19,10 @@ var client *http.Client
 func init() {
 	tr := &http.Transport{
 		MaxIdleConnsPerHost: 20,
+		TLSHandshakeTimeout: time.Duration(2 * time.Second),
 	}
 	client = &http.Client{
-		Timeout:   time.Duration(2 * time.Second),
+		Timeout:   time.Duration(10 * time.Second),
 		Transport: tr,
 	}
 }
