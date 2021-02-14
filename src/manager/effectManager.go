@@ -10,16 +10,17 @@ import (
 )
 
 const (
-	particleEffectEndpoint      = "/effects/particle"
-	dragonEffectEndpoint        = "/effects/dragon"
-	timeshiftEffectEndpoint     = "/effects/time"
-	potionEffectEndpoint        = "/effects/potion"
-	targetedlaserEffectEndpoint = "/effects/targetedlaser"
-	laserEffectEndpoint         = "/effects/laser"
-	endlaserEffectEndpoint      = "/effects/endlaser"
-	commandEffectEndpoint       = "/commands"
-	lightningEffectEndpoint     = "/effects/lightning"
-	effectsEndpoint             = "/effects"
+	commandsEndpoint             = "/commands"
+	effectsAllEndpoint           = "/effects/all"
+	effectsStopEndpoint          = "/effects/stop"
+	effectsDragonEndpoint        = "/effects/dragon"
+	effectsLaserEndEndpoint      = "/effects/endlaser"
+	effectsLaserEndpoint         = "/effects/laser"
+	effectsLaserTargetedEndpoint = "/effects/targetedlaser"
+	effectsLightningEndpoint     = "/effects/lightning"
+	effectsParticleEndpoint      = "/effects/particle"
+	effectsPotionEndpoint        = "/effects/potion"
+	effectsTimeEndpoint          = "/effects/time"
 )
 
 // RunCommandEffect compiles a command effect request and executes it on all servers
@@ -29,7 +30,7 @@ func RunCommandEffect(preset model.CommandEffectPreset, sendUpdate bool) error {
 		return sferror.New(sferror.Encoding, "Failed to marshal request", err)
 	}
 
-	err = client.ExecuteEffect(commandEffectEndpoint, body)
+	err = client.ExecuteEffect(commandsEndpoint, body)
 
 	if sendUpdate {
 		sendEffectUpdate(preset.ID, model.CommandEffectType, preset.DisplayName, model.TriggerEffectAction, err)
@@ -45,7 +46,7 @@ func RunDragonEffect(preset model.DragonEffectPreset, action model.EffectAction,
 		return sferror.New(sferror.Encoding, "Failed to marshal request", err)
 	}
 
-	endpoint := fmt.Sprintf("%s/%s/%s", dragonEffectEndpoint, preset.ID, string(action))
+	endpoint := fmt.Sprintf("%s/%s/%s", effectsDragonEndpoint, preset.ID, string(action))
 
 	err = client.ExecuteEffect(endpoint, body)
 
@@ -66,11 +67,11 @@ func RunLaserEffect(preset model.LaserEffectPreset, action model.EffectAction, s
 	laserEndpoint := ""
 	switch preset.LaserType {
 	case model.EndLaserType:
-		laserEndpoint = endlaserEffectEndpoint
+		laserEndpoint = effectsLaserEndEndpoint
 	case model.NonTargetingGuardianLaserType:
-		laserEndpoint = laserEffectEndpoint
+		laserEndpoint = effectsLaserEndpoint
 	case model.TargetingGuardianLaserType:
-		laserEndpoint = targetedlaserEffectEndpoint
+		laserEndpoint = effectsLaserTargetedEndpoint
 	}
 
 	endpoint := fmt.Sprintf("%s/%s/%s", laserEndpoint, preset.ID, string(action))
@@ -96,7 +97,7 @@ func RunLightningEffect(preset model.LightningEffectPreset, action model.EffectA
 		return sferror.New(sferror.Encoding, "Failed to marshal request", err)
 	}
 
-	endpoint := fmt.Sprintf("%s/%s/%s", lightningEffectEndpoint, preset.ID, string(action))
+	endpoint := fmt.Sprintf("%s/%s/%s", effectsLightningEndpoint, preset.ID, string(action))
 
 	err = client.ExecuteEffect(endpoint, body)
 
@@ -114,7 +115,7 @@ func RunParticleEffect(preset model.ParticleEffectPreset, action model.EffectAct
 		return sferror.New(sferror.Encoding, "Failed to marshal request", err)
 	}
 
-	endpoint := fmt.Sprintf("%s/%s/%s", particleEffectEndpoint, preset.ID, string(action))
+	endpoint := fmt.Sprintf("%s/%s/%s", effectsParticleEndpoint, preset.ID, string(action))
 
 	err = client.ExecuteEffect(endpoint, body)
 
@@ -132,7 +133,7 @@ func RunPotionEffect(preset model.PotionEffectPreset, action model.EffectAction,
 		return sferror.New(sferror.Encoding, "Failed to marshal request", err)
 	}
 
-	endpoint := fmt.Sprintf("%s/%s/%s", potionEffectEndpoint, preset.ID, string(action))
+	endpoint := fmt.Sprintf("%s/%s/%s", effectsPotionEndpoint, preset.ID, string(action))
 
 	err = client.ExecuteEffect(endpoint, body)
 
@@ -150,7 +151,7 @@ func RunTimeshiftEffect(preset model.TimeshiftEffectPreset, action model.EffectA
 		return sferror.New(sferror.Encoding, "Failed to marshal request", err)
 	}
 
-	endpoint := fmt.Sprintf("%s/%s/%s", timeshiftEffectEndpoint, preset.ID, string(action))
+	endpoint := fmt.Sprintf("%s/%s/%s", effectsTimeEndpoint, preset.ID, string(action))
 
 	err = client.ExecuteEffect(endpoint, body)
 
@@ -163,7 +164,7 @@ func RunTimeshiftEffect(preset model.TimeshiftEffectPreset, action model.EffectA
 
 // StopEffect stops an effect by ID
 func StopEffect(id string, sendUpdate bool) error {
-	endpoint := fmt.Sprintf("%s/%s/stop", effectsEndpoint, id)
+	endpoint := fmt.Sprintf("%s/%s/stop", effectsStopEndpoint, id)
 
 	err := client.ExecuteEffect(endpoint, nil)
 
@@ -202,28 +203,28 @@ func StopAll(request *model.StopAllRequest) (err error) {
 
 func runStopAll(effectType *model.EffectType) error {
 	if effectType == nil {
-		return client.ExecuteEffect(effectsEndpoint+"/all/stop", nil)
+		return client.ExecuteEffect(effectsAllEndpoint+"/stop", nil)
 	}
 
 	switch *effectType {
 	case model.DragonEffectType:
-		return client.ExecuteEffect(effectsEndpoint+"/dragon/stop", nil)
+		return client.ExecuteEffect(effectsDragonEndpoint+"/stop", nil)
 	case model.LaserEffectType:
-		err := client.ExecuteEffect(effectsEndpoint+"/laser/stop", nil)
-		err = client.ExecuteEffect(effectsEndpoint+"/endlaser/stop", nil)
-		err = client.ExecuteEffect(effectsEndpoint+"/targetedlaser/stop", nil)
+		err := client.ExecuteEffect(effectsLaserEndpoint+"/stop", nil)
+		err = client.ExecuteEffect(effectsLaserEndEndpoint+"/stop", nil)
+		err = client.ExecuteEffect(effectsLaserTargetedEndpoint+"/stop", nil)
 
 		if err != nil {
 			return err
 		}
 	case model.LightningEffectType:
-		return client.ExecuteEffect(effectsEndpoint+"/lightning/stop", nil)
+		return client.ExecuteEffect(effectsLightningEndpoint+"/stop", nil)
 	case model.ParticleEffectType:
-		return client.ExecuteEffect(effectsEndpoint+"/particle/stop", nil)
+		return client.ExecuteEffect(effectsParticleEndpoint+"/stop", nil)
 	case model.PotionEffectType:
-		return client.ExecuteEffect(effectsEndpoint+"/potion/stop", nil)
+		return client.ExecuteEffect(effectsPotionEndpoint+"/stop", nil)
 	case model.TimeshiftEffectType:
-		return client.ExecuteEffect(effectsEndpoint+"/time/stop", nil)
+		return client.ExecuteEffect(effectsTimeEndpoint+"/stop", nil)
 	}
 
 	return nil

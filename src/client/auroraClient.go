@@ -66,13 +66,13 @@ func ExecuteEffect(endpoint string, body []byte) error {
 func executeEffect(url string, body *[]byte, wg *sync.WaitGroup, errCount *int) {
 	defer wg.Done()
 	request, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(*body))
-	request.Header.Add("Idempotency-Key", "oof.")
-	request.Header.Add("Content-Type", "application/json")
 	if err != nil {
 		sferror.New(sferror.Encoding, "Error compiling request to Aurora", err)
 		*errCount++
 		return
 	}
+	request.Header.Add("Idempotency-Key", "oof.")
+	request.Header.Add("Content-Type", "application/json")
 
 	response, err := client.Do(request)
 	if err != nil {
