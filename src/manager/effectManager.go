@@ -11,7 +11,7 @@ import (
 
 const (
 	commandsEndpoint             = "/commands"
-	effectsAllEndpoint           = "/effects/all"
+	effectsEndpoint              = "/effects"
 	effectsStopEndpoint          = "/effects/stop"
 	effectsDragonEndpoint        = "/effects/dragon"
 	effectsLaserEndEndpoint      = "/effects/endlaser"
@@ -164,7 +164,7 @@ func RunTimeshiftEffect(preset model.TimeshiftEffectPreset, action model.EffectA
 
 // StopEffect stops an effect by ID
 func StopEffect(id string, sendUpdate bool) error {
-	endpoint := fmt.Sprintf("%s/%s/stop", effectsStopEndpoint, id)
+	endpoint := fmt.Sprintf("%s/%s/stop", effectsEndpoint, id)
 
 	err := client.ExecuteEffect(endpoint, nil)
 
@@ -203,7 +203,7 @@ func StopAll(request *model.StopAllRequest) (err error) {
 
 func runStopAll(effectType *model.EffectType) error {
 	if effectType == nil {
-		return client.ExecuteEffect(effectsAllEndpoint+"/stop", nil)
+		return client.ExecuteEffect(effectsEndpoint+"/all/stop", nil)
 	}
 
 	switch *effectType {
