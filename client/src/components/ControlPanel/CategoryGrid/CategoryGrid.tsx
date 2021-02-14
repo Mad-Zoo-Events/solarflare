@@ -30,6 +30,7 @@ const CategoryGrid = ({
         rowHeight={90}
         margin={[0, 0]}
         autoSize
+        draggableCancel=".non-draggable"
         isBounded
         compactType="vertical"
         onResizeStop={handleLayoutChange}

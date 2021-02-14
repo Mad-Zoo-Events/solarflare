@@ -44,7 +44,7 @@ const CategorySection = ({
 
     return (
         <div className={`control-panel__category-section ${effectType}-controls`} style={coloredBackground}>
-            <div className="header" style={coloredText}>
+            <div className="header non-draggable" style={coloredText}>
                 <FontAwesomeIcon
                     className="button"
                     icon={["fas", "stop-circle"]}

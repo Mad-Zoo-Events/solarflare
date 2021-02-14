@@ -40,7 +40,7 @@ const PresetControl = ({
     };
 
     return (
-        <div className="control-panel__visual-control">
+        <div className="control-panel__visual-control non-draggable">
             <span style={coloredText}>{displayName}</span>
 
             {effectType === et.Command && <>
