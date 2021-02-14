@@ -4,9 +4,10 @@ import (
 	"io/ioutil"
 	"net/http"
 
+	"github.com/gin-gonic/gin"
+
 	"github.com/eynorey/solarflare/src/controller"
 	"github.com/eynorey/solarflare/src/utils/sferror"
-	"github.com/gin-gonic/gin"
 )
 
 // CommandHandler handles requests to run a console command

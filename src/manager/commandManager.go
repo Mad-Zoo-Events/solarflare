@@ -15,7 +15,7 @@ func RunSingleCommand(command string) error {
 		return sferror.New(sferror.Encoding, "Failed to marshal request", err)
 	}
 
-	err = client.ExecuteEffect(commandEffectEndpoint, body)
+	err = client.ExecuteEffect(commandsEndpoint, body)
 
 	update := model.UIUpdate{
 		CommandUpdate: &model.CommandUpdate{

@@ -24,23 +24,6 @@ const (
 	SettingsTable = "settings"
 )
 
-func scanTable(tableName string) *dynamodb.ScanOutput {
-	if strings.Contains(tableName, "%s") {
-		cfg := config.Get()
-		tableName = fmt.Sprintf(tableName, cfg.SelectedStage)
-	}
-
-	result, err := dbClient.Scan(&dynamodb.ScanInput{
-		TableName: &tableName,
-	})
-	if err != nil {
-		sferror.New(sferror.DatabaseCRUD, "Failed to read presets", err)
-		return nil
-	}
-
-	return result
-}
-
 // GetCommandEffectPresets retrieves all command effect presets from the database
 func GetCommandEffectPresets() (presets []model.CommandEffectPreset) {
 	presets = []model.CommandEffectPreset{}
@@ -280,4 +263,21 @@ func ReloadAllPresets() {
 	cfg.ParticleEffectPresets = GetParticleEffectPresets()
 	cfg.PotionEffectPresets = GetPotionEffectPresets()
 	cfg.TimeshiftEffectPresets = GetTimeshiftEffectPresets()
+}
+
+func scanTable(tableName string) *dynamodb.ScanOutput {
+	if strings.Contains(tableName, "%s") {
+		cfg := config.Get()
+		tableName = fmt.Sprintf(tableName, cfg.SelectedStage)
+	}
+
+	result, err := dbClient.Scan(&dynamodb.ScanInput{
+		TableName: &tableName,
+	})
+	if err != nil {
+		sferror.New(sferror.DatabaseCRUD, "Failed to read presets", err)
+		return nil
+	}
+
+	return result
 }
