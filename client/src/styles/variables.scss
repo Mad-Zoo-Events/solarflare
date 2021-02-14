@@ -32,7 +32,7 @@ $command  : #597da1;
     --gray-darker-alpha: #{transparentize(darken($gray, 50%), 0.5)};
 
     --accent         : #{$accent};
-    --accent-alpha   : #{transparentize($accent, 0.85)};
+    --accent-alpha   : #{transparentize($accent, 0.9)};
     --accent-darker  : #{darken($accent, 35%)};
     --accent-darkest : #{darken($accent, 50%)};
 

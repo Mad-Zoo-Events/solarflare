@@ -24,8 +24,7 @@
     max-width    : calc(100% - 8em);
     border-radius: 1em;
 
-    background     : var(--black-alpha);
-    backdrop-filter: blur(0.5em);
+    background: var(--black-alpha);
 
     display           : grid;
     grid-template-rows: min-content auto min-content;
