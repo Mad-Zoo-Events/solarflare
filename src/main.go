@@ -44,46 +44,46 @@ func main() {
 
 	// router := mux.NewRouter()
 	router := gin.Default()
+	api := router.Group("/api")
 
 	// service
-	router.GET("/health", HealthHandler)
-	router.GET("/version", VersionHandler)
+	api.GET("/health", HealthHandler)
+	api.GET("/version", VersionHandler)
 
 	// settings
-	settings := router.Group("/settings")
+	settings := api.Group("/settings")
 	settings.GET("/:setting", GetSettingsHandler)
 	settings.POST("/:setting", SetSettingsHandler)
-	router.PATCH("/servers/:id/:action", ServerHandler)
+	api.PATCH("/servers/:id/:action", ServerHandler)
 
 	// effect execution
-	effects := router.Group("/effects")
+	effects := api.Group("/effects")
 	effects.POST("/run/:effectType/:id/:action", EffectHandler)
 	effects.POST("/stopall", StopAllHandler)
 
-	router.POST("/bossbar/:action", BossbarHandler)
-	router.POST("/command", CommandHandler)
+	api.POST("/bossbar/:action", BossbarHandler)
+	api.POST("/command", CommandHandler)
 
 	// presets
-	presets := router.Group("/presets")
+	presets := api.Group("/presets")
 	presets.POST("/:effectType", PresetMutationHandler)
 	presets.DELETE("/:effectType/:id", PresetDeletionHandler)
 	presets.POST("/:effectType/:id/duplicate", PresetDuplicationHandler)
 	presets.GET("/:effectType", PreserRetrievalHandler)
-	router.POST("/testPreset/:effectType", PresetTestHandler)
+	api.POST("/testPreset/:effectType", PresetTestHandler)
 
 	// clock
-	clock := router.Group("/clock")
+	clock := api.Group("/clock")
 	clock.POST("/restart", ClockRestartHandler)
 	clock.POST("/speed", ClockSpeedHandler)
 	clock.PUT("/:action", ClockSubscriptionHandler)
 
 	// web UI
-	router.Use(static.Serve("/", static.LocalFile("./public", true)))
 	router.Use(static.Serve("/controlpanel", static.LocalFile("./public", true)))
 	router.Use(static.Serve("/presetmanager", static.LocalFile("./public", true)))
 
 	// websocket
-	router.GET("/socket", SocketHandler)
+	api.GET("/socket", SocketHandler)
 
 	log.Print("Starting server listening on port 5000")
 	err := http.ListenAndServe(":5000", router)
