@@ -32,7 +32,7 @@ function App ({
     return (
         <Router>
             <Switch>
-                <Redirect exact from="/cp" to={Routes.controlPanel}/>
+                <Redirect exact from="/" to={Routes.controlPanel}/>
                 <Route exact path={Routes.controlPanel}><ControlPanel /></Route>
                 <Route exact path={Routes.presetManager}><PresetManager /></Route>
             </Switch>

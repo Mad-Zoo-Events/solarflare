@@ -78,9 +78,9 @@ func main() {
 	clock.PUT("/:action", ClockSubscriptionHandler)
 
 	// web UI
-	router.Use(static.Serve("/cp", static.LocalFile("./public", true)))
-	router.Use(static.Serve("/cp/controlpanel", static.LocalFile("./public", true)))
-	router.Use(static.Serve("/cp/presetmanager", static.LocalFile("./public", true)))
+	router.Use(static.Serve("/", static.LocalFile("./public", true)))
+	router.Use(static.Serve("/controlpanel", static.LocalFile("./public", true)))
+	router.Use(static.Serve("/presetmanager", static.LocalFile("./public", true)))
 
 	// websocket
 	router.GET("/socket", SocketHandler)
