@@ -95,8 +95,8 @@ const didGetPresetsOfType = createAction<{ effectType: EffectType, presets: Pres
 // ACTIONS
 export const initializeApp = (): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {
     const url = location.hostname === "localhost"
-        ? "ws://localhost:5000/socket"
-        : `wss://${window.location.host}/socket`;
+        ? "ws://localhost:5000/api/socket"
+        : `wss://${window.location.host}/api/socket`;
 
     dispatch(connect(url));
 
