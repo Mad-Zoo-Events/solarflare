@@ -110,6 +110,8 @@ This information can then be used in a client which accepts MIDI input and sends
 
 The control panel is the browser-based user interface which interacts with the Go service.
 
+You can reach it via https://visuals.madzoo.events/controlpanel.
+
 Here you can execute effects, manage presets, run one-off commands, set the in-game boss bar, and more. It also logs a message indicating if the effect you just triggered successfully ran on all servers, or at least on how many of them.
 
 By default, all presets of the same type are grouped together in areas you can freely resize and rearrange on the control panel.
@@ -183,21 +185,21 @@ The basic workflow is as follows:
 
 #### Service Health
 
-`GET https://visuals.madzoo.events/health`
+`GET https://visuals.madzoo.events/api/health`
 
 Gets the service health (to be implemented)
 
 #### Application Version
 
-`GET https://visuals.madzoo.events/version`
+`GET https://visuals.madzoo.events/api/version`
 
 Gets a the service version formatted as the latest build timestamp
 
 #### Settings
 
-`GET https://visuals.madzoo.events/settings/{setting}`
+`GET https://visuals.madzoo.events/api/settings/{setting}`
 
-`POST https://visuals.madzoo.events/settings/{setting}`
+`POST https://visuals.madzoo.events/api/settings/{setting}`
 
 Retrieve or store settings on the database
 
@@ -226,7 +228,7 @@ The payload will be returned as it was stored
 
 You can start or stop servers, and enable or disable them to receive effects (see [Manage Servers](#manage-servers))
 
-`PATCH https://visuals.madzoo.events/servers/{id}/{action}`
+`PATCH https://visuals.madzoo.events/api/servers/{id}/{action}`
 
 **Parameters:**
 
@@ -240,13 +242,13 @@ You can start or stop servers, and enable or disable them to receive effects (se
 
 You can retrieve all presets of a specific type or all presets of all types:
 
-`GET https://visuals.madzoo.events/presets/{effectType}`
+`GET https://visuals.madzoo.events/api/presets/{effectType}`
 
 Returns an array of all presets of the specified type
 
 ---
 
-`GET https://visuals.madzoo.events/presets/all`
+`GET https://visuals.madzoo.events/api/presets/all`
 
 Returns an object containing an array for each preset type
 
@@ -263,7 +265,7 @@ Returns an object containing an array for each preset type
 
 ### Trigger Actions On Presets
 
-`POST https://visuals.madzoo.events/effects/run/{effectType}/{id}/{action}`
+`POST https://visuals.madzoo.events/api/effects/run/{effectType}/{id}/{action}`
 
 There is no payload.
 
@@ -311,7 +313,7 @@ There is no payload.
 
 ### Stop All Effects and/or Detach All From The Clock
 
-`POST https://visuals.madzoo.events/effects/stopall`
+`POST https://visuals.madzoo.events/api/effects/stopall`
 
 **Payload:**
 
@@ -335,7 +337,7 @@ If you still wish to do it manually via POST requests, you should know what you 
 
 #### Subscribe and Unsubscribe 
 
-`PUT https://visuals.madzoo.events/clock/{action}`
+`PUT https://visuals.madzoo.events/api/clock/{action}`
 
 Subscribes an effect to the clock or unsubscribes it.
 
@@ -360,13 +362,13 @@ where `EffectType` has to be one of the types listed above, `isRunning` indicate
 
 #### Restart
 
-`POST https://visuals.madzoo.events/clock/restart`
+`POST https://visuals.madzoo.events/api/clock/restart`
 
 Restarts the clock, use this to sync up visuals on the clock with the music.
 
 #### Set Speed
 
-`POST https://visuals.madzoo.events/clock/speed`
+`POST https://visuals.madzoo.events/api/clock/speed`
 
 Set the clock speed.
 
@@ -385,7 +387,7 @@ where a `noteLength` of 1 equals a quarter note (so e.g. 0.5 = eight note, 4 = w
 
 #### Execute Command in Minecraft
 
-`POST https://visuals.madzoo.events/command`
+`POST https://visuals.madzoo.events/api/command`
 
 Runs a single command on all connected instances
 
@@ -399,7 +401,7 @@ Runs a single command on all connected instances
 
 #### Set The Bossbar (Title)
 
-`POST https://visuals.madzoo.events/bossbar/{action}`
+`POST https://visuals.madzoo.events/api/bossbar/{action}`
 
 Sets the in-game boss bar or clears (and hides) it
 
