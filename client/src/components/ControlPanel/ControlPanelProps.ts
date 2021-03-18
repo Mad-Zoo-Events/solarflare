@@ -7,6 +7,7 @@ import { handleKeyPress } from "./ControlPanelActions";
 
 export interface ControlPanelProps {
     combinedPresets: Preset[]
+    loosePresets: Preset[]
     runningEffects: Map<string, RunningEffect>
 
     displayCategories: EffectType[]

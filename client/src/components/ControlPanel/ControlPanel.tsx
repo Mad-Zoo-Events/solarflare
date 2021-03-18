@@ -15,11 +15,13 @@ import HeaderControls from "./HeaderControls/HeaderControls";
 import PresetControl from "./PresetControl/PresetControl";
 
 const ControlPanel = ({
-    combinedPresets,
-    runningEffects,
     displayCategories,
+    combinedPresets,
+    loosePresets,
+    runningEffects,
     ignoreKeystrokes,
     clockTapButtonRef,
+
     handleKeyPress
 }: ControlPanelProps) => {
     const doClockTap = (b: HTMLDivElement | null) => {
@@ -51,8 +53,7 @@ const ControlPanel = ({
                     </div>
             }
 
-            {/* "loose" presets */}
-            {combinedPresets.map(preset =>
+            {loosePresets.map(preset =>
                 <PresetControl
                     key={preset.id}
                     preset={preset}
@@ -67,15 +68,17 @@ const ControlPanel = ({
 
 function mapStateToProps (state: RootState) {
     const displayCategories = selectDisplayCategories(state);
-    const combinedPresets = selectCombinedPresets(state, displayCategories);
+    const combinedPresets = selectCombinedPresets(state);
+    const loosePresets = selectCombinedPresets(state, displayCategories);
     const runningEffects = selectRunningEffects(state);
     const ignoreKeystrokes = selectIgnoreKeystrokes(state);
     const clockTapButtonRef = selectClockTapButtonRef(state);
 
     return {
-        combinedPresets,
-        runningEffects,
         displayCategories,
+        combinedPresets,
+        loosePresets,
+        runningEffects,
         ignoreKeystrokes,
         clockTapButtonRef
     };

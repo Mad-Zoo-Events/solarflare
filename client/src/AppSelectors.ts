@@ -15,7 +15,9 @@ export const selectSelectedStage = createSelector(selectAppState, ({ selectedSta
 
 export const selectPresets = createSelector(selectAppState, ({ presets }) => presets);
 
-export function selectCombinedPresets (state: RootState, excludedEffectTypes: EffectType[]): Preset[] {
-    const effectTypes = allEffectTypes.filter(et => !excludedEffectTypes.includes(et));
+export function selectCombinedPresets (state: RootState, excludedEffectTypes?: EffectType[]): Preset[] {
+    const effectTypes = excludedEffectTypes
+        ? allEffectTypes.filter(et => !excludedEffectTypes.includes(et))
+        : allEffectTypes;
     return combinePresets(selectPresets(state), effectTypes);
 }
