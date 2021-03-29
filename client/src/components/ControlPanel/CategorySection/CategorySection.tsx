@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { ReactElement } from "react";
 import { connect } from "react-redux";
 import * as et from "../../../domain/EffectType";
-import { getAccentColor } from "../../../utils/utils";
+import { getAccentColor, presetSorter } from "../../../utils/utils";
 import { stopAll } from "../ControlPanelActions";
 import PresetControl from "../PresetControl/PresetControl";
 import "./CategorySection.scss";
@@ -68,7 +68,7 @@ const CategorySection = ({
                 />
                 <span>{header}</span>
             </div>
-            {presets?.map((preset) => {
+            {presets?.sort(presetSorter).map((preset) => {
                 return <PresetControl
                     key={preset.id}
                     preset={preset}

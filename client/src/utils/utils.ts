@@ -73,13 +73,7 @@ export function getSummary (preset: Preset, effectType: EffectType): string {
 }
 
 export function presetSorter (p1: Preset, p2: Preset): number {
-    if (p1.displayName > p2.displayName) {
-        return 1;
-    }
-    if (p1.displayName < p2.displayName) {
-        return -1;
-    }
-    return 0;
+    return p1.displayName.localeCompare(p2.displayName);
 }
 
 export function decoratePresetsOfType (presets: Preset[], effectType: EffectType): void {
