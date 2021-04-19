@@ -27,7 +27,7 @@ const CategoryGrid = ({
         className="layout"
         layout={layout}
         cols={8}
-        rowHeight={90}
+        rowHeight={95}
         margin={[0, 0]}
         autoSize
         draggableCancel=".non-draggable"
