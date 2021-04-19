@@ -17,7 +17,11 @@ interface midiMapping {
 }
 
 export const MidiBehaviorTypes: Record<string, string> = {
-    trigger: "Triggers the effect on MIDI input",
-    startStop: "Runs the effect while the note is on",
-    clock: "Keeps the clock attached to the clock while the note is on"
+    trigger: "Triggers the effect on note down",
+    toggle: "Toggles the effect on or off on note down",
+    hold: "Runs the effect while note down",
+    clock1Toggle: "Toggles subscription of the effect to the clock's on-beat on note down",
+    clock1Hold: "Keeps the effect subscribed to the clock's on-beat while note down",
+    clock2Toggle: "Toggles subscription of the effect to the clock's off-beat on note down",
+    clock2Hold: "Keeps the effect subscribed to the clock's off-beat while note down"
 };
