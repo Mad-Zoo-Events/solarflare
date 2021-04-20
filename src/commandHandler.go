@@ -13,6 +13,11 @@ import (
 // CommandHandler handles requests to run a console command
 func CommandHandler(c *gin.Context) {
 	body, err := ioutil.ReadAll(c.Request.Body)
+	if err != nil {
+		err = sferror.New(sferror.BadRequest, "Could not read command request", err)
+		c.JSON(http.StatusBadRequest, sferror.Get(err))
+		return
+	}
 
 	err = controller.RunSingleCommand(body)
 	if err != nil {

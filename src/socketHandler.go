@@ -12,7 +12,10 @@ import (
 
 // SocketHandler handles websocket requests for UI updates
 func SocketHandler(c *gin.Context) {
-	conn, err := websocket.Upgrade(c.Writer, c.Request, nil, 131072, 131072) // 128 Kb
+	upgrader := websocket.Upgrader{
+		WriteBufferSize: 131072, // 128 Kb
+	}
+	conn, err := upgrader.Upgrade(c.Writer, c.Request, nil)
 	if err != nil {
 		sferror.New(sferror.SocketOpen, "Error upgrading connection to websocket", err)
 		c.JSON(http.StatusInternalServerError, sferror.Get(err))

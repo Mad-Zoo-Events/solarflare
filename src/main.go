@@ -26,19 +26,6 @@ func load() {
 	client.ReloadAllPresets()
 }
 
-// writes the response header and a response body if supplied
-func writeResponse(w http.ResponseWriter, code int, body []byte) {
-	w.WriteHeader(code)
-
-	if body != nil {
-		w.Write(body)
-	}
-}
-
-func redirectTo(w http.ResponseWriter, r *http.Request, endpoint string) {
-	http.Redirect(w, r, endpoint, http.StatusFound)
-}
-
 func main() {
 	load()
 
