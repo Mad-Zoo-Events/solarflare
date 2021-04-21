@@ -20,7 +20,7 @@ type connection struct {
 	mu   *sync.Mutex
 }
 
-var conns = make(map[uuid.UUID]*connection, 0)
+var conns = make(map[uuid.UUID]*connection)
 
 // RegisterSocket adds a new socket to the pool
 func RegisterSocket(conn *websocket.Conn) {

@@ -14,6 +14,11 @@ import (
 	"github.com/eynorey/solarflare/src/utils/sferror"
 )
 
+const (
+	defaultTimeout = time.Duration(5 * time.Second)
+	longerTimeout  = time.Duration(20 * time.Second)
+)
+
 var client *http.Client
 
 func init() {
@@ -22,14 +27,18 @@ func init() {
 		TLSHandshakeTimeout: time.Duration(2 * time.Second),
 	}
 	client = &http.Client{
-		Timeout:   time.Duration(10 * time.Second),
 		Transport: tr,
 	}
 }
 
 // ExecuteEffect executes an effect on all servers
-func ExecuteEffect(endpoint string, body []byte) error {
+func ExecuteEffect(endpoint string, body []byte, increaseTimeout bool) error {
 	cfg := config.Get()
+
+	timeout := defaultTimeout
+	if increaseTimeout {
+		timeout = longerTimeout
+	}
 
 	errCount := 0
 	serverCount := 0
@@ -49,7 +58,7 @@ func ExecuteEffect(endpoint string, body []byte) error {
 		serverCount++
 
 		wg.Add(1)
-		go executeEffect(url, &body, &wg, &errCount)
+		go executeEffect(url, &body, &wg, &errCount, timeout)
 	}
 
 	wg.Wait()
@@ -64,7 +73,7 @@ func ExecuteEffect(endpoint string, body []byte) error {
 	return nil
 }
 
-func executeEffect(url string, body *[]byte, wg *sync.WaitGroup, errCount *int) {
+func executeEffect(url string, body *[]byte, wg *sync.WaitGroup, errCount *int, timeout time.Duration) {
 	defer wg.Done()
 	request, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(*body))
 	if err != nil {
@@ -75,6 +84,7 @@ func executeEffect(url string, body *[]byte, wg *sync.WaitGroup, errCount *int) 
 	request.Header.Add("Idempotency-Key", "oof.")
 	request.Header.Add("Content-Type", "application/json")
 
+	client.Timeout = timeout
 	response, err := client.Do(request)
 	if err != nil {
 		sferror.New(sferror.Aurora, "Error sending request to Aurora", err)
