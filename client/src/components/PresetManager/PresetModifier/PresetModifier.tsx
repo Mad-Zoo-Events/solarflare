@@ -83,6 +83,13 @@ const PresetModifier = ({
         setValue("keyBinding", getShortcutCode(input));
     };
 
+    const handleShortcutChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        event.preventDefault();
+        if (event.currentTarget.value === "") {
+            setValue("keyBinding", 0);
+        }
+    };
+
     const handleShortcutPaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
         event.preventDefault();
         const input = event.clipboardData.getData("text")[0];
@@ -113,7 +120,7 @@ const PresetModifier = ({
                             <input name="description" type="text" autoComplete="false" placeholder="Short description" ref={register} />
 
                             <label>Keyboard Shortcut</label>
-                            <input type="text" autoComplete="false" defaultValue={preset.keyBindingStr} onKeyPress={handleShortcutKeyPress} onPaste={handleShortcutPaste} />
+                            <input type="text" autoComplete="false" defaultValue={preset.keyBindingStr} onKeyPress={handleShortcutKeyPress} onPaste={handleShortcutPaste} onChange={handleShortcutChange} />
                             <Controller
                                 name="keyBinding"
                                 control={control}
