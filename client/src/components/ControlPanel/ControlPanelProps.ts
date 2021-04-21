@@ -3,7 +3,7 @@ import { HandleThunkActionCreator } from "react-redux";
 import { EffectType } from "../../domain/EffectType";
 import { Preset } from "../../domain/presets/Preset";
 import { RunningEffect } from "../../domain/RunningEffect";
-import { handleKeyPress } from "./ControlPanelActions";
+import { handleKeyPress, setIgnoreKeystrokes } from "./ControlPanelActions";
 
 export interface ControlPanelProps {
     combinedPresets: Preset[]
@@ -16,4 +16,5 @@ export interface ControlPanelProps {
     clockTapButtonRef: RefObject<HTMLDivElement>
 
     handleKeyPress: HandleThunkActionCreator<typeof handleKeyPress>
+    setIgnoreKeystrokes: HandleThunkActionCreator<typeof setIgnoreKeystrokes>
 }

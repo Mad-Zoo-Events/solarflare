@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { selectCombinedPresets } from "../../AppSelectors";
 import { allEffectTypes } from "../../domain/EffectType";
@@ -7,7 +7,7 @@ import Page from "../Page/Page";
 import CategoryGrid from "./CategoryGrid/CategoryGrid";
 import CategorySection from "./CategorySection/CategorySection";
 import "./ControlPanel.scss";
-import { handleKeyPress } from "./ControlPanelActions";
+import { handleKeyPress, setIgnoreKeystrokes } from "./ControlPanelActions";
 import { ControlPanelProps } from "./ControlPanelProps";
 import { selectClockTapButtonRef, selectDisplayCategories, selectIgnoreKeystrokes, selectRunningEffects } from "./ControlPanelSelectors";
 import FooterControls from "./FooterControls/FooterControls";
@@ -22,7 +22,8 @@ const ControlPanel = ({
     ignoreKeystrokes,
     clockTapButtonRef,
 
-    handleKeyPress
+    handleKeyPress,
+    setIgnoreKeystrokes
 }: ControlPanelProps) => {
     const doClockTap = (b: HTMLDivElement | null) => {
         if (!b) return;
@@ -38,6 +39,13 @@ const ControlPanel = ({
                 : handleKeyPress(e, combinedPresets, runningEffects);
         }
     };
+
+    useEffect(() => {
+        setIgnoreKeystrokes(false);
+        return () => {
+            setIgnoreKeystrokes(true);
+        };
+    }, []);
 
     return (
         <Page
@@ -85,7 +93,8 @@ function mapStateToProps (state: RootState) {
 }
 
 const mapDispatchToProps = {
-    handleKeyPress: handleKeyPress
+    handleKeyPress: handleKeyPress,
+    setIgnoreKeystrokes: setIgnoreKeystrokes
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ControlPanel);
