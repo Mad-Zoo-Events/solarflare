@@ -2,7 +2,7 @@
 Your Friendly Neighborhood Visual Effect Distribution System&trade;
 
 ## What is this?
-Solarflare is a hopelessly over-engineered Minecraft visual effect management system that works in combination with [the Aurora plugin](https://github.com/SorenNeedsCoffee/aurora).
+Solarflare is a hopelessly over-engineered Minecraft visual effect management system that works in combination with [the Aurora plugin](https://github.com/SorenNeedsCoffee/aurora) and optionally the corresponding [Max For Live device](https://github.com/Mad-Zoo-Events/solarflare-max).
 
 It allows you to create **presets** which can be used to control a range of awesome Minecraft effects in a certain region and shape.
 
@@ -14,12 +14,12 @@ These presets can be executed through a web request (to allow for time-coded vis
 	- [What is this?](#what-is-this)
 	- [Core Concepts](#core-concepts)
 		- [Effects](#effects)
-			- [Particle Effects](#particle-effects)
 			- [Dying Dragon Effect](#dying-dragon-effect)
-			- [Timeshift Effect](#timeshift-effect)
-			- [Potion Effect](#potion-effect)
 			- [Laser Effect](#laser-effect)
 			- [Lightning Effect](#lightning-effect)
+			- [Particle Effects](#particle-effects)
+			- [Potion Effect](#potion-effect)
+			- [Timeshift Effect](#timeshift-effect)
 		- [Presets](#presets)
 		- [Control Panel](#control-panel)
 			- [Boss Bar Control](#boss-bar-control)
@@ -54,34 +54,11 @@ These presets can be executed through a web request (to allow for time-coded vis
 
 ### Effects
 
-#### Particle Effects
-
-Particle effects can be displayed in the Minecraft world in three different ways:
-
-- at a single point
-- at a range of points
-- in a cuboid with a specified density and optional randomization
-- in a complex shape described by a mathematical equation
-
-They can either be triggered once or toggles on and off.
-
 #### Dying Dragon Effect
 
 The dying dragon effect is an amazing purple-laser-beam animation which continuously gets more intense and blinding for as long as it's turned on.
 
 The effect originates from a specified point and can be toggled on and off with the additional option to restart the animation.
-
-#### Timeshift Effect
-
-The timeshift effect lets you control the daylight cycle in the game. You can specify which portion of one Minecraft day to skip ahead or rewind per second. It's a continuous effect that can be turned on and off.
-
-You can trigger as many timeshift effects at the same time as you want. A neat side-effect of this is that the moon's shape reacts to that as it skips along the server time as well. For instance if you skip ahead and rewind with the exact same amount at the same time, the moon just rapidly skips through its cycles without the time of the day actually changing. Add a third time skip on top of that, and you have days flying by with a frenzy moon!
-
-#### Potion Effect
-
-You can apply one or multiple Minecraft potion effects to every player in the world at the same time.
-
-This can be used to turn the lights off with blindness, give players night vision (these two are a good combination), make them glow, become invisible (another combo that looks really cool), move really fast, get nausea... You get the idea.
 
 #### Laser Effect
 
@@ -97,6 +74,29 @@ You can create presets to summon lightnings at all points specified. This effect
 
 **Warning:** This effect can quickly become **very** loud in-game, so make sure you warn users to turn off in-game audio ;)
 
+#### Particle Effects
+
+Particle effects can be displayed in the Minecraft world in three different ways:
+
+- at a single point
+- at a range of points
+- in a cuboid with a specified density and optional randomization
+- in a complex shape described by a mathematical equation
+
+They can either be triggered once or toggles on and off.
+
+#### Potion Effect
+
+You can apply one or multiple Minecraft potion effects to every player in the world at the same time.
+
+This can be used to turn the lights off with blindness, give players night vision (these two are a good combination), make them glow, become invisible (another combo that looks really cool), move really fast, get nausea... You get the idea.
+
+#### Timeshift Effect
+
+The timeshift effect lets you control the daylight cycle in the game. You can specify which portion of one Minecraft day to skip ahead or rewind per second. It's a continuous effect that can be turned on and off.
+
+You can trigger as many timeshift effects at the same time as you want. A neat side-effect of this is that the moon's shape reacts to that as it skips along the server time as well. For instance if you skip ahead and rewind with the exact same amount at the same time, the moon just rapidly skips through its cycles without the time of the day actually changing. Add a third time skip on top of that, and you have days flying by with a frenzy moon!
+
 ### Presets
 
 Presets represent a compilation of effects of the same type to be controlled at the same time. For instance you could display hearts in a specific location and shape while also turning on the rain in a different shape.
@@ -105,6 +105,8 @@ Each preset is identified by a UUID which gets generated upon its creation, and 
 
 In addition to the effect-specific options, you can define a keyboard shortcut to start/stop it on the control panel, and a set of MIDI options which let you map MIDI keys and channels to certain actions which are to be performed on the preset.
 This information can then be used in a client which accepts MIDI input and sends corresponding web requests to the backend, allowing you to map presets to a MIDI keyboard or even time-code a show.
+
+One such client is the [Max For Live Device](https://github.com/Mad-Zoo-Events/solarflare-max) which has been built for Solarflare.
 
 ### Control Panel
 
@@ -154,6 +156,8 @@ This feature can be useful when you already want to work on a new/different stag
 #### Preset Manager
 
 This button takes you to the preset manager, where you can - well - manage all your presets.
+
+You can also directly reach it via https://visuals.madzoo.events/presetmanager.
 
 ### Clock
 
@@ -254,12 +258,13 @@ Returns an object containing an array for each preset type
 
 ```
 {
-	"particlePresets": [],
+	"commandPresets": [],
 	"dragonPresets": [],
-	"timeshiftPresets": [],
-	"potionPresets": [],
 	"laserPresets": [],
-	"commandPresets": []
+	"lightningPresets": [],
+	"particlePresets": [],
+	"potionPresets": [],
+	"timeshiftPresets": []
 }
 ```
 
@@ -278,24 +283,34 @@ There is no payload.
 | `action`     | The action to perform on the preset (see below)                        |
 
 **Effect Types**
-- `particle`
-- `dragon`
-- `timeshift`
-- `potion`
-- `laser`
 - `command`
+- `dragon`
+- `laser`
+- `lightning`
+- `particle`
+- `potion`
+- `timeshift`
 
-**Actions allowed on *particle effect* presets:**
+**Actions allowed on *command* presets:**
 - `trigger`
-- `start`
-- `stop`
 
 **Actions allowed on *dragon effect* presets:**
 - `start`
 - `restart`
 - `stop`
 
-**Actions allowed on *timeshift effect* presets:**
+**Actions allowed on *laser effect* presets:**
+- `trigger` *(only for Guardian Lasers, restarts color cycle)*
+- `start`
+- `stop`
+
+**Actions allowed on *lightning effect* presets:**
+- `trigger`
+- `start`
+- `stop`
+
+**Actions allowed on *particle effect* presets:**
+- `trigger`
 - `start`
 - `stop`
 
@@ -303,13 +318,9 @@ There is no payload.
 - `start`
 - `stop`
 
-**Actions allowed on *laser effect* presets:**
-- `restart` *(only for Guardian Lasers)*
+**Actions allowed on *timeshift effect* presets:**
 - `start`
 - `stop`
-
-**Actions allowed on *command* presets:**
-- `trigger`
 
 ### Stop All Effects and/or Detach All From The Clock
 
