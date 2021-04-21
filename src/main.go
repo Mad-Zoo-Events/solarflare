@@ -34,8 +34,8 @@ func main() {
 	api := router.Group("/api")
 
 	// service
-	api.GET("/health", HealthHandler)
-	api.GET("/version", VersionHandler)
+	router.GET("/health", HealthHandler)
+	router.GET("/version", VersionHandler)
 
 	// settings
 	settings := api.Group("/settings")

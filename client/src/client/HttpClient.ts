@@ -13,7 +13,7 @@ import { decoratePresets, decoratePresetsOfType } from "../utils/utils";
 
 // Status
 export async function getVersion (): Promise<string> {
-    return (await axios.get<string>("/api/version")).data;
+    return (await axios.get<string>("/version")).data;
 }
 
 // Backend

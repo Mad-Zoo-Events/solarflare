@@ -185,13 +185,13 @@ The basic workflow is as follows:
 
 #### Service Health
 
-`GET https://visuals.madzoo.events/api/health`
+`GET https://visuals.madzoo.events/health`
 
 Gets the service health (to be implemented)
 
 #### Application Version
 
-`GET https://visuals.madzoo.events/api/version`
+`GET https://visuals.madzoo.events/version`
 
 Gets a the service version formatted as the latest build timestamp
 
