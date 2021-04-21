@@ -80,7 +80,7 @@ func pollForUpdates(id string, action model.ServerAction, prevStatus model.Insta
 	for {
 		time.Sleep(pollingInterval)
 
-		if time.Now().Sub(startTime) > pollingTimeout {
+		if time.Since(startTime) > pollingTimeout {
 			updateInstanceStatus(id, model.InstanceStatusUnknown)
 			sendServerUpdate(id, action)
 			return
