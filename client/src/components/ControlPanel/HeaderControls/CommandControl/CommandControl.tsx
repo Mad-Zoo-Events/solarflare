@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FocusEvent, KeyboardEvent, ReactElement, useState } from "react";
 import { connect } from "react-redux";
 import TextareaAutosize from "react-textarea-autosize";
-import { runComand } from "../../../../client/HttpClient";
+import { runCommand } from "../../../../client/HttpClient";
 import { setIgnoreKeystrokes } from "../../ControlPanelActions";
 import { CommandControlProps } from "./CommandControlProps";
 
@@ -24,7 +24,7 @@ const CommandControl = ({
     const handleKeyDown = async (e: KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === "Enter") {
             const { value } = e.currentTarget;
-            await runComand(value);
+            await runCommand(value);
             setCommand("");
         }
     };
