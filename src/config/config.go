@@ -8,7 +8,7 @@ import (
 )
 
 func init() {
-	cfg.Stages = []string{"mzitv", "stratos", "iod", "hotg"}
+	cfg.Stages = []string{"mzitv", "stratos", "iod", "hotg", "rnr", "rnrwarmup"}
 	cfg.SelectedStage = cfg.Stages[len(cfg.Stages)-1]
 
 	cfg.AppVersion = appVersion
