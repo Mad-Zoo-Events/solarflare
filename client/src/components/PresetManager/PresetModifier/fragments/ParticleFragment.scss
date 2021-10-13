@@ -12,7 +12,9 @@
         'delete dustsize-label       dustsize-label      dustsize-label      dustsize-label     color-input'
         'delete dustsize-input       dustsize-input      dustsize-input      dustsize-input     color-input'
         'delete material-label       material-label      material-label      material-label     color-input'
-        'delete material-input       material-input      material-input      material-input     color-input';
+        'delete material-input       material-input      material-input      material-input     color-input'
+        'delete material-input       material-input      material-input      material-input     color-label2'
+        'delete material-input       material-input      material-input      material-input     color-input2';
 
     & label {
         grid-area: label;
@@ -84,6 +86,14 @@
 
     & .color-input {
         grid-area: color-input;
+    }
+
+    & .color-label2 {
+        grid-area: color-label2;
+    }
+
+    & .color-input2 {
+        grid-area: color-input2;
     }
 
     & .material-label {

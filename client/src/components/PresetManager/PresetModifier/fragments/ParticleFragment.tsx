@@ -52,6 +52,7 @@ const ParticleFragment = ({
                     const regionType = watch(`particleEffects[${index}].regionType`, particlePreset.particleEffects[0].regionType);
                     const effectName = watch(`particleEffects[${index}].name`, particlePreset.particleEffects[0].name);
                     const dustColor = watch(`particleEffects[${index}].dustColor`, "0,0,0");
+                    const toColor = watch(`particleEffects[${index}].toColor`, "0,0,0");
 
                     return (
                         <div key={effect.id} className="preset-modifier__particle-item preset-modifier__item">
@@ -63,7 +64,7 @@ const ParticleFragment = ({
                                     <Fragment key={name}>
                                         <option value={name}>
                                             {name}
-                                            {["ITEM_CRACK", "BLOCK_CRACK", "BLOCK_DUST", "FALLING_DUST", "REDSTONE"].includes(name) && " *"}
+                                            {["ITEM_CRACK", "BLOCK_CRACK", "BLOCK_DUST", "FALLING_DUST", "REDSTONE", "DUST_COLOR_TRANSITION", "VIBRATION"].includes(name) && " *"}
                                         </option>
                                     </Fragment>
                                 ))}
@@ -189,6 +190,58 @@ const ParticleFragment = ({
                                         defaultValue={effect.materialName}
                                         placeholder="MAGMA_BLOCK"
                                         ref={register()}
+                                    />
+                                </>
+                            }
+
+                            {effectName === "DUST_COLOR_TRANSITION" &&
+                                <>
+                                    <label className="dustsize-label">Particle Size</label>
+                                    <input
+                                        className="dustsize-input"
+                                        name={`particleEffects[${index}].dustSize`}
+                                        type="number"
+                                        step={0.1}
+                                        defaultValue={effect.dustSize || 1.0}
+                                        ref={register({ valueAsNumber: true })}
+                                    />
+
+                                    <label className="color-label">Sarting Color</label>
+                                    <Controller
+                                        name={`particleEffects[${index}].dustColor`}
+                                        control={control}
+                                        as={<input type="hidden" />}
+                                        defaultValue={effect.dustColor || "0,0,0"}
+                                    />
+
+                                    <SketchPicker
+                                        className="color-input"
+                                        presetColors={[]}
+                                        color={fromColorDto(dustColor)}
+                                        onChange={(color) => {
+                                            const { rgb } = color;
+                                            setValue(`particleEffects[${index}].dustColor`, toColorDto(rgb));
+                                        }}
+                                        disableAlpha={true}
+                                    />
+
+                                    <label className="color-label2">Ending Color</label>
+                                    <Controller
+                                        name={`particleEffects[${index}].toColor`}
+                                        control={control}
+                                        as={<input type="hidden" />}
+                                        defaultValue={effect.toColor || "0,0,0"}
+                                    />
+
+                                    <SketchPicker
+                                        className="color-input2"
+                                        presetColors={[]}
+                                        color={fromColorDto(toColor)}
+                                        onChange={(color) => {
+                                            const { rgb } = color;
+                                            setValue(`particleEffects[${index}].toColor`, toColorDto(rgb));
+                                        }}
+                                        disableAlpha={true}
                                     />
                                 </>
                             }

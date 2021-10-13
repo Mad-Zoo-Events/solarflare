@@ -48,12 +48,15 @@ type Region struct {
 
 // AdditionalOptions contains optional parameters for specific particle effects (such as redstone dust color)
 type AdditionalOptions struct {
-	// Only for REDSTONE
-	DustColor *[]int   `json:"dustColor,omitempty"` // RGB color of redstone dust particles
+	// Only for REDSTONE & DUST_COLOR_TRANSITION
+	DustColor *[]int   `json:"dustColor,omitempty"` // RGB color of redstone dust particles (or start color for DUST_COLOR_TRANSITION)
 	DustSize  *float64 `json:"dustSize,omitempty"`  // Size of redstone dust particles
 
 	// Only for ITEM_CRACK, BLOCK_CRACK, BLOCK_DUST and FALLING_DUST
 	MaterialName *string `json:"materialName,omitempty"` // Name of the Minecraft material (e.g. STONE)
+
+	// Only for DUST_COLOR_TRANSITION
+	ToColor *[]int `json:"toColor,omitempty"` // Ending RGB color of dust particles
 }
 
 // ********* //
@@ -77,11 +80,14 @@ type ParticleEffectAPI struct {
 	Density     *float64 `json:"density,omitempty"` // min 1 | max 100
 	Equation    *string  `json:"equation,omitempty"`
 
-	// Only for REDSTONE
+	// Only for REDSTONE & DUST_COLOR_TRANSITION
 	DustColor *string  `json:"dustColor,omitempty"` // comma-separated RGB color parts of redstone dust particles
 	DustSize  *float64 `json:"dustSize,omitempty"`  // size of redstone dust particles
 	// Only for ITEM_CRACK, BLOCK_CRACK, BLOCK_DUST and FALLING_DUST
 	MaterialName *string `json:"materialName,omitempty"` // Name of the Minecraft material (e.g. STONE)
+
+	// Only for DUST_COLOR_TRANSITION
+	ToColor *string `json:"toColor,omitempty"` // comma-separated RGB color parts of redstone dust particles
 }
 
 // ******************** //
@@ -121,6 +127,16 @@ func (preset ParticleEffectPreset) ToAPI() ParticleEffectPresetAPI {
 			}
 			dustColor := strings.TrimSuffix(dustColorBuilder.String(), ",")
 			apiEffect.DustColor = &dustColor
+		}
+
+		if effect.AdditionalOptions.ToColor != nil {
+			toColorBuilder := strings.Builder{}
+			for _, p := range *effect.AdditionalOptions.ToColor {
+				toColorBuilder.WriteString(strconv.Itoa(p))
+				toColorBuilder.WriteString(",")
+			}
+			toColor := strings.TrimSuffix(toColorBuilder.String(), ",")
+			apiEffect.ToColor = &toColor
 		}
 
 		apiEffect.DustSize = effect.AdditionalOptions.DustSize
@@ -174,6 +190,15 @@ func (preset ParticleEffectPresetAPI) FromAPI() ParticleEffectPreset {
 				rgb = append(rgb, p)
 			}
 			particleEffect.AdditionalOptions.DustColor = &rgb
+		}
+
+		if effect.ToColor != nil {
+			rgb := []int{}
+			for _, part := range strings.Split(*effect.ToColor, ",") {
+				p, _ := strconv.Atoi(part)
+				rgb = append(rgb, p)
+			}
+			particleEffect.AdditionalOptions.ToColor = &rgb
 		}
 
 		effects = append(effects, particleEffect)
