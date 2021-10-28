@@ -75,6 +75,7 @@ func ExecuteEffect(endpoint string, body []byte, increaseTimeout bool) error {
 
 func executeEffect(url string, body *[]byte, wg *sync.WaitGroup, errCount *int, timeout time.Duration) {
 	defer wg.Done()
+	// sferror.New(sferror.Encoding, string(*body), nil) // Uncomment to see what is actually getting sent to aurora for debugging
 	request, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(*body))
 	if err != nil {
 		sferror.New(sferror.Encoding, "Error compiling request to Aurora", err)

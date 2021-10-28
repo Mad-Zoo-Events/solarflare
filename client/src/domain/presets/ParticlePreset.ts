@@ -12,6 +12,7 @@ interface ParticleEffect {
     regionType: string
     randomize?: boolean
     density?: number
+    quantity?: number
     equation?: string
 
     dustColor?: string
@@ -22,7 +23,10 @@ interface ParticleEffect {
 
 export const ParticleEffectRegionTypes: Record<string, string> = {
     POINTS: "Points (One particle at each specified point)",
-    CUBOID: "Cuboid (Particles filling a cuboid specified by two points)",
+    CUBOID: "Cuboid % (Particles filling a cuboid specified by two points)",
+    CUBOID_QUANTITATIVE: "Cuboid # (Defined by two points and particle count)",
+    CYLINDER: "Verticle Cylinder (First point defines center, second defines height and radius)",
+    SPHERE: "Sphere (First point defines center, second defines 3d radius)",
     EQUATION: "Equation (Particles filling a shape described by an equation around a single point)"
 };
 

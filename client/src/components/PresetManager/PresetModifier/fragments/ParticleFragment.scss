@@ -1,20 +1,22 @@
 .preset-modifier__particle-item {
     grid-template-columns: min-content max-content 1fr 2fr max-content min-content;
     grid-template-areas  :
-        'delete effect-label         effect-label        regiontype-label    regiontype-label   color-label'
-        'delete effect-input         effect-input        regiontype-input    regiontype-input   color-input'
-        'delete pointids-label       pointids-label      pointids-label      pointids-label     color-input'
-        'delete pointids-input       pointids-input      pointids-input      pointids-input     color-input'
-        'delete density-label        density-label       .                   .                  color-input'
-        'delete density-number-input density-range-input density-range-input randomize-checkbox color-input'
-        'delete equation-label       equation-label      equation-label      equation-label     color-input'
-        'delete equation-input       equation-input      equation-input      equation-input     color-input'
-        'delete dustsize-label       dustsize-label      dustsize-label      dustsize-label     color-input'
-        'delete dustsize-input       dustsize-input      dustsize-input      dustsize-input     color-input'
-        'delete material-label       material-label      material-label      material-label     color-input'
-        'delete material-input       material-input      material-input      material-input     color-input'
-        'delete material-input       material-input      material-input      material-input     color-label2'
-        'delete material-input       material-input      material-input      material-input     color-input2';
+        'delete effect-label          effect-label        regiontype-label    regiontype-label   color-label'
+        'delete effect-input          effect-input        regiontype-input    regiontype-input   color-input'
+        'delete pointids-label        pointids-label      pointids-label      pointids-label     color-input'
+        'delete pointids-input        pointids-input      pointids-input      pointids-input     color-input'
+        'delete quantity-label        quantity-label      .                   .                  color-input'
+        'delete quantity-number-input .                   .                   .                  color-input'
+        'delete density-label         density-label       .                   .                  color-input'
+        'delete density-number-input  density-range-input density-range-input randomize-checkbox color-input'
+        'delete equation-label        equation-label      equation-label      equation-label     color-input'
+        'delete equation-input        equation-input      equation-input      equation-input     color-input'
+        'delete dustsize-label        dustsize-label      dustsize-label      dustsize-label     color-input'
+        'delete dustsize-input        dustsize-input      dustsize-input      dustsize-input     color-input'
+        'delete material-label        material-label      material-label      material-label     color-input'
+        'delete material-input        material-input      material-input      material-input     color-input'
+        'delete material-input        material-input      material-input      material-input     color-label2'
+        'delete material-input        material-input      material-input      material-input     color-input2';
 
     & label {
         grid-area: label;
@@ -62,6 +64,18 @@
 
     & .density-range-input {
         grid-area: density-range-input;
+    }
+
+    & .quantity-label {
+        grid-area: quantity-label;
+    }
+
+    & .quantity-number-input {
+        grid-area: quantity-number-input;
+    }
+
+    & .quantity-range-input {
+        grid-area: quantity-range-input;
     }
 
     & .equation-label {

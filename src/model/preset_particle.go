@@ -42,6 +42,8 @@ type Region struct {
 	Randomize *bool `json:"randomize,omitempty"`
 	// Density of the particles [for Cuboid and Equation region type]
 	Density *float64 `json:"density,omitempty"` // MIN 0.00001 | MAX 0.01
+	// Quantity of the particles [for Cuboid_Quantitative, Cylinder, and Sphere region types]
+	Quantity *int64 `json:"quantity,omitempty"`
 	// Equation for the shape of the effect region [for EquationRegionType]
 	Equation *string `json:"equation,omitempty"`
 }
@@ -77,7 +79,8 @@ type ParticleEffectAPI struct {
 	PointIDList string   `json:"pointIDList"` // Comma-separated list of point IDs
 	RegionType  string   `json:"regionType"`
 	Randomize   *bool    `json:"randomize,omitempty"`
-	Density     *float64 `json:"density,omitempty"` // min 1 | max 100
+	Density     *float64 `json:"density,omitempty"`  // min 1 | max 100
+	Quantity    *int64   `json:"quantity,omitempty"` // quantity of particles
 	Equation    *string  `json:"equation,omitempty"`
 
 	// Only for REDSTONE & DUST_COLOR_TRANSITION
@@ -117,6 +120,10 @@ func (preset ParticleEffectPreset) ToAPI() ParticleEffectPresetAPI {
 		if effect.Region.Density != nil {
 			density := densityToAPI(*effect.Region.Density)
 			apiEffect.Density = &density
+		}
+
+		if effect.Region.Quantity != nil {
+			apiEffect.Quantity = effect.Region.Quantity
 		}
 
 		if effect.AdditionalOptions.DustColor != nil {
@@ -176,6 +183,10 @@ func (preset ParticleEffectPresetAPI) FromAPI() ParticleEffectPreset {
 		if effect.Density != nil {
 			density := densityFromAPI(*effect.Density)
 			particleEffect.Region.Density = &density
+		}
+
+		if effect.Quantity != nil {
+			particleEffect.Region.Quantity = effect.Quantity
 		}
 
 		particleEffect.AdditionalOptions = AdditionalOptions{

@@ -18,7 +18,8 @@ const ParticleFragment = ({
         name: "ASH",
         regionType: "POINTS",
         pointIDList: "",
-        density: 20
+        density: 20,
+        quantity: 200
     }];
 
     const { register, control, watch, setValue } = formMethods;
@@ -90,7 +91,8 @@ const ParticleFragment = ({
                                 ref={register()}
                             />
 
-                            {regionType !== "POINTS" &&
+                            {/* DISABLING RANDOMIZE CUZ IT IS NOT USED RIGHT NOW */}
+                            {/* {regionType !== "POINTS" &&
                                 <label className="checkbox-container randomize-checkbox">Randomize
                                     <input
                                         name={`particleEffects[${index}].randomize`}
@@ -100,9 +102,23 @@ const ParticleFragment = ({
                                     />
                                     <span></span>
                                 </label>
+                            } */}
+
+                            {(regionType === "CUBOID_QUANTITATIVE" || regionType === "SPHERE" || regionType === "CYLINDER") &&
+                                <>
+                                    <label className="quantity-label">Quantity</label>
+                                    <input
+                                        name={`particleEffects[${index}].quantity`}
+                                        className="quantity-number-input"
+                                        type="number"
+                                        min={1} max={20000} step={1}
+                                        defaultValue={effect.quantity}
+                                        ref={register({ valueAsNumber: true })}
+                                    />
+                                </>
                             }
 
-                            {regionType !== "POINTS" &&
+                            {(regionType === "CUBOID" || regionType === "EQUATION") &&
                                 <>
                                     <label className="density-label">Density</label>
                                     <input
