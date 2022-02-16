@@ -18,7 +18,8 @@
         }
 
         &:hover {
-            border-width: 0.3em;
+            // border-width: 0.3em;
+            box-shadow: inset var(--particle-lighter) 0 0 0 0.3em;
         }
 
         &.attached {
